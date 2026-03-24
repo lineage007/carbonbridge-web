@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --forest: #1B3A2D;
+  --forest-light: #2D5A3F;
+  --parchment: #F2ECE0;
+  --gold: #C9A96E;
+  --gold-light: #D4B882;
+  --cream: #FFFCF6;
+  --ink: #1A1714;
+  --ink-muted: #6B6259;
+  --forest-deep: #0C1C14;
+  --sage: #8AAA92;
+  --border-light: #E5DED3;
+  --border-dark: #2D5A3F;
+}
+
+body {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(201, 169, 110, 0.3);
+  color: var(--ink);
+}
