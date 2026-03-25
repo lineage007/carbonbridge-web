@@ -128,12 +128,19 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Trust bar */}
+              {/* Trust bar — Settlement partner logos */}
               <div style={{ borderTop: '1px solid rgba(201,169,110,0.1)', paddingTop: '24px' }}>
-                <div style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.6)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '12px' }}>Settlement infrastructure</div>
-                <div className="flex flex-wrap gap-x-8 gap-y-2">
-                  {['ACX Abu Dhabi', 'Carbonplace', 'CIX Singapore', 'Xpansiv CBL'].map(name => (
-                    <span key={name} style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(255,252,246,0.35)' }}>{name}</span>
+                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.45)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>Settlement &amp; Registry Partners</div>
+                <div className="flex flex-wrap items-center gap-x-10 gap-y-4" style={{ opacity: 0.4 }}>
+                  {[
+                    { src: '/partners/acx.svg', alt: 'ACX Abu Dhabi', w: 80 },
+                    { src: '/partners/carbonplace.svg', alt: 'Carbonplace', w: 110 },
+                    { src: '/partners/cix.svg', alt: 'CIX Singapore', w: 90 },
+                    { src: '/partners/xpansiv.svg', alt: 'Xpansiv CBL', w: 80 },
+                    { src: '/partners/verra.svg', alt: 'Verra', w: 70 },
+                    { src: '/partners/goldstandard.svg', alt: 'Gold Standard', w: 100 },
+                  ].map(p => (
+                    <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '22px', width: 'auto', filter: 'brightness(0) invert(1)', transition: 'opacity 0.3s' }} className="hover:opacity-100" />
                   ))}
                 </div>
               </div>
@@ -188,6 +195,32 @@ export default function Home() {
                 182M tonnes retired in 2024 · $535M total value · Quality premium widening
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          PARTNER LOGOS — Full-width credibility bar
+          ═══════════════════════════════════════════════════════ */}
+      <section style={{ background: 'var(--parchment)', borderBottom: '1px solid var(--border-light)', padding: '40px 0' }}>
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
+          <div className="text-center mb-6">
+            <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: 'var(--ink-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.5 }}>Trusted Settlement &amp; Insurance Infrastructure</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5" style={{ opacity: 0.3 }}>
+            {[
+              { src: '/partners/acx.svg', alt: 'ACX Abu Dhabi', w: 80 },
+              { src: '/partners/carbonplace.svg', alt: 'Carbonplace', w: 115 },
+              { src: '/partners/cix.svg', alt: 'CIX Singapore', w: 95 },
+              { src: '/partners/xpansiv.svg', alt: 'Xpansiv CBL', w: 80 },
+              { src: '/partners/lloyds.svg', alt: "Lloyd's of London", w: 120 },
+              { src: '/partners/verra.svg', alt: 'Verra', w: 70 },
+              { src: '/partners/goldstandard.svg', alt: 'Gold Standard', w: 105 },
+              { src: '/partners/kita.svg', alt: 'Kita', w: 55 },
+              { src: '/partners/munichre.svg', alt: 'Munich Re', w: 100 },
+            ].map(p => (
+              <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '20px', width: 'auto', filter: 'grayscale(1)', transition: 'all 0.3s' }} className="hover:grayscale-0 hover:opacity-80" />
+            ))}
           </div>
         </div>
       </section>
@@ -383,9 +416,23 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <p style={{ fontFamily: bg, fontSize: '12px', color: 'rgba(138,170,146,0.5)' }}>
-              Insurance distributed by CarbonBridge. Underwritten by Lloyd&apos;s of London syndicates via Kita (backed by Munich Re, Chaucer, Tokio Marine Kiln) and CFC.
+          {/* Insurance partner logos */}
+          <div className="mt-12" style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '24px' }}>
+            <div className="text-center mb-5">
+              <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Insurance &amp; Underwriting Partners</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4" style={{ opacity: 0.35 }}>
+              {[
+                { src: '/partners/lloyds.svg', alt: "Lloyd's of London", w: 120 },
+                { src: '/partners/kita.svg', alt: 'Kita', w: 60 },
+                { src: '/partners/munichre.svg', alt: 'Munich Re', w: 100 },
+                { src: '/partners/cfc.svg', alt: 'CFC Underwriting', w: 50 },
+              ].map(p => (
+                <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '24px', width: 'auto', filter: 'brightness(0) invert(1)', transition: 'opacity 0.3s' }} className="hover:opacity-100" />
+              ))}
+            </div>
+            <p className="text-center mt-4" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
+              Insurance distributed by CarbonBridge. Underwritten by Lloyd&apos;s of London syndicates.
             </p>
           </div>
         </div>
