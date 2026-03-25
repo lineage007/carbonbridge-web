@@ -583,7 +583,7 @@ export default function Home() {
               { q: 'What registries do you support?', a: 'CarbonBridge supports credits from Verra (VCS), Gold Standard, and the American Carbon Registry (ACR). We also facilitate ACCU-adjacent projects registered directly with Verra.' },
               { q: 'How are credits rated?', a: 'We use an independent rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity — from AAA (highest) to C.' },
               { q: 'Is the insurance mandatory?', a: 'No. Insurance is optional and available at checkout. You choose the level of cover you need — from basic non-delivery protection to comprehensive CORSIA guarantees.' },
-              { q: 'How does settlement work?', a: 'Transactions under $100K settle via Stripe Connect escrow. Institutional transactions ($100K+) settle through ACX Abu Dhabi, CIX Singapore, or Carbonplace — bank-grade delivery-versus-payment.' },
+              { q: 'How does settlement work?', a: 'All marketplace transactions settle via Stripe Connect escrow or bank transfer (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace — delivery versus payment.' },
               { q: 'Do you sell your own credits?', a: 'Yes, through CarbonBridge Direct — our own curated inventory. These are always clearly labelled and never algorithmically favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
             ].map(faq => (
@@ -640,15 +640,15 @@ export default function Home() {
               { title: 'Platform', items: [
                 { label: 'Marketplace', href: '/marketplace' },
                 { label: 'Data & Ratings', href: '/data' },
-                { label: 'Insurance', href: '/checkout' },
+                { label: 'Insurance', href: '/marketplace' },
                 { label: 'Compare Credits', href: '/compare' },
-                { label: 'Carbon Management', href: '/dashboard/carbon' },
+                { label: 'Carbon Management', href: '/carbon-management' },
               ] },
               { title: 'Solutions', items: [
-                { label: 'Corporate Buyers', href: '/register' },
-                { label: 'Project Developers', href: '/register' },
-                { label: 'Airlines & CORSIA', href: '/register' },
-                { label: 'CBAM Compliance', href: '/register' },
+                { label: 'Corporate Buyers', href: '/#solutions' },
+                { label: 'Project Developers', href: '/#solutions' },
+                { label: 'Airlines & CORSIA', href: '/#solutions' },
+                { label: 'CBAM Compliance', href: '/#solutions' },
                 { label: 'Advisory', href: 'mailto:hello@carbonbridge.ae' },
               ] },
               { title: 'Company', items: [
