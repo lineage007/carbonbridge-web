@@ -11,12 +11,14 @@ const NAV = [
   { label: 'Overview', href: '/dashboard', icon: '◎' },
   { label: 'Portfolio', href: '/dashboard/portfolio', icon: '◇' },
   { label: 'Purchases', href: '/dashboard/purchases', icon: '◈' },
+  { label: 'Marketplace', href: '/marketplace', icon: '◆' },
   { label: 'My Listings', href: '/dashboard/listings', icon: '▣', sellerOnly: true },
   { label: 'Orders Received', href: '/dashboard/orders', icon: '▤', sellerOnly: true },
   { label: 'Carbon Management', href: '/dashboard/carbon', icon: '◉' },
   { label: 'Forward Contracts', href: '/dashboard/forwards', icon: '▸' },
   { label: 'API', href: '/dashboard/api', icon: '⟨/⟩', apiOnly: true },
   { label: 'Settings', href: '/dashboard/settings', icon: '⚙' },
+  { label: 'Admin Centre', href: '/admin', icon: '⛊', adminOnly: true },
 ];
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -48,6 +50,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <span style={{ fontSize: '14px', opacity: 0.7, width: '20px', textAlign: 'center' }}>{item.icon}</span>
                 {item.label}
                 {item.sellerOnly && <span style={{ fontSize: '9px', background: 'rgba(201,169,110,0.1)', color: '#C9A96E', padding: '1px 6px', borderRadius: '4px', marginLeft: 'auto' }}>SELLER</span>}
+                {(item as any).adminOnly && <span style={{ fontSize: '9px', background: 'rgba(220,38,38,0.1)', color: '#dc2626', padding: '1px 6px', borderRadius: '4px', marginLeft: 'auto' }}>ADMIN</span>}
               </Link>
             );
           })}
