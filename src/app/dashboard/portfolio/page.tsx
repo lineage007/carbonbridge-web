@@ -1,77 +1,87 @@
 'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/lib/auth-context';
+import { getPortfolio } from '@/lib/db';
+
 const fr = "'Fraunces', Georgia, serif";
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 const mono = "'JetBrains Mono', monospace";
-const fmt = (n: number) => '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2 });
-
-const CREDITS = [
-  { id: 1, project: 'Abu Dhabi Blue Carbon Mangroves', type: 'Blue Carbon', registry: 'Verra', regId: 'VCS-3102', vintage: 2025, qty: 5000, cost: 29.00, current: 32.50, rating: 'AA', status: 'Held' },
-  { id: 2, project: 'Great Southern Forest Restoration', type: 'ARR', registry: 'Verra', regId: 'VCS-2847', vintage: 2024, qty: 2500, cost: 23.20, current: 26.40, rating: 'AAA', status: 'Held' },
-  { id: 3, project: 'Queensland Soil Carbon Initiative', type: 'Soil Carbon', registry: 'Gold Standard', regId: 'GS-9841', vintage: 2025, qty: 8000, cost: 16.50, current: 18.20, rating: 'A', status: 'Held' },
-  { id: 4, project: 'Kalimantan Peatland Conservation', type: 'REDD+', registry: 'Verra', regId: 'VCS-1822', vintage: 2024, qty: 10000, cost: 11.50, current: 12.80, rating: 'BBB', status: 'Retired' },
-];
+const fmt = (n: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n);
 
 export default function PortfolioPage() {
-  const held = CREDITS.filter(c => c.status === 'Held');
-  const totalValue = held.reduce((s, c) => s + c.qty * c.current, 0);
-  const totalCost = held.reduce((s, c) => s + c.qty * c.cost, 0);
-  const totalTonnes = held.reduce((s, c) => s + c.qty, 0);
-  const pnl = totalValue - totalCost;
+  const { user } = useAuth();
+  const [portfolio, setPortfolio] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    getPortfolio(user.id).then(setPortfolio).finally(() => setLoading(false));
+  }, [user?.id]);
+
+  const totalValue = portfolio.reduce((s, p) => s + (p.listing?.price_per_tonne || 0) * (p.quantity || 0), 0);
+  const totalTonnes = portfolio.reduce((s, p) => s + (p.quantity || 0), 0);
 
   return (
-    <div>
-      <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>Portfolio</h1>
-        <p style={{ fontFamily: bg, fontSize: '14px', color: '#6B6259' }}>Your carbon credit holdings and performance.</p>
+    <div style={{ fontFamily: bg }}>
+      <h1 style={{ fontFamily: fr, fontSize: '26px', color: '#1A1714', marginBottom: '4px' }}>Portfolio</h1>
+      <p style={{ fontSize: '13px', color: '#8A7E70', marginBottom: '24px' }}>Your owned carbon credits across all projects</p>
+
+      {/* Summary */}
+      <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
+        <div style={{ background: '#1B3A2D', borderRadius: '12px', padding: '20px', flex: 1 }}>
+          <div style={{ fontSize: '11px', color: '#8AAA92' }}>Total Value</div>
+          <div style={{ fontFamily: mono, fontSize: '28px', fontWeight: 700, color: '#F2ECE0' }}>{loading ? '...' : fmt(totalValue)}</div>
+        </div>
+        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '20px', flex: 1 }}>
+          <div style={{ fontSize: '11px', color: '#8A7E70' }}>Total Credits</div>
+          <div style={{ fontFamily: mono, fontSize: '28px', fontWeight: 700, color: '#1A1714' }}>{loading ? '...' : `${totalTonnes.toLocaleString()} tCO₂e`}</div>
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '28px' }}>
-        {[
-          { label: 'Total Value', val: fmt(totalValue), color: '#1B3A2D' },
-          { label: 'Total Cost', val: fmt(totalCost), color: '#5A5248' },
-          { label: 'Unrealised P&L', val: `${pnl >= 0 ? '+' : ''}${fmt(pnl)}`, color: pnl >= 0 ? '#16A34A' : '#EF4444' },
-          { label: 'Credits Held', val: `${totalTonnes.toLocaleString()} tCO₂e`, color: '#2D6A4F' },
-        ].map(k => (
-          <div key={k.label} style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '18px', borderTop: `3px solid ${k.color}` }}>
-            <div style={{ fontFamily: bg, fontSize: '12px', color: '#8A7E70', marginBottom: '6px' }}>{k.label}</div>
-            <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: k.color }}>{k.val}</div>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: bg, fontSize: '13px' }}>
-          <thead>
-            <tr style={{ background: '#F5F0E8' }}>
-              {['Project', 'Type', 'Registry', 'Vintage', 'Qty (tCO₂e)', 'Avg Cost', 'Market Price', 'Value', 'P&L', 'Rating', 'Status'].map(h => (
-                <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontSize: '11px', fontWeight: 700, color: '#6B6259', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+      {loading ? (
+        <p style={{ padding: '40px', textAlign: 'center', color: '#8A7E70' }}>Loading portfolio...</p>
+      ) : portfolio.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px 20px', background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px' }}>
+          <div style={{ fontSize: '48px', marginBottom: '12px' }}>◇</div>
+          <h3 style={{ fontFamily: fr, fontSize: '18px', color: '#1A1714', marginBottom: '8px' }}>Your portfolio is empty</h3>
+          <p style={{ fontSize: '13px', color: '#8A7E70', marginBottom: '20px' }}>Purchase carbon credits from the marketplace to build your portfolio</p>
+          <Link href="/marketplace" style={{ fontSize: '14px', fontWeight: 600, color: '#F2ECE0', background: '#1B3A2D', padding: '12px 28px', borderRadius: '10px', textDecoration: 'none' }}>
+            Browse Marketplace
+          </Link>
+        </div>
+      ) : (
+        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', overflow: 'hidden' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+            <thead><tr style={{ background: '#F5F0E8' }}>
+              {['Project', 'Type', 'Registry', 'Vintage', 'Qty (tCO₂e)', 'Unit Price', 'Value', 'Rating'].map(h => (
+                <th key={h} style={{ padding: '10px 14px', textAlign: h === 'Project' ? 'left' : 'right', fontSize: '10px', fontWeight: 700, color: '#5A5248', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</th>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {CREDITS.map(c => {
-              const val = c.qty * c.current;
-              const pl = c.qty * (c.current - c.cost);
-              return (
-                <tr key={c.id} onClick={() => window.location.href = `/credits/${c.id}`} style={{ borderBottom: '1px solid #F0EBE0', cursor: 'pointer', transition: 'background 120ms' }} className="hover:bg-[#F5F0E8]">
-                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#1B3A2D', textDecoration: 'underline', textDecorationColor: '#E5DED3' }}>{c.project}</td>
-                  <td style={{ padding: '12px 14px' }}>{c.type}</td>
-                  <td style={{ padding: '12px 14px', fontSize: '11px' }}>{c.regId}</td>
-                  <td style={{ padding: '12px 14px', fontFamily: mono }}>{c.vintage}</td>
-                  <td style={{ padding: '12px 14px', fontFamily: mono, fontWeight: 600 }}>{c.qty.toLocaleString()}</td>
-                  <td style={{ padding: '12px 14px', fontFamily: mono }}>{fmt(c.cost)}</td>
-                  <td style={{ padding: '12px 14px', fontFamily: mono }}>{fmt(c.current)}</td>
-                  <td style={{ padding: '12px 14px', fontFamily: mono, fontWeight: 600 }}>{fmt(val)}</td>
-                  <td style={{ padding: '12px 14px', fontFamily: mono, fontWeight: 600, color: pl >= 0 ? '#16A34A' : '#EF4444' }}>{pl >= 0 ? '+' : ''}{fmt(pl)}</td>
-                  <td style={{ padding: '12px 14px' }}><span style={{ background: '#F5F0E8', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 700 }}>{c.rating}</span></td>
-                  <td style={{ padding: '12px 14px' }}><span style={{ fontSize: '11px', fontWeight: 600, color: c.status === 'Held' ? '#1B3A2D' : '#8A7E70' }}>{c.status}</span></td>
+            </tr></thead>
+            <tbody>
+              {portfolio.map((p, i) => (
+                <tr key={i} onClick={() => p.listing?.id && (window.location.href = `/credits/${p.listing.id}`)}
+                  style={{ borderBottom: '1px solid #F0EBE0', cursor: 'pointer', transition: 'background 120ms' }}
+                  className="hover:bg-[#F5F0E8]">
+                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#1B3A2D' }}>{p.listing?.project_name || '—'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontSize: '11px', color: '#5A5248' }}>{p.listing?.credit_type?.replace(/_/g, ' ')?.toUpperCase() || '—'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontSize: '11px' }}>{p.listing?.registry || '—'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono }}>{p.listing?.vintage_year || '—'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono, fontWeight: 600 }}>{(p.quantity || 0).toLocaleString()}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono }}>${(p.listing?.price_per_tonne || 0).toFixed(2)}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono, fontWeight: 600 }}>{fmt((p.listing?.price_per_tonne || 0) * (p.quantity || 0))}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right' }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', background: '#F5F0E8', color: '#1B3A2D' }}>
+                      {p.listing?.quality_rating || '—'}
+                    </span>
+                  </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
