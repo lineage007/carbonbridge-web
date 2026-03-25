@@ -1,5 +1,7 @@
 {
   "/_not-found/page": "/_not-found",
+  "/credits/[id]/page": "/credits/[id]",
+  "/page": "/",
   "/marketplace/page": "/marketplace",
-  "/page": "/"
+  "/register/page": "/register"
 }
