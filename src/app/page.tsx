@@ -145,11 +145,11 @@ export default function Home() {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <a href="#contact" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(201,169,110,0.8)', padding: '7px 18px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(201,169,110,0.5)] hover:text-[#C9A96E] transition-all duration-300">
+            <a href="/register" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(201,169,110,0.8)', padding: '7px 18px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(201,169,110,0.5)] hover:text-[#C9A96E] transition-all duration-300">
               Sign in
             </a>
             <a href="#contact" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '7px 20px', borderRadius: '7px' }} className="hover:brightness-110 transition-all duration-200">
-              Request access
+              Create account
             </a>
           </div>
 
@@ -181,7 +181,7 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-3 mb-7">
                 <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', padding: '5px 14px', borderRadius: '100px' }}>
-                  Now accepting early access applications
+                  Create your free account today
                 </span>
               </div>
 
@@ -194,10 +194,10 @@ export default function Home() {
               </p>
 
               <div className="flex flex-wrap gap-3 mb-14">
-                <a href="#contact" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '13px 28px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
-                  Request early access {icons.arrow}
+                <a href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '13px 28px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
+                  Create free account {icons.arrow}
                 </a>
-                <a href="#platform" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '13px 28px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 hover:text-white transition-all duration-300">
+                <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '13px 28px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 hover:text-white transition-all duration-300">
                   Explore the platform
                 </a>
               </div>
@@ -478,7 +478,7 @@ export default function Home() {
               Illustrative listings. Prices based on public voluntary carbon market data (Ecosystem Marketplace, ACX).
             </p>
             <div className="text-center pt-2">
-              <a href="#contact" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest)', display: 'inline-flex', alignItems: 'center', gap: '6px' }} className="hover:underline">
+              <a href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest)', display: 'inline-flex', alignItems: 'center', gap: '6px' }} className="hover:underline">
                 Browse all credits {icons.arrow}
               </a>
             </div>
@@ -614,7 +614,7 @@ export default function Home() {
             <a href="mailto:hello@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
               Contact our team {icons.arrow}
             </a>
-            <a href="#platform" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '14px 32px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 transition-all">
+            <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '14px 32px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 transition-all">
               Explore the platform
             </a>
           </div>

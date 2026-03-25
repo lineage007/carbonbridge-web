@@ -3,6 +3,6 @@
   "/checkout/page": "/checkout",
   "/credits/[id]/page": "/credits/[id]",
   "/marketplace/page": "/marketplace",
-  "/register/page": "/register",
-  "/page": "/"
+  "/page": "/",
+  "/register/page": "/register"
 }
