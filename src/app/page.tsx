@@ -147,7 +147,7 @@ export default function Home() {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <a href="/register" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(201,169,110,0.8)', padding: '7px 18px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(201,169,110,0.5)] hover:text-[#C9A96E] transition-all duration-300">
+            <a href="/login" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(201,169,110,0.8)', padding: '7px 18px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(201,169,110,0.5)] hover:text-[#C9A96E] transition-all duration-300">
               Sign in
             </a>
             <a href="#contact" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '7px 20px', borderRadius: '7px' }} className="hover:brightness-110 transition-all duration-200">
