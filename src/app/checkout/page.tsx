@@ -321,8 +321,8 @@ export default function CheckoutPage() {
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2.5">
-            <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M6 26 L16 6 L26 26" stroke="#C9A96E" strokeWidth="2" fill="none"/><path d="M10 20 H22" stroke="#C9A96E" strokeWidth="1.5"/></svg>
-            <span style={{ fontFamily: "'Fraunces', serif", fontSize: '18px', fontWeight: 600, color: '#FFFCF6' }}>CarbonBridge</span>
+            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "28px", width: "auto" }} />
+            
           </Link>
           <Link href="/marketplace" style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '13px', color: 'rgba(255,252,246,0.5)' }}>← Back to marketplace</Link>
         </div>

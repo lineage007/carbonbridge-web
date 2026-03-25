@@ -130,10 +130,8 @@ export default function Home() {
           ═══════════════════════════════════════════════════════ */}
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-1.5 group">
-            <span style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: '#FFFCF6', letterSpacing: '-0.02em' }}>
-              Carbon<span style={{ color: '#C9A96E' }}>Bridge</span><span style={{ color: '#C9A96E', opacity: 0.6 }}>.</span>
-            </span>
+          <Link href="/" className="flex items-center group">
+            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '34px', width: 'auto' }} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
@@ -632,9 +630,7 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
-              <span style={{ fontFamily: fr, fontSize: '17px', fontWeight: 700, color: '#FFFCF6' }}>
-                Carbon<span style={{ color: '#C9A96E' }}>Bridge</span><span style={{ color: '#C9A96E', opacity: 0.6 }}>.</span>
-              </span>
+              <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto', opacity: 0.85 }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
                 MENA&apos;s first integrated carbon credit marketplace. ADGM registered. Abu Dhabi, UAE.
               </p>
