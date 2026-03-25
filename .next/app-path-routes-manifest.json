@@ -1,12 +1,15 @@
 {
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
+  "/carbon-management/page": "/carbon-management",
   "/checkout/page": "/checkout",
   "/credits/[id]/page": "/credits/[id]",
-  "/data/page": "/data",
+  "/compare/page": "/compare",
   "/dashboard/page": "/dashboard",
-  "/marketplace/page": "/marketplace",
   "/login/page": "/login",
+  "/data/page": "/data",
+  "/marketplace/page": "/marketplace",
+  "/page": "/",
   "/register/page": "/register",
-  "/page": "/"
+  "/seller/page": "/seller"
 }

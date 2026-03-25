@@ -48,10 +48,22 @@
       "namedRegex": "^/about(?:/)?$"
     },
     {
+      "page": "/carbon-management",
+      "regex": "^/carbon\\-management(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/carbon\\-management(?:/)?$"
+    },
+    {
       "page": "/checkout",
       "regex": "^/checkout(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/checkout(?:/)?$"
+    },
+    {
+      "page": "/compare",
+      "regex": "^/compare(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/compare(?:/)?$"
     },
     {
       "page": "/dashboard",
@@ -82,6 +94,12 @@
       "regex": "^/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/register(?:/)?$"
+    },
+    {
+      "page": "/seller",
+      "regex": "^/seller(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/seller(?:/)?$"
     }
   ],
   "dataRoutes": [],

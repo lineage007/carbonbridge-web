@@ -137,6 +137,7 @@ export default function Home() {
           <div className="hidden lg:flex items-center gap-7">
             {[
               { label: 'Marketplace', href: '/marketplace' },
+              { label: 'Compare', href: '/compare' },
               { label: 'Data & Insights', href: '/data' },
               { label: 'About', href: '/about' },
             ].map(({ label, href }) => (
