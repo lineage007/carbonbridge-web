@@ -54,8 +54,8 @@ export default function PortfolioPage() {
               const val = c.qty * c.current;
               const pl = c.qty * (c.current - c.cost);
               return (
-                <tr key={c.id} style={{ borderBottom: '1px solid #F0EBE0' }}>
-                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#1A1714' }}>{c.project}</td>
+                <tr key={c.id} onClick={() => window.location.href = `/credits/${c.id}`} style={{ borderBottom: '1px solid #F0EBE0', cursor: 'pointer', transition: 'background 120ms' }} className="hover:bg-[#F5F0E8]">
+                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#1B3A2D', textDecoration: 'underline', textDecorationColor: '#E5DED3' }}>{c.project}</td>
                   <td style={{ padding: '12px 14px' }}>{c.type}</td>
                   <td style={{ padding: '12px 14px', fontSize: '11px' }}>{c.regId}</td>
                   <td style={{ padding: '12px 14px', fontFamily: mono }}>{c.vintage}</td>

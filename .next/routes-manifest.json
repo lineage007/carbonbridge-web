@@ -160,6 +160,60 @@
       "namedRegex": "^/dashboard(?:/)?$"
     },
     {
+      "page": "/dashboard/admin",
+      "regex": "^/dashboard/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/analytics",
+      "regex": "^/dashboard/admin/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/analytics(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/claims",
+      "regex": "^/dashboard/admin/claims(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/claims(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/financials",
+      "regex": "^/dashboard/admin/financials(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/financials(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/inventory",
+      "regex": "^/dashboard/admin/inventory(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/inventory(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/listings",
+      "regex": "^/dashboard/admin/listings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/listings(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/orders",
+      "regex": "^/dashboard/admin/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/orders(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/settings",
+      "regex": "^/dashboard/admin/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/settings(?:/)?$"
+    },
+    {
+      "page": "/dashboard/admin/users",
+      "regex": "^/dashboard/admin/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/admin/users(?:/)?$"
+    },
+    {
       "page": "/dashboard/api",
       "regex": "^/dashboard/api(?:/)?$",
       "routeKeys": {},

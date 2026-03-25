@@ -88,7 +88,7 @@ export default function DashboardSubPage() {
           { section: 'Company Details', fields: ['Company Name', 'Country', 'Registration Number', 'Contact Person', 'Email'] },
           { section: 'Compliance Profile', fields: ['Compliance Needs (NRCC, CBAM, CORSIA)', 'Estimated Annual Volume', 'Target Sectors'] },
           { section: 'Registry Accounts', fields: ['Verra Account ID', 'Gold Standard Account ID', 'ACR Account ID'] },
-          { section: 'Seller Verification', fields: ['Verification Status', 'Submit Documentation'] },
+          { section: 'Seller Verification', fields: ['Verification Status'] },
         ].map(s => (
           <div key={s.section} style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', padding: '24px' }}>
             <h3 style={{ fontFamily: fr, fontSize: '16px', color: '#1A1714', marginBottom: '16px' }}>{s.section}</h3>
@@ -100,6 +100,25 @@ export default function DashboardSubPage() {
             ))}
           </div>
         ))}
+        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', padding: '24px' }}>
+          <h3 style={{ fontFamily: fr, fontSize: '16px', color: '#1A1714', marginBottom: '4px' }}>Seller Verification Documents</h3>
+          <p style={{ fontFamily: bg, fontSize: '12px', color: '#8A7E70', marginBottom: '16px' }}>Upload documents to verify your identity and credit ownership. Accepted formats: PDF, JPG, PNG (max 10MB each).</p>
+          <div style={{ display: 'grid', gap: '12px' }}>
+            {['Company Registration Certificate', 'Verra/Gold Standard Account Screenshot', 'Credit Ownership Evidence', 'Government-issued ID (Director)'].map(doc => (
+              <div key={doc} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: '#fff', border: '1px dashed #E5DED3', borderRadius: '10px' }}>
+                <div>
+                  <div style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>{doc}</div>
+                  <div style={{ fontFamily: bg, fontSize: '11px', color: '#8A7E70' }}>Not uploaded</div>
+                </div>
+                <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#C9A96E', cursor: 'pointer', padding: '6px 16px', border: '1px solid #C9A96E', borderRadius: '6px' }}>
+                  Upload
+                  <input type="file" accept=".pdf,.jpg,.jpeg,.png" style={{ display: 'none' }} />
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <button style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, color: '#F2ECE0', background: '#1B3A2D', padding: '14px', borderRadius: '10px', border: 'none', cursor: 'pointer' }}>
           Save Changes
         </button>
