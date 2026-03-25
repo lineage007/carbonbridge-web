@@ -14,6 +14,9 @@ const BUYER_NAV = [
   { label: 'Carbon Management', href: '/carbon-management', icon: '◉' },
   { label: 'Data & Insights', href: '/data', icon: '◇' },
   { sep: true },
+  { label: 'Forward Contracts', href: '/forward-contracts', icon: '⤳' },
+  { label: 'RFQ', href: '/rfq', icon: '✉' },
+  { sep: true },
   { label: 'Settings', href: '/settings/profile', icon: '⚙' },
 ];
 
@@ -34,6 +37,8 @@ const ADMIN_NAV = [
   { label: 'Data & Insights', href: '/data', icon: '◇' },
   { sep: true },
   { label: 'Seller Portal', href: '/seller', icon: '▤' },
+  { label: 'Forward Contracts', href: '/forward-contracts', icon: '⤳' },
+  { label: 'RFQ', href: '/rfq', icon: '✉' },
   { sep: true },
   { label: 'Admin Panel', href: '/admin', icon: '⊞' },
   { label: 'Settings', href: '/settings/profile', icon: '⚙' },

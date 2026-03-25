@@ -84,6 +84,54 @@
       "namedRegex": "^/data(?:/)?$"
     },
     {
+      "page": "/developers",
+      "regex": "^/developers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/developers(?:/)?$"
+    },
+    {
+      "page": "/forward-contracts",
+      "regex": "^/forward\\-contracts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forward\\-contracts(?:/)?$"
+    },
+    {
+      "page": "/legal/api-terms",
+      "regex": "^/legal/api\\-terms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/legal/api\\-terms(?:/)?$"
+    },
+    {
+      "page": "/legal/cookies",
+      "regex": "^/legal/cookies(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/legal/cookies(?:/)?$"
+    },
+    {
+      "page": "/legal/insurance",
+      "regex": "^/legal/insurance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/legal/insurance(?:/)?$"
+    },
+    {
+      "page": "/legal/marketplace-rules",
+      "regex": "^/legal/marketplace\\-rules(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/legal/marketplace\\-rules(?:/)?$"
+    },
+    {
+      "page": "/legal/privacy",
+      "regex": "^/legal/privacy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/legal/privacy(?:/)?$"
+    },
+    {
+      "page": "/legal/terms",
+      "regex": "^/legal/terms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/legal/terms(?:/)?$"
+    },
+    {
       "page": "/login",
       "regex": "^/login(?:/)?$",
       "routeKeys": {},
@@ -100,6 +148,12 @@
       "regex": "^/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/register(?:/)?$"
+    },
+    {
+      "page": "/rfq",
+      "regex": "^/rfq(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/rfq(?:/)?$"
     },
     {
       "page": "/seller",

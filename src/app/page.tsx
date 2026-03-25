@@ -654,8 +654,11 @@ export default function Home() {
               { title: 'Company', items: [
                 { label: 'About', href: '/about' },
                 { label: 'Contact', href: 'mailto:hello@carbonbridge.ae' },
-                { label: 'Privacy', href: '#' },
-                { label: 'Terms', href: '#' },
+                { label: 'Privacy', href: '/legal/privacy' },
+                { label: 'Terms', href: '/legal/terms' },
+                { label: 'Insurance Terms', href: '/legal/insurance' },
+                { label: 'API Terms', href: '/legal/api-terms' },
+                { label: 'Marketplace Rules', href: '/legal/marketplace-rules' },
               ] },
             ].map(col => (
               <div key={col.title}>
