@@ -97,7 +97,7 @@ export default function MarketplacePage() {
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "28px", width: "auto" }} />
+            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
             <span style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: '#FFFCF6', letterSpacing: '-0.02em' }}>CarbonBridge</span>
           </Link>
           <div className="flex items-center gap-6">

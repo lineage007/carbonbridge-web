@@ -158,7 +158,7 @@ function Nav() {
     <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
       <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
         <Link href="/" className="flex items-center gap-2.5">
-          <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "28px", width: "auto" }} />
+          <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
           
         </Link>
         <Link href="/marketplace" style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '13px', color: 'rgba(255,252,246,0.5)' }} className="hover:text-white transition-colors">Marketplace</Link>

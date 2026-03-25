@@ -131,7 +131,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '34px', width: 'auto' }} />
+            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '48px', width: 'auto' }} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">

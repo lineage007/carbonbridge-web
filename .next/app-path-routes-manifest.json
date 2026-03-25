@@ -4,7 +4,7 @@
   "/checkout/page": "/checkout",
   "/credits/[id]/page": "/credits/[id]",
   "/data/page": "/data",
+  "/register/page": "/register",
   "/marketplace/page": "/marketplace",
-  "/page": "/",
-  "/register/page": "/register"
+  "/page": "/"
 }
