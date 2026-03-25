@@ -137,8 +137,12 @@ export default function Home() {
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
-            {['Platform', 'Solutions', 'Market Data', 'Insights', 'About'].map(label => (
-              <a key={label} href={`#${label.toLowerCase().replace(' ', '-')}`} style={{ fontFamily: bg, fontSize: '13.5px', fontWeight: 500, color: 'rgba(255,252,246,0.55)' }} className="hover:text-white transition-colors duration-300">
+            {[
+              { label: 'Marketplace', href: '/marketplace' },
+              { label: 'Data & Insights', href: '/data' },
+              { label: 'About', href: '/about' },
+            ].map(({ label, href }) => (
+              <a key={label} href={href} style={{ fontFamily: bg, fontSize: '13.5px', fontWeight: 500, color: 'rgba(255,252,246,0.55)' }} className="hover:text-white transition-colors duration-300">
                 {label}
               </a>
             ))}
