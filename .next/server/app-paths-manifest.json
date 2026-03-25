@@ -3,8 +3,8 @@
   "/about/page": "app/about/page.js",
   "/checkout/page": "app/checkout/page.js",
   "/credits/[id]/page": "app/credits/[id]/page.js",
-  "/marketplace/page": "app/marketplace/page.js",
   "/data/page": "app/data/page.js",
+  "/marketplace/page": "app/marketplace/page.js",
   "/page": "app/page.js",
   "/register/page": "app/register/page.js"
 }

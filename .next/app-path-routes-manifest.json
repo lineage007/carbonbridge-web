@@ -3,8 +3,8 @@
   "/about/page": "/about",
   "/checkout/page": "/checkout",
   "/credits/[id]/page": "/credits/[id]",
-  "/marketplace/page": "/marketplace",
   "/data/page": "/data",
+  "/marketplace/page": "/marketplace",
   "/page": "/",
   "/register/page": "/register"
 }
