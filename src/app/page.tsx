@@ -150,8 +150,8 @@ export default function Home() {
             <a href="/login" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(201,169,110,0.8)', padding: '7px 18px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(201,169,110,0.5)] hover:text-[#C9A96E] transition-all duration-300">
               Sign in
             </a>
-            <a href="#contact" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '7px 20px', borderRadius: '7px' }} className="hover:brightness-110 transition-all duration-200">
-              Create account
+            <a href="/register" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '7px 20px', borderRadius: '7px' }} className="hover:brightness-110 transition-all duration-200">
+              Get started
             </a>
           </div>
 
@@ -447,14 +447,14 @@ export default function Home() {
           {/* Credit card preview — tactile hover states */}
           <div className="space-y-4">
             {[
-              { type: 'ARR / Reforestation', project: 'Great Southern Forest Restoration', location: 'Victoria, Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A' },
-              { type: 'Blue Carbon', project: 'Abu Dhabi Mangrove Conservation', location: 'Abu Dhabi, UAE', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$64.00', volume: '12,000', badge: 'Premium', badgeColor: '#0EA5E9' },
-              { type: 'Biochar', project: 'Queensland Biochar Sequestration', location: 'Queensland, Australia', registry: 'Verra VCS', vintage: '2026', rating: 'AA+', price: '$142.00', volume: '8,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6' },
+              { type: 'ARR / Reforestation', project: 'Great Southern Forest Restoration', location: 'Victoria, Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A', id: 'cb-au-arr-001' },
+              { type: 'Blue Carbon', project: 'Abu Dhabi Mangrove Conservation', location: 'Abu Dhabi, UAE', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$64.00', volume: '12,000', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
+              { type: 'Biochar', project: 'Queensland Biochar Sequestration', location: 'Queensland, Australia', registry: 'Verra VCS', vintage: '2026', rating: 'AA+', price: '$142.00', volume: '8,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6', id: 'cb-au-bio-001' },
             ].map((c, i) => (
               <FadeIn key={c.project} delay={i * 120}>
-                <div
-                  className="group cursor-pointer"
-                  style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '12px', padding: '20px', display: 'flex', gap: '16px', alignItems: 'center', transition: 'all 0.25s ease, box-shadow 0.25s ease' }}
+                <a href={`/credits/${c.id}`}
+                  className="group cursor-pointer block"
+                  style={{ textDecoration: 'none', background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '12px', padding: '20px', display: 'flex', gap: '16px', alignItems: 'center', transition: 'all 0.25s ease, box-shadow 0.25s ease' }}
                   onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(27,58,45,0.08)'; e.currentTarget.style.borderColor = 'var(--gold)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = 'var(--border-light)'; }}
                 >
@@ -473,7 +473,7 @@ export default function Home() {
                     <div style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: 'var(--forest)', transition: 'color 0.2s' }} className="group-hover:text-[#C9A96E]">{c.price}</div>
                     <div style={{ fontFamily: bg, fontSize: '10px', color: 'var(--ink-muted)' }}>per tCO₂e</div>
                   </div>
-                </div>
+                </a>
               </FadeIn>
             ))}
             <p style={{ fontFamily: bg, fontSize: '10px', color: 'var(--ink-muted)', opacity: 0.5, textAlign: 'center', marginTop: '8px' }}>
@@ -636,15 +636,32 @@ export default function Home() {
               </p>
             </div>
             {[
-              { title: 'Platform', items: ['Marketplace', 'Data & Ratings', 'Insurance', 'API', 'Carbon Management'] },
-              { title: 'Solutions', items: ['Corporate Buyers', 'Project Developers', 'Airlines & CORSIA', 'CBAM Compliance', 'Advisory'] },
-              { title: 'Company', items: ['About', 'Contact', 'Careers', 'Privacy', 'Terms'] },
+              { title: 'Platform', items: [
+                { label: 'Marketplace', href: '/marketplace' },
+                { label: 'Data & Ratings', href: '/data' },
+                { label: 'Insurance', href: '/checkout' },
+                { label: 'Compare Credits', href: '/compare' },
+                { label: 'Carbon Management', href: '/dashboard/carbon' },
+              ] },
+              { title: 'Solutions', items: [
+                { label: 'Corporate Buyers', href: '/register' },
+                { label: 'Project Developers', href: '/register' },
+                { label: 'Airlines & CORSIA', href: '/register' },
+                { label: 'CBAM Compliance', href: '/register' },
+                { label: 'Advisory', href: 'mailto:hello@carbonbridge.ae' },
+              ] },
+              { title: 'Company', items: [
+                { label: 'About', href: '/about' },
+                { label: 'Contact', href: 'mailto:hello@carbonbridge.ae' },
+                { label: 'Privacy', href: '#' },
+                { label: 'Terms', href: '#' },
+              ] },
             ].map(col => (
               <div key={col.title}>
                 <h4 style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px' }}>{col.title}</h4>
                 <ul className="space-y-2">
                   {col.items.map(item => (
-                    <li key={item}><a href="#" style={{ fontFamily: bg, fontSize: '13px', color: '#4A6B55' }} className="hover:text-white transition-colors duration-200">{item}</a></li>
+                    <li key={item.label}><a href={item.href} style={{ fontFamily: bg, fontSize: '13px', color: '#4A6B55' }} className="hover:text-white transition-colors duration-200">{item.label}</a></li>
                   ))}
                 </ul>
               </div>

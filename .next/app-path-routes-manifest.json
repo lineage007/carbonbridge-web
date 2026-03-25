@@ -3,10 +3,10 @@
   "/about/page": "/about",
   "/checkout/page": "/checkout",
   "/credits/[id]/page": "/credits/[id]",
-  "/dashboard/page": "/dashboard",
   "/data/page": "/data",
-  "/login/page": "/login",
+  "/dashboard/page": "/dashboard",
   "/marketplace/page": "/marketplace",
-  "/page": "/",
-  "/register/page": "/register"
+  "/login/page": "/login",
+  "/register/page": "/register",
+  "/page": "/"
 }
