@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 import { LISTINGS } from '@/data/credits';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
@@ -49,50 +50,7 @@ export default function DashboardPage() {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       {/* ─── Sidebar ─── */}
-      <aside style={{ width: '260px', background: '#0C1C14', borderRight: '1px solid rgba(201,169,110,0.06)', padding: '24px 0', flexShrink: 0 }}
-        className="hidden lg:block">
-        <div style={{ padding: '0 20px', marginBottom: '32px' }}>
-          <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '30px', width: 'auto' }} /></Link>
-        </div>
-        <nav style={{ padding: '0 12px' }}>
-          {[
-            { label: 'Dashboard', href: '/dashboard', icon: '◎', active: true },
-            { label: 'Marketplace', href: '/marketplace', icon: '◈' },
-            { label: 'Portfolio', href: '#', icon: '◇' },
-            { label: 'Retirements', href: '#', icon: '◆' },
-            { label: 'Data & Insights', href: '/data', icon: '◉' },
-          ].map(item => (
-            <Link key={item.label} href={item.href} style={{
-              display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', marginBottom: '2px',
-              fontFamily: bg, fontSize: '13px', fontWeight: item.active ? 600 : 400,
-              color: item.active ? '#FFFCF6' : '#8AAA92',
-              background: item.active ? 'rgba(201,169,110,0.08)' : 'transparent',
-              textDecoration: 'none', transition: 'all 0.15s',
-            }}>
-              <span style={{ fontSize: '14px', opacity: 0.6 }}>{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
-          <div style={{ height: '1px', background: 'rgba(201,169,110,0.06)', margin: '16px 12px' }} />
-          {[
-            { label: 'Settings', href: '#', icon: '⚙' },
-            { label: 'Help & Support', href: '#', icon: '?' },
-          ].map(item => (
-            <Link key={item.label} href={item.href} style={{
-              display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', marginBottom: '2px',
-              fontFamily: bg, fontSize: '13px', color: '#8AAA92', textDecoration: 'none',
-            }}>
-              <span style={{ fontSize: '14px', opacity: 0.5 }}>{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        {/* User */}
-        <div style={{ position: 'absolute', bottom: '20px', left: '12px', right: '12px', padding: '12px', background: 'rgba(255,252,246,0.02)', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.05)' }}>
-          <div style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#FFFCF6' }}>{USER.name}</div>
-          <div style={{ fontFamily: bg, fontSize: '10px', color: '#8AAA92', marginTop: '2px' }}>{USER.type} · {USER.compliance.join(', ')}</div>
-        </div>
-      </aside>
+      <Sidebar />
 
       {/* ─── Main Content ─── */}
       <main style={{ flex: 1, background: '#FDFBF7', overflow: 'auto' }}>

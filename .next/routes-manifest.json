@@ -100,6 +100,12 @@
       "regex": "^/seller(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/seller(?:/)?$"
+    },
+    {
+      "page": "/settings/profile",
+      "regex": "^/settings/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/settings/profile(?:/)?$"
     }
   ],
   "dataRoutes": [],

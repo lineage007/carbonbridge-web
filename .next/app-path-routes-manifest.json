@@ -1,15 +1,16 @@
 {
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
-  "/carbon-management/page": "/carbon-management",
   "/checkout/page": "/checkout",
-  "/credits/[id]/page": "/credits/[id]",
+  "/carbon-management/page": "/carbon-management",
   "/compare/page": "/compare",
+  "/credits/[id]/page": "/credits/[id]",
   "/dashboard/page": "/dashboard",
-  "/login/page": "/login",
   "/data/page": "/data",
+  "/login/page": "/login",
   "/marketplace/page": "/marketplace",
-  "/page": "/",
   "/register/page": "/register",
-  "/seller/page": "/seller"
+  "/page": "/",
+  "/seller/page": "/seller",
+  "/settings/profile/page": "/settings/profile"
 }
