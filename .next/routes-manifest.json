@@ -20,6 +20,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/api/agreements/[orderId]",
+      "regex": "^/api/agreements/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPorderId": "nxtPorderId"
+      },
+      "namedRegex": "^/api/agreements/(?<nxtPorderId>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/credits/[id]",
       "regex": "^/credits/([^/]+?)(?:/)?$",
       "routeKeys": {
