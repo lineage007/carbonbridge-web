@@ -77,12 +77,13 @@ export function generateAgreementHTML(data: AgreementData): string {
   @page { size: A4; margin: 25mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: Georgia, 'Times New Roman', serif; font-size: 11pt; line-height: 1.65; color: #1A1714; background: #fff; }
-  .header { background: #1B3A2D; color: #F2ECE0; padding: 28px 32px; margin: -25mm -25mm 24px; display: flex; justify-content: space-between; align-items: center; }
-  .header-left { display: flex; align-items: center; gap: 16px; }
-  .header-logo { font-family: 'Fraunces', Georgia, serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
-  .header-logo span { color: #C9A96E; }
-  .header-right { text-align: right; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 9pt; }
-  .header-right .ref { color: #C9A96E; font-size: 12pt; font-weight: 700; }
+  .header { background: #1B3A2D; color: #F2ECE0; padding: 32px 36px; margin: -25mm -25mm 28px; }
+  .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(201,169,110,0.2); }
+  .header-logo-img { height: 44px; width: auto; }
+  .header-ref { text-align: right; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 9pt; }
+  .header-ref .ref { color: #C9A96E; font-size: 13pt; font-weight: 700; display: block; margin-bottom: 2px; }
+  .header-title { font-family: Georgia, serif; font-size: 18pt; font-weight: 400; color: #F2ECE0; letter-spacing: -0.01em; }
+  .header-subtitle { font-size: 10pt; color: #8AAA92; margin-top: 4px; }
   .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 72pt; color: rgba(201,169,110,0.06); font-weight: 800; z-index: -1; pointer-events: none; }
   h1 { font-family: Georgia, serif; font-size: 16pt; font-weight: 700; color: #1B3A2D; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #E5DED3; }
   h2 { font-family: Georgia, serif; font-size: 13pt; font-weight: 700; color: #1B3A2D; margin: 20px 0 8px; }
@@ -111,14 +112,15 @@ export function generateAgreementHTML(data: AgreementData): string {
 ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 
 <div class="header">
-  <div class="header-left">
-    <div class="header-logo">Carbon<span>Bridge</span></div>
-    <div style="font-size: 9pt; opacity: 0.6;">Purchase Agreement</div>
+  <div class="header-top">
+    <img src="https://carbonbridge-web.vercel.app/logo-green.png" alt="CarbonBridge" class="header-logo-img" />
+    <div class="header-ref">
+      <span class="ref">${data.reference}</span>
+      ${data.date}
+    </div>
   </div>
-  <div class="header-right">
-    <div class="ref">${data.reference}</div>
-    <div>${data.date}</div>
-  </div>
+  <div class="header-title">Purchase Agreement</div>
+  <div class="header-subtitle">Carbon Credit Sale and Purchase — governed by the laws of Abu Dhabi Global Market</div>
 </div>
 
 <h1>1. Parties</h1>
@@ -406,6 +408,7 @@ ${isCBDirect ? '<p>12.2 Where CarbonBridge is the Seller (CarbonBridge Direct), 
 </div>
 
 <div class="footer">
+  <img src="https://carbonbridge-web.vercel.app/logo-green.png" alt="CarbonBridge" style="height: 24px; width: auto; margin-bottom: 6px;" />
   <p>CarbonBridge Ltd &middot; Abu Dhabi Global Market &middot; Al Maryah Island, Abu Dhabi, UAE</p>
   <p>${data.reference} &middot; Generated ${data.date}</p>
 </div>
