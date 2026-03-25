@@ -48,6 +48,12 @@
       "namedRegex": "^/about(?:/)?$"
     },
     {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
       "page": "/carbon-management",
       "regex": "^/carbon\\-management(?:/)?$",
       "routeKeys": {},

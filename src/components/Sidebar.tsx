@@ -2,11 +2,31 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
 
-const NAV_ITEMS = [
+const BUYER_NAV = [
+  { label: 'Dashboard', href: '/dashboard', icon: '◎' },
+  { label: 'Marketplace', href: '/marketplace', icon: '◈' },
+  { label: 'Compare', href: '/compare', icon: '⇄' },
+  { label: 'Carbon Management', href: '/carbon-management', icon: '◉' },
+  { label: 'Data & Insights', href: '/data', icon: '◇' },
+  { sep: true },
+  { label: 'Settings', href: '/settings/profile', icon: '⚙' },
+];
+
+const SELLER_NAV = [
+  { label: 'Dashboard', href: '/dashboard', icon: '◎' },
+  { label: 'Seller Portal', href: '/seller', icon: '▤' },
+  { label: 'Marketplace', href: '/marketplace', icon: '◈' },
+  { label: 'Data & Insights', href: '/data', icon: '◇' },
+  { sep: true },
+  { label: 'Settings', href: '/settings/profile', icon: '⚙' },
+];
+
+const ADMIN_NAV = [
   { label: 'Dashboard', href: '/dashboard', icon: '◎' },
   { label: 'Marketplace', href: '/marketplace', icon: '◈' },
   { label: 'Compare', href: '/compare', icon: '⇄' },
@@ -15,6 +35,7 @@ const NAV_ITEMS = [
   { sep: true },
   { label: 'Seller Portal', href: '/seller', icon: '▤' },
   { sep: true },
+  { label: 'Admin Panel', href: '/admin', icon: '⊞' },
   { label: 'Settings', href: '/settings/profile', icon: '⚙' },
 ];
 
@@ -30,8 +51,16 @@ const PROFILE_MENU = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { profile, signOut } = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  const role = profile?.role || 'buyer';
+  const NAV_ITEMS = role === 'admin' ? ADMIN_NAV : role === 'seller' ? SELLER_NAV : BUYER_NAV;
+  const initials = profile ? (profile.first_name?.[0] || '') + (profile.last_name?.[0] || profile.company_name?.[0] || 'U') : 'U';
+  const displayName = profile?.company_name || 'Account';
+  const roleLabel = role === 'admin' ? 'Admin' : role === 'seller' ? 'Seller · ' + (profile?.seller_status || 'Pending') : 'Corporate · Premium';
 
   useEffect(() => {
     const handler = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setProfileOpen(false); };
@@ -82,11 +111,11 @@ export default function Sidebar() {
           onMouseLeave={e => { if (!profileOpen) e.currentTarget.style.background = profileOpen ? 'rgba(201,169,110,0.08)' : 'transparent'; }}
         >
           <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1B3A2D, #2D6A4F)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <span style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#C9A96E' }}>E</span>
+            <span style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#C9A96E' }}>{initials}</span>
           </div>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <div style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#FFFCF6' }}>Emirates Industrial</div>
-            <div style={{ fontFamily: bg, fontSize: '10px', color: '#8AAA92' }}>Corporate · Premium</div>
+            <div style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#FFFCF6' }}>{displayName}</div>
+            <div style={{ fontFamily: bg, fontSize: '10px', color: '#8AAA92' }}>{roleLabel}</div>
           </div>
           <span style={{ color: '#8AAA92', fontSize: '10px', transform: profileOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>▾</span>
         </button>
@@ -113,10 +142,10 @@ export default function Sidebar() {
               ))}
             </div>
             <div style={{ padding: '6px', borderTop: '1px solid #F0EDE6' }}>
-              <Link href="/login" style={{ display: 'block', padding: '9px 12px', borderRadius: '6px', fontFamily: bg, fontSize: '13px', color: '#EF4444', textDecoration: 'none' }}
+              <button onClick={async () => { await signOut(); router.push('/login'); }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '9px 12px', borderRadius: '6px', fontFamily: bg, fontSize: '13px', color: '#EF4444', border: 'none', cursor: 'pointer', background: 'transparent' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.04)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-              >Sign Out</Link>
+              >Sign Out</button>
             </div>
           </div>
         )}

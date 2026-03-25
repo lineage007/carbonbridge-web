@@ -1,202 +1,180 @@
 'use client';
-
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 
-const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
-const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
+const fr = "'Fraunces', serif";
+const bg = "'Plus Jakarta Sans', system-ui, sans-serif";
 
 type AccountType = 'buyer' | 'seller';
 
 export default function RegisterPage() {
-  const [accountType, setAccountType] = useState<AccountType>('buyer');
-  const [submitted, setSubmitted] = useState(false);
+  const { signUp } = useAuth();
+  const router = useRouter();
+  const [step, setStep] = useState(1);
+  const [type, setType] = useState<AccountType | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [company, setCompany] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
 
-  if (submitted) {
-    return (
-      <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-        <Nav />
-        <div className="pt-16 flex items-center justify-center" style={{ minHeight: 'calc(100vh - 64px)' }}>
-          <div className="text-center max-w-md px-6">
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(27,58,45,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 700, color: '#1A1714', marginBottom: '12px' }}>
-              {accountType === 'buyer' ? 'Account created' : 'Application submitted'}
-            </h1>
-            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
-              {accountType === 'buyer'
-                ? 'Your buyer account is active. You can now browse the marketplace, save credits to your watchlist, and submit purchase requests.'
-                : 'Your seller application is under review. Our team will verify your registry credentials and approve your account within 48 hours. You\'ll receive a confirmation email.'}
-            </p>
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '10px', display: 'inline-block' }}>
-              Browse marketplace →
-            </Link>
-          </div>
+  // Seller-specific
+  const [registryAccounts, setRegistryAccounts] = useState('');
+  const [projectCount, setProjectCount] = useState('');
+
+  // Buyer-specific
+  const [complianceNeeds, setComplianceNeeds] = useState<string[]>([]);
+  const [role, setRole] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!type) return;
+    setError(''); setLoading(true);
+    const result = await signUp(email, password, { company_name: company, role: type, first_name: firstName, last_name: lastName });
+    if (result.error) { setError(result.error); setLoading(false); return; }
+    setDone(true); setLoading(false);
+  };
+
+  const Inp = ({ label, value, onChange, type: t = 'text', placeholder = '', required = true }: { label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string; required?: boolean }) => (
+    <div style={{ marginBottom: '16px' }}>
+      <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8B8178', display: 'block', marginBottom: '6px' }}>{label}</label>
+      <input type={t} value={value} onChange={e => onChange(e.target.value)} required={required} placeholder={placeholder}
+        style={{ width: '100%', padding: '12px 14px', border: '1px solid #E8E2D8', borderRadius: '8px', fontFamily: bg, fontSize: '14px', color: '#1A1714', outline: 'none', background: '#fff' }} />
+    </div>
+  );
+
+  if (done) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFFCF6', padding: '40px' }}>
+      <div style={{ maxWidth: '440px', textAlign: 'center' }}>
+        <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#1B3A2D', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+          <span style={{ fontSize: '28px' }}>✓</span>
         </div>
-      </main>
-    );
-  }
+        <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '12px' }}>Check your email</h1>
+        <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
+          We&apos;ve sent a verification link to <strong style={{ color: '#1A1714' }}>{email}</strong>. Click the link to activate your account.
+          {type === 'seller' && <><br/><br/>Once verified, your seller account will be reviewed by our team within 48 hours. We&apos;ll email you when you&apos;re approved to list credits.</>}
+        </p>
+        <Link href="/login" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#C9A96E', textDecoration: 'none' }}>← Go to sign in</Link>
+      </div>
+    </div>
+  );
 
   return (
-    <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-      <Nav />
-      <div className="pt-16">
-        {/* Header */}
-        <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
-          <div className="max-w-lg mx-auto px-6 text-center">
-            <h1 style={{ fontFamily: fr, fontSize: '32px', fontWeight: 700, color: '#FFFCF6', marginBottom: '8px' }}>Create your account</h1>
-            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>
-              Join the Gulf&apos;s first institutional carbon credit marketplace
-            </p>
-          </div>
-        </div>
+    <div style={{ minHeight: '100vh', display: 'flex' }}>
+      {/* Left brand panel */}
+      <div style={{ width: '45%', background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '60px' }} className="hidden lg:flex">
+        <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '40px', width: 'auto', marginBottom: '48px' }} /></Link>
+        <h1 style={{ fontFamily: fr, fontSize: '34px', fontWeight: 600, color: '#FFFCF6', lineHeight: 1.2, marginBottom: '16px' }}>
+          {type === 'seller' ? 'List your credits.\nReach institutional buyers.' : type === 'buyer' ? 'Access verified credits.\nWith integrated insurance.' : 'Join the marketplace.'}
+        </h1>
+        <p style={{ fontFamily: bg, fontSize: '15px', color: '#8AAA92', lineHeight: 1.7, maxWidth: '400px' }}>
+          {type === 'seller' ? 'CarbonBridge connects project developers with corporate buyers, airlines, and governments across MENA.' : 'Browse credits from Verra, Gold Standard, and ACR. Compare quality ratings. Purchase with insurance at checkout.'}
+        </p>
+      </div>
 
-        <div className="max-w-lg mx-auto px-6 py-10">
-          {/* Account type toggle */}
-          <div className="flex gap-2 mb-8 p-1.5" style={{ background: '#F0EBE3', borderRadius: '12px' }}>
-            {(['buyer', 'seller'] as const).map(t => (
-              <button key={t} onClick={() => setAccountType(t)} style={{
-                fontFamily: bg, fontSize: '14px', fontWeight: 600, flex: 1, padding: '12px',
-                borderRadius: '10px', cursor: 'pointer', transition: 'all 0.2s',
-                background: accountType === t ? 'white' : 'transparent',
-                color: accountType === t ? '#1A1714' : '#8B8178',
-                boxShadow: accountType === t ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
-              }}>
-                {t === 'buyer' ? '🏢 Buyer' : '🌿 Seller / Developer'}
-              </button>
-            ))}
+      {/* Right form */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFFCF6', padding: '40px', overflow: 'auto' }}>
+        <div style={{ width: '100%', maxWidth: '440px' }}>
+          <Link href="/" className="lg:hidden" style={{ display: 'block', marginBottom: '24px' }}><img src="/logo-green.png" alt="CarbonBridge" style={{ height: '36px' }} /></Link>
+
+          {/* Step indicator */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '28px' }}>
+            {[1, 2, 3].map(s => <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: s <= step ? '#1B3A2D' : '#E8E2D8', transition: 'background 0.3s' }} />)}
           </div>
 
-          <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }}>
-            {/* Common fields */}
-            <Section title="Company details">
-              <Field label="Company name" name="company" required />
-              <Field label="Contact name" name="contact" required />
-              <Field label="Email address" name="email" type="email" required />
-              <Field label="Country" name="country" required />
-              <Field label="Password" name="password" type="password" required />
-            </Section>
+          {step === 1 && (
+            <>
+              <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Create your account</h2>
+              <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '28px' }}>How will you use CarbonBridge?</p>
 
-            {accountType === 'buyer' ? (
-              <>
-                <Section title="Buyer profile">
-                  <SelectField label="Company type" name="company_type" options={['Corporate', 'Airline', 'Government', 'Financial Institution', 'Other']} required />
-                  
+              <div style={{ display: 'grid', gap: '12px', marginBottom: '24px' }}>
+                {[
+                  { t: 'buyer' as const, title: 'I want to buy credits', desc: 'Browse the marketplace, purchase credits, manage your carbon portfolio, and access compliance tools.' },
+                  { t: 'seller' as const, title: 'I want to sell credits', desc: 'List your verified carbon credits, reach institutional buyers, and get paid through our platform.' },
+                ].map(opt => (
+                  <button key={opt.t} onClick={() => { setType(opt.t); setStep(2); }}
+                    style={{ padding: '20px', border: `2px solid ${type === opt.t ? '#1B3A2D' : '#E8E2D8'}`, borderRadius: '12px', background: type === opt.t ? 'rgba(27,58,45,0.03)' : '#fff', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}>
+                    <div style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>{opt.title}</div>
+                    <div style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.5 }}>{opt.desc}</div>
+                  </button>
+                ))}
+              </div>
+
+              <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', textAlign: 'center' }}>
+                Already have an account? <Link href="/login" style={{ color: '#C9A96E', fontWeight: 600, textDecoration: 'none' }}>Sign in</Link>
+              </p>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Your details</h2>
+              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>{type === 'seller' ? 'Tell us about your organisation and projects.' : 'Tell us about your company and needs.'}</p>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 12px' }}>
+                <Inp label="First Name" value={firstName} onChange={setFirstName} placeholder="Khalid" />
+                <Inp label="Last Name" value={lastName} onChange={setLastName} placeholder="Al Mansouri" />
+              </div>
+              <Inp label="Company Name" value={company} onChange={setCompany} placeholder="Emirates Industrial Group" />
+              {type === 'buyer' && (
+                <>
+                  <Inp label="Your Role" value={role} onChange={setRole} placeholder="Head of Sustainability" required={false} />
                   <div style={{ marginBottom: '16px' }}>
-                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '8px' }}>Compliance needs</span>
-                    <div className="flex flex-wrap gap-2">
-                      {['NRCC', 'CBAM', 'CORSIA', 'Voluntary', 'SBTi / BVCM', 'VCMI'].map(c => (
-                        <label key={c} className="flex items-center gap-2 cursor-pointer" style={{ fontFamily: bg, fontSize: '13px', color: '#1A1714', background: '#F5F0E8', border: '1px solid #E8E2D6', padding: '8px 14px', borderRadius: '8px' }}>
-                          <input type="checkbox" name="compliance" value={c} style={{ accentColor: '#C9A96E' }} />
+                    <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8B8178', display: 'block', marginBottom: '8px' }}>Compliance requirements (select all that apply)</label>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                      {['NRCC', 'CBAM', 'CORSIA', 'SBTi', 'Voluntary', 'None specific'].map(c => (
+                        <button key={c} type="button" onClick={() => setComplianceNeeds(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
+                          style={{ padding: '6px 14px', borderRadius: '100px', border: `1px solid ${complianceNeeds.includes(c) ? '#1B3A2D' : '#E8E2D8'}`, background: complianceNeeds.includes(c) ? 'rgba(27,58,45,0.06)' : '#fff', fontFamily: bg, fontSize: '12px', fontWeight: 600, color: complianceNeeds.includes(c) ? '#1B3A2D' : '#8B8178', cursor: 'pointer' }}>
                           {c}
-                        </label>
+                        </button>
                       ))}
                     </div>
                   </div>
+                </>
+              )}
+              {type === 'seller' && (
+                <>
+                  <Inp label="Registry accounts (Verra, Gold Standard, ACR)" value={registryAccounts} onChange={setRegistryAccounts} placeholder="Verra #12345, Gold Standard #67890" />
+                  <Inp label="How many projects do you have?" value={projectCount} onChange={setProjectCount} placeholder="5" required={false} />
+                </>
+              )}
 
-                  <SelectField label="Estimated annual credit volume" name="volume" options={['Under 1,000 tCO₂e', '1,000 – 10,000 tCO₂e', '10,000 – 100,000 tCO₂e', '100,000+ tCO₂e']} required />
-                </Section>
-              </>
-            ) : (
-              <>
-                <Section title="Developer profile">
-                  <div style={{ marginBottom: '16px' }}>
-                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '8px' }}>Registry accounts</span>
-                    <div className="flex flex-wrap gap-2">
-                      {['Verra VCS', 'Gold Standard', 'ACR'].map(r => (
-                        <label key={r} className="flex items-center gap-2 cursor-pointer" style={{ fontFamily: bg, fontSize: '13px', color: '#1A1714', background: '#F5F0E8', border: '1px solid #E8E2D6', padding: '8px 14px', borderRadius: '8px' }}>
-                          <input type="checkbox" name="registries" value={r} style={{ accentColor: '#C9A96E' }} />
-                          {r}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <Field label="Number of registered projects" name="projects" type="number" required />
-                  <Field label="Estimated annual volume available (tCO₂e)" name="volume" type="number" required />
-                  
-                  <div style={{ marginBottom: '16px' }}>
-                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '8px' }}>Primary credit types</span>
-                    <div className="flex flex-wrap gap-2">
-                      {['ARR', 'REDD+', 'Blue Carbon', 'Soil Carbon', 'Biochar', 'Energy Efficiency', 'Other'].map(t => (
-                        <label key={t} className="flex items-center gap-2 cursor-pointer" style={{ fontFamily: bg, fontSize: '13px', color: '#1A1714', background: '#F5F0E8', border: '1px solid #E8E2D6', padding: '8px 14px', borderRadius: '8px' }}>
-                          <input type="checkbox" name="credit_types" value={t} style={{ accentColor: '#C9A96E' }} />
-                          {t}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </Section>
+              <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+                <button onClick={() => setStep(1)} style={{ flex: 1, padding: '12px', border: '1px solid #E8E2D8', borderRadius: '10px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#8B8178', background: '#fff', cursor: 'pointer' }}>← Back</button>
+                <button onClick={() => setStep(3)} disabled={!company || !firstName} style={{ flex: 2, padding: '12px', border: 'none', borderRadius: '10px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#FFFCF6', background: (!company || !firstName) ? '#C5BFB3' : '#1B3A2D', cursor: 'pointer' }}>Continue →</button>
+              </div>
+            </>
+          )}
 
-                <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)', borderRadius: '12px', padding: '16px', marginBottom: '24px' }}>
-                  <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                    <strong style={{ color: '#1A1714' }}>Seller verification:</strong> All seller accounts require manual review before listings go live. We verify registry credentials and project ownership to protect marketplace integrity. Typical review time: 24-48 hours.
-                  </p>
-                </div>
-              </>
-            )}
+          {step === 3 && (
+            <form onSubmit={handleSubmit}>
+              <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Set up your login</h2>
+              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>You&apos;ll use these credentials to access your {type} dashboard.</p>
 
-            <button type="submit" style={{ fontFamily: bg, fontSize: '15px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', width: '100%', padding: '15px', borderRadius: '10px', cursor: 'pointer', border: 'none' }} className="hover:brightness-110 transition-all">
-              {accountType === 'buyer' ? 'Create buyer account' : 'Submit seller application'}
-            </button>
+              {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#DC2626', background: 'rgba(220,38,38,0.06)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px' }}>{error}</div>}
 
-            <p style={{ fontFamily: bg, fontSize: '12px', color: '#B0A99A', textAlign: 'center', marginTop: '16px' }}>
-              Already have an account? <Link href="/login" style={{ color: '#C9A96E', fontWeight: 600 }}>Sign in</Link>
-            </p>
-          </form>
+              <Inp label="Email" value={email} onChange={setEmail} type="email" placeholder="k.almansouri@company.ae" />
+              <Inp label="Password" value={password} onChange={setPassword} type="password" placeholder="Minimum 8 characters" />
+
+              <div style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', marginBottom: '24px', lineHeight: 1.6 }}>
+                By creating an account, you agree to our <Link href="/legal/terms" style={{ color: '#C9A96E' }}>Terms of Service</Link> and <Link href="/legal/privacy" style={{ color: '#C9A96E' }}>Privacy Policy</Link>.
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button type="button" onClick={() => setStep(2)} style={{ flex: 1, padding: '12px', border: '1px solid #E8E2D8', borderRadius: '10px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#8B8178', background: '#fff', cursor: 'pointer' }}>← Back</button>
+                <button type="submit" disabled={loading || !email || password.length < 8} style={{ flex: 2, padding: '14px', border: 'none', borderRadius: '10px', fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#FFFCF6', background: loading ? '#8AAA92' : '#1B3A2D', cursor: 'pointer' }}>
+                  {loading ? 'Creating account...' : type === 'seller' ? 'Create seller account' : 'Create buyer account'}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
-    </main>
-  );
-}
-
-// ─── Sub-components ───────────────────────────────────────
-
-function Nav() {
-  return (
-    <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-      <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
-        <Link href="/" className="flex items-center gap-2.5">
-          <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
-          
-        </Link>
-        <Link href="/marketplace" style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '13px', color: 'rgba(255,252,246,0.5)' }} className="hover:text-white transition-colors">Marketplace</Link>
-      </div>
-    </nav>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div style={{ marginBottom: '28px' }}>
-      <h3 style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '13px', fontWeight: 700, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E8E2D6' }}>{title}</h3>
-      {children}
-    </div>
-  );
-}
-
-function Field({ label, name, type = 'text', required = false }: { label: string; name: string; type?: string; required?: boolean }) {
-  return (
-    <div style={{ marginBottom: '16px' }}>
-      <label style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '6px' }}>
-        {label} {required && <span style={{ color: '#C9A96E' }}>*</span>}
-      </label>
-      <input type={type} name={name} required={required} style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '14px', width: '100%', padding: '11px 14px', border: '1px solid #E8E2D6', borderRadius: '9px', background: 'white', color: '#1A1714', outline: 'none' }} />
-    </div>
-  );
-}
-
-function SelectField({ label, name, options, required = false }: { label: string; name: string; options: string[]; required?: boolean }) {
-  return (
-    <div style={{ marginBottom: '16px' }}>
-      <label style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '6px' }}>
-        {label} {required && <span style={{ color: '#C9A96E' }}>*</span>}
-      </label>
-      <select name={name} required={required} style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '14px', width: '100%', padding: '11px 14px', border: '1px solid #E8E2D6', borderRadius: '9px', background: 'white', color: '#1A1714' }}>
-        <option value="">Select...</option>
-        {options.map(o => <option key={o} value={o}>{o}</option>)}
-      </select>
     </div>
   );
 }
