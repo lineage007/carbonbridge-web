@@ -1,16 +1,16 @@
 {
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
-  "/checkout/page": "/checkout",
   "/carbon-management/page": "/carbon-management",
-  "/compare/page": "/compare",
+  "/checkout/page": "/checkout",
   "/credits/[id]/page": "/credits/[id]",
+  "/compare/page": "/compare",
   "/dashboard/page": "/dashboard",
   "/data/page": "/data",
   "/login/page": "/login",
   "/marketplace/page": "/marketplace",
-  "/register/page": "/register",
   "/page": "/",
+  "/register/page": "/register",
   "/seller/page": "/seller",
   "/settings/profile/page": "/settings/profile"
 }

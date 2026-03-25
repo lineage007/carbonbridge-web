@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { LISTINGS } from '@/data/credits';
+import Sidebar from '@/components/Sidebar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -74,16 +75,11 @@ export default function ComparePage() {
   const pickCredit = (idx: number, id: string) => { const next = [...selected]; next[idx] = id; setSelected(next); setShowPicker(null); setSearch(''); };
 
   return (
-    <div style={{ background: '#FAFAF7', minHeight: '100vh' }}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
       {/* Nav */}
-      <nav style={{ background: 'var(--forest-deep, #1B3A2D)', padding: '0 24px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '28px', width: 'auto' }} />
-        </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.6)' }}>← Back to Marketplace</Link>
-        </div>
-      </nav>
+      
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
         <div style={{ marginBottom: '28px' }}>
@@ -204,6 +200,7 @@ export default function ComparePage() {
           </div>
         )}
       </div>
+    </main>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { LISTINGS } from '@/data/credits';
+import Sidebar from '@/components/Sidebar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -62,21 +63,11 @@ export default function DataPage() {
   return (
     <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
       {/* Nav */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
-            
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.5)' }} className="hover:text-white transition-colors">Marketplace</Link>
-            <span style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', fontWeight: 600 }}>Data & Insights</span>
-            <Link href="/register" style={{ fontFamily: bg, fontSize: '13px', background: '#C9A96E', color: '#0C1C14', padding: '8px 18px', borderRadius: '8px', fontWeight: 600 }}>Create Account</Link>
-          </div>
-        </div>
-      </nav>
+      
 
-      <div className="pt-16">
+      <div style={{ display: "flex", minHeight: "100vh" }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
         {/* Header */}
         <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
           <div className="max-w-[1200px] mx-auto px-4 lg:px-8">
@@ -265,7 +256,8 @@ export default function DataPage() {
           </Section>
 
         </div>
-      </div>
+      </main>
+    </div>
     </main>
   );
 }

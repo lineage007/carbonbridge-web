@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 import { LISTINGS, CREDIT_TYPE_COLORS } from '@/data/credits';
 import { Suspense } from 'react';
 
@@ -317,21 +318,15 @@ function InputField({ label, value, onChange, type = 'text', required = false }:
 
 export default function CheckoutPage() {
   return (
-    <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
-            
-          </Link>
-          <Link href="/marketplace" style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '13px', color: 'rgba(255,252,246,0.5)' }}>← Back to marketplace</Link>
-        </div>
-      </nav>
-      <div className="pt-16">
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: '#FDFBF7', overflow: 'auto' }}>
+      <div>
         <Suspense fallback={<div className="flex items-center justify-center py-20" style={{ fontFamily: "'Plus Jakarta Sans', system-ui", color: '#8B8178' }}>Loading...</div>}>
           <CheckoutInner />
         </Suspense>
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

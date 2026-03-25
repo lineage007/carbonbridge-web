@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 import { LISTINGS, CREDIT_TYPE_COLORS, type CreditListing, type CreditType, type QualityRating, type Region, type ComplianceTag, type CoBenefit, type Registry } from '@/data/credits';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
@@ -92,23 +93,11 @@ export default function MarketplacePage() {
   };
 
   return (
-    <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
-            <span style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: '#FFFCF6', letterSpacing: '-0.02em' }}>CarbonBridge</span>
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/" style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.5)' }} className="hover:text-white transition-colors hidden md:block">Home</Link>
-            <span style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', fontWeight: 600 }}>Marketplace</span>
-            <Link href="/register" style={{ fontFamily: bg, fontSize: '13px', background: '#C9A96E', color: '#0C1C14', padding: '8px 18px', borderRadius: '8px', fontWeight: 600 }} className="hover:brightness-110 transition-all">Create Account</Link>
-          </div>
-        </div>
-      </nav>
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: '#FDFBF7', overflow: 'auto' }}>
 
-      <div className="pt-16">
+      <div>
         {/* Header */}
         <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
@@ -258,7 +247,8 @@ export default function MarketplacePage() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

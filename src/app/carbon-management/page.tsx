@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -50,15 +51,10 @@ export default function CarbonManagementPage() {
   const coveragePct = ((totalOffset / totalEmissions) * 100).toFixed(1);
 
   return (
-    <div style={{ background: '#FAFAF7', minHeight: '100vh' }}>
-      <nav style={{ background: 'var(--forest-deep, #1B3A2D)', padding: '0 24px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '28px', width: 'auto' }} />
-        </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <span style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.6)' }}>Carbon Management</span>
-        </div>
-      </nav>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
+      
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
         <div style={{ marginBottom: '28px' }}>
@@ -247,6 +243,7 @@ export default function CarbonManagementPage() {
           </div>
         )}
       </div>
+    </main>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 import { LISTINGS, CREDIT_TYPE_COLORS, type CreditListing } from '@/data/credits';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
@@ -60,22 +61,10 @@ export default function CreditDetailPage() {
   ];
 
   return (
-    <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
-            
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.5)' }} className="hover:text-white transition-colors">Marketplace</Link>
-            <Link href="/register" style={{ fontFamily: bg, fontSize: '13px', background: '#C9A96E', color: '#0C1C14', padding: '8px 18px', borderRadius: '8px', fontWeight: 600 }} className="hover:brightness-110 transition-all">Create Account</Link>
-          </div>
-        </div>
-      </nav>
-
-      <div className="pt-16">
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: '#FDFBF7', overflow: 'auto' }}>
+      <div>
         {/* Breadcrumb */}
         <div style={{ background: '#F5F0E8', borderBottom: '1px solid #E8E2D6', padding: '12px 0' }}>
           <div className="max-w-[1200px] mx-auto px-4 lg:px-8">
@@ -438,6 +427,7 @@ export default function CreditDetailPage() {
           </div>
         )}
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -54,19 +55,11 @@ export default function SellerDashboard() {
   const avgPrice = LISTINGS_DATA.filter(l => l.status === 'Active').reduce((s, l) => s + l.price, 0) / activeListings;
 
   return (
-    <div style={{ background: '#FAFAF7', minHeight: '100vh' }}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <Sidebar />
+      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
       {/* Nav */}
-      <nav style={{ background: 'var(--forest-deep, #1B3A2D)', padding: '0 24px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '28px', width: 'auto' }} />
-        </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <span style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.6)' }}>Seller Portal</span>
-          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(201,169,110,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#C9A96E' }}>PD</span>
-          </div>
-        </div>
-      </nav>
+      
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
         {/* Header */}
@@ -375,6 +368,7 @@ export default function SellerDashboard() {
           </div>
         )}
       </div>
+    </main>
     </div>
   );
 }
