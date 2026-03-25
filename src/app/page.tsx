@@ -1,20 +1,84 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 
 /* ═══════════════════════════════════════════════════════════════
-   CarbonBridge — Homepage V2
-   Competitor audit: Carbonplace, Patch.io, Cloverly studied.
-   Quality target: Above Carbonplace (bank-backed), above Patch (testimonial-heavy)
-   
-   Key improvements over V1:
-   - Editorial voice, not feature bullets
-   - "How it works" process flow 
-   - Regulatory knowledge section (NRCC/CBAM/CORSIA explainers)
-   - Dedicated audience routing (not all on one page)
-   - Market data dashboard as hero visual
-   - FAQ section addressing real objections
-   - Richer micro-copy and contextual detail
+   CarbonBridge — Homepage V3
+   + Dynamic NRCC countdown
+   + Scroll-triggered animations (IntersectionObserver)
+   + Tactile hover states on credit cards
+   + Geometric decorative circles on dark sections
+   + Market data disclaimer ("Indicative")
    ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Dynamic countdown ──────────────────────────────────── */
+function daysUntil(dateStr: string): number {
+  const target = new Date(dateStr + "T00:00:00+04:00");
+  const now = new Date();
+  return Math.max(0, Math.ceil((target.getTime() - now.getTime()) / 86400000));
+}
+
+/* ─── Scroll-triggered fade-in ───────────────────────────── */
+function FadeIn({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.15 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={className} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(24px)", transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+/* ─── Animated counter ───────────────────────────────────── */
+function AnimCount({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const [started, setStarted] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setStarted(true); obs.disconnect(); } }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!started) return;
+    const dur = 1200;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(Math.round(eased * target));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [started, target]);
+  return <span ref={ref}>{val}{suffix}</span>;
+}
+
+/* ─── Decorative geometric circles (brand guideline element) */
+function GeoCircles({ side = "right" }: { side?: "left" | "right" }) {
+  return (
+    <div style={{ position: "absolute", [side]: "-60px", top: "50%", transform: "translateY(-50%)", opacity: 0.04, pointerEvents: "none" }}>
+      <svg width="320" height="320" viewBox="0 0 320 320" fill="none">
+        <circle cx="160" cy="160" r="155" stroke="#C9A96E" strokeWidth="1" />
+        <circle cx="160" cy="160" r="110" stroke="#C9A96E" strokeWidth="0.5" />
+        <circle cx="160" cy="160" r="65" stroke="#C9A96E" strokeWidth="0.5" />
+        <line x1="5" y1="160" x2="315" y2="160" stroke="#C9A96E" strokeWidth="0.3" />
+        <line x1="160" y1="5" x2="160" y2="315" stroke="#C9A96E" strokeWidth="0.3" />
+      </svg>
+    </div>
+  );
+}
 
 const fr = "'Fraunces', Georgia, serif";
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
@@ -37,10 +101,11 @@ const icons = {
 };
 
 /* ── Reusable section wrapper ────────────────────── */
-function Section({ id, dark, children, className = '' }: { id?: string; dark?: boolean; children: React.ReactNode; className?: string }) {
+function Section({ id, dark, children, className = '', geo }: { id?: string; dark?: boolean; children: React.ReactNode; className?: string; geo?: "left" | "right" | "both" }) {
   return (
-    <section id={id} style={{ background: dark ? 'var(--forest)' : 'var(--parchment)', padding: '100px 0' }} className={className}>
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-10">{children}</div>
+    <section id={id} style={{ background: dark ? 'var(--forest)' : 'var(--parchment)', padding: '100px 0', position: 'relative', overflow: 'hidden' }} className={className}>
+      {geo && (geo === "both" ? <><GeoCircles side="left" /><GeoCircles side="right" /></> : <GeoCircles side={geo} />)}
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">{children}</div>
     </section>
   );
 }
@@ -100,6 +165,15 @@ export default function Home() {
       <section style={{ background: 'linear-gradient(175deg, #0C1C14 0%, #142E22 50%, #1B3A2D 100%)', paddingTop: '140px', paddingBottom: '110px', position: 'relative', overflow: 'hidden' }}>
         {/* Subtle grid pattern */}
         <div style={{ position: 'absolute', inset: 0, opacity: 0.03, backgroundImage: 'linear-gradient(rgba(201,169,110,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,110,0.3) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+        {/* Decorative geometric circles — brand element */}
+        <div style={{ position: 'absolute', right: '-120px', bottom: '-80px', opacity: 0.025, pointerEvents: 'none' }}>
+          <svg width="500" height="500" viewBox="0 0 500 500" fill="none">
+            <circle cx="250" cy="250" r="245" stroke="#C9A96E" strokeWidth="1" />
+            <circle cx="250" cy="250" r="180" stroke="#C9A96E" strokeWidth="0.5" />
+            <circle cx="250" cy="250" r="115" stroke="#C9A96E" strokeWidth="0.5" />
+            <circle cx="250" cy="250" r="50" stroke="#C9A96E" strokeWidth="0.5" />
+          </svg>
+        </div>
         
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -150,7 +224,7 @@ export default function Home() {
             <div style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '18px', padding: '28px', position: 'relative' }}>
               <div className="flex items-center justify-between mb-6">
                 <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Market Overview</span>
-                <span style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.5)' }}>Live data</span>
+                <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', background: 'rgba(138,170,146,0.08)', padding: '2px 8px', borderRadius: '4px' }}>Indicative</span>
               </div>
 
               {/* Price grid */}
@@ -191,8 +265,9 @@ export default function Home() {
                 ))}
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', marginTop: '20px', paddingTop: '14px', fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.4)' }}>
-                182M tonnes retired in 2024 · $535M total value · Quality premium widening
+              <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', marginTop: '20px', paddingTop: '14px', fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.35)', lineHeight: 1.5 }}>
+                182M tonnes retired in 2024 · $535M total value · Quality premium widening<br />
+                <span style={{ fontSize: '9px', opacity: 0.7 }}>Prices are indicative benchmarks from public registry data. Not real-time trading prices.</span>
               </div>
             </div>
           </div>
@@ -242,18 +317,20 @@ export default function Home() {
 
           <div className="space-y-4">
             {[
-              { reg: 'UAE NRCC', deadline: 'May 30, 2026', days: '66 days', desc: 'Mandatory carbon reporting for large UAE emitters. First compliance deadline for the National Registry of Carbon Credits.', color: '#EF4444' },
-              { reg: 'EU CBAM', deadline: 'January 1, 2027', days: '282 days', desc: 'Carbon Border Adjustment Mechanism. UAE aluminium, steel, cement, and fertiliser exporters to the EU must purchase equivalent carbon credits.', color: '#F59E0B' },
+              { reg: 'UAE NRCC', deadline: 'May 30, 2026', days: `${daysUntil('2026-05-30')} days`, desc: 'Mandatory carbon reporting for large UAE emitters. First compliance deadline for the National Registry of Carbon Credits.', color: '#EF4444' },
+              { reg: 'EU CBAM', deadline: 'January 1, 2027', days: `${daysUntil('2027-01-01')} days`, desc: 'Carbon Border Adjustment Mechanism. UAE aluminium, steel, cement, and fertiliser exporters to the EU must purchase equivalent carbon credits.', color: '#F59E0B' },
               { reg: 'CORSIA Phase 2', deadline: '2027–2035', days: 'Procurement starting now', desc: 'Mandatory carbon offsetting for international aviation. Emirates, Etihad, and Qatar Airways face multi-million credit requirements annually.', color: '#0EA5E9' },
-            ].map(r => (
-              <div key={r.reg} style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '24px', borderLeft: `3px solid ${r.color}` }}>
-                <div className="flex items-center justify-between mb-2">
-                  <span style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: 'var(--ink)' }}>{r.reg}</span>
-                  <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: r.color, background: `${r.color}12`, padding: '3px 10px', borderRadius: '100px', letterSpacing: '0.02em' }}>{r.days}</span>
+            ].map((r, i) => (
+              <FadeIn key={r.reg} delay={i * 150}>
+                <div style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '24px', borderLeft: `3px solid ${r.color}`, transition: 'box-shadow 0.3s' }} className="hover:shadow-md">
+                  <div className="flex items-center justify-between mb-2">
+                    <span style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: 'var(--ink)' }}>{r.reg}</span>
+                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: r.color, background: `${r.color}15`, padding: '4px 12px', borderRadius: '100px', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>{r.days}</span>
+                  </div>
+                  <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.55 }}>{r.desc}</p>
+                  <span style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(107,98,89,0.5)', marginTop: '6px', display: 'block' }}>Deadline: {r.deadline}</span>
                 </div>
-                <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.55 }}>{r.desc}</p>
-                <span style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(107,98,89,0.5)', marginTop: '6px', display: 'block' }}>Deadline: {r.deadline}</span>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -274,12 +351,14 @@ export default function Home() {
               { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout — non-delivery cover, invalidation protection, and CORSIA guarantees backed by Lloyd\'s.' },
               { step: '04', title: 'Retire & Report', desc: 'Retire credits across any registry from one dashboard. Auto-generated retirement certificates and audit-ready compliance records.' },
             ].map((s, i) => (
-              <div key={s.step} style={{ position: 'relative' }}>
-                {i < 3 && <div className="hidden md:block" style={{ position: 'absolute', top: '24px', right: '-12px', width: '24px', height: '1px', background: 'var(--border-light)' }} />}
-                <div style={{ fontFamily: fr, fontSize: '32px', fontWeight: 300, color: 'var(--gold)', marginBottom: '12px', opacity: 0.6 }}>{s.step}</div>
-                <h3 style={{ fontFamily: fr, fontSize: '20px', fontWeight: 600, color: 'var(--ink)', marginBottom: '8px' }}>{s.title}</h3>
-                <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.6 }}>{s.desc}</p>
-              </div>
+              <FadeIn key={s.step} delay={i * 100}>
+                <div style={{ position: 'relative' }}>
+                  {i < 3 && <div className="hidden md:block" style={{ position: 'absolute', top: '24px', right: '-12px', width: '24px', height: '1px', background: 'var(--border-light)' }} />}
+                  <div style={{ fontFamily: fr, fontSize: '32px', fontWeight: 300, color: 'var(--gold)', marginBottom: '12px', opacity: 0.6 }}>{s.step}</div>
+                  <h3 style={{ fontFamily: fr, fontSize: '20px', fontWeight: 600, color: 'var(--ink)', marginBottom: '8px' }}>{s.title}</h3>
+                  <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.6 }}>{s.desc}</p>
+                </div>
+              </FadeIn>
             ))}
           </div>
 
@@ -292,15 +371,19 @@ export default function Home() {
               { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Real-time retirement, certificate generation, and webhook notifications. From $0.02/tonne.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with dynamic tools and real-time market data.', tag: 'Enterprise' },
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
-            ].map(f => (
-              <div key={f.title} style={{ background: '#FFFCF6', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '28px' }}>
-                <div className="flex items-start justify-between mb-4">
-                  <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'var(--forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E' }}>{f.icon}</div>
-                  <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: f.tag === 'Unique' ? '#C9A96E' : 'var(--ink-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', background: f.tag === 'Unique' ? 'rgba(201,169,110,0.1)' : 'rgba(26,23,20,0.04)', padding: '3px 8px', borderRadius: '4px' }}>{f.tag}</span>
+            ].map((f, i) => (
+              <FadeIn key={f.title} delay={i * 80}>
+                <div className="group" style={{ background: '#FFFCF6', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '28px', transition: 'box-shadow 0.3s, border-color 0.3s' }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 24px rgba(27,58,45,0.06)'; e.currentTarget.style.borderColor = 'rgba(201,169,110,0.25)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = 'var(--border-light)'; }}>
+                  <div className="flex items-start justify-between mb-4">
+                    <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'var(--forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', transition: 'transform 0.2s' }} className="group-hover:scale-105">{f.icon}</div>
+                    <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: f.tag === 'Unique' ? '#C9A96E' : 'var(--ink-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', background: f.tag === 'Unique' ? 'rgba(201,169,110,0.1)' : 'rgba(26,23,20,0.04)', padding: '3px 8px', borderRadius: '4px' }}>{f.tag}</span>
+                  </div>
+                  <h3 style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>{f.title}</h3>
+                  <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.6 }}>{f.desc}</p>
                 </div>
-                <h3 style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: 'var(--ink)', marginBottom: '6px' }}>{f.title}</h3>
-                <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.6 }}>{f.desc}</p>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -309,7 +392,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════
           SOLUTIONS — Audience routing
           ═══════════════════════════════════════════════════════ */}
-      <Section id="solutions" dark>
+      <Section id="solutions" dark geo="right">
         <SectionHeader eyebrow="Solutions" title={<>Built for every participant<br />in the carbon market.</>} dark />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -359,31 +442,41 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Credit card preview */}
+          {/* Credit card preview — tactile hover states */}
           <div className="space-y-4">
             {[
               { type: 'ARR / Reforestation', project: 'Great Southern Forest Restoration', location: 'Victoria, Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A' },
               { type: 'Blue Carbon', project: 'Abu Dhabi Mangrove Conservation', location: 'Abu Dhabi, UAE', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$64.00', volume: '12,000', badge: 'Premium', badgeColor: '#0EA5E9' },
               { type: 'Biochar', project: 'Queensland Biochar Sequestration', location: 'Queensland, Australia', registry: 'Verra VCS', vintage: '2026', rating: 'AA+', price: '$142.00', volume: '8,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6' },
-            ].map(c => (
-              <div key={c.project} style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '12px', padding: '20px', display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div style={{ width: '52px', height: '52px', borderRadius: '10px', background: 'var(--forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ fontFamily: fr, fontSize: '16px', fontWeight: 700, color: '#C9A96E' }}>{c.rating}</span>
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: c.badgeColor, background: `${c.badgeColor}12`, padding: '2px 7px', borderRadius: '3px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{c.badge}</span>
-                    <span style={{ fontFamily: bg, fontSize: '11px', color: 'var(--ink-muted)' }}>{c.registry} · {c.vintage}</span>
+            ].map((c, i) => (
+              <FadeIn key={c.project} delay={i * 120}>
+                <div
+                  className="group cursor-pointer"
+                  style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '12px', padding: '20px', display: 'flex', gap: '16px', alignItems: 'center', transition: 'all 0.25s ease, box-shadow 0.25s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(27,58,45,0.08)'; e.currentTarget.style.borderColor = 'var(--gold)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = 'var(--border-light)'; }}
+                >
+                  <div style={{ width: '52px', height: '52px', borderRadius: '10px', background: 'var(--forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'transform 0.2s' }} className="group-hover:scale-105">
+                    <span style={{ fontFamily: fr, fontSize: '16px', fontWeight: 700, color: '#C9A96E' }}>{c.rating}</span>
                   </div>
-                  <h4 style={{ fontFamily: fr, fontSize: '15px', fontWeight: 600, color: 'var(--ink)', lineHeight: 1.3 }}>{c.project}</h4>
-                  <span style={{ fontFamily: bg, fontSize: '12px', color: 'var(--ink-muted)' }}>{c.location} · {c.volume} tCO₂e available</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: c.badgeColor, background: `${c.badgeColor}12`, padding: '2px 7px', borderRadius: '3px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{c.badge}</span>
+                      <span style={{ fontFamily: bg, fontSize: '11px', color: 'var(--ink-muted)' }}>{c.registry} · {c.vintage}</span>
+                    </div>
+                    <h4 style={{ fontFamily: fr, fontSize: '15px', fontWeight: 600, color: 'var(--ink)', lineHeight: 1.3 }}>{c.project}</h4>
+                    <span style={{ fontFamily: bg, fontSize: '12px', color: 'var(--ink-muted)' }}>{c.location} · {c.volume} tCO₂e available</span>
+                  </div>
+                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                    <div style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: 'var(--forest)', transition: 'color 0.2s' }} className="group-hover:text-[#C9A96E]">{c.price}</div>
+                    <div style={{ fontFamily: bg, fontSize: '10px', color: 'var(--ink-muted)' }}>per tCO₂e</div>
+                  </div>
                 </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: 'var(--forest)' }}>{c.price}</div>
-                  <div style={{ fontFamily: bg, fontSize: '10px', color: 'var(--ink-muted)' }}>per tCO₂e</div>
-                </div>
-              </div>
+              </FadeIn>
             ))}
+            <p style={{ fontFamily: bg, fontSize: '10px', color: 'var(--ink-muted)', opacity: 0.5, textAlign: 'center', marginTop: '8px' }}>
+              Illustrative listings. Prices based on public voluntary carbon market data (Ecosystem Marketplace, ACX).
+            </p>
             <div className="text-center pt-2">
               <a href="#contact" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest)', display: 'inline-flex', alignItems: 'center', gap: '6px' }} className="hover:underline">
                 Browse all credits {icons.arrow}
@@ -396,9 +489,10 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════
           INSURANCE — The trust differentiator
           ═══════════════════════════════════════════════════════ */}
-      <section style={{ background: 'var(--forest-deep)', padding: '100px 0', position: 'relative' }}>
+      <section style={{ background: 'var(--forest-deep)', padding: '100px 0', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(45,90,63,0.4) 0%, transparent 60%)' }} />
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative">
+        <GeoCircles side="left" />
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
           <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Optional insurance at checkout — the only carbon marketplace with integrated credit guarantee products backed by Lloyd's of London." dark />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
