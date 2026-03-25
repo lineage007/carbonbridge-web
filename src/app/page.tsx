@@ -631,7 +631,7 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
-              <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto', opacity: 0.85 }} />
+              <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
                 MENA&apos;s first integrated carbon credit marketplace. ADGM registered. Abu Dhabi, UAE.
               </p>
