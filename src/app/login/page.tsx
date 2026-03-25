@@ -1,106 +1,116 @@
 'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
+import { createClient } from '@/lib/supabase-browser';
 
-const fr = "'Fraunces', serif";
-const bg = "'Plus Jakarta Sans', system-ui, sans-serif";
+const fr = "'Fraunces', Georgia, serif";
+const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 
 export default function LoginPage() {
-  const { signIn } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState<'login' | 'reset'>('login');
+  const [error, setError] = useState('');
+  const [resetMode, setResetMode] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(''); setLoading(true);
-    const result = await signIn(email, password);
-    if (result.error) { setError(result.error); setLoading(false); return; }
-    router.push('/dashboard');
+  const handleLogin = async () => {
+    setLoading(true); setError('');
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      if (authError) throw authError;
+      
+      // Check role for redirect
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+        if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+          router.push('/admin');
+        } else {
+          const params = new URLSearchParams(window.location.search);
+          router.push(params.get('redirect') || '/dashboard');
+        }
+      }
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Login failed');
+    } finally { setLoading(false); }
   };
 
+  const handleReset = async () => {
+    setLoading(true); setError('');
+    try {
+      const supabase = createClient();
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback?type=recovery`,
+      });
+      if (resetError) throw resetError;
+      setResetSent(true);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Reset failed');
+    } finally { setLoading(false); }
+  };
+
+  const inputStyle = { fontFamily: bg, fontSize: '14px', padding: '14px 16px', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.15)', background: 'rgba(255,252,246,0.04)', color: '#F2ECE0', width: '100%', outline: 'none' };
+
   return (
-    <div style={{ minHeight: '100vh', display: 'flex' }}>
-      {/* Left — brand panel */}
-      <div style={{ width: '45%', background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '60px' }} className="hidden lg:flex">
-        <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '40px', width: 'auto', marginBottom: '48px' }} /></Link>
-        <h1 style={{ fontFamily: fr, fontSize: '38px', fontWeight: 600, color: '#FFFCF6', lineHeight: 1.2, marginBottom: '16px' }}>Where carbon credits<br/>meet institutional trust.</h1>
-        <p style={{ fontFamily: bg, fontSize: '15px', color: '#8AAA92', lineHeight: 1.7, maxWidth: '420px' }}>Access the MENA region&apos;s most comprehensive carbon marketplace. Verified credits, integrated insurance, and real-time data.</p>
-        <div style={{ display: 'flex', gap: '24px', marginTop: '40px' }}>
-          {[{ n: '20+', l: 'Credit types' }, { n: '1.2M', l: 'tCO₂e listed' }, { n: 'AAA', l: 'Quality rated' }].map(s => (
-            <div key={s.l}><div style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#C9A96E' }}>{s.n}</div><div style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92' }}>{s.l}</div></div>
-          ))}
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0C1C14 0%, #1B3A2D 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div style={{ width: '100%', maxWidth: '420px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+          <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '36px', marginBottom: '28px' }} /></Link>
+          <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#F2ECE0', marginBottom: '8px' }}>
+            {resetMode ? 'Reset password' : 'Welcome back'}
+          </h1>
+          <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>
+            {resetMode ? 'Enter your email to receive a reset link' : 'Sign in to your CarbonBridge account'}
+          </p>
         </div>
-      </div>
 
-      {/* Right — form */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFFCF6', padding: '40px' }}>
-        <div style={{ width: '100%', maxWidth: '400px' }}>
-          <Link href="/" className="lg:hidden" style={{ display: 'block', marginBottom: '32px' }}><img src="/logo-green.png" alt="CarbonBridge" style={{ height: '36px' }} /></Link>
-
-          {mode === 'login' ? (
-            <>
-              <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Sign in</h2>
-              <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '28px' }}>Enter your credentials to access your account.</p>
-
-              <form onSubmit={handleLogin}>
-                {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#DC2626', background: 'rgba(220,38,38,0.06)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px' }}>{error}</div>}
-
-                <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8B8178', display: 'block', marginBottom: '6px' }}>Email</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                  style={{ width: '100%', padding: '12px 14px', border: '1px solid #E8E2D8', borderRadius: '8px', fontFamily: bg, fontSize: '14px', color: '#1A1714', marginBottom: '16px', outline: 'none', background: '#fff' }}
-                  placeholder="you@company.com" />
-
-                <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8B8178', display: 'block', marginBottom: '6px' }}>Password</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
-                  style={{ width: '100%', padding: '12px 14px', border: '1px solid #E8E2D8', borderRadius: '8px', fontFamily: bg, fontSize: '14px', color: '#1A1714', marginBottom: '8px', outline: 'none', background: '#fff' }}
-                  placeholder="••••••••" />
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                  <label style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <input type="checkbox" style={{ accentColor: '#1B3A2D' }} /> Remember me
-                  </label>
-                  <button type="button" onClick={() => setMode('reset')} style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer' }}>Forgot password?</button>
-                </div>
-
-                <button type="submit" disabled={loading} style={{
-                  width: '100%', padding: '14px', border: 'none', borderRadius: '10px', cursor: 'pointer',
-                  fontFamily: bg, fontSize: '14px', fontWeight: 600,
-                  background: loading ? '#8AAA92' : '#1B3A2D', color: '#FFFCF6',
-                  transition: 'background 0.2s',
-                }}>{loading ? 'Signing in...' : 'Sign in'}</button>
-              </form>
-
-              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', textAlign: 'center', marginTop: '24px' }}>
-                Don&apos;t have an account? <Link href="/register" style={{ color: '#C9A96E', fontWeight: 600, textDecoration: 'none' }}>Create account</Link>
+        <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
+          {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
+          
+          {resetSent ? (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '36px', marginBottom: '16px' }}>✉️</div>
+              <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', lineHeight: 1.7 }}>
+                Reset link sent to <strong style={{ color: '#C9A96E' }}>{email}</strong>
               </p>
-            </>
+              <button onClick={() => { setResetMode(false); setResetSent(false); }} style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer', marginTop: '16px' }}>← Back to sign in</button>
+            </div>
           ) : (
-            <>
-              <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Reset password</h2>
-              {resetSent ? (
-                <div style={{ fontFamily: bg, fontSize: '14px', color: '#2D6A4F', background: 'rgba(45,106,79,0.06)', padding: '16px', borderRadius: '10px' }}>
-                  <strong>Check your email.</strong> We&apos;ve sent a password reset link to {email}. It expires in 1 hour.
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92', marginBottom: '6px', display: 'block' }}>Email</label>
+                <input type="email" style={inputStyle} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" onKeyDown={e => e.key === 'Enter' && (resetMode ? handleReset() : handleLogin())} />
+              </div>
+              {!resetMode && (
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                    <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Password</label>
+                    <button onClick={() => setResetMode(true)} style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer' }}>Forgot password?</button>
+                  </div>
+                  <input type="password" style={inputStyle} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" onKeyDown={e => e.key === 'Enter' && handleLogin()} />
                 </div>
-              ) : (
-                <form onSubmit={e => { e.preventDefault(); setResetSent(true); }}>
-                  <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '20px' }}>Enter your email and we&apos;ll send you a reset link.</p>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid #E8E2D8', borderRadius: '8px', fontFamily: bg, fontSize: '14px', marginBottom: '16px', outline: 'none', background: '#fff' }}
-                    placeholder="you@company.com" />
-                  <button type="submit" style={{ width: '100%', padding: '14px', border: 'none', borderRadius: '10px', cursor: 'pointer', fontFamily: bg, fontSize: '14px', fontWeight: 600, background: '#1B3A2D', color: '#FFFCF6' }}>Send reset link</button>
-                </form>
               )}
-              <button onClick={() => { setMode('login'); setResetSent(false); }} style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer', marginTop: '16px', display: 'block', width: '100%', textAlign: 'center' }}>← Back to sign in</button>
-            </>
+              <button onClick={resetMode ? handleReset : handleLogin} disabled={loading}
+                style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#C9A96E', color: '#0C1C14', cursor: loading ? 'wait' : 'pointer', width: '100%', marginTop: '4px', opacity: loading ? 0.7 : 1 }}>
+                {loading ? (resetMode ? 'Sending...' : 'Signing in...') : (resetMode ? 'Send reset link' : 'Sign in')}
+              </button>
+              {resetMode && (
+                <button onClick={() => setResetMode(false)} style={{ fontFamily: bg, fontSize: '13px', color: '#8AAA92', background: 'none', border: 'none', cursor: 'pointer' }}>← Back to sign in</button>
+              )}
+            </div>
           )}
         </div>
+
+        {!resetMode && (
+          <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74', textAlign: 'center', marginTop: '20px' }}>
+            Don&apos;t have an account? <Link href="/register" style={{ color: '#C9A96E' }}>Create one free</Link>
+          </p>
+        )}
       </div>
     </div>
   );

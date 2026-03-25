@@ -54,6 +54,72 @@
       "namedRegex": "^/admin(?:/)?$"
     },
     {
+      "page": "/admin/analytics",
+      "regex": "^/admin/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/analytics(?:/)?$"
+    },
+    {
+      "page": "/admin/claims",
+      "regex": "^/admin/claims(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/claims(?:/)?$"
+    },
+    {
+      "page": "/admin/financials",
+      "regex": "^/admin/financials(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/financials(?:/)?$"
+    },
+    {
+      "page": "/admin/inventory",
+      "regex": "^/admin/inventory(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/inventory(?:/)?$"
+    },
+    {
+      "page": "/admin/listings",
+      "regex": "^/admin/listings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/listings(?:/)?$"
+    },
+    {
+      "page": "/admin/orders",
+      "regex": "^/admin/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/orders(?:/)?$"
+    },
+    {
+      "page": "/admin/revenue",
+      "regex": "^/admin/revenue(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/revenue(?:/)?$"
+    },
+    {
+      "page": "/admin/settings",
+      "regex": "^/admin/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/settings(?:/)?$"
+    },
+    {
+      "page": "/admin/users",
+      "regex": "^/admin/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/users(?:/)?$"
+    },
+    {
+      "page": "/auth/callback",
+      "regex": "^/auth/callback(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/callback(?:/)?$"
+    },
+    {
+      "page": "/auth/signout",
+      "regex": "^/auth/signout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/signout(?:/)?$"
+    },
+    {
       "page": "/carbon-management",
       "regex": "^/carbon\\-management(?:/)?$",
       "routeKeys": {},
@@ -76,6 +142,54 @@
       "regex": "^/dashboard(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/dashboard(?:/)?$"
+    },
+    {
+      "page": "/dashboard/api",
+      "regex": "^/dashboard/api(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/api(?:/)?$"
+    },
+    {
+      "page": "/dashboard/carbon",
+      "regex": "^/dashboard/carbon(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/carbon(?:/)?$"
+    },
+    {
+      "page": "/dashboard/forwards",
+      "regex": "^/dashboard/forwards(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/forwards(?:/)?$"
+    },
+    {
+      "page": "/dashboard/listings",
+      "regex": "^/dashboard/listings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/listings(?:/)?$"
+    },
+    {
+      "page": "/dashboard/orders",
+      "regex": "^/dashboard/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/orders(?:/)?$"
+    },
+    {
+      "page": "/dashboard/portfolio",
+      "regex": "^/dashboard/portfolio(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/portfolio(?:/)?$"
+    },
+    {
+      "page": "/dashboard/purchases",
+      "regex": "^/dashboard/purchases(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/purchases(?:/)?$"
+    },
+    {
+      "page": "/dashboard/settings",
+      "regex": "^/dashboard/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/settings(?:/)?$"
     },
     {
       "page": "/data",

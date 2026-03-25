@@ -1,179 +1,200 @@
 'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
+import { createClient } from '@/lib/supabase-browser';
 
-const fr = "'Fraunces', serif";
-const bg = "'Plus Jakarta Sans', system-ui, sans-serif";
+const fr = "'Fraunces', Georgia, serif";
+const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 
-type AccountType = 'buyer' | 'seller';
+const COMPANY_TYPES = [
+  { value: 'corporate', label: 'Corporate / Industrial' },
+  { value: 'airline', label: 'Airline' },
+  { value: 'government', label: 'Government / Sovereign' },
+  { value: 'financial', label: 'Financial Institution' },
+  { value: 'developer', label: 'Project Developer' },
+  { value: 'broker', label: 'Broker / Trader' },
+  { value: 'other', label: 'Other' },
+];
+
+const COMPLIANCE = ['NRCC', 'CBAM', 'CORSIA', 'Voluntary', 'SBTi'];
+const VOLUMES = [
+  { value: 'under_1k', label: 'Under 1,000 tCO₂e' },
+  { value: '1k_10k', label: '1,000 – 10,000 tCO₂e' },
+  { value: '10k_100k', label: '10,000 – 100,000 tCO₂e' },
+  { value: '100k_plus', label: '100,000+ tCO₂e' },
+];
 
 export default function RegisterPage() {
-  const { signUp } = useAuth();
-  const router = useRouter();
   const [step, setStep] = useState(1);
-  const [type, setType] = useState<AccountType | null>(null);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [company, setCompany] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  // Seller-specific
-  const [registryAccounts, setRegistryAccounts] = useState('');
-  const [projectCount, setProjectCount] = useState('');
+  const [form, setForm] = useState({
+    email: '', password: '', confirmPassword: '',
+    companyName: '', contactName: '', country: 'AE',
+    companyType: 'corporate',
+    plansTo: [] as string[],
+    compliance: [] as string[],
+    volume: '',
+    registries: [] as string[],
+  });
 
-  // Buyer-specific
-  const [complianceNeeds, setComplianceNeeds] = useState<string[]>([]);
-  const [role, setRole] = useState('');
+  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
+  const toggleArr = (k: 'plansTo' | 'compliance' | 'registries', v: string) =>
+    setForm(f => ({ ...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v] }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!type) return;
-    setError(''); setLoading(true);
-    const result = await signUp(email, password, { company_name: company, role: type, first_name: firstName, last_name: lastName });
-    if (result.error) { setError(result.error); setLoading(false); return; }
-    setDone(true); setLoading(false);
+  const handleSubmit = async () => {
+    if (form.password !== form.confirmPassword) { setError('Passwords do not match'); return; }
+    if (form.password.length < 8) { setError('Password must be at least 8 characters'); return; }
+    setLoading(true); setError('');
+
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signUp({
+        email: form.email,
+        password: form.password,
+        options: {
+          data: {
+            company_name: form.companyName,
+            contact_name: form.contactName,
+            country: form.country,
+            company_type: form.companyType,
+            plans_to: form.plansTo,
+            compliance_needs: form.compliance,
+            estimated_volume: form.volume,
+            registry_accounts: form.registries,
+          },
+        },
+      });
+      if (authError) throw authError;
+      setSuccess(true);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Registration failed');
+    } finally { setLoading(false); }
   };
 
-  const Inp = ({ label, value, onChange, type: t = 'text', placeholder = '', required = true }: { label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string; required?: boolean }) => (
-    <div style={{ marginBottom: '16px' }}>
-      <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8B8178', display: 'block', marginBottom: '6px' }}>{label}</label>
-      <input type={t} value={value} onChange={e => onChange(e.target.value)} required={required} placeholder={placeholder}
-        style={{ width: '100%', padding: '12px 14px', border: '1px solid #E8E2D8', borderRadius: '8px', fontFamily: bg, fontSize: '14px', color: '#1A1714', outline: 'none', background: '#fff' }} />
-    </div>
-  );
-
-  if (done) return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFFCF6', padding: '40px' }}>
-      <div style={{ maxWidth: '440px', textAlign: 'center' }}>
-        <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#1B3A2D', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-          <span style={{ fontSize: '28px' }}>✓</span>
+  if (success) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0C1C14', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+        <div style={{ maxWidth: '480px', textAlign: 'center' }}>
+          <div style={{ fontSize: '48px', marginBottom: '24px' }}>✉️</div>
+          <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#F2ECE0', marginBottom: '12px' }}>Check your email</h1>
+          <p style={{ fontFamily: bg, fontSize: '15px', color: '#8AAA92', lineHeight: 1.7 }}>
+            We&apos;ve sent a verification link to <strong style={{ color: '#C9A96E' }}>{form.email}</strong>. Click the link to activate your account.
+          </p>
+          <Link href="/login" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', marginTop: '24px', display: 'inline-block' }}>← Back to sign in</Link>
         </div>
-        <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '12px' }}>Check your email</h1>
-        <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
-          We&apos;ve sent a verification link to <strong style={{ color: '#1A1714' }}>{email}</strong>. Click the link to activate your account.
-          {type === 'seller' && <><br/><br/>Once verified, your seller account will be reviewed by our team within 48 hours. We&apos;ll email you when you&apos;re approved to list credits.</>}
-        </p>
-        <Link href="/login" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#C9A96E', textDecoration: 'none' }}>← Go to sign in</Link>
       </div>
-    </div>
-  );
+    );
+  }
+
+  const inputStyle = { fontFamily: bg, fontSize: '14px', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.15)', background: 'rgba(255,252,246,0.04)', color: '#F2ECE0', width: '100%', outline: 'none' };
+  const labelStyle = { fontFamily: bg, fontSize: '12px', fontWeight: 600 as const, color: '#8AAA92', marginBottom: '6px', display: 'block' as const };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex' }}>
-      {/* Left brand panel */}
-      <div style={{ width: '45%', background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '60px' }} className="hidden lg:flex">
-        <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '40px', width: 'auto', marginBottom: '48px' }} /></Link>
-        <h1 style={{ fontFamily: fr, fontSize: '34px', fontWeight: 600, color: '#FFFCF6', lineHeight: 1.2, marginBottom: '16px' }}>
-          {type === 'seller' ? 'List your credits.\nReach institutional buyers.' : type === 'buyer' ? 'Access verified credits.\nWith integrated insurance.' : 'Join the marketplace.'}
-        </h1>
-        <p style={{ fontFamily: bg, fontSize: '15px', color: '#8AAA92', lineHeight: 1.7, maxWidth: '400px' }}>
-          {type === 'seller' ? 'CarbonBridge connects project developers with corporate buyers, airlines, and governments across MENA.' : 'Browse credits from Verra, Gold Standard, and ACR. Compare quality ratings. Purchase with insurance at checkout.'}
-        </p>
-      </div>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0C1C14 0%, #1B3A2D 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div style={{ width: '100%', maxWidth: '520px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '36px', marginBottom: '24px' }} /></Link>
+          <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#F2ECE0', marginBottom: '8px' }}>Create your account</h1>
+          <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>One account for buying, selling, and managing carbon credits</p>
+        </div>
 
-      {/* Right form */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFFCF6', padding: '40px', overflow: 'auto' }}>
-        <div style={{ width: '100%', maxWidth: '440px' }}>
-          <Link href="/" className="lg:hidden" style={{ display: 'block', marginBottom: '24px' }}><img src="/logo-green.png" alt="CarbonBridge" style={{ height: '36px' }} /></Link>
+        {/* Step indicators */}
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '28px' }}>
+          {[1, 2].map(s => (
+            <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: step >= s ? '#C9A96E' : 'rgba(201,169,110,0.15)' }} />
+          ))}
+        </div>
 
-          {/* Step indicator */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '28px' }}>
-            {[1, 2, 3].map(s => <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: s <= step ? '#1B3A2D' : '#E8E2D8', transition: 'background 0.3s' }} />)}
-          </div>
+        <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
+          {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
 
           {step === 1 && (
-            <>
-              <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Create your account</h2>
-              <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '28px' }}>How will you use CarbonBridge?</p>
-
-              <div style={{ display: 'grid', gap: '12px', marginBottom: '24px' }}>
-                {[
-                  { t: 'buyer' as const, title: 'I want to buy credits', desc: 'Browse the marketplace, purchase credits, manage your carbon portfolio, and access compliance tools.' },
-                  { t: 'seller' as const, title: 'I want to sell credits', desc: 'List your verified carbon credits, reach institutional buyers, and get paid through our platform.' },
-                ].map(opt => (
-                  <button key={opt.t} onClick={() => { setType(opt.t); setStep(2); }}
-                    style={{ padding: '20px', border: `2px solid ${type === opt.t ? '#1B3A2D' : '#E8E2D8'}`, borderRadius: '12px', background: type === opt.t ? 'rgba(27,58,45,0.03)' : '#fff', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}>
-                    <div style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>{opt.title}</div>
-                    <div style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.5 }}>{opt.desc}</div>
-                  </button>
-                ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div><label style={labelStyle}>Contact name *</label><input style={inputStyle} value={form.contactName} onChange={e => set('contactName', e.target.value)} placeholder="Your full name" /></div>
+                <div><label style={labelStyle}>Company name *</label><input style={inputStyle} value={form.companyName} onChange={e => set('companyName', e.target.value)} placeholder="Company Ltd" /></div>
               </div>
-
-              <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', textAlign: 'center' }}>
-                Already have an account? <Link href="/login" style={{ color: '#C9A96E', fontWeight: 600, textDecoration: 'none' }}>Sign in</Link>
-              </p>
-            </>
+              <div><label style={labelStyle}>Email *</label><input type="email" style={inputStyle} value={form.email} onChange={e => set('email', e.target.value)} placeholder="you@company.com" /></div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div><label style={labelStyle}>Password *</label><input type="password" style={inputStyle} value={form.password} onChange={e => set('password', e.target.value)} placeholder="Min 8 characters" /></div>
+                <div><label style={labelStyle}>Confirm password *</label><input type="password" style={inputStyle} value={form.confirmPassword} onChange={e => set('confirmPassword', e.target.value)} /></div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div>
+                  <label style={labelStyle}>Country *</label>
+                  <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.country} onChange={e => set('country', e.target.value)}>
+                    <option value="AE">United Arab Emirates</option><option value="SA">Saudi Arabia</option><option value="QA">Qatar</option><option value="KW">Kuwait</option><option value="BH">Bahrain</option><option value="OM">Oman</option><option value="AU">Australia</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="SG">Singapore</option><option value="OTHER">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={labelStyle}>Company type *</label>
+                  <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.companyType} onChange={e => set('companyType', e.target.value)}>
+                    {COMPANY_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                  </select>
+                </div>
+              </div>
+              <button onClick={() => { if (!form.email || !form.password || !form.companyName || !form.contactName) { setError('Please fill all required fields'); return; } setError(''); setStep(2); }}
+                style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#C9A96E', color: '#0C1C14', cursor: 'pointer', width: '100%', marginTop: '8px' }}>
+                Continue →
+              </button>
+            </div>
           )}
 
           {step === 2 && (
-            <>
-              <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Your details</h2>
-              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>{type === 'seller' ? 'Tell us about your organisation and projects.' : 'Tell us about your company and needs.'}</p>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 12px' }}>
-                <Inp label="First Name" value={firstName} onChange={setFirstName} placeholder="Khalid" />
-                <Inp label="Last Name" value={lastName} onChange={setLastName} placeholder="Al Mansouri" />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <label style={labelStyle}>I plan to... *</label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {['Buy credits', 'Sell credits', 'Both', 'Not sure yet'].map(opt => {
+                    const val = opt.toLowerCase().replace(/ /g, '_');
+                    const active = form.plansTo.includes(val);
+                    return <button key={opt} onClick={() => toggleArr('plansTo', val)} style={{ fontFamily: bg, fontSize: '13px', padding: '8px 16px', borderRadius: '8px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.15)'}`, background: active ? 'rgba(201,169,110,0.1)' : 'transparent', color: active ? '#C9A96E' : '#8AAA92', cursor: 'pointer' }}>{opt}</button>;
+                  })}
+                </div>
               </div>
-              <Inp label="Company Name" value={company} onChange={setCompany} placeholder="Emirates Industrial Group" />
-              {type === 'buyer' && (
-                <>
-                  <Inp label="Your Role" value={role} onChange={setRole} placeholder="Head of Sustainability" required={false} />
-                  <div style={{ marginBottom: '16px' }}>
-                    <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8B8178', display: 'block', marginBottom: '8px' }}>Compliance requirements (select all that apply)</label>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                      {['NRCC', 'CBAM', 'CORSIA', 'SBTi', 'Voluntary', 'None specific'].map(c => (
-                        <button key={c} type="button" onClick={() => setComplianceNeeds(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
-                          style={{ padding: '6px 14px', borderRadius: '100px', border: `1px solid ${complianceNeeds.includes(c) ? '#1B3A2D' : '#E8E2D8'}`, background: complianceNeeds.includes(c) ? 'rgba(27,58,45,0.06)' : '#fff', fontFamily: bg, fontSize: '12px', fontWeight: 600, color: complianceNeeds.includes(c) ? '#1B3A2D' : '#8B8178', cursor: 'pointer' }}>
-                          {c}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-              {type === 'seller' && (
-                <>
-                  <Inp label="Registry accounts (Verra, Gold Standard, ACR)" value={registryAccounts} onChange={setRegistryAccounts} placeholder="Verra #12345, Gold Standard #67890" />
-                  <Inp label="How many projects do you have?" value={projectCount} onChange={setProjectCount} placeholder="5" required={false} />
-                </>
-              )}
-
+              <div>
+                <label style={labelStyle}>Compliance needs (optional)</label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {COMPLIANCE.map(c => {
+                    const active = form.compliance.includes(c.toLowerCase());
+                    return <button key={c} onClick={() => toggleArr('compliance', c.toLowerCase())} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{c}</button>;
+                  })}
+                </div>
+              </div>
+              <div>
+                <label style={labelStyle}>Estimated annual volume (optional)</label>
+                <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.volume} onChange={e => set('volume', e.target.value)}>
+                  <option value="">Select...</option>
+                  {VOLUMES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={labelStyle}>Registry accounts held (optional)</label>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {['Verra', 'Gold Standard', 'ACR'].map(r => {
+                    const val = r.toLowerCase().replace(/ /g, '_');
+                    const active = form.registries.includes(val);
+                    return <button key={r} onClick={() => toggleArr('registries', val)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{r}</button>;
+                  })}
+                </div>
+              </div>
               <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-                <button onClick={() => setStep(1)} style={{ flex: 1, padding: '12px', border: '1px solid #E8E2D8', borderRadius: '10px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#8B8178', background: '#fff', cursor: 'pointer' }}>← Back</button>
-                <button onClick={() => setStep(3)} disabled={!company || !firstName} style={{ flex: 2, padding: '12px', border: 'none', borderRadius: '10px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#FFFCF6', background: (!company || !firstName) ? '#C5BFB3' : '#1B3A2D', cursor: 'pointer' }}>Continue →</button>
-              </div>
-            </>
-          )}
-
-          {step === 3 && (
-            <form onSubmit={handleSubmit}>
-              <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Set up your login</h2>
-              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>You&apos;ll use these credentials to access your {type} dashboard.</p>
-
-              {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#DC2626', background: 'rgba(220,38,38,0.06)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px' }}>{error}</div>}
-
-              <Inp label="Email" value={email} onChange={setEmail} type="email" placeholder="k.almansouri@company.ae" />
-              <Inp label="Password" value={password} onChange={setPassword} type="password" placeholder="Minimum 8 characters" />
-
-              <div style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', marginBottom: '24px', lineHeight: 1.6 }}>
-                By creating an account, you agree to our <Link href="/legal/terms" style={{ color: '#C9A96E' }}>Terms of Service</Link> and <Link href="/legal/privacy" style={{ color: '#C9A96E' }}>Privacy Policy</Link>.
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <button type="button" onClick={() => setStep(2)} style={{ flex: 1, padding: '12px', border: '1px solid #E8E2D8', borderRadius: '10px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#8B8178', background: '#fff', cursor: 'pointer' }}>← Back</button>
-                <button type="submit" disabled={loading || !email || password.length < 8} style={{ flex: 2, padding: '14px', border: 'none', borderRadius: '10px', fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#FFFCF6', background: loading ? '#8AAA92' : '#1B3A2D', cursor: 'pointer' }}>
-                  {loading ? 'Creating account...' : type === 'seller' ? 'Create seller account' : 'Create buyer account'}
+                <button onClick={() => setStep(1)} style={{ fontFamily: bg, fontSize: '14px', padding: '14px', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.15)', background: 'transparent', color: '#8AAA92', cursor: 'pointer', flex: 1 }}>← Back</button>
+                <button onClick={handleSubmit} disabled={loading} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#C9A96E', color: '#0C1C14', cursor: loading ? 'wait' : 'pointer', flex: 2, opacity: loading ? 0.7 : 1 }}>
+                  {loading ? 'Creating account...' : 'Create account'}
                 </button>
               </div>
-            </form>
+            </div>
           )}
         </div>
+
+        <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74', textAlign: 'center', marginTop: '20px' }}>
+          Already have an account? <Link href="/login" style={{ color: '#C9A96E' }}>Sign in</Link>
+        </p>
       </div>
     </div>
   );
