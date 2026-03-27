@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /carbon-management
+Disallow: /forward-contracts
+Disallow: /rfq
+Disallow: /api/
+
+Sitemap: https://carbonbridge.ae/sitemap.xml

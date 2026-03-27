@@ -350,6 +350,12 @@
       "regex": "^/settings/profile(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/settings/profile(?:/)?$"
+    },
+    {
+      "page": "/sitemap.xml",
+      "regex": "^/sitemap\\.xml(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sitemap\\.xml(?:/)?$"
     }
   ],
   "dataRoutes": [],
