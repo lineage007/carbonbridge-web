@@ -1,6 +1,6 @@
 const fr = "'Fraunces', Georgia, serif";
 
-export const metadata = { title: 'api terms | CarbonBridge' };
+export const metadata = { title: 'API Terms | CarbonBridge' };
 
 export default function apitermsPage() {
   return (

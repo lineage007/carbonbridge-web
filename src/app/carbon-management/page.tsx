@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
+import { useAuth } from '@/lib/auth-context';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -47,13 +49,23 @@ const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
 export default function CarbonManagementPage() {
   const [tab, setTab] = useState<Tab>('emissions');
   const totalEmissions = SCOPES.reduce((s, sc) => s + sc.value, 0);
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const totalOffset = OFFSET_PORTFOLIO.reduce((s, o) => s + o.qty, 0);
   const coveragePct = ((totalOffset / totalEmissions) * 100).toFixed(1);
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/login?redirect=/carbon-management');
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) return null;
+
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Sidebar />
-      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
+    <div style={{ minHeight: "100vh", background: "#FAFAF7" }}>
+      <Navbar />
+      <main>
       
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>

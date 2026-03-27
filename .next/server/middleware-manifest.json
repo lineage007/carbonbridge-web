@@ -26,6 +26,30 @@
           "originalSource": "/seller/:path*"
         },
         {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/carbon-management(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
+          "originalSource": "/carbon-management/:path*"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/carbon-management(\\.json)?[\\/#\\?]?$",
+          "originalSource": "/carbon-management"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/forward-contracts(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
+          "originalSource": "/forward-contracts/:path*"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/forward-contracts(\\.json)?[\\/#\\?]?$",
+          "originalSource": "/forward-contracts"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/settings(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
+          "originalSource": "/settings/:path*"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/settings(\\.json)?[\\/#\\?]?$",
+          "originalSource": "/settings"
+        },
+        {
           "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/login(\\.json)?[\\/#\\?]?$",
           "originalSource": "/login"
         },
@@ -37,7 +61,7 @@
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "fAiQQ3Q849eQmq9KmNoO2",
+        "__NEXT_BUILD_ID": "Euufx7SHicRjijCa1CiM4",
         "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "NyXl+tksCqsZ7YiMeW1V8hFqsv3V7Xcv4QDNaY5NXJI=",
         "__NEXT_PREVIEW_MODE_ID": "281f43ff9b6a6f84eed5cae759595dfd",
         "__NEXT_PREVIEW_MODE_SIGNING_KEY": "1969f8851b2727e328e3d593cd8439f904d13b3a19d8f10ce88378b83fa9f30c",

@@ -1,6 +1,6 @@
 const fr = "'Fraunces', Georgia, serif";
 
-export const metadata = { title: 'terms | CarbonBridge' };
+export const metadata = { title: 'Terms of Service | CarbonBridge' };
 
 export default function termsPage() {
   return (

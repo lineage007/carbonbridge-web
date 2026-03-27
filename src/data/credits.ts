@@ -32,6 +32,7 @@ export interface CreditListing {
   coBenefits: CoBenefit[];
   ccpLabelled: boolean;
   isCBDirect: boolean;
+  isCBSourced?: boolean;
   sdgs: number[];
   description: string;
   projectOverview: string;
@@ -93,7 +94,7 @@ export const LISTINGS: CreditListing[] = [
     status: 'active',
   },
   {
-    id: 'cb-au-arr-002',
+    id: 'cb-au-sav-001',
     projectName: 'Kimberley Savanna Carbon Project',
     developer: 'Aboriginal Carbon Foundation',
     developerYears: 15,
@@ -115,6 +116,7 @@ export const LISTINGS: CreditListing[] = [
     coBenefits: ['Biodiversity', 'Community', 'Indigenous'],
     ccpLabelled: true,
     isCBDirect: false,
+  isCBSourced: true,
     sdgs: [13, 15, 10, 2],
     description: 'Indigenous-led fire management across 1.2 million hectares of tropical savanna. Early dry season burning reduces wildfire intensity and carbon emissions while protecting biodiversity.',
     projectOverview: 'The Kimberley Savanna Carbon Project is managed by Aboriginal ranger groups across 1.2 million hectares of tropical savanna in Western Australia\'s Kimberley region. Using traditional burning practices refined over 65,000 years, rangers conduct early dry season burns that reduce the frequency and intensity of late-season wildfires. This shift in fire regime reduces methane and nitrous oxide emissions by up to 40% compared to unmanaged wildfire. The project directly employs 45 Aboriginal rangers full-time and supports cultural knowledge transfer across generations. It is one of the highest-rated co-benefit projects globally, with verified contributions to biodiversity protection, community employment, and Indigenous self-determination.',
@@ -186,6 +188,7 @@ export const LISTINGS: CreditListing[] = [
     coBenefits: ['Community', 'Water', 'Biodiversity'],
     ccpLabelled: false,
     isCBDirect: false,
+  isCBSourced: true,
     sdgs: [13, 2, 15, 6],
     description: 'Aggregated soil carbon project across 40 farms in the Murray-Darling Basin. Regenerative grazing, cover cropping, and reduced tillage practices sequester carbon in agricultural soils.',
     projectOverview: 'This aggregated project brings together 40 farming properties across 18,000 hectares in the Murray-Darling Basin, transitioning from conventional to regenerative agricultural practices. Key interventions include rotational grazing management, multi-species cover cropping, reduced tillage, and strategic tree planting along waterways. Soil carbon is measured through a network of 320 permanent monitoring plots, with baseline and periodic sampling to 30cm depth. Early results show an average 0.4% increase in soil organic carbon across participating properties, with corresponding improvements in water retention, soil biology, and drought resilience.',

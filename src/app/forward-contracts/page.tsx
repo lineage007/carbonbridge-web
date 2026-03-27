@@ -1,6 +1,8 @@
 'use client';
-import { useState } from 'react';
-import Sidebar from '@/components/Sidebar';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Navbar from '@/components/Navbar';
+import { useAuth } from '@/lib/auth-context';
 
 const fr = "'Fraunces', serif";
 const bg = "'Plus Jakarta Sans', system-ui, sans-serif";
@@ -22,13 +24,23 @@ const statusMap: Record<string, { label: string; bg: string; text: string }> = {
 };
 
 export default function ForwardContractsPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const totalValue = CONTRACTS.reduce((s, c) => s + c.volume * c.price, 0);
   const totalVolume = CONTRACTS.reduce((s, c) => s + c.volume, 0);
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/login?redirect=/forward-contracts');
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) return null;
+
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Sidebar />
-      <main style={{ flex: 1, background: '#FAFAF7', overflow: 'auto' }}>
+    <div style={{ minHeight: '100vh', background: '#FAFAF7' }}>
+      <Navbar />
+      <main>
         <div style={{ padding: '28px', maxWidth: '1200px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '24px' }}>
             <div>

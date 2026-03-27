@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
 import { LISTINGS, CREDIT_TYPE_COLORS, type CreditListing } from '@/data/credits';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
@@ -61,9 +61,9 @@ export default function CreditDetailPage() {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Sidebar />
-      <main style={{ flex: 1, background: '#FDFBF7', overflow: 'auto' }}>
+    <div style={{ minHeight: '100vh', background: '#FDFBF7' }}>
+      <Navbar />
+      <main>
       <div>
         {/* Breadcrumb */}
         <div style={{ background: '#F5F0E8', borderBottom: '1px solid #E8E2D6', padding: '12px 0' }}>

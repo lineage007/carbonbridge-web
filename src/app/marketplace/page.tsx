@@ -1,8 +1,9 @@
 'use client';
 
+
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
 import { LISTINGS, CREDIT_TYPE_COLORS, type CreditListing, type CreditType, type QualityRating, type Region, type ComplianceTag, type CoBenefit, type Registry } from '@/data/credits';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
@@ -37,7 +38,7 @@ export default function MarketplacePage() {
   const [selectedCoBenefits, setSelectedCoBenefits] = useState<Set<CoBenefit>>(new Set());
   const [selectedVintages, setSelectedVintages] = useState<Set<number>>(new Set());
   const [ccpOnly, setCcpOnly] = useState(false);
-  const [sellerFilter, setSellerFilter] = useState<'all' | 'cb-direct' | 'third-party'>('all');
+  const [sellerFilter, setSellerFilter] = useState<'all' | 'cb-direct' | 'cb-sourced' | 'third-party'>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -70,7 +71,8 @@ export default function MarketplacePage() {
     if (selectedVintages.size > 0) result = result.filter(c => selectedVintages.has(c.vintage));
     if (ccpOnly) result = result.filter(c => c.ccpLabelled);
     if (sellerFilter === 'cb-direct') result = result.filter(c => c.isCBDirect);
-    if (sellerFilter === 'third-party') result = result.filter(c => !c.isCBDirect);
+    if (sellerFilter === 'cb-sourced') result = result.filter(c => !c.isCBDirect && (c as any).isCBSourced);
+    if (sellerFilter === 'third-party') result = result.filter(c => !c.isCBDirect && !(c as any).isCBSourced);
     result = result.filter(c => c.price >= priceRange[0] && c.price <= priceRange[1]);
 
     switch (sortBy) {
@@ -93,9 +95,9 @@ export default function MarketplacePage() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Sidebar />
-      <main style={{ flex: 1, background: '#FDFBF7', overflow: 'auto' }}>
+    <div style={{ minHeight: '100vh', background: '#FDFBF7' }}>
+      <Navbar dark={true} />
+      <main>
 
       <div>
         {/* Header */}
@@ -218,8 +220,8 @@ export default function MarketplacePage() {
               {/* Seller */}
               <FilterSection title="Seller">
                 <div className="flex flex-wrap gap-1.5">
-                  {(['all', 'cb-direct', 'third-party'] as const).map(s => (
-                    <FilterPill key={s} label={s === 'all' ? 'All' : s === 'cb-direct' ? 'CB Direct' : 'Third-party'} active={sellerFilter === s} onClick={() => setSellerFilter(s)} />
+                  {(['all', 'cb-direct', 'cb-sourced', 'third-party'] as const).map(s => (
+                    <FilterPill key={s} label={s === 'all' ? 'All' : s === 'cb-direct' ? 'CB Direct' : s === 'cb-sourced' ? 'CB Sourced' : 'Third-party'} active={sellerFilter === s} onClick={() => setSellerFilter(s)} />
                   ))}
                 </div>
               </FilterSection>
@@ -315,6 +317,7 @@ function CreditCard({ credit }: { credit: CreditListing }) {
           <div className="flex items-center gap-2">
             {credit.ccpLabelled && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', fontWeight: 700, color: '#C9A96E', background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.2)', padding: '2px 7px', borderRadius: '4px' }}>CCP</span>}
             {credit.isCBDirect && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', fontWeight: 700, color: '#1B3A2D', background: 'rgba(27,58,45,0.08)', border: '1px solid rgba(27,58,45,0.15)', padding: '2px 7px', borderRadius: '4px' }}>CB Direct</span>}
+            {!credit.isCBDirect && (credit as any).isCBSourced && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', fontWeight: 700, color: '#C9A96E', background: 'transparent', border: '1px solid #C9A96E', padding: '2px 7px', borderRadius: '4px' }}>CB Sourced</span>}
           </div>
         </div>
 

@@ -1,9 +1,10 @@
 'use client';
 
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { LISTINGS } from '@/data/credits';
-import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -37,7 +38,7 @@ const REGULATORY_TIMELINE = [
   { date: 'Jul 2025', event: 'ICVCM CCP Labels begin', status: 'completed', detail: 'First batch of Verra and Gold Standard methodologies receive CCP approval. Labels now visible on VCU serial numbers.' },
   { date: 'Jan 2026', event: 'CORSIA Phase 1 begins', status: 'active', detail: 'Mandatory carbon offsetting for international aviation. Airlines must retire CORSIA-eligible credits for emissions above 85% of 2019 baseline.' },
   { date: 'Jan 2026', event: 'EU CBAM transition ends', status: 'active', detail: 'Full CBAM implementation. Importers of cement, iron, steel, aluminium, fertilisers, electricity, and hydrogen must surrender CBAM certificates.' },
-  { date: 'Jul 2026', event: 'Australia NRCC commences', status: 'upcoming', detail: 'National Renewable Carbon Credits scheme. Entities exceeding 100,000 tCO₂e/year must surrender credits equivalent to 4.9% of scope 1 emissions.' },
+  { date: 'May 2026', event: 'UAE NRCC compliance deadline', status: 'upcoming', detail: 'National Register for Carbon Credits. All designated entities must complete registration with MOCCAE. Fines of AED 50,000–2,000,000 for non-compliance. Federal Decree-Law No. 11/2024.' },
   { date: 'Jan 2027', event: 'VCMI Claims Code mandatory', status: 'upcoming', detail: 'Companies making net-zero or carbon-neutral claims must follow VCMI Claims Code requirements, including use of CCP-labelled credits.' },
   { date: 'Jan 2028', event: 'SBTi BVCM framework', status: 'upcoming', detail: 'Science-Based Targets initiative requires Beyond Value Chain Mitigation commitments from all validated companies.' },
 ];
@@ -61,13 +62,9 @@ export default function DataPage() {
   const [timeframe, setTimeframe] = useState<'6m' | '1y' | 'all'>('6m');
 
   return (
-    <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-      {/* Nav */}
-      
-
-      <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Sidebar />
-      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
+    <div style={{ background: '#FDFBF7', minHeight: '100vh' }}>
+      <Navbar />
+      <main>
         {/* Header */}
         <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
           <div className="max-w-[1200px] mx-auto px-4 lg:px-8">
@@ -258,7 +255,6 @@ export default function DataPage() {
         </div>
       </main>
     </div>
-    </main>
   );
 }
 

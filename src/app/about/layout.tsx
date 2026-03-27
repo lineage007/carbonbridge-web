@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About CarbonBridge',
-  description: 'Founded in the UAE with operations in Australia. Operators with deep experience across carbon markets and institutional finance.',
+  description: 'Learn about CarbonBridge — the team, mission, and regulatory framework behind MENA\'s first carbon credit marketplace.',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,6 @@
 const fr = "'Fraunces', Georgia, serif";
 
-export const metadata = { title: 'marketplace rules | CarbonBridge' };
+export const metadata = { title: 'Marketplace Rules | CarbonBridge' };
 
 export default function marketplacerulesPage() {
   return (

@@ -1,9 +1,10 @@
 'use client';
 
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { LISTINGS } from '@/data/credits';
-import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -63,7 +64,7 @@ function isGoodValue(key: string, val: string): boolean | null {
 }
 
 export default function ComparePage() {
-  const [selected, setSelected] = useState<string[]>([LISTINGS[0].id, LISTINGS[5].id]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [showPicker, setShowPicker] = useState<number | null>(null);
   const [search, setSearch] = useState('');
 
@@ -75,10 +76,10 @@ export default function ComparePage() {
   const pickCredit = (idx: number, id: string) => { const next = [...selected]; next[idx] = id; setSelected(next); setShowPicker(null); setSearch(''); };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Sidebar />
-      <main style={{ flex: 1, background: "#FAFAF7", overflow: "auto" }}>
-      {/* Nav */}
+    <div style={{ minHeight: "100vh", background: "#FAFAF7" }}>
+      <Navbar />
+      <main>
+      {/* Content */}
       
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
@@ -87,8 +88,18 @@ export default function ComparePage() {
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>Side-by-side comparison across quality, price, compliance eligibility, and co-benefits.</p>
         </div>
 
+        {/* Empty state */}
+        {selected.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '80px 24px', background: '#fff', borderRadius: '16px', border: '2px dashed #E8E2D8', marginBottom: '32px' }}>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚖️</div>
+            <h2 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Nothing to compare yet</h2>
+            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '24px' }}>Select 2–4 credits from the marketplace to compare them side by side.</p>
+            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>Browse Marketplace</Link>
+          </div>
+        )}
+
         {/* Credit selector row */}
-        <div style={{ display: 'flex', gap: '12px', marginBottom: '32px', flexWrap: 'wrap' }}>
+        {selected.length > 0 && <div style={{ display: 'flex', gap: '12px', marginBottom: '32px', flexWrap: 'wrap' }}>
           {selected.map((id, idx) => {
             const credit = LISTINGS.find(l => l.id === id);
             return (
@@ -145,7 +156,11 @@ export default function ComparePage() {
               ＋ Add credit
             </button>
           )}
-        </div>
+        </div>}
+
+        {selected.length > 0 && selected.length < 2 && (
+          <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', textAlign: 'center', padding: '32px' }}>Add at least one more credit to start comparing.</p>
+        )}
 
         {/* Comparison table */}
         {credits.length >= 2 && (

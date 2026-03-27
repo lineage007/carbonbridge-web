@@ -1,6 +1,8 @@
 'use client';
-import { useState } from 'react';
-import Sidebar from '@/components/Sidebar';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Navbar from '@/components/Navbar';
+import { useAuth } from '@/lib/auth-context';
 import Link from 'next/link';
 const fr = "'Fraunces', serif"; const bg = "'Plus Jakarta Sans', sans-serif"; const mono = "'JetBrains Mono', monospace";
 type Tab = 'profile'|'company'|'billing'|'api'|'notifications'|'security'|'team';
@@ -8,12 +10,24 @@ const TABS: {key:Tab;label:string}[] = [{key:'profile',label:'My Profile'},{key:
 function Inp({label,value,type='text'}:{label:string;value:string;type?:string}) { return <div style={{marginBottom:'16px'}}><label style={{fontFamily:bg,fontSize:'12px',fontWeight:600,color:'#8B8178',display:'block',marginBottom:'6px'}}>{label}</label><input defaultValue={value} type={type} style={{width:'100%',padding:'10px 14px',border:'1px solid #E8E2D8',borderRadius:'8px',fontFamily:bg,fontSize:'13px',color:'#1A1714',background:'#fff',outline:'none'}}/></div>; }
 function Tog({label,desc,on:init=false}:{label:string;desc?:string;on?:boolean}) { const [on,set]=useState(init); return <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'12px 0',borderBottom:'1px solid #F0EDE6'}}><div><div style={{fontFamily:bg,fontSize:'13px',fontWeight:600,color:'#1A1714'}}>{label}</div>{desc&&<div style={{fontFamily:bg,fontSize:'11px',color:'#8B8178',marginTop:'2px'}}>{desc}</div>}</div><button onClick={()=>set(!on)} style={{width:'42px',height:'24px',borderRadius:'12px',border:'none',cursor:'pointer',background:on?'#2D6A4F':'#D5CFC4',position:'relative'}}><div style={{width:'18px',height:'18px',borderRadius:'50%',background:'#fff',position:'absolute',top:'3px',left:on?'21px':'3px',transition:'left 0.2s',boxShadow:'0 1px 3px rgba(0,0,0,0.15)'}}/></button></div>; }
 export default function SettingsPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/login?redirect=/settings/profile');
+    }
+  }, [user, loading, router]);
+
   const [tab,setTab]=useState<Tab>('profile');
+
+  if (loading || !user) return null;
   const Card=({children,title}:{children:React.ReactNode;title:string})=>(<div style={{background:'#fff',border:'1px solid #E8E2D8',borderRadius:'12px',padding:'28px',marginBottom:'16px'}}><h2 style={{fontFamily:fr,fontSize:'18px',fontWeight:600,color:'#1A1714',marginBottom:'20px'}}>{title}</h2>{children}</div>);
   const Btn=({children}:{children:React.ReactNode})=>(<button style={{fontFamily:bg,fontSize:'13px',fontWeight:600,color:'#1B3A2D',background:'#C9A96E',border:'none',padding:'10px 24px',borderRadius:'8px',cursor:'pointer'}}>{children}</button>);
   return (
-    <div style={{display:'flex',minHeight:'100vh'}}>
-      <Sidebar />
+    <div style={{minHeight:'100vh',background:'#FAFAF7'}}>
+      <Navbar />
+      
       <main style={{flex:1,background:'#FAFAF7',overflow:'auto'}}>
         <div style={{padding:'32px 28px',maxWidth:'900px'}}>
           <h1 style={{fontFamily:fr,fontSize:'28px',fontWeight:600,color:'#1A1714',marginBottom:'4px'}}>Settings</h1>

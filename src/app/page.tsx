@@ -227,7 +227,7 @@ export default function Home() {
             <div style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '18px', padding: '28px', position: 'relative' }}>
               <div className="flex items-center justify-between mb-6">
                 <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Market Overview</span>
-                <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', background: 'rgba(138,170,146,0.08)', padding: '2px 8px', borderRadius: '4px' }}>Indicative</span>
+                <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', background: 'rgba(138,170,146,0.08)', padding: '2px 8px', borderRadius: '4px' }}>Indicative · As of March 2026</span>
               </div>
 
               {/* Price grid */}
@@ -371,7 +371,7 @@ export default function Home() {
               { icon: icons.globe, title: 'Marketplace', desc: 'Connect developers and buyers across multiple registries. Self-serve listings, RFQ system, and OTC facilitation.', tag: 'Core' },
               { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers via Kita and CFC (Lloyd\'s syndicates).', tag: 'Unique' },
               { icon: icons.chart, title: 'Data & Ratings', desc: 'Independent credit quality ratings (AAA–C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
-              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Real-time retirement, certificate generation, and webhook notifications. From $0.02/tonne.', tag: 'Developer' },
+              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Log offset requests in real-time. Monthly retirement and branded certificate delivery. From $0.15/call.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with dynamic tools and real-time market data.', tag: 'Enterprise' },
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
             ].map((f, i) => (
@@ -403,7 +403,7 @@ export default function Home() {
             { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings remove guesswork. Insurance removes risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA–C)', 'Insurance at checkout (Lloyd\'s-backed)', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
             { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on the region\'s first dedicated marketplace. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
-            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with real-time retirement and certificate generation.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'Usage-based pricing from $0.02/tonne'] },
+            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with real-time offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
             <div key={s.role} style={{ background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
               <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '16px' }}>{s.icon}</div>
@@ -449,7 +449,7 @@ export default function Home() {
           <div className="space-y-4">
             {[
               { type: 'ARR / Reforestation', project: 'Great Southern Forest Restoration', location: 'Victoria, Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A', id: 'cb-au-arr-001' },
-              { type: 'Blue Carbon', project: 'Abu Dhabi Mangrove Conservation', location: 'Abu Dhabi, UAE', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$64.00', volume: '12,000', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
+              { type: 'Blue Carbon', project: 'Abu Dhabi Mangrove Conservation', location: 'Abu Dhabi, UAE', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$42.50', volume: '12,000', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
               { type: 'Biochar', project: 'Queensland Biochar Sequestration', location: 'Queensland, Australia', registry: 'Verra VCS', vintage: '2026', rating: 'AA+', price: '$142.00', volume: '8,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6', id: 'cb-au-bio-001' },
             ].map((c, i) => (
               <FadeIn key={c.project} delay={i * 120}>
@@ -583,7 +583,7 @@ export default function Home() {
               { q: 'What registries do you support?', a: 'CarbonBridge supports credits from Verra (VCS), Gold Standard, and the American Carbon Registry (ACR). We also facilitate ACCU-adjacent projects registered directly with Verra.' },
               { q: 'How are credits rated?', a: 'We use an independent rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity — from AAA (highest) to C.' },
               { q: 'Is the insurance mandatory?', a: 'No. Insurance is optional and available at checkout. You choose the level of cover you need — from basic non-delivery protection to comprehensive CORSIA guarantees.' },
-              { q: 'How does settlement work?', a: 'All marketplace transactions settle via Stripe Connect escrow or bank transfer (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace — delivery versus payment.' },
+              { q: 'How does settlement work?', a: 'All marketplace transactions settle via bank transfer (recommended) or card payment through Tap Payments or Stripe (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace — delivery versus payment.' },
               { q: 'Do you sell your own credits?', a: 'Yes, through CarbonBridge Direct — our own curated inventory. These are always clearly labelled and never algorithmically favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
             ].map(faq => (

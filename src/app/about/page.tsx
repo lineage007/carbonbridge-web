@@ -1,6 +1,8 @@
 'use client';
 
+
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
@@ -9,22 +11,9 @@ const mono = "'JetBrains Mono', 'DM Mono', monospace";
 export default function AboutPage() {
   return (
     <main style={{ background: '#FDFBF7', minHeight: '100vh' }}>
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: "40px", width: "auto" }} />
-            
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.5)' }} className="hover:text-white transition-colors">Marketplace</Link>
-            <span style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', fontWeight: 600 }}>About</span>
-            <Link href="/register" style={{ fontFamily: bg, fontSize: '13px', background: '#C9A96E', color: '#0C1C14', padding: '8px 18px', borderRadius: '8px', fontWeight: 600 }}>Create Account</Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar dark={true} />
 
-      <div className="pt-16">
+      <div>
         {/* Hero */}
         <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D 60%, #0C1C14)', padding: '80px 0 72px' }}>
           <div className="max-w-[800px] mx-auto px-4 lg:px-8 text-center">
@@ -89,15 +78,15 @@ export default function AboutPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { role: 'Founder & CEO', location: 'Dubai, UAE', desc: 'Technology finance and real estate operator. Built and scaled multiple SaaS platforms across ANZ and MENA. Leads Gulf relationships and investor conversations.' },
-                { role: 'Co-founder & COO', location: 'Australia', desc: 'Environmental markets strategist. Leads Australian developer outreach, project sourcing, and supply-side partnerships.' },
-                { role: 'Strategic Advisor', location: 'Global', desc: 'Co-architect of the CarbonBridge platform strategy. Deep expertise in carbon market regulation and product design.' },
+                { name: 'Gary C.', role: 'Founder & CEO', location: 'Dubai, UAE', desc: 'Technology finance and real estate operator. Built and scaled multiple SaaS platforms across ANZ and MENA. Leads Gulf relationships and investor conversations.' },
+                { name: 'Alex A.', role: 'Co-founder & COO', location: 'Australia', desc: 'Environmental markets strategist. Leads Australian developer outreach, project sourcing, and supply-side partnerships.' },
+                { name: 'Julian K.', role: 'Strategic Advisor', location: 'Global', desc: 'Co-architect of the CarbonBridge platform strategy. Deep expertise in carbon market regulation and product design.' },
               ].map(p => (
                 <div key={p.role} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
                   <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#F5F0E8', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   </div>
-                  <h3 style={{ fontFamily: bg, fontSize: '15px', fontWeight: 700, color: '#1A1714', marginBottom: '2px' }}>{p.role}</h3>
+                  <h3 style={{ fontFamily: bg, fontSize: '15px', fontWeight: 700, color: '#1A1714', marginBottom: '2px' }}>{p.name} — {p.role}</h3>
                   <p style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', marginBottom: '12px' }}>{p.location}</p>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>{p.desc}</p>
                 </div>

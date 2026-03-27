@@ -6,7 +6,7 @@ import Link from 'next/link';
 const fr = "'Fraunces', Georgia, serif";
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 
-const CREDIT_TYPES = ['ARR','REDD+','Blue Carbon','Biochar','Cookstove','Soil Carbon','DAC','Landfill Gas','Mineralization','ERW','IFM','Renewable Energy'];
+const CREDIT_TYPES = ['ARR','REDD+','Blue Carbon','Biochar','Soil Carbon','Savanna Fire Management','Landfill Gas','Energy Efficiency','IFM','Direct Air Capture (DACCS)','Enhanced Rock Weathering','Carbon Mineralization'];
 const QUALITY_OPTIONS = ['AAA','AA','A','BBB','Any'];
 
 export default function RFQPage() {
