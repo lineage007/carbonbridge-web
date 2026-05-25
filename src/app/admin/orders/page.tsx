@@ -1,136 +1,257 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const fr = "'Fraunces', Georgia, serif";
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 const mono = "'JetBrains Mono', monospace";
 
-const fmt = (n: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n);
+const fmt = (n: number) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n);
 
-type OrderStatus = 'pending_payment' | 'payment_received' | 'transfer_in_progress' | 'credits_delivered' | 'completed' | 'cancelled' | 'expired' | 'disputed';
+type CbOrderStatus =
+  | 'pending_kyc'
+  | 'pending_payment'
+  | 'payment_processing'
+  | 'settled'
+  | 'retired'
+  | 'cancelled'
+  | 'disputed';
 
-type Order = {
-  ref: string; date: string; buyer: string; credit: string; type: string;
-  qty: number; unitPrice: number; total: number; insurance: boolean;
-  insurancePremium: number; status: OrderStatus; paymentMethod: string;
-  agreementDeadline: string; transferInitiated: boolean; hoursElapsed: number;
+const STATUS_CONFIG: Record<CbOrderStatus, { label: string; bg: string; text: string; priority: number }> = {
+  pending_kyc:        { label: 'Pending KYC',        bg: 'rgba(251,146,60,0.12)', text: '#EA580C', priority: 0 },
+  pending_payment:    { label: 'Pending Payment',     bg: 'rgba(245,158,11,0.1)',  text: '#F59E0B', priority: 1 },
+  payment_processing: { label: 'Payment Processing',  bg: 'rgba(59,130,246,0.1)',  text: '#3B82F6', priority: 2 },
+  settled:            { label: 'Settled — Transfer',  bg: 'rgba(139,92,246,0.1)',  text: '#8B5CF6', priority: 3 },
+  retired:            { label: 'Retired',             bg: 'rgba(22,163,74,0.1)',   text: '#16A34A', priority: 4 },
+  cancelled:          { label: 'Cancelled',           bg: 'rgba(239,68,68,0.06)',  text: '#EF4444', priority: 6 },
+  disputed:           { label: 'Disputed',            bg: 'rgba(239,68,68,0.15)',  text: '#DC2626', priority: 0 },
 };
 
-const STATUS_CONFIG: Record<OrderStatus, { label: string; bg: string; text: string; priority: number }> = {
-  pending_payment:     { label: 'Pending Payment', bg: 'rgba(245,158,11,0.1)', text: '#F59E0B', priority: 1 },
-  payment_received:    { label: 'Payment Received', bg: 'rgba(59,130,246,0.1)', text: '#3B82F6', priority: 2 },
-  transfer_in_progress:{ label: 'Transfer In Progress', bg: 'rgba(139,92,246,0.1)', text: '#8B5CF6', priority: 3 },
-  credits_delivered:   { label: 'Credits Delivered', bg: 'rgba(22,163,74,0.1)', text: '#16A34A', priority: 4 },
-  completed:           { label: 'Completed', bg: 'rgba(27,58,45,0.06)', text: '#2D6A4F', priority: 5 },
-  cancelled:           { label: 'Cancelled', bg: 'rgba(239,68,68,0.06)', text: '#EF4444', priority: 6 },
-  expired:             { label: 'Expired', bg: 'rgba(107,98,89,0.1)', text: '#6B6259', priority: 7 },
-  disputed:            { label: 'Disputed', bg: 'rgba(239,68,68,0.15)', text: '#DC2626', priority: 0 },
-};
+interface KycEntry {
+  id: string;
+  order_id: string;
+  buyer_id: string;
+  business_name: string;
+  business_country: string;
+  intended_use: string | null;
+  status: string;
+  created_at: string;
+}
 
-const ORDERS: Order[] = [
-  { ref: 'CB-2026-00142', date: '22 Mar 2026', buyer: 'Emirates Industrial Group', credit: 'Great Southern Forest', type: 'ARR', qty: 2500, unitPrice: 26.40, total: 66000, insurance: true, insurancePremium: 2310, status: 'payment_received', paymentMethod: 'Bank Transfer', agreementDeadline: '25 Mar 2026 18:00', transferInitiated: false, hoursElapsed: 52 },
-  { ref: 'CB-2026-00141', date: '21 Mar 2026', buyer: 'Abu Dhabi Airports', credit: 'Borneo Peatland REDD+', type: 'REDD+', qty: 15000, unitPrice: 12.80, total: 192000, insurance: true, insurancePremium: 6720, status: 'pending_payment', paymentMethod: 'Bank Transfer', agreementDeadline: '24 Mar 2026 12:00', transferInitiated: false, hoursElapsed: 8 },
-  { ref: 'CB-2026-00140', date: '20 Mar 2026', buyer: 'Masdar', credit: 'Abu Dhabi Blue Carbon', type: 'Blue Carbon', qty: 8000, unitPrice: 32.50, total: 260000, insurance: false, insurancePremium: 0, status: 'transfer_in_progress', paymentMethod: 'Stripe', agreementDeadline: '—', transferInitiated: true, hoursElapsed: 0 },
-  { ref: 'CB-2026-00138', date: '18 Mar 2026', buyer: 'Emirates Steel', credit: 'Kalimantan Peatland', type: 'REDD+', qty: 10000, unitPrice: 12.80, total: 128000, insurance: true, insurancePremium: 4480, status: 'completed', paymentMethod: 'Bank Transfer', agreementDeadline: '—', transferInitiated: true, hoursElapsed: 0 },
-  { ref: 'CB-2026-00125', date: '10 Mar 2026', buyer: 'ADNOC', credit: 'Abu Dhabi Blue Carbon', type: 'Blue Carbon', qty: 5000, unitPrice: 32.50, total: 162500, insurance: false, insurancePremium: 0, status: 'completed', paymentMethod: 'Stripe', agreementDeadline: '—', transferInitiated: true, hoursElapsed: 0 },
-  { ref: 'CB-2026-00098', date: '28 Feb 2026', buyer: 'Dubai Holding', credit: 'Queensland Soil Carbon', type: 'Soil Carbon', qty: 8000, unitPrice: 18.20, total: 145600, insurance: true, insurancePremium: 5096, status: 'completed', paymentMethod: 'Bank Transfer', agreementDeadline: '—', transferInitiated: true, hoursElapsed: 0 },
-];
+interface CbOrder {
+  id: string;
+  status: CbOrderStatus;
+  project_name: string;
+  credit_type: string;
+  quantity: number;
+  unit_price: number;
+  total_amount: number;
+  payment_method: string;
+  kyc_business_name: string;
+  kyc_business_country: string;
+  created_at: string;
+  buyer?: { company_name: string; email: string } | null;
+  kyc_queue?: KycEntry[] | null;
+}
 
 export default function AdminOrdersPage() {
-  const [filter, setFilter] = useState<'all' | OrderStatus>('all');
-  const [selected, setSelected] = useState<string | null>(null);
+  const [orders, setOrders] = useState<CbOrder[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<'all' | CbOrderStatus>('all');
+  const [selectedOrder, setSelectedOrder] = useState<CbOrder | null>(null);
+  const [kycNote, setKycNote] = useState('');
+  const [kycRejectionReason, setKycRejectionReason] = useState('');
+  const [actionLoading, setActionLoading] = useState(false);
+  const [actionFeedback, setActionFeedback] = useState<string | null>(null);
 
-  const filtered = filter === 'all' ? ORDERS : ORDERS.filter(o => o.status === filter);
-  const actionRequired = ORDERS.filter(o => ['pending_payment', 'payment_received'].includes(o.status));
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  async function fetchOrders() {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/admin/orders');
+      if (res.ok) {
+        const data = await res.json();
+        setOrders(data.orders || []);
+      }
+    } catch {
+      // graceful — shows empty state
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const filtered = filter === 'all' ? orders : orders.filter(o => o.status === filter);
+  const kycPending = orders.filter(o => o.status === 'pending_kyc').length;
+  const settledPending = orders.filter(o => o.status === 'settled').length;
+  const actionRequired = kycPending + settledPending;
+
+  async function handleKycApprove(order: CbOrder) {
+    const kycEntry = order.kyc_queue?.[0];
+    if (!kycEntry) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch('/api/admin/kyc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kyc_id: kycEntry.id, action: 'approve', notes: kycNote }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setActionFeedback('KYC approved — order moved to pending_payment.');
+        setSelectedOrder(null);
+        setKycNote('');
+        fetchOrders();
+      } else {
+        setActionFeedback(`Error: ${data.error}`);
+      }
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
+  async function handleKycReject(order: CbOrder) {
+    const kycEntry = order.kyc_queue?.[0];
+    if (!kycEntry || !kycRejectionReason) {
+      setActionFeedback('Rejection reason is required.');
+      return;
+    }
+    setActionLoading(true);
+    try {
+      const res = await fetch('/api/admin/kyc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kyc_id: kycEntry.id, action: 'reject', reason: kycRejectionReason }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setActionFeedback('KYC rejected — order cancelled and credits released.');
+        setSelectedOrder(null);
+        setKycRejectionReason('');
+        fetchOrders();
+      } else {
+        setActionFeedback(`Error: ${data.error}`);
+      }
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
+  async function handleMarkRetired(orderId: string, registryRef: string) {
+    setActionLoading(true);
+    try {
+      const res = await fetch('/api/admin/orders/retire', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId, registry_transaction_ref: registryRef }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setActionFeedback('Order marked as retired. Retirement instruction updated.');
+        setSelectedOrder(null);
+        fetchOrders();
+      } else {
+        setActionFeedback(`Error: ${data.error}`);
+      }
+    } finally {
+      setActionLoading(false);
+    }
+  }
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
           <h1 style={{ fontFamily: fr, fontSize: '26px', fontWeight: 600, color: '#F2ECE0', marginBottom: '4px' }}>Orders</h1>
-          <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74' }}>{ORDERS.length} total · {actionRequired.length} need action</p>
+          <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74' }}>
+            {orders.length} total · {actionRequired} need action
+            {kycPending > 0 && <span style={{ color: '#EA580C', marginLeft: '8px' }}>({kycPending} KYC pending)</span>}
+            {settledPending > 0 && <span style={{ color: '#8B5CF6', marginLeft: '8px' }}>({settledPending} awaiting transfer)</span>}
+          </p>
         </div>
+        <button
+          onClick={fetchOrders}
+          style={{ fontFamily: bg, fontSize: '12px', color: '#8AAA92', background: 'rgba(138,170,146,0.08)', border: '1px solid rgba(138,170,146,0.15)', borderRadius: '6px', padding: '6px 14px', cursor: 'pointer' }}
+        >
+          Refresh
+        </button>
       </div>
 
-      {/* Pipeline summary */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '24px' }}>
-        {Object.entries(STATUS_CONFIG).filter(([k]) => !['cancelled', 'expired', 'disputed'].includes(k)).map(([key, config]) => {
-          const count = ORDERS.filter(o => o.status === key).length;
-          const value = ORDERS.filter(o => o.status === key).reduce((s, o) => s + o.total, 0);
-          return (
-            <button key={key} onClick={() => setFilter(filter === key ? 'all' : key as OrderStatus)}
-              style={{
-                padding: '12px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-                background: filter === key ? config.bg : 'rgba(255,252,246,0.02)',
-                borderTop: `2px solid ${config.text}`, textAlign: 'left',
-              }}>
-              <div style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#F2ECE0' }}>{count}</div>
-              <div style={{ fontFamily: bg, fontSize: '11px', color: config.text, marginTop: '2px' }}>{config.label}</div>
-              {value > 0 && <div style={{ fontFamily: mono, fontSize: '10px', color: '#6B8A74', marginTop: '2px' }}>{fmt(value)}</div>}
-            </button>
-          );
-        })}
+      {actionFeedback && (
+        <div style={{ background: 'rgba(45,106,79,0.12)', border: '1px solid rgba(45,106,79,0.2)', borderRadius: '8px', padding: '12px 16px', marginBottom: '20px', fontFamily: bg, fontSize: '13px', color: '#8AAA92' }}>
+          {actionFeedback}
+          <button onClick={() => setActionFeedback(null)} style={{ marginLeft: '12px', color: '#6B8A74', background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px' }}>Dismiss</button>
+        </div>
+      )}
+
+      {/* Status filter tabs */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
+        {(['all', 'pending_kyc', 'pending_payment', 'payment_processing', 'settled', 'retired', 'cancelled'] as const).map(s => (
+          <button
+            key={s}
+            onClick={() => setFilter(s)}
+            style={{
+              fontFamily: bg, fontSize: '12px', fontWeight: filter === s ? 600 : 400,
+              padding: '5px 14px', borderRadius: '20px', cursor: 'pointer',
+              background: filter === s ? 'rgba(201,169,110,0.15)' : 'transparent',
+              border: filter === s ? '1px solid rgba(201,169,110,0.35)' : '1px solid rgba(138,170,146,0.15)',
+              color: filter === s ? '#C9A96E' : '#6B8A74',
+            }}
+          >
+            {s === 'all' ? `All (${orders.length})` : `${STATUS_CONFIG[s as CbOrderStatus]?.label || s} (${orders.filter(o => o.status === s).length})`}
+          </button>
+        ))}
       </div>
 
-      {/* Orders table */}
-      <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px 0', color: '#6B8A74', fontFamily: bg, fontSize: '14px' }}>
+          Loading orders from database...
+        </div>
+      ) : filtered.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px 0', color: '#6B8A74', fontFamily: bg, fontSize: '14px' }}>
+          No orders found for this filter.
+        </div>
+      ) : (
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
-                {['Ref', 'Date', 'Buyer', 'Credit', 'Qty (tCO₂e)', 'Total', 'Insurance', 'Status', 'Action'].map(h => (
-                  <th key={h} style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: '#6B8A74', textAlign: 'left', padding: '12px 14px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                {['Order ID', 'Buyer', 'Project', 'Qty (tCO₂e)', 'Total (USD)', 'Payment', 'Status', 'Action'].map(h => (
+                  <th key={h} style={{ fontFamily: bg, fontSize: '11px', color: '#6B8A74', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', padding: '8px 12px', textAlign: 'left' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {filtered.map(o => {
-                const sc = STATUS_CONFIG[o.status];
-                const isUrgent = o.status === 'payment_received' && o.hoursElapsed > 48;
+              {filtered.map(order => {
+                const sc = STATUS_CONFIG[order.status] || { label: order.status, bg: 'transparent', text: '#8AAA92', priority: 9 };
                 return (
-                  <tr key={o.ref} onClick={() => setSelected(selected === o.ref ? null : o.ref)}
-                    style={{ borderBottom: '1px solid rgba(201,169,110,0.04)', cursor: 'pointer', background: isUrgent ? 'rgba(239,68,68,0.03)' : selected === o.ref ? 'rgba(201,169,110,0.03)' : 'transparent' }}>
-                    <td style={{ fontFamily: mono, fontSize: '12px', color: '#F2ECE0', padding: '14px', fontWeight: 600 }}>
-                      {o.ref}
-                      {isUrgent && <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '3px', background: '#EF4444', marginLeft: '6px', animation: 'pulse 2s infinite' }} />}
+                  <tr key={order.id} style={{ borderBottom: '1px solid rgba(201,169,110,0.04)' }}>
+                    <td style={{ padding: '10px 12px', fontFamily: mono, fontSize: '11px', color: '#8AAA92' }}>{order.id.slice(0, 8)}...</td>
+                    <td style={{ padding: '10px 12px', fontFamily: bg, fontSize: '13px', color: '#D4C9BA' }}>
+                      {order.buyer?.company_name || order.kyc_business_name}
                     </td>
-                    <td style={{ fontFamily: bg, fontSize: '12px', color: '#8AAA92', padding: '14px' }}>{o.date}</td>
-                    <td style={{ fontFamily: bg, fontSize: '13px', color: '#F2ECE0', padding: '14px', fontWeight: 500 }}>{o.buyer}</td>
-                    <td>
-                      <span style={{ fontFamily: bg, fontSize: '12px', color: '#F2ECE0' }}>{o.credit}</span>
-                      <span style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', display: 'block' }}>{o.type}</span>
+                    <td style={{ padding: '10px 12px', fontFamily: bg, fontSize: '12px', color: '#C4B8A8' }}>
+                      <div>{order.project_name}</div>
+                      <div style={{ color: '#6B8A74', fontSize: '11px' }}>{order.credit_type} · {order.quantity.toLocaleString()} t</div>
                     </td>
-                    <td style={{ fontFamily: mono, fontSize: '12px', color: '#F2ECE0', padding: '14px' }}>{o.qty.toLocaleString()}</td>
-                    <td style={{ fontFamily: mono, fontSize: '13px', color: '#F2ECE0', padding: '14px', fontWeight: 600 }}>{fmt(o.total)}</td>
-                    <td style={{ padding: '14px' }}>
-                      {o.insurance ? (
-                        <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: '#16A34A', background: 'rgba(22,163,74,0.08)', padding: '2px 8px', borderRadius: '4px' }}>
-                          Insured · {fmt(o.insurancePremium)}
-                        </span>
-                      ) : (
-                        <span style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74' }}>No</span>
-                      )}
-                    </td>
-                    <td style={{ padding: '14px' }}>
-                      <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '3px 10px', borderRadius: '6px', background: sc.bg, color: sc.text }}>
+                    <td style={{ padding: '10px 12px', fontFamily: mono, fontSize: '12px', color: '#D4C9BA' }}>{order.quantity.toLocaleString()}</td>
+                    <td style={{ padding: '10px 12px', fontFamily: mono, fontSize: '12px', color: '#D4C9BA' }}>{fmt(order.total_amount)}</td>
+                    <td style={{ padding: '10px 12px', fontFamily: bg, fontSize: '12px', color: '#8AAA92' }}>{order.payment_method}</td>
+                    <td style={{ padding: '10px 12px' }}>
+                      <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '3px 10px', borderRadius: '20px', background: sc.bg, color: sc.text }}>
                         {sc.label}
                       </span>
                     </td>
-                    <td style={{ padding: '14px' }}>
-                      {o.status === 'payment_received' && (
-                        <button style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '6px 14px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: '#C9A96E', color: '#0C1C14' }}>
-                          Initiate transfer
-                        </button>
-                      )}
-                      {o.status === 'pending_payment' && (
-                        <span style={{ fontFamily: mono, fontSize: '10px', color: '#F59E0B' }}>
-                          Due: {o.agreementDeadline}
-                        </span>
-                      )}
-                      {o.status === 'transfer_in_progress' && (
-                        <button style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '6px 14px', borderRadius: '6px', border: '1px solid rgba(201,169,110,0.2)', cursor: 'pointer', background: 'transparent', color: '#C9A96E' }}>
-                          Confirm delivery
+                    <td style={{ padding: '10px 12px' }}>
+                      {['pending_kyc', 'settled'].includes(order.status) && (
+                        <button
+                          onClick={() => { setSelectedOrder(order); setActionFeedback(null); }}
+                          style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '6px', padding: '4px 12px', cursor: 'pointer' }}
+                        >
+                          Review
                         </button>
                       )}
                     </td>
@@ -140,64 +261,124 @@ export default function AdminOrdersPage() {
             </tbody>
           </table>
         </div>
-      </div>
+      )}
 
-      {/* Order detail panel */}
-      {selected && (() => {
-        const o = ORDERS.find(x => x.ref === selected);
-        if (!o) return null;
-        const sc = STATUS_CONFIG[o.status];
-        return (
-          <div style={{ marginTop: '20px', background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <div>
-                <h2 style={{ fontFamily: fr, fontSize: '20px', color: '#F2ECE0' }}>{o.ref}</h2>
-                <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '3px 10px', borderRadius: '6px', background: sc.bg, color: sc.text }}>{sc.label}</span>
-              </div>
-              <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: '#6B8A74', cursor: 'pointer', fontSize: '18px' }}>✕</button>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+      {/* KYC / Settlement Review Modal */}
+      {selectedOrder && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+          <div style={{ background: '#1A2C21', border: '1px solid rgba(201,169,110,0.12)', borderRadius: '16px', padding: '32px', maxWidth: '540px', width: '100%' }}>
+            <h2 style={{ fontFamily: fr, fontSize: '22px', color: '#F2ECE0', marginBottom: '4px' }}>
+              {selectedOrder.status === 'pending_kyc' ? 'KYC Review' : 'Settlement & Transfer'}
+            </h2>
+            <p style={{ fontFamily: bg, fontSize: '12px', color: '#6B8A74', marginBottom: '24px' }}>
+              Order {selectedOrder.id.slice(0, 8)}
+            </p>
+
+            <div style={{ background: 'rgba(255,252,246,0.03)', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
               {[
-                { label: 'Buyer', value: o.buyer },
-                { label: 'Credit', value: `${o.credit} (${o.type})` },
-                { label: 'Quantity', value: `${o.qty.toLocaleString()} tCO₂e` },
-                { label: 'Unit price', value: `$${o.unitPrice.toFixed(2)}/tCO₂e` },
-                { label: 'Subtotal', value: fmt(o.total) },
-                { label: 'Insurance', value: o.insurance ? `${fmt(o.insurancePremium)} (3.5%)` : 'Declined' },
-                { label: 'Grand total', value: fmt(o.total + o.insurancePremium) },
-                { label: 'Payment method', value: o.paymentMethod },
-              ].map(d => (
-                <div key={d.label}>
-                  <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>{d.label}</div>
-                  <div style={{ fontFamily: bg, fontSize: '14px', color: '#F2ECE0', fontWeight: 500 }}>{d.value}</div>
+                ['Project', selectedOrder.project_name],
+                ['Credit Type', selectedOrder.credit_type],
+                ['Quantity', `${selectedOrder.quantity.toLocaleString()} tCO₂e`],
+                ['Total', fmt(selectedOrder.total_amount)],
+                ['Payment', selectedOrder.payment_method],
+                ['KYC Business', selectedOrder.kyc_business_name],
+                ['KYC Country', selectedOrder.kyc_business_country],
+              ].map(([label, value]) => (
+                <div key={label as string} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span style={{ fontFamily: bg, fontSize: '12px', color: '#6B8A74' }}>{label}</span>
+                  <span style={{ fontFamily: bg, fontSize: '12px', color: '#D4C9BA', fontWeight: 500 }}>{value}</span>
                 </div>
               ))}
             </div>
 
-            {/* Action buttons based on status */}
-            <div style={{ display: 'flex', gap: '10px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid rgba(201,169,110,0.06)' }}>
-              {o.status === 'payment_received' && (
-                <>
-                  <button style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, padding: '10px 24px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: '#C9A96E', color: '#0C1C14' }}>
-                    Initiate Verra transfer
+            {selectedOrder.status === 'pending_kyc' && (
+              <>
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ display: 'block', fontFamily: bg, fontSize: '12px', color: '#8AAA92', marginBottom: '6px' }}>
+                    Reviewer Notes (optional)
+                  </label>
+                  <textarea
+                    value={kycNote}
+                    onChange={e => setKycNote(e.target.value)}
+                    placeholder="Internal notes about this KYC review..."
+                    style={{ width: '100%', background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.12)', borderRadius: '8px', padding: '10px', fontFamily: bg, fontSize: '13px', color: '#D4C9BA', resize: 'vertical', minHeight: '72px', boxSizing: 'border-box' }}
+                  />
+                </div>
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
+                  <button
+                    onClick={() => handleKycApprove(selectedOrder)}
+                    disabled={actionLoading}
+                    style={{ flex: 1, fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#0C1C14', background: '#22C55E', border: 'none', borderRadius: '8px', padding: '10px', cursor: actionLoading ? 'not-allowed' : 'pointer', opacity: actionLoading ? 0.7 : 1 }}
+                  >
+                    Approve KYC
                   </button>
-                  <button style={{ fontFamily: bg, fontSize: '13px', padding: '10px 24px', borderRadius: '8px', border: '1px solid rgba(201,169,110,0.2)', cursor: 'pointer', background: 'transparent', color: '#C9A96E' }}>
-                    Contact buyer
+                </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <textarea
+                    value={kycRejectionReason}
+                    onChange={e => setKycRejectionReason(e.target.value)}
+                    placeholder="Rejection reason (required to reject)..."
+                    style={{ width: '100%', background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '8px', padding: '10px', fontFamily: bg, fontSize: '13px', color: '#D4C9BA', resize: 'vertical', minHeight: '60px', boxSizing: 'border-box' }}
+                  />
+                  <button
+                    onClick={() => handleKycReject(selectedOrder)}
+                    disabled={actionLoading || !kycRejectionReason}
+                    style={{ marginTop: '8px', width: '100%', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#EF4444', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '8px', padding: '10px', cursor: actionLoading ? 'not-allowed' : 'pointer' }}
+                  >
+                    Reject KYC
                   </button>
-                </>
-              )}
-              {o.status === 'transfer_in_progress' && (
-                <button style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, padding: '10px 24px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: '#16A34A', color: 'white' }}>
-                  Mark credits delivered
-                </button>
-              )}
-              <button style={{ fontFamily: bg, fontSize: '13px', padding: '10px 24px', borderRadius: '8px', border: '1px solid rgba(239,68,68,0.2)', cursor: 'pointer', background: 'transparent', color: '#EF4444' }}>
-                Flag issue
-              </button>
-            </div>
+                </div>
+              </>
+            )}
+
+            {selectedOrder.status === 'settled' && (
+              <SettlementPanel order={selectedOrder} onComplete={(ref) => handleMarkRetired(selectedOrder.id, ref)} loading={actionLoading} />
+            )}
+
+            <button
+              onClick={() => { setSelectedOrder(null); setKycNote(''); setKycRejectionReason(''); }}
+              style={{ width: '100%', fontFamily: bg, fontSize: '13px', color: '#6B8A74', background: 'transparent', border: '1px solid rgba(138,170,146,0.15)', borderRadius: '8px', padding: '10px', cursor: 'pointer', marginTop: '4px' }}
+            >
+              Close
+            </button>
           </div>
-        );
-      })()}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SettlementPanel({ order, onComplete, loading }: { order: CbOrder; onComplete: (ref: string) => void; loading: boolean }) {
+  const [registryRef, setRegistryRef] = useState('');
+  const fr = "'Fraunces', Georgia, serif";
+  const bg = "'Bricolage Grotesque', system-ui, sans-serif";
+
+  return (
+    <div>
+      <div style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)', borderRadius: '8px', padding: '14px', marginBottom: '16px' }}>
+        <p style={{ fontFamily: bg, fontSize: '12px', color: '#A78BFA', marginBottom: '4px', fontWeight: 600 }}>Registry Transfer Required</p>
+        <p style={{ fontFamily: bg, fontSize: '12px', color: '#8AAA92' }}>
+          Payment has been captured. Log into the {order.credit_type} registry and transfer {order.quantity.toLocaleString()} tCO₂e to the buyer account. Paste the registry transaction reference below.
+        </p>
+      </div>
+      <div style={{ marginBottom: '12px' }}>
+        <label style={{ display: 'block', fontFamily: bg, fontSize: '12px', color: '#8AAA92', marginBottom: '6px' }}>
+          Registry Transaction Reference *
+        </label>
+        <input
+          value={registryRef}
+          onChange={e => setRegistryRef(e.target.value)}
+          placeholder="e.g. VCS-1234-SERIAL-2024-001-500"
+          style={{ width: '100%', background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.12)', borderRadius: '8px', padding: '10px', fontFamily: bg, fontSize: '13px', color: '#D4C9BA', boxSizing: 'border-box' }}
+        />
+      </div>
+      <button
+        onClick={() => registryRef && onComplete(registryRef)}
+        disabled={loading || !registryRef}
+        style={{ width: '100%', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#0C1C14', background: '#8B5CF6', border: 'none', borderRadius: '8px', padding: '10px', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading || !registryRef ? 0.7 : 1 }}
+      >
+        Mark as Retired
+      </button>
     </div>
   );
 }

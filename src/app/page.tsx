@@ -182,9 +182,12 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left: Copy */}
             <div>
-              <div className="flex items-center gap-3 mb-7">
-                <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', padding: '5px 14px', borderRadius: '100px' }}>
-                  Create your free account today
+              <div className="flex items-center gap-3 mb-5 flex-wrap">
+                <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#F59E0B', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.25)', padding: '5px 14px', borderRadius: '100px' }}>
+                  Beta — Pilot Transactions Only
+                </span>
+                <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: 'rgba(138,170,146,0.7)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  ADGM/FSRA Authorisation In Progress
                 </span>
               </div>
 
@@ -192,8 +195,12 @@ export default function Home() {
                 The carbon credit marketplace built for the Gulf compliance wave.
               </h1>
 
-              <p style={{ fontFamily: bg, fontSize: '16px', color: '#8AAA92', lineHeight: 1.7, marginBottom: '36px', maxWidth: '480px' }}>
-                Discover, compare, and purchase verified carbon credits with integrated insurance, quality ratings, and institutional-grade settlement — in one platform.
+              <p style={{ fontFamily: bg, fontSize: '16px', color: '#8AAA92', lineHeight: 1.7, marginBottom: '20px', maxWidth: '480px' }}>
+                Discover, compare, and purchase verified carbon credits with integrated quality ratings and settlement — built for Gulf-region compliance buyers.
+              </p>
+              <p style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(138,170,146,0.55)', lineHeight: 1.6, marginBottom: '32px', maxWidth: '480px' }}>
+                Currently operating as a beta marketplace with pilot transactions. ADGM/FSRA Financial Services Permission application in progress.{' '}
+                <a href="/legal/risk-disclosure" style={{ color: 'rgba(201,169,110,0.6)', textDecoration: 'underline' }}>Risk disclosure ↗</a>
               </p>
 
               <div className="flex flex-wrap gap-3 mb-14">
