@@ -43,6 +43,46 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'order_id and action required' }, { status: 400 });
   }
 
+  // Fetch the order to verify ownership before any state transition
+  const { data: order } = await supabase
+    .from('orders')
+    .select('id, buyer_id, seller_id')
+    .eq('id', order_id)
+    .single();
+
+  if (!order) {
+    return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+  }
+
+  // Determine the caller's role — fetch profile for admin check
+  const { data: callerProfile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+  const isAdmin =
+    callerProfile?.role === 'admin' || callerProfile?.role === 'super_admin';
+
+  // Actions restricted to admin or seller only
+  const adminOrSellerActions = ['initiate_transfer', 'confirm_delivery', 'mark_failed', 'resolve_dispute'];
+  // Actions restricted to buyer, seller, or admin (i.e. no random user)
+  const isParty =
+    user.id === order.buyer_id || user.id === order.seller_id || isAdmin;
+
+  if (!isParty) {
+    return NextResponse.json({ error: 'Forbidden — not a party to this order' }, { status: 403 });
+  }
+
+  if (adminOrSellerActions.includes(action)) {
+    const isAdminOrSeller = isAdmin || user.id === order.seller_id;
+    if (!isAdminOrSeller) {
+      return NextResponse.json(
+        { error: `Forbidden — action '${action}' requires admin or seller role` },
+        { status: 403 },
+      );
+    }
+  }
+
   // Get current settlement state
   let { data: settlement } = await supabase
     .from('settlements')
@@ -138,23 +178,24 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Create admin alert
+    // Create admin alert (schema: priority in ('red','amber','blue'), alert_type text)
     await supabase.from('admin_alerts').insert({
-      type: 'settlement_completed',
-      severity: 'info',
+      priority: 'blue',
+      alert_type: 'settlement_completed',
       title: `Settlement completed for order ${order_id}`,
-      message: `${verra_transfer_ref || 'No ref'} — retirement certificate pending generation`,
+      entity_type: 'order',
+      entity_id: order_id,
       action_url: `/admin/orders`,
     });
   }
 
   // Log activity
   await supabase.from('activity_log').insert({
-    user_id: user.id,
+    actor_id: user.id,
     action: `settlement_${action}`,
     entity_type: 'settlement',
     entity_id: settlement.id,
-    metadata: { order_id, from: settlement.status, to: transition.to, payment_reference, verra_transfer_ref },
+    details: { order_id, from: settlement.status, to: transition.to, payment_reference, verra_transfer_ref },
   });
 
   return NextResponse.json({

@@ -123,10 +123,18 @@ function SectionHeader({ eyebrow, title, subtitle, dark, center = true }: { eyeb
 }
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navLinks = [
+    { label: 'Marketplace', href: '/marketplace' },
+    { label: 'Compare', href: '/compare' },
+    { label: 'Data & Insights', href: '/data' },
+    { label: 'About', href: '/about' },
+  ];
+
   return (
     <main>
       {/* ═══════════════════════════════════════════════════════
-          NAVIGATION 
+          NAVIGATION
           ═══════════════════════════════════════════════════════ */}
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
@@ -135,12 +143,7 @@ export default function Home() {
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
-            {[
-              { label: 'Marketplace', href: '/marketplace' },
-              { label: 'Compare', href: '/compare' },
-              { label: 'Data & Insights', href: '/data' },
-              { label: 'About', href: '/about' },
-            ].map(({ label, href }) => (
+            {navLinks.map(({ label, href }) => (
               <a key={label} href={href} style={{ fontFamily: bg, fontSize: '13.5px', fontWeight: 500, color: 'rgba(255,252,246,0.55)' }} className="hover:text-white transition-colors duration-300">
                 {label}
               </a>
@@ -156,10 +159,76 @@ export default function Home() {
             </a>
           </div>
 
-          <button className="lg:hidden text-white/60 hover:text-white" aria-label="Menu">
-            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          <button
+            className="lg:hidden text-white/60 hover:text-white"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen(prev => !prev)}
+          >
+            {mobileMenuOpen ? (
+              <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            ) : (
+              <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            )}
           </button>
         </div>
+
+        {/* Mobile menu panel */}
+        {mobileMenuOpen && (
+          <div
+            className="lg:hidden"
+            style={{
+              background: 'rgba(12,28,20,0.98)',
+              borderTop: '1px solid rgba(201,169,110,0.08)',
+              padding: '16px 24px 24px',
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '20px' }}>
+              {navLinks.map(({ label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    fontFamily: bg, fontSize: '15px', fontWeight: 500,
+                    color: 'rgba(255,252,246,0.7)',
+                    padding: '12px 0',
+                    borderBottom: '1px solid rgba(201,169,110,0.06)',
+                    display: 'block',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <a
+                href="/login"
+                style={{
+                  fontFamily: bg, fontSize: '14px', fontWeight: 500,
+                  color: 'rgba(201,169,110,0.9)',
+                  padding: '12px 20px',
+                  border: '1px solid rgba(201,169,110,0.2)', borderRadius: '8px',
+                  textAlign: 'center', textDecoration: 'none',
+                }}
+              >
+                Sign in
+              </a>
+              <a
+                href="/register"
+                style={{
+                  fontFamily: bg, fontSize: '14px', fontWeight: 600,
+                  color: '#0C1C14', background: '#C9A96E',
+                  padding: '12px 20px', borderRadius: '8px',
+                  textAlign: 'center', textDecoration: 'none',
+                }}
+              >
+                Get started
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* ═══════════════════════════════════════════════════════
@@ -545,9 +614,9 @@ export default function Home() {
             
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                'ADGM-registered entity',
-                'Verra General Account holder',
-                'ACX Abu Dhabi member',
+                'ADGM jurisdiction — Abu Dhabi',
+                'Verra General Account (target)',
+                'ACX Abu Dhabi (target)',
                 'Institutional-grade settlement',
                 'Lloyd\'s insurance distribution',
                 'Multi-registry access',
@@ -633,7 +702,7 @@ export default function Home() {
             <div>
               <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
-                MENA&apos;s first integrated carbon credit marketplace. ADGM registered. Abu Dhabi, UAE.
+                MENA&apos;s first integrated carbon credit marketplace. Abu Dhabi, UAE. ADGM authorisation in progress.
               </p>
             </div>
             {[

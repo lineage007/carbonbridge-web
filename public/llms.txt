@@ -1,0 +1,47 @@
+# CarbonBridge
+
+> MENA's first institutional carbon credit marketplace. Connecting UAE corporates, funds, and governments with verified carbon offset projects.
+
+CarbonBridge is a Next.js 15 + Supabase platform for buying, selling, and retiring voluntary carbon credits. It is designed for the MENA market, targeting the UAE NRCC compliance wave and EU CBAM readiness.
+
+## Key Product Areas
+
+- **Marketplace**: Browse and compare 18+ verified carbon credit listings by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
+- **Transaction chain**: Reservation → purchase agreement → escrow → settlement → registry retirement, with a 24-hour payment window.
+- **Insurance**: Integrated non-delivery and invalidation insurance via Lloyd's and Kita Earth.
+- **Data & Ratings**: Independent quality ratings (AAA–C) based on ICVCM Core Carbon Principles — additionality, permanence, leakage, co-benefits.
+- **API access**: REST API for fintech integrations to programmatically purchase and retire credits on behalf of clients.
+- **Carbon management SaaS**: Portfolio tracking, emissions reporting, and compliance dashboards for corporate sustainability teams.
+- **Forward contracts**: Lock in future delivery of credits at agreed prices with 15% deposit structure.
+
+## Supported Registries
+
+- Verra (VCS)
+- Gold Standard
+- American Carbon Registry (ACR)
+
+## Compliance Frameworks Covered
+
+- UAE NRCC (National Registry of Carbon Credits)
+- EU CBAM (Carbon Border Adjustment Mechanism, effective 2027)
+- ICAO CORSIA (aviation)
+- Science Based Targets initiative (SBTi BVCM)
+- VCMI claims framework
+
+## Technical
+
+- Stack: Next.js 15 (App Router), TypeScript, Supabase (PostgreSQL + auth + RLS), Tailwind CSS
+- Deployment: Vercel (preview at carbonbridge-web.vercel.app; production domain carbonbridge.ae pending DNS)
+- Status: pre-revenue, dev/staging only; 1 registered user (admin); no live Stripe account
+
+## Limitations (as of 2026-07-03)
+
+- Registry integrations (Verra, Gold Standard, ACR) are stubs — retirements are manually processed by the operations team until ADGM FSP authorisation is granted.
+- E-signature service not yet live — purchase agreements are executed by alternative means.
+- ADGM Financial Services Permission application in progress.
+- Legal pages (Terms, Privacy, API Terms, Insurance Terms, Marketplace Rules) contain placeholder text pending ADGM-qualified counsel review.
+
+## Contact
+
+- info@carbonbridge.ae (business inquiries)
+- gary@continode.com (founder)

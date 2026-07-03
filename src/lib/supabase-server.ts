@@ -1,4 +1,8 @@
+// server-only — never import this file from a Client Component
+import 'server-only';
+
 import { createServerClient } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 
 export async function createClient() {
@@ -58,4 +62,16 @@ export async function requireSuperAdmin() {
     redirect('/dashboard')
   }
   return user
+}
+
+/**
+ * Service-role client — bypasses RLS. Use only in server-side API routes
+ * for admin operations. NEVER import from a Client Component.
+ */
+export function createServiceClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder',
+    { auth: { autoRefreshToken: false, persistSession: false } },
+  );
 }

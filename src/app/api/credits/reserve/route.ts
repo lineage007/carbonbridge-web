@@ -81,11 +81,11 @@ export async function POST(req: NextRequest) {
 
     // Log activity
     await supabase.from('activity_log').insert({
-      user_id: user.id,
+      actor_id: user.id,
       action: 'credit_reserved',
       entity_type: 'order',
       entity_id: order.id,
-      metadata: { listing_id, quantity, project: listing.project_name, expires: deadline.toISOString() },
+      details: { listing_id, quantity, project: listing.project_name, expires: deadline.toISOString() },
     });
 
     return NextResponse.json({
@@ -102,10 +102,34 @@ export async function POST(req: NextRequest) {
 }
 
 // Release expired reservations (called by cron or admin)
-export async function DELETE() {
+export async function DELETE(req: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
+    // Require either a valid admin/super_admin session or a shared cron secret header
+    const cronSecret = req.headers.get('x-cron-secret');
+    const validCronSecret =
+      cronSecret &&
+      process.env.CRON_SECRET &&
+      cronSecret === process.env.CRON_SECRET;
+
+    if (!validCronSecret) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+      const isAdmin =
+        profile?.role === 'admin' || profile?.role === 'super_admin';
+      if (!isAdmin) {
+        return NextResponse.json({ error: 'Forbidden — admin only' }, { status: 403 });
+      }
+    }
+
     // Find expired reservations
     const { data: expired } = await supabase
       .from('orders')
@@ -141,7 +165,7 @@ export async function DELETE() {
         action: 'reservation_expired',
         entity_type: 'order',
         entity_id: order.id,
-        metadata: { listing_id: order.listing_id, quantity: order.quantity },
+        details: { listing_id: order.listing_id, quantity: order.quantity },
       });
 
       released++;

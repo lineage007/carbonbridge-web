@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
       userId = profile.id;
 
       await supabase.from('api_offset_logs').insert({
-        api_client_id: userId,
+        client_id: userId,
         endpoint: '/api/retire',
         method: 'POST',
         status_code: 200,
@@ -165,21 +165,22 @@ export async function POST(req: NextRequest) {
     // Until ADGM authorisation + registry partner agreements are in place,
     // the admin_alert below routes to a human operator for manual execution.
 
+    // Schema: admin_alerts uses priority in ('red','amber','blue') and alert_type text
     await supabase.from('admin_alerts').insert({
-      type: 'retirement_requested',
-      severity: 'action',
-      title: `Retirement requested: ${retireQty} tCO₂e`,
-      message: `Order ${order_id} (credit ${credit_id}) — ${order.listings?.project_name ?? 'unknown'} (${order.listings?.registry ?? 'unknown'}). Beneficiary: ${beneficiary_name ?? 'Not specified'}. Buyer wallet: ${buyer_wallet ?? 'not provided'}. Initiate retirement on registry portal.`,
+      priority: 'amber',
+      alert_type: 'retirement_requested',
+      title: `Retirement requested: ${retireQty} tCO₂e — Order ${order_id}`,
+      entity_type: 'retirement_certificate',
+      entity_id: cert.id,
       action_url: `/admin/orders`,
-      metadata: { order_id, credit_id, cert_id: cert.id, quantity: retireQty, buyer_wallet },
     });
 
     await supabase.from('activity_log').insert({
-      user_id: userId,
+      actor_id: userId,
       action: 'retirement_requested',
       entity_type: 'retirement_certificate',
       entity_id: cert.id,
-      metadata: {
+      details: {
         order_id,
         credit_id,
         quantity: retireQty,
