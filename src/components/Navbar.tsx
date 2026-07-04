@@ -61,13 +61,14 @@ export default function Navbar({ dark = false }: NavbarProps) {
   // Style variants
   const navBg = dark
     ? 'rgba(12,28,20,0.97)'
-    : 'rgba(250,250,247,0.97)';
+    : 'rgba(250,251,249,0.97)';
   const borderColor = dark
-    ? 'rgba(201,169,110,0.08)'
-    : '#E8E2D8';
-  const linkColor = dark ? 'rgba(255,252,246,0.6)' : '#5A5248';
-  const activeLinkColor = dark ? '#FFFCF6' : '#1A1714';
-  const logoSrc = dark ? '/logo-white.png' : '/logo-white.png';
+    ? 'rgba(184,149,90,0.08)'
+    : '#DDE0DA';
+  const linkColor = dark ? 'rgba(238,238,232,0.55)' : '#556358';
+  const activeLinkColor = dark ? '#EEEEE8' : '#0F1A13';
+  // Use green logo on light backgrounds so it's visible
+  const logoSrc = dark ? '/logo-white.png' : '/logo-green.png';
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 

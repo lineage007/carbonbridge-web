@@ -7,7 +7,8 @@ import Navbar from '@/components/Navbar';
 import { LISTINGS, CREDIT_TYPE_COLORS, type CreditListing, type CreditType, type QualityRating, type Region, type ComplianceTag, type CoBenefit, type Registry } from '@/data/credits';
 
 const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
-const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
+const bg = "'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui, sans-serif";
+const mono = "'JetBrains Mono', 'Courier New', monospace";
 
 // ─── Filter Options ────────────────────────────────────────
 const CREDIT_TYPES: CreditType[] = ['ARR', 'Blue Carbon', 'REDD+', 'Biochar', 'Soil Carbon', 'Savanna', 'Landfill Gas', 'Energy Efficiency', 'IFM'];
@@ -95,7 +96,7 @@ export default function MarketplacePage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#FDFBF7' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--slate)' }}>
       <Navbar dark={true} />
       <main>
 
@@ -133,7 +134,7 @@ export default function MarketplacePage() {
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-8">
           <div className="flex gap-8">
             {/* Sidebar filters — desktop always, mobile toggle */}
-            <aside className={`w-[280px] shrink-0 ${showFilters ? 'block fixed inset-0 z-40 bg-white p-6 overflow-y-auto' : 'hidden'} lg:block lg:static lg:bg-transparent lg:p-0`}>
+            <aside className={`w-[280px] shrink-0 ${showFilters ? 'block fixed inset-0 z-40 p-6 overflow-y-auto' : 'hidden'} lg:block lg:static lg:bg-transparent lg:p-0`} style={showFilters ? { background: 'var(--canvas)' } : {}}>
               {showFilters && (
                 <div className="flex items-center justify-between mb-4 lg:hidden">
                   <span style={{ fontFamily: bg, fontSize: '16px', fontWeight: 700 }}>Filters</span>
@@ -142,8 +143,8 @@ export default function MarketplacePage() {
               )}
 
               <div className="flex items-center justify-between mb-5">
-                <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#1A1714', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Filters</span>
-                {activeFilterCount > 0 && <button onClick={clearAll} style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', fontWeight: 600 }}>Clear all ({activeFilterCount})</button>}
+                <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--ink)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Filters</span>
+                {activeFilterCount > 0 && <button onClick={clearAll} style={{ fontFamily: mono, fontSize: '10px', color: 'var(--gold)', fontWeight: 600, letterSpacing: '0.04em' }}>Clear all ({activeFilterCount})</button>}
               </div>
 
               {/* Sort */}
@@ -258,8 +259,8 @@ export default function MarketplacePage() {
 
 function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #E8E2D6' }}>
-      <div style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '11px', fontWeight: 700, color: '#8B8178', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>{title}</div>
+    <div style={{ marginBottom: '18px', paddingBottom: '14px', borderBottom: '1px solid var(--border-light)' }}>
+      <div style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--sage)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '10px' }}>{title}</div>
       {children}
     </div>
   );
@@ -270,17 +271,18 @@ function FilterPill({ label, active, onClick, color }: { label: string; active: 
     <button
       onClick={onClick}
       style={{
-        fontFamily: "'Plus Jakarta Sans', system-ui",
-        fontSize: '12px',
-        fontWeight: active ? 700 : 500,
-        color: active ? (color || '#1B3A2D') : '#8B8178',
-        background: active ? (color ? `${color}15` : 'rgba(27,58,45,0.08)') : 'transparent',
-        border: `1px solid ${active ? (color || '#1B3A2D') : '#E8E2D6'}`,
-        padding: '5px 12px',
-        borderRadius: '100px',
+        fontFamily: mono,
+        fontSize: '11px',
+        fontWeight: active ? 600 : 400,
+        color: active ? (color || 'var(--forest)') : 'var(--ink-muted)',
+        background: active ? (color ? `${color}12` : 'rgba(27,58,45,0.07)') : 'transparent',
+        border: `1px solid ${active ? (color || 'rgba(27,58,45,0.3)') : 'var(--border-light)'}`,
+        padding: '4px 10px',
+        borderRadius: '4px',
         cursor: 'pointer',
-        transition: 'all 0.15s',
+        transition: 'all 0.12s',
         whiteSpace: 'nowrap',
+        letterSpacing: '0.04em',
       }}
     >
       {label}
@@ -289,81 +291,81 @@ function FilterPill({ label, active, onClick, color }: { label: string; active: 
 }
 
 function CreditCard({ credit }: { credit: CreditListing }) {
-  const ratingColor = credit.qualityRating.startsWith('A') ? '#2D6A4F' : credit.qualityRating === 'BBB' ? '#7B5B3A' : '#8B8178';
+  const ratingColor = credit.qualityRating.startsWith('A') ? 'var(--forest)' : credit.qualityRating === 'BBB' ? 'var(--gold)' : 'var(--ink-muted)';
 
   return (
     <Link href={`/credits/${credit.id}`}>
       <div
         className="group"
         style={{
-          background: 'white',
-          border: '1px solid #E8E2D6',
-          borderRadius: '14px',
-          padding: '22px',
+          background: 'var(--canvas)',
+          border: '1px solid var(--border-light)',
+          borderRadius: '8px',
+          padding: '18px 20px',
           cursor: 'pointer',
-          transition: 'all 0.25s ease',
+          transition: 'border-color 0.15s',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
         }}
-        onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 30px rgba(27,58,45,0.08)'; e.currentTarget.style.borderColor = 'rgba(201,169,110,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-        onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#E8E2D6'; e.currentTarget.style.transform = 'none'; }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(184,149,90,0.35)'; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-light)'; }}
       >
-        {/* Top row: type badge + CB Direct */}
+        {/* Top row: type badge + status badges */}
         <div className="flex items-center justify-between mb-3">
-          <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '10px', fontWeight: 700, color: 'white', background: CREDIT_TYPE_COLORS[credit.creditType], padding: '3px 10px', borderRadius: '6px', letterSpacing: '0.03em' }}>
+          <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'white', background: CREDIT_TYPE_COLORS[credit.creditType], padding: '2px 8px', borderRadius: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             {credit.creditType}
           </span>
-          <div className="flex items-center gap-2">
-            {credit.ccpLabelled && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', fontWeight: 700, color: '#C9A96E', background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.2)', padding: '2px 7px', borderRadius: '4px' }}>CCP</span>}
-            {credit.isCBDirect && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', fontWeight: 700, color: '#1B3A2D', background: 'rgba(27,58,45,0.08)', border: '1px solid rgba(27,58,45,0.15)', padding: '2px 7px', borderRadius: '4px' }}>CB Direct</span>}
-            {!credit.isCBDirect && (credit as any).isCBSourced && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', fontWeight: 700, color: '#C9A96E', background: 'transparent', border: '1px solid #C9A96E', padding: '2px 7px', borderRadius: '4px' }}>CB Sourced</span>}
+          <div className="flex items-center gap-1.5">
+            {credit.ccpLabelled && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--gold)', background: 'rgba(184,149,90,0.1)', border: '1px solid rgba(184,149,90,0.2)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>CCP</span>}
+            {credit.isCBDirect && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--forest)', background: 'rgba(27,58,45,0.07)', border: '1px solid rgba(27,58,45,0.15)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>Direct</span>}
+            {!credit.isCBDirect && (credit as any).isCBSourced && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(184,149,90,0.4)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>Sourced</span>}
           </div>
         </div>
 
         {/* Project name + location */}
-        <h3 style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '14px', fontWeight: 700, color: '#1A1714', lineHeight: 1.35, marginBottom: '3px', minHeight: '38px' }}>
+        <h3 style={{ fontFamily: bg, fontSize: '13.5px', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.35, marginBottom: '3px', minHeight: '36px' }}>
           {credit.projectName}
         </h3>
-        <p style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '11.5px', color: '#8B8178', marginBottom: '14px' }}>
+        <p style={{ fontFamily: mono, fontSize: '10px', color: 'var(--sage)', marginBottom: '14px', letterSpacing: '0.02em' }}>
           {credit.location}
         </p>
 
         {/* Price + Rating row */}
-        <div className="flex items-end justify-between mb-3">
+        <div className="flex items-baseline justify-between mb-3">
           <div>
-            <span style={{ fontFamily: fr, fontSize: '26px', fontWeight: 700, color: '#1A1714', letterSpacing: '-0.02em', fontFeatureSettings: "'tnum'", transition: 'color 0.2s' }} className="group-hover:text-[#C9A96E]">
+            <span style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: 'var(--ink)', letterSpacing: '-0.01em', fontVariantNumeric: 'tabular-nums', transition: 'color 0.15s' }} className="group-hover:text-[#B8955A]">
               ${credit.price.toFixed(2)}
             </span>
-            <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '11px', color: '#8B8178', marginLeft: '3px' }}>/tCO₂e</span>
-            {credit.priceNegotiable && <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '10px', color: '#C9A96E', display: 'block', marginTop: '1px' }}>Negotiable for volume</span>}
+            <span style={{ fontFamily: mono, fontSize: '10px', color: 'var(--sage)', marginLeft: '3px' }}>/tCO₂e</span>
+            {credit.priceNegotiable && <span style={{ fontFamily: mono, fontSize: '9px', color: 'var(--gold)', display: 'block', marginTop: '1px', letterSpacing: '0.04em' }}>vol. negotiable</span>}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <span style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: ratingColor, lineHeight: 1 }}>{credit.qualityRating}</span>
-            <span style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9px', color: '#B0A99A', marginTop: '2px' }}>Quality</span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <span style={{ fontFamily: mono, fontSize: '16px', fontWeight: 700, color: ratingColor, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{credit.qualityRating}</span>
+            <span style={{ fontFamily: mono, fontSize: '8px', color: 'var(--sage)', marginTop: '2px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Quality</span>
           </div>
         </div>
 
         {/* Metadata */}
-        <div style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '11px', color: '#8B8178', display: 'flex', gap: '12px', marginBottom: '12px', flexWrap: 'wrap' }}>
+        <div style={{ fontFamily: mono, fontSize: '10px', color: 'var(--sage)', display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap', letterSpacing: '0.02em' }}>
           <span>{credit.vintage}</span>
           <span>·</span>
           <span>{credit.registry}</span>
           <span>·</span>
-          <span>{credit.methodology}</span>
+          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '140px' }}>{credit.methodology}</span>
         </div>
 
         {/* Volume */}
-        <div style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '11px', color: '#1A1714', marginBottom: '12px' }}>
-          <span style={{ fontWeight: 600, fontFeatureSettings: "'tnum'" }}>{credit.volumeAvailable.toLocaleString()}</span>
-          <span style={{ color: '#B0A99A' }}> tCO₂e available</span>
+        <div style={{ fontFamily: mono, fontSize: '10px', color: 'var(--ink)', marginBottom: '10px', fontVariantNumeric: 'tabular-nums' }}>
+          <span style={{ fontWeight: 600 }}>{credit.volumeAvailable.toLocaleString()}</span>
+          <span style={{ color: 'var(--sage)' }}> tCO₂e available</span>
         </div>
 
         {/* Compliance tags */}
         {credit.compliance.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-auto pt-3" style={{ borderTop: '1px solid #F0EBE3' }}>
+          <div className="flex flex-wrap gap-1 mt-auto pt-3" style={{ borderTop: '1px solid var(--border-light)' }}>
             {credit.compliance.map(c => (
-              <span key={c} style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '9.5px', fontWeight: 600, color: '#1B3A2D', background: 'rgba(27,58,45,0.06)', border: '1px solid rgba(27,58,45,0.1)', padding: '2px 8px', borderRadius: '4px' }}>
+              <span key={c} style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--forest)', background: 'rgba(27,58,45,0.05)', border: '1px solid rgba(27,58,45,0.1)', padding: '1px 7px', borderRadius: '3px', letterSpacing: '0.04em' }}>
                 {c}
               </span>
             ))}
