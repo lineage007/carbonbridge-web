@@ -14,7 +14,7 @@ const coverage = ((totalOffset / totalEmissions) * 100).toFixed(0);
 
 const TARGETS = [
   { name: 'UAE Net Zero 2050', target: 'Net zero by 2050', progress: 38, status: 'On track', color: '#16A34A' },
-  { name: 'SBTi Near-Term', target: '42% reduction by 2030', progress: 22, status: 'Monitoring', color: '#C9A96E' },
+  { name: 'SBTi Near-Term', target: '42% reduction by 2030', progress: 22, status: 'Monitoring', color: '#4A8B64' },
   { name: 'NRCC Compliance', target: 'Annual reporting + offsetting', progress: 85, status: 'Action needed', color: '#dc2626' },
 ];
 
@@ -37,9 +37,9 @@ export default function CarbonPage() {
           <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: '#16A34A' }}>{totalOffset.toLocaleString()} tCO₂e</div>
           <div style={{ fontFamily: bg, fontSize: '11px', color: '#8A7E70', marginTop: '4px' }}>{coverage}% of total emissions</div>
         </div>
-        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '18px', borderTop: '3px solid #C9A96E' }}>
+        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '18px', borderTop: '3px solid #4A8B64' }}>
           <div style={{ fontFamily: bg, fontSize: '12px', color: '#8A7E70', marginBottom: '6px' }}>Net Position</div>
-          <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: '#C9A96E' }}>Carbon Positive</div>
+          <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: '#4A8B64' }}>Carbon Positive</div>
           <div style={{ fontFamily: bg, fontSize: '11px', color: '#8A7E70', marginTop: '4px' }}>Offsets exceed emissions by {(totalOffset - totalEmissions).toLocaleString()} tCO₂e</div>
         </div>
       </div>

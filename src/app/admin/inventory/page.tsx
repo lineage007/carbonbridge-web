@@ -49,11 +49,11 @@ export default function AdminInventoryPage() {
         {[
           { label: 'Available inventory', value: `${(INVENTORY.reduce((s, i) => s + i.available, 0) / 1000).toFixed(0)}K tCO₂e`, color: '#F2ECE0' },
           { label: 'Inventory value', value: fmt(totalValue), color: '#16A34A' },
-          { label: 'CB Direct cost basis', value: fmt(totalCost), color: '#C9A96E' },
+          { label: 'CB Direct cost basis', value: fmt(totalCost), color: '#4A8B64' },
           { label: 'Reserved (locked)', value: `${(INVENTORY.reduce((s, i) => s + i.reserved, 0) / 1000).toFixed(1)}K tCO₂e`, color: '#F59E0B' },
           { label: 'Avg CB Direct margin', value: `${avgMargin.toFixed(1)}%`, color: '#16A34A' },
         ].map(k => (
-          <div key={k.label} style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '10px', padding: '14px' }}>
+          <div key={k.label} style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '10px', padding: '14px' }}>
             <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{k.label}</div>
             <div style={{ fontFamily: mono, fontSize: '20px', fontWeight: 700, color: k.color, marginTop: '4px' }}>{k.value}</div>
           </div>
@@ -66,18 +66,18 @@ export default function AdminInventoryPage() {
           <button key={t.k} onClick={() => setFilter(t.k as typeof filter)} style={{
             fontFamily: bg, fontSize: '12px', fontWeight: filter === t.k ? 600 : 400,
             padding: '7px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-            background: filter === t.k ? 'rgba(201,169,110,0.1)' : 'transparent',
-            color: filter === t.k ? '#C9A96E' : '#6B8A74',
+            background: filter === t.k ? 'rgba(74,139,100,0.1)' : 'transparent',
+            color: filter === t.k ? '#4A8B64' : '#6B8A74',
           }}>{t.l}</button>
         ))}
       </div>
 
       {/* Inventory table */}
-      <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
+      <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(74,139,100,0.08)' }}>
                 {['Project', 'Type', 'Registry', 'Vintage', 'Rating', 'Available', 'Reserved', 'Sold', 'List Price', 'Margin', 'Source'].map(h => (
                   <th key={h} style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textAlign: 'left', padding: '10px 12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
                 ))}
@@ -87,7 +87,7 @@ export default function AdminInventoryPage() {
               {filtered.map(item => {
                 const sellThrough = item.totalTonnes > 0 ? (item.sold / item.totalTonnes * 100) : 0;
                 return (
-                  <tr key={item.id} style={{ borderBottom: '1px solid rgba(201,169,110,0.04)' }}>
+                  <tr key={item.id} style={{ borderBottom: '1px solid rgba(74,139,100,0.04)' }}>
                     <td style={{ fontFamily: bg, fontSize: '13px', color: '#F2ECE0', padding: '14px 12px', fontWeight: 500 }}>{item.project}</td>
                     <td style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92', padding: '14px 12px' }}>{item.type}</td>
                     <td style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92', padding: '14px 12px' }}>{item.registry}</td>
@@ -112,8 +112,8 @@ export default function AdminInventoryPage() {
                     <td style={{ fontFamily: mono, fontSize: '12px', color: item.margin > 30 ? '#16A34A' : '#F59E0B', padding: '14px 12px' }}>{item.margin.toFixed(1)}%</td>
                     <td style={{ padding: '14px 12px' }}>
                       <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, padding: '2px 8px', borderRadius: '4px',
-                        background: item.cbDirect ? 'rgba(201,169,110,0.1)' : 'rgba(255,252,246,0.04)',
-                        color: item.cbDirect ? '#C9A96E' : '#6B8A74',
+                        background: item.cbDirect ? 'rgba(74,139,100,0.1)' : 'rgba(255,252,246,0.04)',
+                        color: item.cbDirect ? '#4A8B64' : '#6B8A74',
                       }}>{item.cbDirect ? 'CB Direct' : '3rd party'}</span>
                     </td>
                   </tr>

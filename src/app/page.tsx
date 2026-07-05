@@ -90,7 +90,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════
           NAVIGATION
           ═══════════════════════════════════════════════════════ */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
+      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(74,139,100,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
           <Link href="/" className="flex items-center group">
             <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '48px', width: 'auto' }} />
@@ -105,10 +105,10 @@ export default function Home() {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <a href="/login" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(201,169,110,0.8)', padding: '7px 18px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(201,169,110,0.5)] hover:text-[#C9A96E] transition-all duration-300">
+            <a href="/login" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 500, color: 'rgba(74,139,100,0.8)', padding: '7px 18px', border: '1px solid rgba(74,139,100,0.2)', borderRadius: '7px' }} className="hover:border-[rgba(74,139,100,0.5)] hover:text-[#4A8B64] transition-all duration-300">
               Sign in
             </a>
-            <a href="/register" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '7px 20px', borderRadius: '7px' }} className="hover:brightness-110 transition-all duration-200">
+            <a href="/register" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest-deep)', background: '#4A8B64', padding: '7px 20px', borderRadius: '7px' }} className="hover:brightness-110 transition-all duration-200">
               Get started
             </a>
           </div>
@@ -133,7 +133,7 @@ export default function Home() {
             className="lg:hidden"
             style={{
               background: 'rgba(12,28,20,0.98)',
-              borderTop: '1px solid rgba(201,169,110,0.08)',
+              borderTop: '1px solid rgba(74,139,100,0.08)',
               padding: '16px 24px 24px',
             }}
           >
@@ -147,7 +147,7 @@ export default function Home() {
                     fontFamily: bg, fontSize: '15px', fontWeight: 500,
                     color: 'rgba(255,252,246,0.7)',
                     padding: '12px 0',
-                    borderBottom: '1px solid rgba(201,169,110,0.06)',
+                    borderBottom: '1px solid rgba(74,139,100,0.06)',
                     display: 'block',
                     textDecoration: 'none',
                   }}
@@ -161,9 +161,9 @@ export default function Home() {
                 href="/login"
                 style={{
                   fontFamily: bg, fontSize: '14px', fontWeight: 500,
-                  color: 'rgba(201,169,110,0.9)',
+                  color: 'rgba(74,139,100,0.9)',
                   padding: '12px 20px',
-                  border: '1px solid rgba(201,169,110,0.2)', borderRadius: '8px',
+                  border: '1px solid rgba(74,139,100,0.2)', borderRadius: '8px',
                   textAlign: 'center', textDecoration: 'none',
                 }}
               >
@@ -173,7 +173,7 @@ export default function Home() {
                 href="/register"
                 style={{
                   fontFamily: bg, fontSize: '14px', fontWeight: 600,
-                  color: '#0C1C14', background: '#C9A96E',
+                  color: '#0C1C14', background: '#4A8B64',
                   padding: '12px 20px', borderRadius: '8px',
                   textAlign: 'center', textDecoration: 'none',
                 }}
@@ -190,14 +190,14 @@ export default function Home() {
           ═══════════════════════════════════════════════════════ */}
       <section style={{ background: 'linear-gradient(175deg, #0C1C14 0%, #142E22 50%, #1B3A2D 100%)', paddingTop: '140px', paddingBottom: '110px', position: 'relative', overflow: 'hidden' }}>
         {/* Subtle grid pattern */}
-        <div style={{ position: 'absolute', inset: 0, opacity: 0.03, backgroundImage: 'linear-gradient(rgba(201,169,110,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,110,0.3) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.03, backgroundImage: 'linear-gradient(rgba(74,139,100,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(74,139,100,0.3) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
         {/* Decorative geometric circles — brand element */}
         <div style={{ position: 'absolute', right: '-120px', bottom: '-80px', opacity: 0.025, pointerEvents: 'none' }}>
           <svg width="500" height="500" viewBox="0 0 500 500" fill="none">
-            <circle cx="250" cy="250" r="245" stroke="#C9A96E" strokeWidth="1" />
-            <circle cx="250" cy="250" r="180" stroke="#C9A96E" strokeWidth="0.5" />
-            <circle cx="250" cy="250" r="115" stroke="#C9A96E" strokeWidth="0.5" />
-            <circle cx="250" cy="250" r="50" stroke="#C9A96E" strokeWidth="0.5" />
+            <circle cx="250" cy="250" r="245" stroke="#4A8B64" strokeWidth="1" />
+            <circle cx="250" cy="250" r="180" stroke="#4A8B64" strokeWidth="0.5" />
+            <circle cx="250" cy="250" r="115" stroke="#4A8B64" strokeWidth="0.5" />
+            <circle cx="250" cy="250" r="50" stroke="#4A8B64" strokeWidth="0.5" />
           </svg>
         </div>
         
@@ -206,7 +206,7 @@ export default function Home() {
             {/* Left: Copy */}
             <div>
               <div className="flex items-center gap-3 mb-7">
-                <span style={{ fontFamily: mono, fontSize: '10px', fontWeight: 500, color: 'var(--gold)', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(184,149,90,0.1)', border: '1px solid rgba(184,149,90,0.2)', padding: '4px 12px', borderRadius: '3px' }}>
+                <span style={{ fontFamily: mono, fontSize: '10px', fontWeight: 500, color: 'var(--gold)', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(60,122,85,0.1)', border: '1px solid rgba(60,122,85,0.2)', padding: '4px 12px', borderRadius: '3px' }}>
                   MENA Carbon Credit Marketplace
                 </span>
               </div>
@@ -220,7 +220,7 @@ export default function Home() {
               </p>
 
               <div className="flex flex-wrap gap-3 mb-14">
-                <a href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '13px 28px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
+                <a href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#4A8B64', padding: '13px 28px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
                   Create free account {icons.arrow}
                 </a>
                 <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '13px 28px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 hover:text-white transition-all duration-300">
@@ -229,7 +229,7 @@ export default function Home() {
               </div>
 
               {/* Trust bar — Settlement partner logos */}
-              <div style={{ borderTop: '1px solid rgba(184,149,90,0.12)', paddingTop: '22px' }}>
+              <div style={{ borderTop: '1px solid rgba(60,122,85,0.12)', paddingTop: '22px' }}>
                 <div style={{ fontFamily: mono, fontSize: '9px', color: 'rgba(99,122,106,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '14px' }}>Settlement &amp; Registry Partners (target)</div>
                 <div className="flex flex-wrap items-center gap-x-10 gap-y-4" style={{ opacity: 0.45 }}>
                   {[
@@ -247,7 +247,7 @@ export default function Home() {
             </div>
 
             {/* Right: Market data dashboard */}
-            <div style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '18px', padding: '28px', position: 'relative' }}>
+            <div style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(74,139,100,0.08)', borderRadius: '18px', padding: '28px', position: 'relative' }}>
               <div className="flex items-center justify-between mb-6">
                 <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Market Overview</span>
                 <span style={{ fontFamily: mono, fontSize: '10px', color: 'rgba(99,122,106,0.6)', background: 'rgba(99,122,106,0.08)', padding: '2px 8px', borderRadius: '3px', letterSpacing: '0.04em' }}>INDICATIVE BENCHMARKS</span>
@@ -261,7 +261,7 @@ export default function Home() {
                   { label: 'Biochar / CDR', price: '$142.00', delta: '+45.2%', up: true },
                   { label: 'Legacy Credits', price: '$3.50', delta: '-22.1%', up: false },
                 ].map(p => (
-                  <div key={p.label} style={{ background: 'rgba(255,255,248,0.03)', border: '1px solid rgba(184,149,90,0.08)', borderRadius: '6px', padding: '14px' }}>
+                  <div key={p.label} style={{ background: 'rgba(255,255,248,0.03)', border: '1px solid rgba(60,122,85,0.08)', borderRadius: '6px', padding: '14px' }}>
                     <div style={{ fontFamily: mono, fontSize: '9px', color: 'var(--sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{p.label}</div>
                     <div className="flex items-baseline gap-2 mt-1">
                       <span style={{ fontFamily: mono, fontSize: '18px', fontWeight: 600, color: '#EEEEE8', fontVariantNumeric: 'tabular-nums' }}>{p.price}</span>
@@ -277,7 +277,7 @@ export default function Home() {
               <div className="space-y-2">
                 {[
                   { label: 'Nature-Based', pct: 56, color: '#6FAE78' },
-                  { label: 'Engineered', pct: 24, color: '#B8955A' },
+                  { label: 'Engineered', pct: 24, color: '#3C7A55' },
                   { label: 'Avoidance', pct: 14, color: '#7A9E8A' },
                   { label: 'Other', pct: 6, color: '#4A6355' },
                 ].map(b => (
@@ -291,7 +291,7 @@ export default function Home() {
                 ))}
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(184,149,90,0.06)', marginTop: '18px', paddingTop: '12px', fontFamily: mono, fontSize: '9px', color: 'rgba(99,122,106,0.4)', lineHeight: 1.6, letterSpacing: '0.02em' }}>
+              <div style={{ borderTop: '1px solid rgba(60,122,85,0.06)', marginTop: '18px', paddingTop: '12px', fontFamily: mono, fontSize: '9px', color: 'rgba(99,122,106,0.4)', lineHeight: 1.6, letterSpacing: '0.02em' }}>
                 182M tonnes retired in 2024 · $535M total value<br />
                 Indicative benchmarks sourced from public registry data. Not real-time trading prices.
               </div>
@@ -346,7 +346,7 @@ export default function Home() {
           <div className="space-y-3">
             {[
               { reg: 'UAE NRCC', deadline: 'May 30, 2026', days: 'First deadline passed', desc: 'The UAE National Registry of Carbon Credits first compliance deadline has passed. Large emitters now face retroactive reporting obligations. The window for managed retroactive compliance is open now.', color: '#C97A5A', passed: true },
-              { reg: 'EU CBAM', deadline: 'January 1, 2027', days: `${daysUntil('2027-01-01')} days`, desc: 'Carbon Border Adjustment Mechanism. UAE aluminium, steel, cement, and fertiliser exporters to the EU must purchase equivalent carbon credits or face import duties.', color: '#B8955A', passed: false },
+              { reg: 'EU CBAM', deadline: 'January 1, 2027', days: `${daysUntil('2027-01-01')} days`, desc: 'Carbon Border Adjustment Mechanism. UAE aluminium, steel, cement, and fertiliser exporters to the EU must purchase equivalent carbon credits or face import duties.', color: '#3C7A55', passed: false },
               { reg: 'CORSIA Phase 2', deadline: '2027–2035', days: 'Procurement now', desc: 'Mandatory carbon offsetting for international aviation. Airlines must source eligible credits and retire them against verified emissions. Multi-year forward procurement is already underway.', color: '#637A6A', passed: false },
             ].map(r => (
                 <div key={r.reg} style={{ background: 'var(--canvas)', border: '1px solid var(--border-light)', borderLeft: `3px solid ${r.color}`, borderRadius: '8px', padding: '20px 22px' }}>
@@ -400,11 +400,11 @@ export default function Home() {
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
             ].map(f => (
                 <div key={f.title} className="group" style={{ background: 'var(--slate)', border: '1px solid var(--border-light)', borderRadius: '8px', padding: '24px', transition: 'border-color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(184,149,90,0.3)'; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(60,122,85,0.3)'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-light)'; }}>
                   <div className="flex items-start justify-between mb-4">
                     <div style={{ width: '40px', height: '40px', borderRadius: '6px', background: 'var(--forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)' }}>{f.icon}</div>
-                    <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: f.tag === 'Unique' ? 'var(--gold)' : 'var(--ink-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', background: f.tag === 'Unique' ? 'rgba(184,149,90,0.1)' : 'rgba(15,26,19,0.04)', padding: '3px 7px', borderRadius: '3px' }}>{f.tag}</span>
+                    <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: f.tag === 'Unique' ? 'var(--gold)' : 'var(--ink-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', background: f.tag === 'Unique' ? 'rgba(60,122,85,0.1)' : 'rgba(15,26,19,0.04)', padding: '3px 7px', borderRadius: '3px' }}>{f.tag}</span>
                   </div>
                   <h3 style={{ fontFamily: bg, fontSize: '15px', fontWeight: 700, color: 'var(--ink)', marginBottom: '6px' }}>{f.title}</h3>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.65 }}>{f.desc}</p>
@@ -429,8 +429,8 @@ export default function Home() {
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
             { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with real-time offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
-            <div key={s.role} style={{ background: 'rgba(240,242,238,0.04)', border: '1px solid rgba(184,149,90,0.1)', borderRadius: '8px', padding: '28px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '6px', background: 'rgba(184,149,90,0.1)', border: '1px solid rgba(184,149,90,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', marginBottom: '14px' }}>{s.icon}</div>
+            <div key={s.role} style={{ background: 'rgba(240,242,238,0.04)', border: '1px solid rgba(60,122,85,0.1)', borderRadius: '8px', padding: '28px' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '6px', background: 'rgba(60,122,85,0.1)', border: '1px solid rgba(60,122,85,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', marginBottom: '14px' }}>{s.icon}</div>
               <h3 style={{ fontFamily: bg, fontSize: '17px', fontWeight: 700, color: '#EEEEE8', marginBottom: '8px' }}>{s.role}</h3>
               <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--sage)', lineHeight: 1.65, marginBottom: '18px' }}>{s.desc}</p>
               <ul className="space-y-2">
@@ -533,8 +533,8 @@ export default function Home() {
               { icon: icons.globe, title: 'Political Risk', desc: 'Coverage for sovereign intervention, export restrictions, or regulatory changes in the project host country.' },
               { icon: icons.plane, title: 'CORSIA Guarantee', desc: 'Insurance that credits maintain CORSIA eligibility through the entire compliance period.' },
             ].map(i => (
-              <div key={i.title} style={{ background: 'rgba(240,242,238,0.03)', border: '1px solid rgba(184,149,90,0.1)', borderRadius: '8px', padding: '22px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '6px', background: 'rgba(184,149,90,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', marginBottom: '14px' }}>{i.icon}</div>
+              <div key={i.title} style={{ background: 'rgba(240,242,238,0.03)', border: '1px solid rgba(60,122,85,0.1)', borderRadius: '8px', padding: '22px' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '6px', background: 'rgba(60,122,85,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', marginBottom: '14px' }}>{i.icon}</div>
                 <h3 style={{ fontFamily: bg, fontSize: '15px', fontWeight: 700, color: '#EEEEE8', marginBottom: '6px' }}>{i.title}</h3>
                 <p style={{ fontFamily: bg, fontSize: '12.5px', color: 'var(--sage)', lineHeight: 1.6 }}>{i.desc}</p>
               </div>
@@ -542,7 +542,7 @@ export default function Home() {
           </div>
 
           {/* Insurance partner logos — honest treatment at readable opacity */}
-          <div className="mt-12" style={{ borderTop: '1px solid rgba(184,149,90,0.06)', paddingTop: '24px' }}>
+          <div className="mt-12" style={{ borderTop: '1px solid rgba(60,122,85,0.06)', paddingTop: '24px' }}>
             <div className="text-center mb-5">
               <span style={{ fontFamily: mono, fontSize: '9px', color: 'rgba(99,122,106,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Insurance &amp; Underwriting Partners (target)</span>
             </div>
@@ -592,7 +592,7 @@ export default function Home() {
 
           <div style={{ background: 'var(--forest)', borderRadius: '8px', padding: '32px' }}>
             <div style={{ fontFamily: mono, fontSize: '9px', fontWeight: 500, color: 'var(--gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '18px' }}>Our Position</div>
-            <blockquote style={{ fontFamily: fr, fontSize: '19px', fontWeight: 400, fontStyle: 'italic', color: '#EEEEE8', lineHeight: 1.55, borderLeft: '2px solid rgba(184,149,90,0.3)', paddingLeft: '18px', margin: '0 0 20px' }}>
+            <blockquote style={{ fontFamily: fr, fontSize: '19px', fontWeight: 400, fontStyle: 'italic', color: '#EEEEE8', lineHeight: 1.55, borderLeft: '2px solid rgba(60,122,85,0.3)', paddingLeft: '18px', margin: '0 0 20px' }}>
               &ldquo;The first self-serve carbon credit marketplace with integrated insurance, data analytics, and compliance tools — built specifically for the MENA market.&rdquo;
             </blockquote>
             <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--sage)', lineHeight: 1.65 }}>
@@ -657,7 +657,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════
           FOOTER
           ═══════════════════════════════════════════════════════ */}
-      <footer style={{ background: 'var(--forest-deep)', borderTop: '1px solid rgba(201,169,110,0.06)', padding: '56px 0 36px' }}>
+      <footer style={{ background: 'var(--forest-deep)', borderTop: '1px solid rgba(74,139,100,0.06)', padding: '56px 0 36px' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
@@ -692,7 +692,7 @@ export default function Home() {
               ] },
             ].map(col => (
               <div key={col.title}>
-                <h4 style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px' }}>{col.title}</h4>
+                <h4 style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px' }}>{col.title}</h4>
                 <ul className="space-y-2">
                   {col.items.map(item => (
                     <li key={item.label}><a href={item.href} style={{ fontFamily: bg, fontSize: '13px', color: '#4A6B55' }} className="hover:text-white transition-colors duration-200">{item.label}</a></li>
@@ -702,7 +702,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div style={{ borderTop: '1px solid rgba(184,149,90,0.06)', paddingTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
+          <div style={{ borderTop: '1px solid rgba(60,122,85,0.06)', paddingTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
             <span style={{ fontFamily: mono, fontSize: '10px', color: '#3A5A45', letterSpacing: '0.04em' }}>
               © {new Date().getFullYear()} CarbonBridge. Operating under ADGM jurisdiction.
             </span>

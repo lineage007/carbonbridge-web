@@ -32,7 +32,7 @@ export default function AdminPage() {
         {[
           { label: 'Gross Volume', value: loading ? '...' : fmt(stats?.totalGmv || 0), color: '#1B3A2D' },
           { label: 'Pending Settlements', value: loading ? '...' : String(stats?.pendingSettlements || 0), color: (stats?.pendingSettlements || 0) > 0 ? '#dc2626' : '#2D6A4F' },
-          { label: 'Registered Users', value: loading ? '...' : String(stats?.totalUsers || 0), color: '#C9A96E' },
+          { label: 'Registered Users', value: loading ? '...' : String(stats?.totalUsers || 0), color: '#4A8B64' },
           { label: 'Credits Listed', value: loading ? '...' : `${(stats?.totalCredits || 0).toLocaleString()} tCO₂e`, color: '#2D6A4F' },
         ].map(kpi => (
           <div key={kpi.label} style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '18px', borderLeft: `4px solid ${kpi.color}` }}>
@@ -55,7 +55,7 @@ export default function AdminPage() {
           <Link key={link.label} href={link.href} style={{
             background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '20px',
             textDecoration: 'none', transition: 'border-color 120ms',
-          }} className="hover:border-[#C9A96E]">
+          }} className="hover:border-[#4A8B64]">
             <span style={{ fontSize: '20px' }}>{link.icon}</span>
             <h3 style={{ fontFamily: fr, fontSize: '15px', color: '#1A1714', marginTop: '8px', marginBottom: '4px' }}>{link.label}</h3>
             <p style={{ fontSize: '12px', color: '#8A7E70' }}>{link.desc}</p>

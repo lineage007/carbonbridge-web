@@ -82,15 +82,15 @@ export default function RegisterPage() {
           <div style={{ fontSize: '48px', marginBottom: '24px' }}>✉️</div>
           <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#F2ECE0', marginBottom: '12px' }}>Check your email</h1>
           <p style={{ fontFamily: bg, fontSize: '15px', color: '#8AAA92', lineHeight: 1.7 }}>
-            We&apos;ve sent a verification link to <strong style={{ color: '#C9A96E' }}>{form.email}</strong>. Click the link to activate your account.
+            We&apos;ve sent a verification link to <strong style={{ color: '#4A8B64' }}>{form.email}</strong>. Click the link to activate your account.
           </p>
-          <Link href="/login" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', marginTop: '24px', display: 'inline-block' }}>← Back to sign in</Link>
+          <Link href="/login" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', marginTop: '24px', display: 'inline-block' }}>← Back to sign in</Link>
         </div>
       </div>
     );
   }
 
-  const inputStyle = { fontFamily: bg, fontSize: '14px', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.15)', background: 'rgba(255,252,246,0.04)', color: '#F2ECE0', width: '100%', outline: 'none' };
+  const inputStyle = { fontFamily: bg, fontSize: '14px', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(74,139,100,0.15)', background: 'rgba(255,252,246,0.04)', color: '#F2ECE0', width: '100%', outline: 'none' };
   const labelStyle = { fontFamily: bg, fontSize: '12px', fontWeight: 600 as const, color: '#8AAA92', marginBottom: '6px', display: 'block' as const };
 
   return (
@@ -105,11 +105,11 @@ export default function RegisterPage() {
         {/* Step indicators */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '28px' }}>
           {[1, 2].map(s => (
-            <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: step >= s ? '#C9A96E' : 'rgba(201,169,110,0.15)' }} />
+            <div key={s} style={{ flex: 1, height: '3px', borderRadius: '2px', background: step >= s ? '#4A8B64' : 'rgba(74,139,100,0.15)' }} />
           ))}
         </div>
 
-        <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
+        <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(74,139,100,0.08)', borderRadius: '16px', padding: '32px' }}>
           {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
 
           {step === 1 && (
@@ -138,7 +138,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               <button onClick={() => { if (!form.email || !form.password || !form.companyName || !form.contactName) { setError('Please fill all required fields'); return; } setError(''); setStep(2); }}
-                style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#C9A96E', color: '#0C1C14', cursor: 'pointer', width: '100%', marginTop: '8px' }}>
+                style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#4A8B64', color: '#0C1C14', cursor: 'pointer', width: '100%', marginTop: '8px' }}>
                 Continue →
               </button>
             </div>
@@ -152,7 +152,7 @@ export default function RegisterPage() {
                   {['Buy credits', 'Sell credits', 'Both', 'Not sure yet'].map(opt => {
                     const val = opt.toLowerCase().replace(/ /g, '_');
                     const active = form.plansTo.includes(val);
-                    return <button key={opt} onClick={() => toggleArr('plansTo', val)} style={{ fontFamily: bg, fontSize: '13px', padding: '8px 16px', borderRadius: '8px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.15)'}`, background: active ? 'rgba(201,169,110,0.1)' : 'transparent', color: active ? '#C9A96E' : '#8AAA92', cursor: 'pointer' }}>{opt}</button>;
+                    return <button key={opt} onClick={() => toggleArr('plansTo', val)} style={{ fontFamily: bg, fontSize: '13px', padding: '8px 16px', borderRadius: '8px', border: `1px solid ${active ? '#4A8B64' : 'rgba(74,139,100,0.15)'}`, background: active ? 'rgba(74,139,100,0.1)' : 'transparent', color: active ? '#4A8B64' : '#8AAA92', cursor: 'pointer' }}>{opt}</button>;
                   })}
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default function RegisterPage() {
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {COMPLIANCE.map(c => {
                     const active = form.compliance.includes(c.toLowerCase());
-                    return <button key={c} onClick={() => toggleArr('compliance', c.toLowerCase())} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{c}</button>;
+                    return <button key={c} onClick={() => toggleArr('compliance', c.toLowerCase())} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#4A8B64' : 'rgba(74,139,100,0.12)'}`, background: active ? 'rgba(74,139,100,0.08)' : 'transparent', color: active ? '#4A8B64' : '#6B8A74', cursor: 'pointer' }}>{c}</button>;
                   })}
                 </div>
               </div>
@@ -178,13 +178,13 @@ export default function RegisterPage() {
                   {['Verra', 'Gold Standard', 'ACR'].map(r => {
                     const val = r.toLowerCase().replace(/ /g, '_');
                     const active = form.registries.includes(val);
-                    return <button key={r} onClick={() => toggleArr('registries', val)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{r}</button>;
+                    return <button key={r} onClick={() => toggleArr('registries', val)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#4A8B64' : 'rgba(74,139,100,0.12)'}`, background: active ? 'rgba(74,139,100,0.08)' : 'transparent', color: active ? '#4A8B64' : '#6B8A74', cursor: 'pointer' }}>{r}</button>;
                   })}
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-                <button onClick={() => setStep(1)} style={{ fontFamily: bg, fontSize: '14px', padding: '14px', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.15)', background: 'transparent', color: '#8AAA92', cursor: 'pointer', flex: 1 }}>← Back</button>
-                <button onClick={handleSubmit} disabled={loading} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#C9A96E', color: '#0C1C14', cursor: loading ? 'wait' : 'pointer', flex: 2, opacity: loading ? 0.7 : 1 }}>
+                <button onClick={() => setStep(1)} style={{ fontFamily: bg, fontSize: '14px', padding: '14px', borderRadius: '10px', border: '1px solid rgba(74,139,100,0.15)', background: 'transparent', color: '#8AAA92', cursor: 'pointer', flex: 1 }}>← Back</button>
+                <button onClick={handleSubmit} disabled={loading} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#4A8B64', color: '#0C1C14', cursor: loading ? 'wait' : 'pointer', flex: 2, opacity: loading ? 0.7 : 1 }}>
                   {loading ? 'Creating account...' : 'Create account'}
                 </button>
               </div>
@@ -193,7 +193,7 @@ export default function RegisterPage() {
         </div>
 
         <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74', textAlign: 'center', marginTop: '20px' }}>
-          Already have an account? <Link href="/login" style={{ color: '#C9A96E' }}>Sign in</Link>
+          Already have an account? <Link href="/login" style={{ color: '#4A8B64' }}>Sign in</Link>
         </p>
       </div>
     </div>

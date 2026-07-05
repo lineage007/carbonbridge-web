@@ -32,7 +32,7 @@ const COMPARE_DIMENSIONS = [
 function getRatingColor(r: string) {
   if (r.startsWith('AAA')) return '#16A34A';
   if (r.startsWith('AA')) return '#2D6A4F';
-  if (r.startsWith('A')) return '#C9A96E';
+  if (r.startsWith('A')) return '#4A8B64';
   return '#8B8178';
 }
 
@@ -94,7 +94,7 @@ export default function ComparePage() {
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚖️</div>
             <h2 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Nothing to compare yet</h2>
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '24px' }}>Select 2–4 credits from the marketplace to compare them side by side.</p>
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>Browse Marketplace</Link>
+            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#4A8B64', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>Browse Marketplace</Link>
           </div>
         )}
 
@@ -141,7 +141,7 @@ export default function ComparePage() {
                           </div>
                           <div style={{ textAlign: 'right' }}>
                             <div style={{ fontFamily: mono, fontSize: '12px', fontWeight: 600, color: '#2D6A4F' }}>${l.price.toFixed(2)}</div>
-                            <div style={{ fontFamily: mono, fontSize: '10px', color: '#C9A96E' }}>{l.qualityRating}</div>
+                            <div style={{ fontFamily: mono, fontSize: '10px', color: '#4A8B64' }}>{l.qualityRating}</div>
                           </div>
                         </div>
                       ))}
@@ -206,7 +206,7 @@ export default function ComparePage() {
         {/* Bottom CTA */}
         {credits.length >= 2 && (
           <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '12px' }}>
-            <Link href="/checkout" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#1B3A2D', background: '#C9A96E', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>
+            <Link href="/checkout" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#1B3A2D', background: '#4A8B64', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>
               Purchase Selected
             </Link>
             <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: '#1A1714', padding: '12px 28px', borderRadius: '9px', border: '1px solid #E8E2D8', textDecoration: 'none' }}>

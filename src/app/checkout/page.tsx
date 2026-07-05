@@ -34,7 +34,7 @@ function CheckoutInner() {
       <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 64px)' }}>
         <div className="text-center">
           <h1 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714', marginBottom: '12px' }}>No credit selected</h1>
-          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>← Browse marketplace</Link>
+          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>← Browse marketplace</Link>
         </div>
       </div>
     );
@@ -70,14 +70,14 @@ function CheckoutInner() {
               <div style={{ fontFamily: mono, fontWeight: 700, color: '#1B3A2D' }}>${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
               {addInsurance && <>
                 <div><span style={{ color: '#B0A99A' }}>Insurance:</span></div>
-                <div style={{ fontFamily: mono, color: '#C9A96E' }}>+${insuranceCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                <div style={{ fontFamily: mono, color: '#4A8B64' }}>+${insuranceCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
               </>}
             </div>
           </div>
           <p style={{ fontFamily: bg, fontSize: '12px', color: '#B0A99A', marginBottom: '20px' }}>
             A confirmation email has been sent to {contactEmail || 'your email address'}.
           </p>
-          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', display: 'inline-block' }}>
+          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px', display: 'inline-block' }}>
             Continue browsing →
           </Link>
         </div>
@@ -156,9 +156,9 @@ function CheckoutInner() {
           </div>
 
           {isLargeVolume && (
-            <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '10px', padding: '14px', marginTop: '12px' }}>
+            <div style={{ background: 'rgba(74,139,100,0.06)', border: '1px solid rgba(74,139,100,0.2)', borderRadius: '10px', padding: '14px', marginTop: '12px' }}>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                <strong style={{ color: '#C9A96E' }}>Large volume order.</strong> For purchases over 10,000 tCO₂e, preferred pricing may be available. You can proceed here or <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ color: '#C9A96E', fontWeight: 600 }}>request a custom quote</Link>.
+                <strong style={{ color: '#4A8B64' }}>Large volume order.</strong> For purchases over 10,000 tCO₂e, preferred pricing may be available. You can proceed here or <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ color: '#4A8B64', fontWeight: 600 }}>request a custom quote</Link>.
               </p>
             </div>
           )}
@@ -179,7 +179,7 @@ function CheckoutInner() {
                   Comprehensive protection: non-delivery, invalidation, and political risk. Premium: ~4% of purchase value.
                 </p>
                 {addInsurance && (
-                  <div style={{ fontFamily: mono, fontSize: '14px', fontWeight: 600, color: '#C9A96E', marginTop: '8px' }}>
+                  <div style={{ fontFamily: mono, fontSize: '14px', fontWeight: 600, color: '#4A8B64', marginTop: '8px' }}>
                     +${insuranceCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                 )}
@@ -222,7 +222,7 @@ function CheckoutInner() {
               {addInsurance && (
                 <div className="flex justify-between py-2" style={{ borderBottom: '1px solid #F0EBE3' }}>
                   <span style={{ color: '#8B8178' }}>Credit guarantee (~4%)</span>
-                  <span style={{ fontFamily: mono, fontWeight: 600, color: '#C9A96E' }}>+${insuranceCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span style={{ fontFamily: mono, fontWeight: 600, color: '#4A8B64' }}>+${insuranceCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               )}
               <div className="flex justify-between py-3">
@@ -286,7 +286,7 @@ function CheckoutInner() {
             if (step === 4 && (!contactName || !contactEmail || !companyName)) return;
             setStep(step + 1);
           }} style={{
-            fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E',
+            fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64',
             padding: '12px 28px', borderRadius: '10px', cursor: 'pointer', border: 'none',
           }} className="hover:brightness-110 transition-all">
             Continue →
@@ -308,7 +308,7 @@ function InputField({ label, value, onChange, type = 'text', required = false }:
   return (
     <div>
       <label style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '6px' }}>
-        {label} {required && <span style={{ color: '#C9A96E' }}>*</span>}
+        {label} {required && <span style={{ color: '#4A8B64' }}>*</span>}
       </label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)} required={required}
         style={{ fontFamily: "'Plus Jakarta Sans', system-ui", fontSize: '14px', width: '100%', padding: '12px 14px', border: '1px solid #E8E2D6', borderRadius: '10px', background: 'white', color: '#1A1714', outline: 'none' }} />

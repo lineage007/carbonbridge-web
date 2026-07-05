@@ -74,11 +74,11 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Orders table */}
-      <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
+      <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(74,139,100,0.08)' }}>
                 {['Ref', 'Date', 'Buyer', 'Credit', 'Qty (tCO₂e)', 'Total', 'Insurance', 'Status', 'Action'].map(h => (
                   <th key={h} style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: '#6B8A74', textAlign: 'left', padding: '12px 14px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
                 ))}
@@ -90,7 +90,7 @@ export default function AdminOrdersPage() {
                 const isUrgent = o.status === 'payment_received' && o.hoursElapsed > 48;
                 return (
                   <tr key={o.ref} onClick={() => setSelected(selected === o.ref ? null : o.ref)}
-                    style={{ borderBottom: '1px solid rgba(201,169,110,0.04)', cursor: 'pointer', background: isUrgent ? 'rgba(239,68,68,0.03)' : selected === o.ref ? 'rgba(201,169,110,0.03)' : 'transparent' }}>
+                    style={{ borderBottom: '1px solid rgba(74,139,100,0.04)', cursor: 'pointer', background: isUrgent ? 'rgba(239,68,68,0.03)' : selected === o.ref ? 'rgba(74,139,100,0.03)' : 'transparent' }}>
                     <td style={{ fontFamily: mono, fontSize: '12px', color: '#F2ECE0', padding: '14px', fontWeight: 600 }}>
                       {o.ref}
                       {isUrgent && <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '3px', background: '#EF4444', marginLeft: '6px', animation: 'pulse 2s infinite' }} />}
@@ -119,7 +119,7 @@ export default function AdminOrdersPage() {
                     </td>
                     <td style={{ padding: '14px' }}>
                       {o.status === 'payment_received' && (
-                        <button style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '6px 14px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: '#C9A96E', color: '#0C1C14' }}>
+                        <button style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '6px 14px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: '#4A8B64', color: '#0C1C14' }}>
                           Initiate transfer
                         </button>
                       )}
@@ -129,7 +129,7 @@ export default function AdminOrdersPage() {
                         </span>
                       )}
                       {o.status === 'transfer_in_progress' && (
-                        <button style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '6px 14px', borderRadius: '6px', border: '1px solid rgba(201,169,110,0.2)', cursor: 'pointer', background: 'transparent', color: '#C9A96E' }}>
+                        <button style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, padding: '6px 14px', borderRadius: '6px', border: '1px solid rgba(74,139,100,0.2)', cursor: 'pointer', background: 'transparent', color: '#4A8B64' }}>
                           Confirm delivery
                         </button>
                       )}
@@ -148,7 +148,7 @@ export default function AdminOrdersPage() {
         if (!o) return null;
         const sc = STATUS_CONFIG[o.status];
         return (
-          <div style={{ marginTop: '20px', background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+          <div style={{ marginTop: '20px', background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <div>
                 <h2 style={{ fontFamily: fr, fontSize: '20px', color: '#F2ECE0' }}>{o.ref}</h2>
@@ -175,13 +175,13 @@ export default function AdminOrdersPage() {
             </div>
 
             {/* Action buttons based on status */}
-            <div style={{ display: 'flex', gap: '10px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid rgba(201,169,110,0.06)' }}>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid rgba(74,139,100,0.06)' }}>
               {o.status === 'payment_received' && (
                 <>
-                  <button style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, padding: '10px 24px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: '#C9A96E', color: '#0C1C14' }}>
+                  <button style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, padding: '10px 24px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: '#4A8B64', color: '#0C1C14' }}>
                     Initiate Verra transfer
                   </button>
-                  <button style={{ fontFamily: bg, fontSize: '13px', padding: '10px 24px', borderRadius: '8px', border: '1px solid rgba(201,169,110,0.2)', cursor: 'pointer', background: 'transparent', color: '#C9A96E' }}>
+                  <button style={{ fontFamily: bg, fontSize: '13px', padding: '10px 24px', borderRadius: '8px', border: '1px solid rgba(74,139,100,0.2)', cursor: 'pointer', background: 'transparent', color: '#4A8B64' }}>
                     Contact buyer
                   </button>
                 </>

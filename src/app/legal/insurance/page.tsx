@@ -29,7 +29,7 @@ export default function insurancePage() {
 
       <section>
         <h2 style={{ fontFamily: fr, fontSize: '20px', color: '#1B3A2D', marginBottom: '12px' }}>4. Contact</h2>
-        <p>For questions about these terms, contact: <a href="mailto:legal@carbonbridge.ae" style={{ color: '#C9A96E' }}>legal@carbonbridge.ae</a></p>
+        <p>For questions about these terms, contact: <a href="mailto:legal@carbonbridge.ae" style={{ color: '#4A8B64' }}>legal@carbonbridge.ae</a></p>
       </section>
     </div>
   );

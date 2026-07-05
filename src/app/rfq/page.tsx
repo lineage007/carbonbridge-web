@@ -30,7 +30,7 @@ export default function RFQPage() {
           <p style={{ fontFamily: bg, fontSize: '15px', color: '#6B6259', lineHeight: 1.7, marginBottom: '24px' }}>
             Your request has been sent to matching sellers and the CarbonBridge Direct team. You&apos;ll receive responses within 48 hours.
           </p>
-          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', textDecoration: 'none' }}>← Back to marketplace</Link>
+          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', textDecoration: 'none' }}>← Back to marketplace</Link>
         </div>
       </div>
     );

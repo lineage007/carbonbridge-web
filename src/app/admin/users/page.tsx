@@ -33,7 +33,7 @@ const ROLE_COLORS: Record<UserRole, { label: string; bg: string; text: string }>
   buyer: { label: 'Buyer', bg: 'rgba(59,130,246,0.1)', text: '#3B82F6' },
   seller: { label: 'Seller', bg: 'rgba(22,163,74,0.1)', text: '#16A34A' },
   both: { label: 'Buyer + Seller', bg: 'rgba(139,92,246,0.1)', text: '#8B5CF6' },
-  api_client: { label: 'API', bg: 'rgba(201,169,110,0.1)', text: '#C9A96E' },
+  api_client: { label: 'API', bg: 'rgba(74,139,100,0.1)', text: '#4A8B64' },
 };
 
 const SELLER_STATUS_COLORS: Record<string, { bg: string; text: string }> = {
@@ -74,8 +74,8 @@ export default function AdminUsersPage() {
             style={{
               fontFamily: bg, fontSize: '12px', fontWeight: filter === t.key ? 600 : 400,
               padding: '7px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-              background: filter === t.key ? 'rgba(201,169,110,0.1)' : 'transparent',
-              color: filter === t.key ? '#C9A96E' : '#6B8A74',
+              background: filter === t.key ? 'rgba(74,139,100,0.1)' : 'transparent',
+              color: filter === t.key ? '#4A8B64' : '#6B8A74',
             }}>
             {t.label}
           </button>
@@ -89,13 +89,13 @@ export default function AdminUsersPage() {
           return (
             <div key={u.id} onClick={() => setSelected(selected === u.id ? null : u.id)}
               style={{
-                background: selected === u.id ? 'rgba(201,169,110,0.03)' : 'rgba(255,252,246,0.02)',
-                border: `1px solid ${selected === u.id ? 'rgba(201,169,110,0.12)' : 'rgba(201,169,110,0.06)'}`,
+                background: selected === u.id ? 'rgba(74,139,100,0.03)' : 'rgba(255,252,246,0.02)',
+                border: `1px solid ${selected === u.id ? 'rgba(74,139,100,0.12)' : 'rgba(74,139,100,0.06)'}`,
                 borderRadius: '12px', padding: '16px 20px', cursor: 'pointer',
               }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(201,169,110,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#C9A96E' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(74,139,100,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#4A8B64' }}>
                     {u.company.charAt(0)}
                   </div>
                   <div>
@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
 
               {/* Expanded detail */}
               {selected === u.id && (
-                <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(201,169,110,0.06)' }}>
+                <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(74,139,100,0.06)' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', marginBottom: '16px' }}>
                     {[
                       { l: 'Country', v: u.country },
@@ -140,8 +140,8 @@ export default function AdminUsersPage() {
                         <button style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, padding: '8px 18px', borderRadius: '6px', border: '1px solid rgba(239,68,68,0.3)', cursor: 'pointer', background: 'transparent', color: '#EF4444' }}>Reject</button>
                       </>
                     )}
-                    <button style={{ fontFamily: bg, fontSize: '12px', padding: '8px 18px', borderRadius: '6px', border: '1px solid rgba(201,169,110,0.15)', cursor: 'pointer', background: 'transparent', color: '#C9A96E' }}>View activity</button>
-                    <button style={{ fontFamily: bg, fontSize: '12px', padding: '8px 18px', borderRadius: '6px', border: '1px solid rgba(201,169,110,0.15)', cursor: 'pointer', background: 'transparent', color: '#C9A96E' }}>Contact</button>
+                    <button style={{ fontFamily: bg, fontSize: '12px', padding: '8px 18px', borderRadius: '6px', border: '1px solid rgba(74,139,100,0.15)', cursor: 'pointer', background: 'transparent', color: '#4A8B64' }}>View activity</button>
+                    <button style={{ fontFamily: bg, fontSize: '12px', padding: '8px 18px', borderRadius: '6px', border: '1px solid rgba(74,139,100,0.15)', cursor: 'pointer', background: 'transparent', color: '#4A8B64' }}>Contact</button>
                   </div>
                 </div>
               )}

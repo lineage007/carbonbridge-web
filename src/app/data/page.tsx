@@ -66,7 +66,7 @@ export default function DataPage() {
       <Navbar />
       <main>
         {/* Header */}
-        <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
+        <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(74,139,100,0.1)' }}>
           <div className="max-w-[1200px] mx-auto px-4 lg:px-8">
             <h1 style={{ fontFamily: fr, fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 700, color: '#FFFCF6', letterSpacing: '-0.02em', marginBottom: '8px' }}>Market Data & Insights</h1>
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>Real-time carbon credit price indices, market intelligence, and regulatory tracking.</p>
@@ -80,7 +80,7 @@ export default function DataPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {PRICE_INDICES.map(idx => (
                 <div key={idx.name} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '22px', transition: 'all 0.2s' }}
-                  className="hover:shadow-md hover:border-[rgba(201,169,110,0.3)]">
+                  className="hover:shadow-md hover:border-[rgba(74,139,100,0.3)]">
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#1A1714' }}>{idx.name}</h3>
@@ -178,7 +178,7 @@ export default function DataPage() {
                     <div key={m.month} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
                       <span style={{ fontFamily: mono, fontSize: '9px', color: '#B0A99A' }}>{(m.nature + m.tech).toFixed(1)}M</span>
                       <div style={{ width: '100%', maxWidth: '48px', display: 'flex', flexDirection: 'column', gap: '1px' }}>
-                        <div style={{ height: `${techH}px`, background: '#C9A96E', borderRadius: '3px 3px 0 0' }} />
+                        <div style={{ height: `${techH}px`, background: '#4A8B64', borderRadius: '3px 3px 0 0' }} />
                         <div style={{ height: `${natureH}px`, background: '#2D6A4F', borderRadius: '0 0 3px 3px' }} />
                       </div>
                       <span style={{ fontFamily: bg, fontSize: '10px', color: '#8B8178', marginTop: '4px' }}>{m.month}</span>
@@ -188,7 +188,7 @@ export default function DataPage() {
               </div>
               <div className="flex items-center gap-6 mt-4 justify-center" style={{ fontFamily: bg, fontSize: '11px', color: '#8B8178' }}>
                 <span className="flex items-center gap-2"><span style={{ width: '10px', height: '10px', background: '#2D6A4F', borderRadius: '2px', display: 'inline-block' }} /> Nature-based</span>
-                <span className="flex items-center gap-2"><span style={{ width: '10px', height: '10px', background: '#C9A96E', borderRadius: '2px', display: 'inline-block' }} /> Technology-based</span>
+                <span className="flex items-center gap-2"><span style={{ width: '10px', height: '10px', background: '#4A8B64', borderRadius: '2px', display: 'inline-block' }} /> Technology-based</span>
               </div>
             </div>
           </Section>
@@ -202,8 +202,8 @@ export default function DataPage() {
                   <div className="flex flex-col items-center" style={{ width: '20px' }}>
                     <div style={{
                       width: '12px', height: '12px', borderRadius: '50%', flexShrink: 0,
-                      background: r.status === 'completed' ? '#2D6A4F' : r.status === 'active' ? '#C9A96E' : '#E8E2D6',
-                      border: r.status === 'active' ? '2px solid #C9A96E' : 'none',
+                      background: r.status === 'completed' ? '#2D6A4F' : r.status === 'active' ? '#4A8B64' : '#E8E2D6',
+                      border: r.status === 'active' ? '2px solid #4A8B64' : 'none',
                     }} />
                     {i < REGULATORY_TIMELINE.length - 1 && (
                       <div style={{ width: '2px', flex: 1, background: '#E8E2D6', minHeight: '40px' }} />
@@ -212,10 +212,10 @@ export default function DataPage() {
                   {/* Content */}
                   <div style={{ paddingBottom: '28px', flex: 1 }}>
                     <div className="flex items-baseline gap-3">
-                      <span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 600, color: r.status === 'active' ? '#C9A96E' : r.status === 'completed' ? '#2D6A4F' : '#B0A99A' }}>{r.date}</span>
+                      <span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 600, color: r.status === 'active' ? '#4A8B64' : r.status === 'completed' ? '#2D6A4F' : '#B0A99A' }}>{r.date}</span>
                       <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em',
-                        color: r.status === 'completed' ? '#2D6A4F' : r.status === 'active' ? '#C9A96E' : '#B0A99A',
-                        background: r.status === 'completed' ? 'rgba(45,106,79,0.08)' : r.status === 'active' ? 'rgba(201,169,110,0.1)' : 'rgba(176,169,154,0.1)',
+                        color: r.status === 'completed' ? '#2D6A4F' : r.status === 'active' ? '#4A8B64' : '#B0A99A',
+                        background: r.status === 'completed' ? 'rgba(45,106,79,0.08)' : r.status === 'active' ? 'rgba(74,139,100,0.1)' : 'rgba(176,169,154,0.1)',
                         padding: '2px 8px', borderRadius: '4px' }}>
                         {r.status}
                       </span>
@@ -240,8 +240,8 @@ export default function DataPage() {
                 { title: 'Credit Insurance: Why It Matters and Who Provides It', date: 'October 2025', tag: 'Insurance', reading: '7 min' },
               ].map(r => (
                 <div key={r.title} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '22px', cursor: 'pointer', transition: 'all 0.2s' }}
-                  className="hover:shadow-md hover:border-[rgba(201,169,110,0.3)]">
-                  <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#C9A96E', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{r.tag}</span>
+                  className="hover:shadow-md hover:border-[rgba(74,139,100,0.3)]">
+                  <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#4A8B64', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{r.tag}</span>
                   <h4 style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#1A1714', marginTop: '8px', marginBottom: '12px', lineHeight: 1.4 }}>{r.title}</h4>
                   <div className="flex items-center justify-between" style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A' }}>
                     <span>{r.date}</span>

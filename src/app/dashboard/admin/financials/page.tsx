@@ -21,7 +21,7 @@ const MONTHLY_DATA = [
 
 const REVENUE_STREAMS = [
   { name: 'Marketplace take rate', pct: 42, amount: 127425, color: '#2D6A4F' },
-  { name: 'CarbonBridge Direct spread', pct: 28, amount: 35800, color: '#C9A96E' },
+  { name: 'CarbonBridge Direct spread', pct: 28, amount: 35800, color: '#4A8B64' },
   { name: 'Insurance commissions', pct: 13, amount: 16980, color: '#3B82F6' },
   { name: 'API revenue', pct: 3, amount: 3250, color: '#8B5CF6' },
   { name: 'Managed procurement fees', pct: 10, amount: 12800, color: '#F59E0B' },
@@ -65,8 +65,8 @@ export default function AdminFinancialsPage() {
             <button key={p} onClick={() => setPeriod(p)} style={{
               fontFamily: bg, fontSize: '11px', fontWeight: period === p ? 600 : 400,
               padding: '5px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer',
-              background: period === p ? 'rgba(201,169,110,0.15)' : 'transparent',
-              color: period === p ? '#C9A96E' : '#6B8A74', textTransform: 'uppercase',
+              background: period === p ? 'rgba(74,139,100,0.15)' : 'transparent',
+              color: period === p ? '#4A8B64' : '#6B8A74', textTransform: 'uppercase',
             }}>{p}</button>
           ))}
         </div>
@@ -80,7 +80,7 @@ export default function AdminFinancialsPage() {
           { label: 'Operating Costs', value: fmt(totals.opex), sub: `${data.length} months`, color: '#F59E0B' },
           { label: 'Net Profit', value: fmt(totals.netProfit), sub: fmtPct(netMargin) + ' net margin', color: totals.netProfit >= 0 ? '#16A34A' : '#EF4444' },
         ].map(k => (
-          <div key={k.label} style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '12px', padding: '18px' }}>
+          <div key={k.label} style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '12px', padding: '18px' }}>
             <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>{k.label}</div>
             <div style={{ fontFamily: mono, fontSize: '24px', fontWeight: 700, color: k.color }}>{k.value}</div>
             <div style={{ fontFamily: bg, fontSize: '11px', color: '#6B8A74', marginTop: '2px' }}>{k.sub}</div>
@@ -94,16 +94,16 @@ export default function AdminFinancialsPage() {
           <button key={t.k} onClick={() => setTab(t.k as typeof tab)} style={{
             fontFamily: bg, fontSize: '12px', fontWeight: tab === t.k ? 600 : 400,
             padding: '8px 18px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-            background: tab === t.k ? 'rgba(201,169,110,0.1)' : 'transparent',
-            color: tab === t.k ? '#C9A96E' : '#6B8A74',
+            background: tab === t.k ? 'rgba(74,139,100,0.1)' : 'transparent',
+            color: tab === t.k ? '#4A8B64' : '#6B8A74',
           }}>{t.l}</button>
         ))}
       </div>
 
       {tab === 'pnl' && (
-        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
+        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
           {/* GMV bar chart */}
-          <div style={{ padding: '20px', borderBottom: '1px solid rgba(201,169,110,0.06)' }}>
+          <div style={{ padding: '20px', borderBottom: '1px solid rgba(74,139,100,0.06)' }}>
             <div style={{ fontFamily: bg, fontSize: '12px', color: '#6B8A74', marginBottom: '12px' }}>Monthly GMV</div>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '80px' }}>
               {data.map(d => (
@@ -119,10 +119,10 @@ export default function AdminFinancialsPage() {
           {/* P&L table */}
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(74,139,100,0.08)' }}>
                 <th style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textAlign: 'left', padding: '10px 16px', textTransform: 'uppercase' }}>Line Item</th>
                 {data.map(d => <th key={d.month} style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textAlign: 'right', padding: '10px 12px' }}>{d.month.split(' ')[0]}</th>)}
-                <th style={{ fontFamily: bg, fontSize: '10px', color: '#C9A96E', textAlign: 'right', padding: '10px 16px', fontWeight: 700 }}>TOTAL</th>
+                <th style={{ fontFamily: bg, fontSize: '10px', color: '#4A8B64', textAlign: 'right', padding: '10px 16px', fontWeight: 700 }}>TOTAL</th>
               </tr>
             </thead>
             <tbody>
@@ -136,7 +136,7 @@ export default function AdminFinancialsPage() {
                 { label: 'Operating expenses', key: 'opex', bold: false, color: '#F59E0B', neg: true },
                 { label: 'Net Profit', key: 'netProfit', bold: true, color: '#16A34A' },
               ].map(row => (
-                <tr key={row.label} style={{ borderBottom: '1px solid rgba(201,169,110,0.04)' }}>
+                <tr key={row.label} style={{ borderBottom: '1px solid rgba(74,139,100,0.04)' }}>
                   <td style={{ fontFamily: bg, fontSize: '12px', color: row.color, padding: '8px 16px', fontWeight: row.bold ? 600 : 400 }}>{row.label}</td>
                   {data.map(d => {
                     const val = (d as unknown as Record<string, number>)[row.key];
@@ -154,7 +154,7 @@ export default function AdminFinancialsPage() {
 
       {tab === 'revenue' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
             <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '20px' }}>Revenue by Stream</div>
             {REVENUE_STREAMS.map(s => (
               <div key={s.name} style={{ marginBottom: '14px' }}>
@@ -168,7 +168,7 @@ export default function AdminFinancialsPage() {
               </div>
             ))}
           </div>
-          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
             <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '20px' }}>Unit Economics</div>
             {[
               { label: 'Average order value', value: '$48,250' },
@@ -180,7 +180,7 @@ export default function AdminFinancialsPage() {
               { label: 'API avg revenue/call', value: '$0.10' },
               { label: 'Blended rev per tCO₂e', value: '$2.84' },
             ].map(u => (
-              <div key={u.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(201,169,110,0.04)' }}>
+              <div key={u.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(74,139,100,0.04)' }}>
                 <span style={{ fontFamily: bg, fontSize: '12px', color: '#8AAA92' }}>{u.label}</span>
                 <span style={{ fontFamily: mono, fontSize: '12px', color: '#F2ECE0', fontWeight: 600 }}>{u.value}</span>
               </div>
@@ -190,7 +190,7 @@ export default function AdminFinancialsPage() {
       )}
 
       {tab === 'cashflow' && (
-        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
           <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '20px' }}>Cash Flow Summary</div>
           {[
             { label: 'Opening balance (Oct 2025)', value: fmt(50000), color: '#F2ECE0', bold: true },
@@ -201,7 +201,7 @@ export default function AdminFinancialsPage() {
             { label: '- Credit purchases (CB Direct inventory)', value: `(${fmt(35800)})`, color: '#EF4444' },
             { label: '= Closing balance', value: fmt(50000 + totals.grossProfit + 16980 - totals.opex - 14200 - 35800), color: '#16A34A', bold: true },
           ].map(row => (
-            <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: row.bold ? '2px solid rgba(201,169,110,0.1)' : '1px solid rgba(201,169,110,0.04)' }}>
+            <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: row.bold ? '2px solid rgba(74,139,100,0.1)' : '1px solid rgba(74,139,100,0.04)' }}>
               <span style={{ fontFamily: bg, fontSize: '13px', color: row.color, fontWeight: row.bold ? 700 : 400 }}>{row.label}</span>
               <span style={{ fontFamily: mono, fontSize: '14px', color: row.color, fontWeight: row.bold ? 700 : 500 }}>{row.value}</span>
             </div>

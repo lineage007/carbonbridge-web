@@ -102,7 +102,7 @@ export default function MarketplacePage() {
 
       <div>
         {/* Header */}
-        <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
+        <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(74,139,100,0.1)' }}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <h1 style={{ fontFamily: fr, fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 700, color: '#FFFCF6', letterSpacing: '-0.02em', marginBottom: '8px' }}>
               Carbon Credit Marketplace
@@ -123,7 +123,7 @@ export default function MarketplacePage() {
                   style={{ fontFamily: bg, fontSize: '14px', width: '100%', padding: '12px 12px 12px 42px', background: 'rgba(255,252,246,0.06)', border: '1px solid rgba(255,252,246,0.1)', borderRadius: '10px', color: '#FFFCF6', outline: 'none' }}
                 />
               </div>
-              <button onClick={() => setShowFilters(!showFilters)} className="lg:hidden" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#C9A96E', background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.2)', padding: '12px 18px', borderRadius: '10px', whiteSpace: 'nowrap' }}>
+              <button onClick={() => setShowFilters(!showFilters)} className="lg:hidden" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#4A8B64', background: 'rgba(74,139,100,0.1)', border: '1px solid rgba(74,139,100,0.2)', padding: '12px 18px', borderRadius: '10px', whiteSpace: 'nowrap' }}>
                 Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
               </button>
             </div>
@@ -165,7 +165,7 @@ export default function MarketplacePage() {
 
               {/* Price Range */}
               <FilterSection title={`Price: $${priceRange[0]} – $${priceRange[1] >= 200 ? '200+' : priceRange[1]}`}>
-                <input type="range" min={0} max={200} step={5} value={priceRange[1]} onChange={e => setPriceRange([priceRange[0], parseInt(e.target.value)])} style={{ width: '100%', accentColor: '#C9A96E' }} />
+                <input type="range" min={0} max={200} step={5} value={priceRange[1]} onChange={e => setPriceRange([priceRange[0], parseInt(e.target.value)])} style={{ width: '100%', accentColor: '#4A8B64' }} />
               </FilterSection>
 
               {/* Quality Rating */}
@@ -213,7 +213,7 @@ export default function MarketplacePage() {
               {/* CCP Labelled */}
               <FilterSection title="CCP Labelled">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={ccpOnly} onChange={() => setCcpOnly(!ccpOnly)} style={{ accentColor: '#C9A96E' }} />
+                  <input type="checkbox" checked={ccpOnly} onChange={() => setCcpOnly(!ccpOnly)} style={{ accentColor: '#4A8B64' }} />
                   <span style={{ fontFamily: bg, fontSize: '13px', color: '#1A1714' }}>ICVCM Core Carbon Principles only</span>
                 </label>
               </FilterSection>
@@ -233,7 +233,7 @@ export default function MarketplacePage() {
               {filtered.length === 0 ? (
                 <div className="text-center py-20">
                   <p style={{ fontFamily: bg, fontSize: '16px', color: '#8B8178', marginBottom: '8px' }}>No credits match your filters.</p>
-                  <button onClick={clearAll} style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>Clear all filters</button>
+                  <button onClick={clearAll} style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>Clear all filters</button>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -308,7 +308,7 @@ function CreditCard({ credit }: { credit: CreditListing }) {
           display: 'flex',
           flexDirection: 'column',
         }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(184,149,90,0.35)'; }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(60,122,85,0.35)'; }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-light)'; }}
       >
         {/* Top row: type badge + status badges */}
@@ -317,9 +317,9 @@ function CreditCard({ credit }: { credit: CreditListing }) {
             {credit.creditType}
           </span>
           <div className="flex items-center gap-1.5">
-            {credit.ccpLabelled && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--gold)', background: 'rgba(184,149,90,0.1)', border: '1px solid rgba(184,149,90,0.2)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>CCP</span>}
+            {credit.ccpLabelled && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--gold)', background: 'rgba(60,122,85,0.1)', border: '1px solid rgba(60,122,85,0.2)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>CCP</span>}
             {credit.isCBDirect && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--forest)', background: 'rgba(27,58,45,0.07)', border: '1px solid rgba(27,58,45,0.15)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>Direct</span>}
-            {!credit.isCBDirect && (credit as any).isCBSourced && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(184,149,90,0.4)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>Sourced</span>}
+            {!credit.isCBDirect && (credit as any).isCBSourced && <span style={{ fontFamily: mono, fontSize: '9px', fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(60,122,85,0.4)', padding: '1px 6px', borderRadius: '3px', letterSpacing: '0.04em' }}>Sourced</span>}
           </div>
         </div>
 
@@ -334,7 +334,7 @@ function CreditCard({ credit }: { credit: CreditListing }) {
         {/* Price + Rating row */}
         <div className="flex items-baseline justify-between mb-3">
           <div>
-            <span style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: 'var(--ink)', letterSpacing: '-0.01em', fontVariantNumeric: 'tabular-nums', transition: 'color 0.15s' }} className="group-hover:text-[#B8955A]">
+            <span style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: 'var(--ink)', letterSpacing: '-0.01em', fontVariantNumeric: 'tabular-nums', transition: 'color 0.15s' }} className="group-hover:text-[#3C7A55]">
               ${credit.price.toFixed(2)}
             </span>
             <span style={{ fontFamily: mono, fontSize: '10px', color: 'var(--sage)', marginLeft: '3px' }}>/tCO₂e</span>

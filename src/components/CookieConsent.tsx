@@ -30,7 +30,7 @@ export default function CookieConsent() {
       position: 'fixed', bottom: '24px', left: '24px', right: '24px',
       maxWidth: '520px',
       background: '#1A1714',
-      border: '1px solid rgba(201,169,110,0.2)',
+      border: '1px solid rgba(74,139,100,0.2)',
       borderRadius: '16px',
       padding: '20px 24px',
       boxShadow: '0 24px 64px rgba(0,0,0,0.4)',
@@ -43,7 +43,7 @@ export default function CookieConsent() {
           <div style={{ fontSize: '14px', fontWeight: 600, color: '#FFFCF6', marginBottom: '4px' }}>We use cookies</div>
           <div style={{ fontSize: '12px', color: 'rgba(255,252,246,0.6)', lineHeight: 1.5 }}>
             We use essential cookies to make the platform work. With your consent, we also use analytics cookies to improve your experience.
-            {' '}<button onClick={() => setShowDetails(!showDetails)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: bg, fontSize: '12px', color: '#C9A96E', padding: 0, textDecoration: 'underline' }}>
+            {' '}<button onClick={() => setShowDetails(!showDetails)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: bg, fontSize: '12px', color: '#4A8B64', padding: 0, textDecoration: 'underline' }}>
               {showDetails ? 'Hide details' : 'Learn more'}
             </button>
           </div>
@@ -61,7 +61,7 @@ export default function CookieConsent() {
       <div style={{ display: 'flex', gap: '8px' }}>
         <button
           onClick={accept}
-          style={{ flex: 1, fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', border: 'none', padding: '10px', borderRadius: '8px', cursor: 'pointer' }}
+          style={{ flex: 1, fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#0C1C14', background: '#4A8B64', border: 'none', padding: '10px', borderRadius: '8px', cursor: 'pointer' }}
         >
           Accept all
         </button>

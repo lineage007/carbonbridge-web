@@ -39,11 +39,11 @@ export default function SignPage() {
           {/* Status icon */}
           <div style={{
             width: '72px', height: '72px', borderRadius: '50%',
-            background: 'rgba(201,169,110,0.12)', border: '1px solid rgba(201,169,110,0.3)',
+            background: 'rgba(74,139,100,0.12)', border: '1px solid rgba(74,139,100,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 24px',
           }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4A8B64" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 8v4" />
               <path d="M12 16h.01" />

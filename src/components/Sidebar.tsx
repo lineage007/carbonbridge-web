@@ -74,7 +74,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside style={{ width: '260px', background: '#0C1C14', borderRight: '1px solid rgba(201,169,110,0.06)', flexShrink: 0, display: 'flex', flexDirection: 'column', height: '100vh', position: 'sticky', top: 0 }} className="hidden lg:flex">
+    <aside style={{ width: '260px', background: '#0C1C14', borderRight: '1px solid rgba(74,139,100,0.06)', flexShrink: 0, display: 'flex', flexDirection: 'column', height: '100vh', position: 'sticky', top: 0 }} className="hidden lg:flex">
       {/* Logo */}
       <div style={{ padding: '20px', marginBottom: '8px' }}>
         <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '30px', width: 'auto' }} /></Link>
@@ -83,15 +83,15 @@ export default function Sidebar() {
       {/* Nav */}
       <nav style={{ flex: 1, padding: '0 12px', overflowY: 'auto' }}>
         {NAV_ITEMS.map((item, i) => {
-          if ('sep' in item && item.sep) return <div key={i} style={{ height: '1px', background: 'rgba(201,169,110,0.06)', margin: '12px 12px' }} />;
+          if ('sep' in item && item.sep) return <div key={i} style={{ height: '1px', background: 'rgba(74,139,100,0.06)', margin: '12px 12px' }} />;
           const active = pathname === item.href || pathname.startsWith(item.href + '/');
           return (
             <Link key={item.label} href={item.href!} style={{
               display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', marginBottom: '2px',
               fontFamily: bg, fontSize: '13px', fontWeight: active ? 600 : 400,
               color: active ? '#FFFCF6' : '#8AAA92',
-              background: active ? 'rgba(201,169,110,0.08)' : 'transparent',
-              borderRight: active ? '3px solid #C9A96E' : '3px solid transparent',
+              background: active ? 'rgba(74,139,100,0.08)' : 'transparent',
+              borderRight: active ? '3px solid #4A8B64' : '3px solid transparent',
               textDecoration: 'none', transition: 'all 0.15s',
             }}
               onMouseEnter={e => { if (!active) { e.currentTarget.style.color = '#FFFCF6'; e.currentTarget.style.background = 'rgba(255,252,246,0.03)'; }}}
@@ -105,18 +105,18 @@ export default function Sidebar() {
       </nav>
 
       {/* Profile section at bottom */}
-      <div ref={ref} style={{ padding: '12px', borderTop: '1px solid rgba(201,169,110,0.06)', position: 'relative' }}>
+      <div ref={ref} style={{ padding: '12px', borderTop: '1px solid rgba(74,139,100,0.06)', position: 'relative' }}>
         <button onClick={() => setProfileOpen(!profileOpen)} style={{
           display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
           padding: '10px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-          background: profileOpen ? 'rgba(201,169,110,0.08)' : 'transparent',
+          background: profileOpen ? 'rgba(74,139,100,0.08)' : 'transparent',
           transition: 'background 0.15s',
         }}
           onMouseEnter={e => { if (!profileOpen) e.currentTarget.style.background = 'rgba(255,252,246,0.03)'; }}
-          onMouseLeave={e => { if (!profileOpen) e.currentTarget.style.background = profileOpen ? 'rgba(201,169,110,0.08)' : 'transparent'; }}
+          onMouseLeave={e => { if (!profileOpen) e.currentTarget.style.background = profileOpen ? 'rgba(74,139,100,0.08)' : 'transparent'; }}
         >
           <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #1B3A2D, #2D6A4F)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <span style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#C9A96E' }}>{initials}</span>
+            <span style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#4A8B64' }}>{initials}</span>
           </div>
           <div style={{ flex: 1, textAlign: 'left' }}>
             <div style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#FFFCF6' }}>{displayName}</div>

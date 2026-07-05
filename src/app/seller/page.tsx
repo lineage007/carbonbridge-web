@@ -74,7 +74,7 @@ export default function SellerDashboard() {
             { label: 'Total Revenue', value: fmt(totalRevenue), sub: `${ORDERS.length} orders`, accent: '#2D6A4F' },
             { label: 'Credits Sold', value: totalSold.toLocaleString(), sub: 'tCO₂e total', accent: '#16A34A' },
             { label: 'Active Listings', value: String(activeListings), sub: `of ${LISTINGS_DATA.length} total`, accent: '#3B82F6' },
-            { label: 'Avg Price', value: `$${avgPrice.toFixed(2)}`, sub: 'per tCO₂e', accent: '#C9A96E' },
+            { label: 'Avg Price', value: `$${avgPrice.toFixed(2)}`, sub: 'per tCO₂e', accent: '#4A8B64' },
           ].map(kpi => (
             <div key={kpi.label} style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', padding: '20px', borderTop: `3px solid ${kpi.accent}` }}>
               <div style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>{kpi.label}</div>
@@ -155,10 +155,10 @@ export default function SellerDashboard() {
                   { label: 'Verification Status', desc: 'Check registry verification and audit status', icon: '✓' },
                 ].map(a => (
                   <button key={a.label} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '14px', background: '#FAFAF7', border: '1px solid transparent', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.background = '#FFFCF6'; }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#4A8B64'; e.currentTarget.style.background = '#FFFCF6'; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.background = '#FAFAF7'; }}
                   >
-                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#1B3A2D', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', fontFamily: mono, fontSize: '16px', flexShrink: 0 }}>{a.icon}</div>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#1B3A2D', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4A8B64', fontFamily: mono, fontSize: '16px', flexShrink: 0 }}>{a.icon}</div>
                     <div>
                       <div style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>{a.label}</div>
                       <div style={{ fontFamily: bg, fontSize: '11px', color: '#8B8178' }}>{a.desc}</div>
@@ -193,7 +193,7 @@ export default function SellerDashboard() {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <h3 style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: '#1A1714' }}>Your Listings</h3>
-              <button style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1B3A2D', background: '#C9A96E', border: 'none', padding: '8px 20px', borderRadius: '8px', cursor: 'pointer' }}>＋ New Listing</button>
+              <button style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1B3A2D', background: '#4A8B64', border: 'none', padding: '8px 20px', borderRadius: '8px', cursor: 'pointer' }}>＋ New Listing</button>
             </div>
             <div style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -210,7 +210,7 @@ export default function SellerDashboard() {
                       <td style={{ padding: '14px', fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714', maxWidth: '220px' }}>{l.name}</td>
                       <td style={{ padding: '14px', fontFamily: bg, fontSize: '12px', color: '#8B8178' }}>{l.type}</td>
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{l.vintage}</td>
-                      <td style={{ padding: '14px' }}><span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 700, color: '#C9A96E', background: 'rgba(201,169,110,0.1)', padding: '2px 8px', borderRadius: '4px' }}>{l.rating}</span></td>
+                      <td style={{ padding: '14px' }}><span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 700, color: '#4A8B64', background: 'rgba(74,139,100,0.1)', padding: '2px 8px', borderRadius: '4px' }}>{l.rating}</span></td>
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>${l.price.toFixed(2)}</td>
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{l.available.toLocaleString()}</td>
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#2D6A4F' }}>{l.sold.toLocaleString()}</td>
@@ -262,9 +262,9 @@ export default function SellerDashboard() {
                 <div style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>Total Paid</div>
                 <div style={{ fontFamily: mono, fontSize: '28px', fontWeight: 700, color: '#2D6A4F' }}>{fmt(PAYOUTS.reduce((s, p) => s + p.amount, 0))}</div>
               </div>
-              <div style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', padding: '20px', borderTop: '3px solid #C9A96E' }}>
+              <div style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', padding: '20px', borderTop: '3px solid #4A8B64' }}>
                 <div style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>Pending</div>
-                <div style={{ fontFamily: mono, fontSize: '28px', fontWeight: 700, color: '#C9A96E' }}>{fmt(66000)}</div>
+                <div style={{ fontFamily: mono, fontSize: '28px', fontWeight: 700, color: '#4A8B64' }}>{fmt(66000)}</div>
               </div>
               <div style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', padding: '20px', borderTop: '3px solid #3B82F6' }}>
                 <div style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>Next Payout</div>
@@ -334,7 +334,7 @@ export default function SellerDashboard() {
                   { name: 'DEWA', vol: 8000, type: 'NRCC' },
                 ].map((b, i) => (
                   <div key={b.name} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', background: '#FAFAF7', borderRadius: '8px' }}>
-                    <span style={{ fontFamily: mono, fontSize: '14px', fontWeight: 700, color: '#C9A96E', width: '24px' }}>{i + 1}</span>
+                    <span style={{ fontFamily: mono, fontSize: '14px', fontWeight: 700, color: '#4A8B64', width: '24px' }}>{i + 1}</span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>{b.name}</div>
                       <div style={{ fontFamily: bg, fontSize: '11px', color: '#8B8178' }}>{b.type} compliance</div>
@@ -352,7 +352,7 @@ export default function SellerDashboard() {
                 {[
                   { type: 'ARR / Reforestation', pct: 38, rev: 380400, color: '#16A34A' },
                   { type: 'Biochar / CDR', pct: 27, rev: 269800, color: '#8B5CF6' },
-                  { type: 'Soil Carbon', pct: 22, rev: 220200, color: '#C9A96E' },
+                  { type: 'Soil Carbon', pct: 22, rev: 220200, color: '#4A8B64' },
                   { type: 'Blue Carbon', pct: 13, rev: 130000, color: '#0EA5E9' },
                 ].map(t => (
                   <div key={t.type} style={{ textAlign: 'center', padding: '16px' }}>

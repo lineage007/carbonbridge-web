@@ -79,7 +79,7 @@ export default function CarbonManagementPage() {
           {[
             { label: 'Total Emissions', value: `${(totalEmissions / 1000).toFixed(1)}k`, sub: 'tCO₂e (FY2025)', accent: '#EF4444' },
             { label: 'Credits Held', value: totalOffset.toLocaleString(), sub: 'tCO₂e in portfolio', accent: '#2D6A4F' },
-            { label: 'Coverage', value: `${coveragePct}%`, sub: 'of total emissions offset', accent: '#C9A96E' },
+            { label: 'Coverage', value: `${coveragePct}%`, sub: 'of total emissions offset', accent: '#4A8B64' },
             { label: 'Compliance Score', value: '72%', sub: 'across all frameworks', accent: '#3B82F6' },
           ].map(kpi => (
             <div key={kpi.label} style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', padding: '20px', borderTop: `3px solid ${kpi.accent}` }}>
@@ -194,7 +194,7 @@ export default function CarbonManagementPage() {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <h3 style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: '#1A1714' }}>Offset Portfolio</h3>
-              <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1B3A2D', background: '#C9A96E', padding: '8px 20px', borderRadius: '8px', textDecoration: 'none' }}>Purchase Credits</Link>
+              <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1B3A2D', background: '#4A8B64', padding: '8px 20px', borderRadius: '8px', textDecoration: 'none' }}>Purchase Credits</Link>
             </div>
             <div style={{ background: '#fff', border: '1px solid #E8E2D8', borderRadius: '12px', overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -214,7 +214,7 @@ export default function CarbonManagementPage() {
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{o.vintage}</td>
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>${o.price.toFixed(2)}</td>
                       <td style={{ padding: '14px', fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#2D6A4F' }}>{fmt(o.total)}</td>
-                      <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#C9A96E', fontWeight: 600 }}>{o.coverage}</td>
+                      <td style={{ padding: '14px', fontFamily: mono, fontSize: '12px', color: '#4A8B64', fontWeight: 600 }}>{o.coverage}</td>
                       <td style={{ padding: '14px' }}><span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, padding: '3px 8px', borderRadius: '4px', background: o.status === 'Active' ? 'rgba(22,163,74,0.1)' : 'rgba(245,158,11,0.1)', color: o.status === 'Active' ? '#16A34A' : '#F59E0B' }}>{o.status}</span></td>
                     </tr>
                   ))}

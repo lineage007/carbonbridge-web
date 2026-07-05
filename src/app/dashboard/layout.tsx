@@ -78,7 +78,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {/* Fixed sidebar — always visible */}
       <aside style={{
         width: '260px', background: '#0C1C14',
-        borderRight: '1px solid rgba(201,169,110,0.06)',
+        borderRight: '1px solid rgba(74,139,100,0.06)',
         flexShrink: 0, height: '100vh', overflowY: 'auto',
         position: 'sticky', top: 0,
       }}>
@@ -107,8 +107,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                       display: 'flex', alignItems: 'center', gap: '10px',
                       padding: '9px 14px', borderRadius: '8px', marginBottom: '1px',
                       fontFamily: bg, fontSize: '13px', fontWeight: active ? 600 : 400,
-                      color: active ? '#C9A96E' : '#6B8A74',
-                      background: active ? 'rgba(201,169,110,0.08)' : 'transparent',
+                      color: active ? '#4A8B64' : '#6B8A74',
+                      background: active ? 'rgba(74,139,100,0.08)' : 'transparent',
                       textDecoration: 'none', transition: 'all 120ms',
                     }}>
                     <span style={{ fontSize: '13px', opacity: 0.6, width: '20px', textAlign: 'center' }}>{item.icon}</span>
@@ -116,8 +116,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     {item.badge && (
                       <span style={{
                         fontSize: '9px', fontWeight: 700, marginLeft: 'auto',
-                        background: item.badge === 'ADMIN' ? 'rgba(220,38,38,0.12)' : 'rgba(201,169,110,0.1)',
-                        color: item.badge === 'ADMIN' ? '#dc2626' : '#C9A96E',
+                        background: item.badge === 'ADMIN' ? 'rgba(220,38,38,0.12)' : 'rgba(74,139,100,0.1)',
+                        color: item.badge === 'ADMIN' ? '#dc2626' : '#4A8B64',
                         padding: '1px 6px', borderRadius: '4px',
                       }}>{item.badge}</span>
                     )}
@@ -127,7 +127,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </div>
           ))}
         </nav>
-        <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(201,169,110,0.06)', marginTop: '8px' }}>
+        <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(74,139,100,0.06)', marginTop: '8px' }}>
           <Link href="/" style={{ fontFamily: bg, fontSize: '12px', color: '#4A6A55', textDecoration: 'none' }}>
             ← Back to website
           </Link>
