@@ -12,7 +12,7 @@ const ORDERS = [
 ];
 
 const SC: Record<string, { bg: string; text: string }> = {
-  Confirmed: { bg: 'rgba(201,169,110,0.1)', text: '#C9A96E' },
+  Confirmed: { bg: 'rgba(74,139,100,0.1)', text: '#4A8B64' },
   Completed: { bg: 'rgba(22,163,74,0.08)', text: '#16A34A' },
   Pending: { bg: 'rgba(59,130,246,0.08)', text: '#2563EB' },
 };
@@ -35,9 +35,9 @@ export default function PurchasesPage() {
           <div style={{ fontFamily: bg, fontSize: '12px', color: '#8A7E70', marginBottom: '6px' }}>Total Orders</div>
           <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: '#2D6A4F' }}>{ORDERS.length}</div>
         </div>
-        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '18px', borderTop: '3px solid #C9A96E' }}>
+        <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '18px', borderTop: '3px solid #4A8B64' }}>
           <div style={{ fontFamily: bg, fontSize: '12px', color: '#8A7E70', marginBottom: '6px' }}>Insurance Purchased</div>
-          <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: '#C9A96E' }}>{fmt(ORDERS.reduce((s, o) => s + o.insPremium, 0))}</div>
+          <div style={{ fontFamily: mono, fontSize: '22px', fontWeight: 700, color: '#4A8B64' }}>{fmt(ORDERS.reduce((s, o) => s + o.insPremium, 0))}</div>
         </div>
       </div>
 

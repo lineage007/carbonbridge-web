@@ -54,7 +54,7 @@ export default function LoginPage() {
     } finally { setLoading(false); }
   };
 
-  const inputStyle = { fontFamily: bg, fontSize: '14px', padding: '14px 16px', borderRadius: '10px', border: '1px solid rgba(201,169,110,0.15)', background: 'rgba(255,252,246,0.04)', color: '#F2ECE0', width: '100%', outline: 'none' };
+  const inputStyle = { fontFamily: bg, fontSize: '14px', padding: '14px 16px', borderRadius: '10px', border: '1px solid rgba(74,139,100,0.15)', background: 'rgba(255,252,246,0.04)', color: '#F2ECE0', width: '100%', outline: 'none' };
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0C1C14 0%, #1B3A2D 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
@@ -69,16 +69,16 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
+        <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(74,139,100,0.08)', borderRadius: '16px', padding: '32px' }}>
           {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
           
           {resetSent ? (
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '36px', marginBottom: '16px' }}>✉️</div>
               <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', lineHeight: 1.7 }}>
-                Reset link sent to <strong style={{ color: '#C9A96E' }}>{email}</strong>
+                Reset link sent to <strong style={{ color: '#4A8B64' }}>{email}</strong>
               </p>
-              <button onClick={() => { setResetMode(false); setResetSent(false); }} style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer', marginTop: '16px' }}>← Back to sign in</button>
+              <button onClick={() => { setResetMode(false); setResetSent(false); }} style={{ fontFamily: bg, fontSize: '13px', color: '#4A8B64', background: 'none', border: 'none', cursor: 'pointer', marginTop: '16px' }}>← Back to sign in</button>
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -90,13 +90,13 @@ export default function LoginPage() {
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                     <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Password</label>
-                    <button onClick={() => setResetMode(true)} style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer' }}>Forgot password?</button>
+                    <button onClick={() => setResetMode(true)} style={{ fontFamily: bg, fontSize: '11px', color: '#4A8B64', background: 'none', border: 'none', cursor: 'pointer' }}>Forgot password?</button>
                   </div>
                   <input type="password" style={inputStyle} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" onKeyDown={e => e.key === 'Enter' && handleLogin()} />
                 </div>
               )}
               <button onClick={resetMode ? handleReset : handleLogin} disabled={loading}
-                style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#C9A96E', color: '#0C1C14', cursor: loading ? 'wait' : 'pointer', width: '100%', marginTop: '4px', opacity: loading ? 0.7 : 1 }}>
+                style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, padding: '14px', borderRadius: '10px', border: 'none', background: '#4A8B64', color: '#0C1C14', cursor: loading ? 'wait' : 'pointer', width: '100%', marginTop: '4px', opacity: loading ? 0.7 : 1 }}>
                 {loading ? (resetMode ? 'Sending...' : 'Signing in...') : (resetMode ? 'Send reset link' : 'Sign in')}
               </button>
               {resetMode && (
@@ -108,7 +108,7 @@ export default function LoginPage() {
 
         {!resetMode && (
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74', textAlign: 'center', marginTop: '20px' }}>
-            Don&apos;t have an account? <Link href="/register" style={{ color: '#C9A96E' }}>Create one free</Link>
+            Don&apos;t have an account? <Link href="/register" style={{ color: '#4A8B64' }}>Create one free</Link>
           </p>
         )}
       </div>

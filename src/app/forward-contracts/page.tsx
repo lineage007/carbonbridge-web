@@ -53,7 +53,7 @@ export default function ForwardContractsPage() {
           {/* Summary */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3" style={{ marginBottom: '24px' }}>
             {[
-              { label: 'Total Committed Value', value: fmt(totalValue), color: '#C9A96E' },
+              { label: 'Total Committed Value', value: fmt(totalValue), color: '#4A8B64' },
               { label: 'Total Volume', value: totalVolume.toLocaleString() + ' tCO₂e', color: '#1B3A2D' },
               { label: 'Active Contracts', value: String(CONTRACTS.length), color: '#2563EB' },
             ].map(m => (

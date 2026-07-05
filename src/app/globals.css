@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
 :root {
-  --forest: #1B3A2D;
-  --forest-light: #2D5A3F;
-  --parchment: #F2ECE0;
-  --gold: #C9A96E;
-  --gold-light: #D4B882;
-  --cream: #FFFCF6;
-  --ink: #1A1714;
-  --ink-muted: #6B6259;
+  /* Dark surfaces */
   --forest-deep: #0C1C14;
-  --sage: #8AAA92;
-  --border-light: #E5DED3;
-  --border-dark: #2D5A3F;
+  --forest:      #1B3A2D;
+  --forest-light: #2D5A3F;
+
+  /* Light surfaces — cool grey-green, not warm cream */
+  --slate:       #F0F2EE;
+  --canvas:      #FAFBF9;
+
+  /* Text */
+  --ink:         #0F1A13;
+  --ink-muted:   #556358;
+
+  /* Accent — Registry Green: forest/commodity-market register */
+  --accent:      #3C7A55;
+  --accent-light: #4A8B64;
+  /* Legacy aliases — keep for any remaining --gold references */
+  --gold:        #3C7A55;
+  --gold-light:  #4A8B64;
+
+  /* Utility */
+  --sage:        #637A6A;
+  --border-light: #DDE0DA;
+  --border-dark:  #2D4A38;
+
+  /* Legacy aliases — keep for components not yet updated */
+  --parchment:   #F0F2EE;
+  --cream:       #FAFBF9;
 }
 
 body {
   font-family: 'Bricolage Grotesque', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+/* Tabular numerals for financial figures */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Balanced heading wrapping */
+h1, h2 { text-wrap: balance; }
+
+/* Reduced-motion: disable decorative transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 ::selection {
-  background: rgba(201, 169, 110, 0.3);
+  background: rgba(60, 122, 85, 0.25);
   color: var(--ink);
 }

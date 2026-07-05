@@ -41,7 +41,7 @@ export default function CreditDetailPage() {
       <main style={{ background: '#FDFBF7', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="text-center">
           <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#1A1714', marginBottom: '12px' }}>Credit not found</h1>
-          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>← Back to marketplace</Link>
+          <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>← Back to marketplace</Link>
         </div>
       </main>
     );
@@ -85,7 +85,7 @@ export default function CreditDetailPage() {
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: 'white', background: CREDIT_TYPE_COLORS[credit.creditType], padding: '4px 12px', borderRadius: '6px' }}>{credit.creditType}</span>
-                {credit.ccpLabelled && <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#C9A96E', background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.2)', padding: '3px 10px', borderRadius: '6px' }}>CCP Labelled</span>}
+                {credit.ccpLabelled && <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#4A8B64', background: 'rgba(74,139,100,0.1)', border: '1px solid rgba(74,139,100,0.2)', padding: '3px 10px', borderRadius: '6px' }}>CCP Labelled</span>}
                 {credit.isCBDirect && <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#1B3A2D', background: 'rgba(27,58,45,0.08)', border: '1px solid rgba(27,58,45,0.15)', padding: '3px 10px', borderRadius: '6px' }}>CarbonBridge Direct</span>}
               </div>
 
@@ -147,7 +147,7 @@ export default function CreditDetailPage() {
                       <div style={{ fontFamily: mono, fontSize: '18px', fontWeight: 700, color: q.score >= 85 ? '#2D6A4F' : q.score >= 70 ? '#7B5B3A' : '#8B8178' }}>{q.score}</div>
                       <div style={{ fontFamily: bg, fontSize: '10px', color: '#B0A99A', marginTop: '2px' }}>{q.label}</div>
                       <div style={{ width: '100%', height: '3px', background: '#F0EBE3', borderRadius: '2px', marginTop: '6px', overflow: 'hidden' }}>
-                        <div style={{ width: `${q.score}%`, height: '100%', background: q.score >= 85 ? '#2D6A4F' : q.score >= 70 ? '#C9A96E' : '#B0A99A', borderRadius: '2px' }} />
+                        <div style={{ width: `${q.score}%`, height: '100%', background: q.score >= 85 ? '#2D6A4F' : q.score >= 70 ? '#4A8B64' : '#B0A99A', borderRadius: '2px' }} />
                       </div>
                     </div>
                   ))}
@@ -163,7 +163,7 @@ export default function CreditDetailPage() {
                   <span style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Price per tCO₂e</span>
                   <div className="flex items-baseline gap-1 mt-1">
                     <span style={{ fontFamily: fr, fontSize: '36px', fontWeight: 700, color: '#1A1714', letterSpacing: '-0.02em', fontFeatureSettings: "'tnum'" }}>${credit.price.toFixed(2)}</span>
-                    {credit.priceNegotiable && <span style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', fontWeight: 600 }}>Negotiable</span>}
+                    {credit.priceNegotiable && <span style={{ fontFamily: bg, fontSize: '11px', color: '#4A8B64', fontWeight: 600 }}>Negotiable</span>}
                   </div>
                 </div>
 
@@ -194,7 +194,7 @@ export default function CreditDetailPage() {
                       <span style={{ fontFamily: mono }}>+${insuranceCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     </div>
                     {qtyNum >= 10000 && (
-                      <p style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', marginTop: '8px', fontWeight: 600 }}>
+                      <p style={{ fontFamily: bg, fontSize: '11px', color: '#4A8B64', marginTop: '8px', fontWeight: 600 }}>
                         Volume over 10,000 tCO₂e — preferred pricing available via RFQ.
                       </p>
                     )}
@@ -202,7 +202,7 @@ export default function CreditDetailPage() {
                 )}
 
                 {/* Action buttons */}
-                <Link href={qtyNum >= 100 ? `/checkout?credit=${credit.id}&qty=${qtyNum}` : '#'} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', display: 'block', textAlign: 'center', padding: '14px', borderRadius: '10px', marginBottom: '8px', opacity: qtyNum >= 100 ? 1 : 0.4, pointerEvents: qtyNum >= 100 ? 'auto' : 'none' }} className="hover:brightness-110 transition-all">
+                <Link href={qtyNum >= 100 ? `/checkout?credit=${credit.id}&qty=${qtyNum}` : '#'} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', display: 'block', textAlign: 'center', padding: '14px', borderRadius: '10px', marginBottom: '8px', opacity: qtyNum >= 100 ? 1 : 0.4, pointerEvents: qtyNum >= 100 ? 'auto' : 'none' }} className="hover:brightness-110 transition-all">
                   Purchase
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
@@ -213,7 +213,7 @@ export default function CreditDetailPage() {
                     ♡ Watchlist
                   </button>
                 </div>
-                <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', fontWeight: 600, display: 'block', textAlign: 'center', marginTop: '12px' }}>
+                <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ fontFamily: bg, fontSize: '12px', color: '#4A8B64', fontWeight: 600, display: 'block', textAlign: 'center', marginTop: '12px' }}>
                   Request quote for large volumes →
                 </Link>
               </div>
@@ -277,7 +277,7 @@ export default function CreditDetailPage() {
                   <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.7 }}>
                       Documentation available upon request: Validation Report, Monitoring Report, Verification Report, Project Design Document (PDD). 
-                      Contact <span style={{ color: '#C9A96E', fontWeight: 600 }}>team@carbonbridge.ae</span> for access.
+                      Contact <span style={{ color: '#4A8B64', fontWeight: 600 }}>team@carbonbridge.ae</span> for access.
                     </p>
                   </div>
                 </div>
@@ -355,14 +355,14 @@ export default function CreditDetailPage() {
                         <h4 style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#1A1714', marginBottom: '6px' }}>{ins.name}</h4>
                         <p style={{ fontFamily: bg, fontSize: '12.5px', color: '#8B8178', lineHeight: 1.6, marginBottom: '12px' }}>{ins.desc}</p>
                         <div className="flex items-center justify-between">
-                          <span style={{ fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#C9A96E' }}>{ins.rate} of purchase</span>
+                          <span style={{ fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#4A8B64' }}>{ins.rate} of purchase</span>
                           <span style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A' }}>{ins.provider}</span>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)', borderRadius: '12px', padding: '18px' }}>
+                  <div style={{ background: 'rgba(74,139,100,0.06)', border: '1px solid rgba(74,139,100,0.15)', borderRadius: '12px', padding: '18px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>
                       Insurance products are available at checkout. Coverage is optional and never pre-selected. Full terms and conditions provided before purchase confirmation. 
                       Insurance facilitated through CarbonBridge&apos;s partnerships with <strong style={{ color: '#1A1714' }}>Kita</strong> (carbon-specific guarantee products) and <strong style={{ color: '#1A1714' }}>Lloyd&apos;s of London</strong> syndicates (political and invalidation risk).
@@ -411,7 +411,7 @@ export default function CreditDetailPage() {
                 {similar.map(c => (
                   <Link key={c.id} href={`/credits/${c.id}`}>
                     <div style={{ border: '1px solid #E8E2D6', borderRadius: '12px', padding: '18px', cursor: 'pointer', transition: 'all 0.2s', height: '100%' }}
-                      className="hover:shadow-md hover:border-[#C9A96E40]">
+                      className="hover:shadow-md hover:border-[#4A8B6440]">
                       <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: 'white', background: CREDIT_TYPE_COLORS[c.creditType], padding: '2px 8px', borderRadius: '4px' }}>{c.creditType}</span>
                       <h4 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#1A1714', marginTop: '8px', marginBottom: '4px', lineHeight: 1.3 }}>{c.projectName}</h4>
                       <p style={{ fontFamily: bg, fontSize: '11px', color: '#8B8178', marginBottom: '8px' }}>{c.location}</p>

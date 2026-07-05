@@ -139,7 +139,7 @@ export default function SettingsPage() {
                     <div style={{ fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>{doc}</div>
                     <div style={{ fontSize: '11px', color: uploads[doc] ? '#2D6A4F' : '#8A7E70' }}>{uploads[doc] || 'Not uploaded'}</div>
                   </div>
-                  <label style={{ fontSize: '12px', fontWeight: 600, color: uploads[doc] ? '#2D6A4F' : '#C9A96E', cursor: 'pointer', padding: '6px 16px', border: `1px solid ${uploads[doc] ? '#2D6A4F' : '#C9A96E'}`, borderRadius: '6px' }}>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: uploads[doc] ? '#2D6A4F' : '#4A8B64', cursor: 'pointer', padding: '6px 16px', border: `1px solid ${uploads[doc] ? '#2D6A4F' : '#4A8B64'}`, borderRadius: '6px' }}>
                     {uploads[doc] ? '✓ Uploaded' : 'Upload'}
                     <input type="file" accept=".pdf,.jpg,.jpeg,.png" style={{ display: 'none' }}
                       onChange={e => e.target.files?.[0] && handleFileUpload(doc, e.target.files[0])} />

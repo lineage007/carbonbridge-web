@@ -53,7 +53,7 @@ export default function AdminAnalyticsPage() {
           { label: 'Days to close', value: '4.2', trend: '-1.3' },
           { label: 'NPS score', value: '72', trend: '+6' },
         ].map(k => (
-          <div key={k.label} style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '10px', padding: '14px' }}>
+          <div key={k.label} style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '10px', padding: '14px' }}>
             <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{k.label}</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '4px' }}>
               <span style={{ fontFamily: mono, fontSize: '20px', fontWeight: 700, color: '#F2ECE0' }}>{k.value}</span>
@@ -69,17 +69,17 @@ export default function AdminAnalyticsPage() {
           <button key={t.k} onClick={() => setTab(t.k as typeof tab)} style={{
             fontFamily: bg, fontSize: '12px', fontWeight: tab === t.k ? 600 : 400,
             padding: '8px 18px', borderRadius: '8px', border: 'none', cursor: 'pointer',
-            background: tab === t.k ? 'rgba(201,169,110,0.1)' : 'transparent',
-            color: tab === t.k ? '#C9A96E' : '#6B8A74',
+            background: tab === t.k ? 'rgba(74,139,100,0.1)' : 'transparent',
+            color: tab === t.k ? '#4A8B64' : '#6B8A74',
           }}>{t.l}</button>
         ))}
       </div>
 
       {tab === 'buyers' && (
-        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
+        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', overflow: 'hidden' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(74,139,100,0.08)' }}>
                 {['Company', 'Orders', 'Volume (tCO₂e)', 'Total Spend', 'Avg $/t', 'Compliance', 'Last Order', 'Status'].map(h => (
                   <th key={h} style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textAlign: 'left', padding: '10px 12px', textTransform: 'uppercase' }}>{h}</th>
                 ))}
@@ -87,7 +87,7 @@ export default function AdminAnalyticsPage() {
             </thead>
             <tbody>
               {BUYER_ANALYTICS.map(b => (
-                <tr key={b.company} style={{ borderBottom: '1px solid rgba(201,169,110,0.04)' }}>
+                <tr key={b.company} style={{ borderBottom: '1px solid rgba(74,139,100,0.04)' }}>
                   <td style={{ fontFamily: bg, fontSize: '13px', color: '#F2ECE0', padding: '12px', fontWeight: 500 }}>{b.company}</td>
                   <td style={{ fontFamily: mono, fontSize: '12px', color: '#8AAA92', padding: '12px' }}>{b.orders}</td>
                   <td style={{ fontFamily: mono, fontSize: '12px', color: '#8AAA92', padding: '12px' }}>{b.volume.toLocaleString()}</td>
@@ -118,7 +118,7 @@ export default function AdminAnalyticsPage() {
       )}
 
       {tab === 'credits' && (
-        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
           <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '20px' }}>Credit Type Demand</div>
           {CREDIT_TYPE_DATA.map(c => (
             <div key={c.type} style={{ marginBottom: '16px' }}>
@@ -135,7 +135,7 @@ export default function AdminAnalyticsPage() {
       )}
 
       {tab === 'funnel' && (
-        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+        <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
           <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '24px' }}>Conversion Funnel</div>
           {FUNNEL.map((f, i) => (
             <div key={f.stage} style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '12px' }}>
@@ -153,7 +153,7 @@ export default function AdminAnalyticsPage() {
 
       {tab === 'geo' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
             <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '16px' }}>Buyer Geography</div>
             {[
               { country: '🇦🇪 UAE', pct: 68, buyers: 12 },
@@ -165,13 +165,13 @@ export default function AdminAnalyticsPage() {
               <div key={g.country} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
                 <span style={{ fontFamily: bg, fontSize: '13px', color: '#F2ECE0', width: '120px' }}>{g.country}</span>
                 <div style={{ flex: 1, height: '6px', background: 'rgba(255,252,246,0.04)', borderRadius: '3px' }}>
-                  <div style={{ width: `${g.pct}%`, height: '100%', background: '#C9A96E', borderRadius: '3px' }} />
+                  <div style={{ width: `${g.pct}%`, height: '100%', background: '#4A8B64', borderRadius: '3px' }} />
                 </div>
                 <span style={{ fontFamily: mono, fontSize: '11px', color: '#6B8A74', width: '60px', textAlign: 'right' }}>{g.pct}% ({g.buyers})</span>
               </div>
             ))}
           </div>
-          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '24px' }}>
+          <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(74,139,100,0.06)', borderRadius: '14px', padding: '24px' }}>
             <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#F2ECE0', marginBottom: '16px' }}>Credit Origin</div>
             {[
               { country: '🇦🇺 Australia', pct: 35, projects: 8 },

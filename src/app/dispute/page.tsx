@@ -81,7 +81,7 @@ function DisputeInner() {
         <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178' }}>
           A dispute can only be raised against an escrow-held order.
         </p>
-        <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>
+        <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>
           Browse marketplace →
         </Link>
       </div>
@@ -181,14 +181,14 @@ function DisputeInner() {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px' }}>
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    background: done ? '#1B3A2D' : active ? '#C9A96E' : '#F0EBE3',
+                    background: done ? '#1B3A2D' : active ? '#4A8B64' : '#F0EBE3',
                     color: (done || active) ? 'white' : '#B0A99A',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontFamily: bg, fontSize: '11px', fontWeight: 700, flexShrink: 0,
                   }}>
                     {done ? '✓' : i + 1}
                   </div>
-                  <span style={{ fontFamily: bg, fontSize: '10px', color: active ? '#C9A96E' : done ? '#1B3A2D' : '#B0A99A', marginTop: '6px', fontWeight: active || done ? 700 : 400, textAlign: 'center' }}>
+                  <span style={{ fontFamily: bg, fontSize: '10px', color: active ? '#4A8B64' : done ? '#1B3A2D' : '#B0A99A', marginTop: '6px', fontWeight: active || done ? 700 : 400, textAlign: 'center' }}>
                     {s.label}
                   </span>
                   <span style={{ fontFamily: bg, fontSize: '9px', color: '#B0A99A', textAlign: 'center', marginTop: '2px' }}>
@@ -207,7 +207,7 @@ function DisputeInner() {
         <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px solid #F0EBE3', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
             width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0,
-            background: session.escrowState === 'frozen' ? '#F59E0B' : session.escrowState === 'held' ? '#C9A96E' : session.escrowState === 'refunded' ? '#2D6A4F' : '#B0A99A',
+            background: session.escrowState === 'frozen' ? '#F59E0B' : session.escrowState === 'held' ? '#4A8B64' : session.escrowState === 'refunded' ? '#2D6A4F' : '#B0A99A',
           }} />
           <span style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178' }}>
             Escrow: <strong style={{ color: '#1A1714', textTransform: 'uppercase' }}>{session.escrowState ?? 'idle'}</strong>
@@ -328,7 +328,7 @@ function DisputeInner() {
 
           <button
             onClick={handleSubmitEvidence} disabled={pending || !evidenceDesc}
-            style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', border: 'none', cursor: pending || !evidenceDesc ? 'not-allowed' : 'pointer', opacity: pending || !evidenceDesc ? 0.5 : 1 }}
+            style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px', border: 'none', cursor: pending || !evidenceDesc ? 'not-allowed' : 'pointer', opacity: pending || !evidenceDesc ? 0.5 : 1 }}
           >
             {pending ? 'Submitting...' : 'Submit evidence'}
           </button>
@@ -378,7 +378,7 @@ function DisputeInner() {
       {/* ── Resolved ── */}
       {uiStep === 'resolved' && (
         <div>
-          <div style={{ background: resolution === 'buyer_wins' ? 'rgba(22,163,74,0.04)' : 'rgba(201,169,110,0.04)', border: `1px solid ${resolution === 'buyer_wins' ? 'rgba(22,163,74,0.2)' : 'rgba(201,169,110,0.2)'}`, borderRadius: '14px', padding: '24px', marginBottom: '24px', textAlign: 'center' }}>
+          <div style={{ background: resolution === 'buyer_wins' ? 'rgba(22,163,74,0.04)' : 'rgba(74,139,100,0.04)', border: `1px solid ${resolution === 'buyer_wins' ? 'rgba(22,163,74,0.2)' : 'rgba(74,139,100,0.2)'}`, borderRadius: '14px', padding: '24px', marginBottom: '24px', textAlign: 'center' }}>
             <div style={{ fontSize: '40px', marginBottom: '12px' }}>
               {resolution === 'buyer_wins' ? '◈' : '◇'}
             </div>
@@ -396,7 +396,7 @@ function DisputeInner() {
           <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '20px', marginBottom: '20px' }}>
             {[
               { label: 'Dispute ID', value: session.disputeId ?? '—', mono: true },
-              { label: 'Escrow final state', value: (session.escrowState ?? '—').toUpperCase(), color: session.escrowState === 'refunded' ? '#2D6A4F' : '#C9A96E' },
+              { label: 'Escrow final state', value: (session.escrowState ?? '—').toUpperCase(), color: session.escrowState === 'refunded' ? '#2D6A4F' : '#4A8B64' },
               { label: 'Outcome', value: resolution === 'buyer_wins' ? 'Buyer wins' : 'Seller wins' },
               { label: 'Mode', value: 'STUB — no funds moved', color: '#991B1B' },
             ].map(row => (
@@ -408,7 +408,7 @@ function DisputeInner() {
           </div>
 
           <div style={{ display: 'flex', gap: '12px' }}>
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}>
+            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}>
               Back to marketplace
             </Link>
             <Link href="/seller-demo" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#8B8178', background: 'white', border: '1px solid #E8E2D6', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}>

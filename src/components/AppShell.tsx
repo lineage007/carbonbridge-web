@@ -106,8 +106,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
                     padding: collapsed ? '10px 0' : '9px 20px',
                     justifyContent: collapsed ? 'center' : 'flex-start',
                     color: active ? '#FFFCF6' : 'rgba(255,252,246,0.5)',
-                    background: active ? 'rgba(201,169,110,0.12)' : 'transparent',
-                    borderRight: active ? '3px solid #C9A96E' : '3px solid transparent',
+                    background: active ? 'rgba(74,139,100,0.12)' : 'transparent',
+                    borderRight: active ? '3px solid #4A8B64' : '3px solid transparent',
                     fontFamily: bg, fontSize: '13px', fontWeight: active ? 600 : 400,
                     textDecoration: 'none', transition: 'all 0.15s',
                   }}
@@ -173,8 +173,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 onClick={() => setProfileOpen(!profileOpen)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '8px',
-                  background: profileOpen ? 'rgba(201,169,110,0.08)' : 'transparent',
-                  border: '1px solid', borderColor: profileOpen ? '#C9A96E' : 'transparent',
+                  background: profileOpen ? 'rgba(74,139,100,0.08)' : 'transparent',
+                  border: '1px solid', borderColor: profileOpen ? '#4A8B64' : 'transparent',
                   borderRadius: '8px', padding: '4px 10px 4px 4px', cursor: 'pointer',
                   transition: 'all 0.15s',
                 }}
@@ -182,7 +182,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 onMouseLeave={e => { if (!profileOpen) e.currentTarget.style.background = 'transparent'; }}
               >
                 <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #1B3A2D, #2D6A4F)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#C9A96E' }}>E</span>
+                  <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#4A8B64' }}>E</span>
                 </div>
                 <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 500, color: '#1A1714' }}>Emirates Industrial</span>
                 <span style={{ fontSize: '10px', color: '#8B8178', transform: profileOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>▾</span>

@@ -17,7 +17,7 @@ export default function AboutPage() {
         {/* Hero */}
         <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D 60%, #0C1C14)', padding: '80px 0 72px' }}>
           <div className="max-w-[800px] mx-auto px-4 lg:px-8 text-center">
-            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px', display: 'block' }}>About CarbonBridge</span>
+            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px', display: 'block' }}>About CarbonBridge</span>
             <h1 style={{ fontFamily: fr, fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#FFFCF6', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '20px' }}>
               Building the infrastructure<br />for trusted carbon markets
             </h1>
@@ -31,7 +31,7 @@ export default function AboutPage() {
         <div className="max-w-[900px] mx-auto px-4 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
             <div>
-              <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Our thesis</span>
+              <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Our thesis</span>
               <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginTop: '8px', marginBottom: '16px' }}>Carbon markets are broken by fragmentation</h2>
               <div style={{ fontFamily: bg, fontSize: '14px', color: '#3D3830', lineHeight: 1.8 }}>
                 <p style={{ marginBottom: '14px' }}>Today, buying a carbon credit requires navigating multiple registries, comparing methodologies you weren&apos;t trained to evaluate, finding brokers through word-of-mouth, negotiating prices with no benchmark, and hoping the credit you bought is actually worth what you paid.</p>
@@ -40,7 +40,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div>
-              <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Our approach</span>
+              <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Our approach</span>
               <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginTop: '8px', marginBottom: '16px' }}>One platform. Complete workflow.</h2>
               <div style={{ fontFamily: bg, fontSize: '14px', color: '#3D3830', lineHeight: 1.8 }}>
                 <p style={{ marginBottom: '14px' }}>CarbonBridge integrates the seven capabilities that are currently scattered across dozens of providers: discovery, quality assessment, marketplace, insurance, settlement, retirement, and compliance reporting.</p>
@@ -52,7 +52,7 @@ export default function AboutPage() {
 
           {/* Why MENA */}
           <div style={{ background: 'linear-gradient(135deg, #0C1C14, #1B3A2D)', borderRadius: '20px', padding: 'clamp(32px, 5vw, 48px)', marginBottom: '48px' }}>
-            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Why the UAE</span>
+            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Why the UAE</span>
             <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#FFFCF6', marginTop: '8px', marginBottom: '20px' }}>The Gulf is ground zero for the compliance wave</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
@@ -61,7 +61,7 @@ export default function AboutPage() {
                 { stat: '$250B', label: 'projected VCM value by 2050', detail: 'McKinsey / TSVCM (Taskforce on Scaling VCMs)' },
               ].map(s => (
                 <div key={s.stat}>
-                  <div style={{ fontFamily: fr, fontSize: '36px', fontWeight: 700, color: '#C9A96E', marginBottom: '6px' }}>{s.stat}</div>
+                  <div style={{ fontFamily: fr, fontSize: '36px', fontWeight: 700, color: '#4A8B64', marginBottom: '6px' }}>{s.stat}</div>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: '#FFFCF6', lineHeight: 1.5, marginBottom: '6px' }}>{s.label}</p>
                   <p style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92', fontStyle: 'italic' }}>{s.detail}</p>
                 </div>
@@ -71,7 +71,7 @@ export default function AboutPage() {
 
           {/* Team */}
           <div style={{ marginBottom: '48px' }}>
-            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Leadership</span>
+            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Leadership</span>
             <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginTop: '8px', marginBottom: '20px' }}>Built by operators, not academics</h2>
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '28px', maxWidth: '600px' }}>
               CarbonBridge is founded by a team with decades of experience across technology, finance, and environmental markets in both Australia and the Gulf.
@@ -84,10 +84,10 @@ export default function AboutPage() {
               ].map(p => (
                 <div key={p.role} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
                   <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#F5F0E8', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A8B64" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   </div>
                   <h3 style={{ fontFamily: bg, fontSize: '15px', fontWeight: 700, color: '#1A1714', marginBottom: '2px' }}>{p.name} — {p.role}</h3>
-                  <p style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', marginBottom: '12px' }}>{p.location}</p>
+                  <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A8B64', marginBottom: '12px' }}>{p.location}</p>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>{p.desc}</p>
                 </div>
               ))}
@@ -96,7 +96,7 @@ export default function AboutPage() {
 
           {/* Values */}
           <div>
-            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Principles</span>
+            <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#4A8B64', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Principles</span>
             <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginTop: '8px', marginBottom: '20px' }}>What we believe</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
@@ -118,7 +118,7 @@ export default function AboutPage() {
             <h2 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#FFFCF6', marginBottom: '12px' }}>Ready to participate?</h2>
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', marginBottom: '24px' }}>Whether you&apos;re buying for compliance or listing credits for sale — CarbonBridge is open.</p>
             <div className="flex justify-center gap-3 flex-wrap">
-              <Link href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px' }}>Create free account</Link>
+              <Link href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px' }}>Create free account</Link>
               <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: '#FFFCF6', border: '1px solid rgba(255,252,246,0.15)', padding: '13px 28px', borderRadius: '10px' }}>Browse marketplace</Link>
             </div>
           </div>

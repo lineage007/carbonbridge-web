@@ -78,13 +78,13 @@ export function generateAgreementHTML(data: AgreementData): string {
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: Georgia, 'Times New Roman', serif; font-size: 11pt; line-height: 1.65; color: #1A1714; background: #fff; }
   .header { background: #1B3A2D; color: #F2ECE0; padding: 32px 36px; margin: -25mm -25mm 28px; }
-  .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(201,169,110,0.2); }
+  .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(74,139,100,0.2); }
   .header-logo-img { height: 44px; width: auto; }
   .header-ref { text-align: right; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 9pt; }
-  .header-ref .ref { color: #C9A96E; font-size: 13pt; font-weight: 700; display: block; margin-bottom: 2px; }
+  .header-ref .ref { color: #4A8B64; font-size: 13pt; font-weight: 700; display: block; margin-bottom: 2px; }
   .header-title { font-family: Georgia, serif; font-size: 18pt; font-weight: 400; color: #F2ECE0; letter-spacing: -0.01em; }
   .header-subtitle { font-size: 10pt; color: #8AAA92; margin-top: 4px; }
-  .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 72pt; color: rgba(201,169,110,0.06); font-weight: 800; z-index: -1; pointer-events: none; }
+  .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 72pt; color: rgba(74,139,100,0.06); font-weight: 800; z-index: -1; pointer-events: none; }
   h1 { font-family: Georgia, serif; font-size: 16pt; font-weight: 700; color: #1B3A2D; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #E5DED3; }
   h2 { font-family: Georgia, serif; font-size: 13pt; font-weight: 700; color: #1B3A2D; margin: 20px 0 8px; }
   h3 { font-family: Georgia, serif; font-size: 11pt; font-weight: 700; color: #5A5248; margin: 14px 0 6px; }

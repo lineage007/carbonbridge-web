@@ -58,7 +58,7 @@ function RetireInner() {
         <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178' }}>
           Start a purchase first to get an escrow order ID.
         </p>
-        <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>
+        <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>
           Browse marketplace →
         </Link>
       </div>
@@ -76,7 +76,7 @@ function RetireInner() {
       <div style={{ maxWidth: '600px', margin: '60px auto', padding: '0 20px', textAlign: 'center' }}>
         <h2 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714', marginBottom: '12px' }}>Cannot retire</h2>
         <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '20px' }}>{msg}</p>
-        <Link href={`/purchase?credit=${session.creditId}&qty=${session.quantity}`} style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>
+        <Link href={`/purchase?credit=${session.creditId}&qty=${session.quantity}`} style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>
           Start a new purchase →
         </Link>
       </div>
@@ -105,7 +105,7 @@ function RetireInner() {
     return (
       <div style={{ maxWidth: '720px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Certificate */}
-        <div style={{ background: 'white', border: '2px solid #C9A96E', borderRadius: '20px', padding: '40px 40px 32px', position: 'relative', overflow: 'hidden', marginBottom: '28px' }}>
+        <div style={{ background: 'white', border: '2px solid #4A8B64', borderRadius: '20px', padding: '40px 40px 32px', position: 'relative', overflow: 'hidden', marginBottom: '28px' }}>
           {/* Watermark */}
           <div style={{
             position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)',
@@ -174,7 +174,7 @@ function RetireInner() {
 
         {/* Actions */}
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-          <Link href="/dashboard/purchases" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}>
+          <Link href="/dashboard/purchases" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}>
             View purchases →
           </Link>
           <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#8B8178', background: 'white', border: '1px solid #E8E2D6', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}>
@@ -213,7 +213,7 @@ function RetireInner() {
           { label: 'Order ID', value: session.orderId, mono: true },
           { label: 'Credit', value: session.creditName },
           { label: 'Quantity', value: `${session.quantity.toLocaleString()} tCO₂e`, mono: true },
-          { label: 'Escrow status', value: 'Held', color: '#C9A96E' },
+          { label: 'Escrow status', value: 'Held', color: '#4A8B64' },
           { label: 'Mode', value: 'STUB — demonstration only', color: '#991B1B' },
         ].map(row => (
           <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #F0EBE3' }}>
@@ -260,7 +260,7 @@ function RetireInner() {
         </Link>
         <button
           onClick={handleRetire} disabled={retirePending || !beneficiary}
-          style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', border: 'none', cursor: retirePending || !beneficiary ? 'not-allowed' : 'pointer', opacity: retirePending || !beneficiary ? 0.6 : 1, flex: 1 }}
+          style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px', border: 'none', cursor: retirePending || !beneficiary ? 'not-allowed' : 'pointer', opacity: retirePending || !beneficiary ? 0.6 : 1, flex: 1 }}
         >
           {retirePending ? 'Processing retirement...' : 'Retire credits (demonstration)'}
         </button>

@@ -55,7 +55,7 @@ function PurchaseInner() {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '16px' }}>
         <h2 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714' }}>No credit selected</h2>
-        <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>
+        <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#4A8B64', fontWeight: 600 }}>
           Browse marketplace →
         </Link>
       </div>
@@ -230,7 +230,7 @@ function PurchaseInner() {
               ].map(f => (
                 <div key={f.label}>
                   <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#1A1714', display: 'block', marginBottom: '5px' }}>
-                    {f.label} <span style={{ color: '#C9A96E' }}>*</span>
+                    {f.label} <span style={{ color: '#4A8B64' }}>*</span>
                   </label>
                   <input
                     type={f.type ?? 'text'} value={f.value} placeholder={f.placeholder}
@@ -326,8 +326,8 @@ function PurchaseInner() {
           {/* Escrow status card */}
           <div style={{ background: 'white', border: '2px solid rgba(27,58,45,0.15)', borderRadius: '16px', padding: '24px', marginBottom: '24px', textAlign: 'left' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#C9A96E', flexShrink: 0 }} />
-              <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#C9A96E', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#4A8B64', flexShrink: 0 }} />
+              <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#4A8B64', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 Escrow Status: HELD (demonstration)
               </span>
             </div>
@@ -350,7 +350,7 @@ function PurchaseInner() {
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link
               href={`/retire?order=${session.orderId}`}
-              style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}
+              style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '13px 28px', borderRadius: '10px', textDecoration: 'none' }}
             >
               Retire credits →
             </Link>
@@ -381,7 +381,7 @@ function PurchaseInner() {
           {step === 1 && (
             <button
               onClick={() => setStep(2)}
-              style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '10px', border: 'none', cursor: 'pointer' }}
+              style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '12px 28px', borderRadius: '10px', border: 'none', cursor: 'pointer' }}
             >
               Continue to review →
             </button>
@@ -391,7 +391,7 @@ function PurchaseInner() {
             <button
               onClick={() => { if (buyerName && buyerEmail && buyerCompany) handleCreateOrder(); }}
               disabled={!buyerName || !buyerEmail || !buyerCompany}
-              style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '10px', border: 'none', cursor: 'pointer', opacity: (!buyerName || !buyerEmail || !buyerCompany) ? 0.4 : 1 }}
+              style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '12px 28px', borderRadius: '10px', border: 'none', cursor: 'pointer', opacity: (!buyerName || !buyerEmail || !buyerCompany) ? 0.4 : 1 }}
             >
               Proceed to escrow →
             </button>

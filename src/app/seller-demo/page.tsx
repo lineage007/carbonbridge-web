@@ -37,7 +37,7 @@ const DEMO_LISTINGS = [
 
 const ESCROW_STATE_COLORS: Record<EscrowState | 'idle', { bg: string; text: string; label: string }> = {
   idle: { bg: 'rgba(176,169,154,0.1)', text: '#B0A99A', label: 'Not started' },
-  held: { bg: 'rgba(201,169,110,0.1)', text: '#C9A96E', label: 'Held — awaiting retirement' },
+  held: { bg: 'rgba(74,139,100,0.1)', text: '#4A8B64', label: 'Held — awaiting retirement' },
   released: { bg: 'rgba(22,163,74,0.08)', text: '#16A34A', label: 'Released' },
   refunded: { bg: 'rgba(239,68,68,0.08)', text: '#DC2626', label: 'Refunded' },
   frozen: { bg: 'rgba(245,158,11,0.1)', text: '#D97706', label: 'Frozen — dispute open' },
@@ -97,7 +97,7 @@ export default function SellerDemoPage() {
           {/* KPIs */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px', marginBottom: '28px' }}>
             {[
-              { label: 'Held in escrow', value: heldCount > 0 ? fmt(totalHeldValue) : '$0.00', sub: `${heldCount} order${heldCount !== 1 ? 's' : ''} pending retirement`, accent: '#C9A96E' },
+              { label: 'Held in escrow', value: heldCount > 0 ? fmt(totalHeldValue) : '$0.00', sub: `${heldCount} order${heldCount !== 1 ? 's' : ''} pending retirement`, accent: '#4A8B64' },
               { label: 'Released', value: String(releasedCount), sub: 'escrow released this session', accent: '#16A34A' },
               { label: 'Frozen (disputes)', value: String(frozenCount), sub: frozenCount > 0 ? 'action required' : 'no active disputes', accent: frozenCount > 0 ? '#D97706' : '#B0A99A' },
               { label: 'Active listings', value: String(DEMO_LISTINGS.filter(l => l.status === 'Active').length), sub: 'of ' + DEMO_LISTINGS.length + ' total', accent: '#1B3A2D' },
@@ -135,7 +135,7 @@ export default function SellerDemoPage() {
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '12px' }}>
                       No demo orders yet.
                     </p>
-                    <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', fontWeight: 600 }}>
+                    <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', color: '#4A8B64', fontWeight: 600 }}>
                       Start a purchase flow →
                     </Link>
                   </div>
@@ -231,7 +231,7 @@ export default function SellerDemoPage() {
                       <td style={{ padding: '14px 16px', fontFamily: bg, fontSize: '12px', color: '#8B8178' }}>{l.type}</td>
                       <td style={{ padding: '14px 16px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{l.vintage}</td>
                       <td style={{ padding: '14px 16px' }}>
-                        <span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 700, color: '#C9A96E', background: 'rgba(201,169,110,0.08)', padding: '2px 8px', borderRadius: '4px' }}>{l.rating}</span>
+                        <span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 700, color: '#4A8B64', background: 'rgba(74,139,100,0.08)', padding: '2px 8px', borderRadius: '4px' }}>{l.rating}</span>
                       </td>
                       <td style={{ padding: '14px 16px', fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>${l.price.toFixed(2)}</td>
                       <td style={{ padding: '14px 16px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{l.available.toLocaleString()}</td>
@@ -260,7 +260,7 @@ export default function SellerDemoPage() {
                   <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '20px' }}>
                     Complete a purchase flow to see escrow states here.
                   </p>
-                  <Link href="/purchase?credit=cb-au-arr-001&qty=500" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '12px 24px', borderRadius: '10px', textDecoration: 'none' }}>
+                  <Link href="/purchase?credit=cb-au-arr-001&qty=500" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '12px 24px', borderRadius: '10px', textDecoration: 'none' }}>
                     Start demo purchase →
                   </Link>
                 </div>
@@ -279,7 +279,7 @@ export default function SellerDemoPage() {
                         const stateInfo = ESCROW_STATE_COLORS[o.escrowState ?? 'idle'];
                         return (
                           <tr key={o.orderId} style={{ borderBottom: '1px solid #F0EBE3' }}>
-                            <td style={{ padding: '12px 14px', fontFamily: mono, fontSize: '11px', color: '#C9A96E', fontWeight: 600 }}>{o.orderId}</td>
+                            <td style={{ padding: '12px 14px', fontFamily: mono, fontSize: '11px', color: '#4A8B64', fontWeight: 600 }}>{o.orderId}</td>
                             <td style={{ padding: '12px 14px', fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#1A1714', maxWidth: '180px' }}>{o.creditName}</td>
                             <td style={{ padding: '12px 14px', fontFamily: bg, fontSize: '12px', color: '#8B8178' }}>{o.buyerCompany}</td>
                             <td style={{ padding: '12px 14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{o.quantity.toLocaleString()}</td>
@@ -293,7 +293,7 @@ export default function SellerDemoPage() {
                               {o.retirementStatus === 'demonstration_complete' ? (
                                 <span style={{ fontFamily: bg, fontSize: '10px', color: '#16A34A', fontWeight: 700 }}>Demo cert issued</span>
                               ) : o.escrowState === 'held' ? (
-                                <Link href={`/retire?order=${o.orderId}`} style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', fontWeight: 600, textDecoration: 'none' }}>
+                                <Link href={`/retire?order=${o.orderId}`} style={{ fontFamily: bg, fontSize: '11px', color: '#4A8B64', fontWeight: 600, textDecoration: 'none' }}>
                                   Retire →
                                 </Link>
                               ) : (
@@ -376,7 +376,7 @@ export default function SellerDemoPage() {
                         {!isResolved && (
                           <div style={{ marginTop: '14px' }}>
                             <Link href={`/dispute?order=${o.orderId}`}
-                              style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '10px 22px', borderRadius: '8px', textDecoration: 'none', display: 'inline-block' }}>
+                              style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#0C1C14', background: '#4A8B64', padding: '10px 22px', borderRadius: '8px', textDecoration: 'none', display: 'inline-block' }}>
                               Review dispute →
                             </Link>
                           </div>

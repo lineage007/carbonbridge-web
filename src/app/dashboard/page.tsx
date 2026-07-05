@@ -43,7 +43,7 @@ export default function DashboardPage() {
         {[
           { label: 'Portfolio Value', value: loading ? '...' : fmt(totalValue), sub: `${portfolio.length} projects`, color: '#1B3A2D' },
           { label: 'Credits Held', value: loading ? '...' : `${totalTonnes.toLocaleString()} tCO₂e`, sub: `${portfolio.length} vintages`, color: '#2D6A4F' },
-          { label: 'Total Invested', value: loading ? '...' : fmt(totalSpent), sub: `${orders.length} orders`, color: '#C9A96E' },
+          { label: 'Total Invested', value: loading ? '...' : fmt(totalSpent), sub: `${orders.length} orders`, color: '#4A8B64' },
           { label: 'Pending Orders', value: loading ? '...' : String(pendingOrders.length), sub: pendingOrders.length > 0 ? 'Action needed' : 'All settled', color: pendingOrders.length > 0 ? '#dc2626' : '#2D6A4F' },
         ].map(kpi => (
           <div key={kpi.label} style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', padding: '20px', borderLeft: `4px solid ${kpi.color}` }}>
@@ -59,7 +59,7 @@ export default function DashboardPage() {
         <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h2 style={{ fontFamily: fr, fontSize: '16px', color: '#1A1714' }}>Portfolio</h2>
-            <Link href="/dashboard/portfolio" style={{ fontSize: '12px', color: '#C9A96E' }}>View all →</Link>
+            <Link href="/dashboard/portfolio" style={{ fontSize: '12px', color: '#4A8B64' }}>View all →</Link>
           </div>
           {loading ? (
             <p style={{ fontSize: '13px', color: '#8A7E70', padding: '20px 0', textAlign: 'center' }}>Loading...</p>
@@ -94,7 +94,7 @@ export default function DashboardPage() {
         <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '14px', padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h2 style={{ fontFamily: fr, fontSize: '16px', color: '#1A1714' }}>Recent Orders</h2>
-            <Link href="/dashboard/purchases" style={{ fontSize: '12px', color: '#C9A96E' }}>View all →</Link>
+            <Link href="/dashboard/purchases" style={{ fontSize: '12px', color: '#4A8B64' }}>View all →</Link>
           </div>
           {loading ? (
             <p style={{ fontSize: '13px', color: '#8A7E70', padding: '20px 0', textAlign: 'center' }}>Loading...</p>
@@ -114,7 +114,7 @@ export default function DashboardPage() {
               </tr></thead>
               <tbody>{orders.slice(0, 5).map((o, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid #F0EBE0' }}>
-                  <td style={{ padding: '10px 0', fontFamily: mono, fontSize: '11px', color: '#C9A96E' }}>{o.reference || `CB-${String(i+1).padStart(4, '0')}`}</td>
+                  <td style={{ padding: '10px 0', fontFamily: mono, fontSize: '11px', color: '#4A8B64' }}>{o.reference || `CB-${String(i+1).padStart(4, '0')}`}</td>
                   <td style={{ padding: '10px 0', color: '#1A1714' }}>{o.listing?.project_name || '—'}</td>
                   <td style={{ padding: '10px 0', textAlign: 'right', fontFamily: mono }}>{fmt(o.total_amount || 0)}</td>
                   <td style={{ padding: '10px 0', textAlign: 'right' }}>
@@ -137,7 +137,7 @@ export default function DashboardPage() {
             <h3 style={{ fontFamily: fr, fontSize: '16px', color: '#F2ECE0', marginBottom: '4px' }}>Want to sell carbon credits?</h3>
             <p style={{ fontSize: '13px', color: '#8AAA92' }}>Apply for seller verification to list your credits on the marketplace</p>
           </div>
-          <Link href="/dashboard/settings" style={{ fontSize: '13px', fontWeight: 600, color: '#1B3A2D', background: '#C9A96E', padding: '10px 24px', borderRadius: '8px', textDecoration: 'none' }}>
+          <Link href="/dashboard/settings" style={{ fontSize: '13px', fontWeight: 600, color: '#1B3A2D', background: '#4A8B64', padding: '10px 24px', borderRadius: '8px', textDecoration: 'none' }}>
             Apply Now
           </Link>
         </div>

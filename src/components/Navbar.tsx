@@ -61,13 +61,14 @@ export default function Navbar({ dark = false }: NavbarProps) {
   // Style variants
   const navBg = dark
     ? 'rgba(12,28,20,0.97)'
-    : 'rgba(250,250,247,0.97)';
+    : 'rgba(250,251,249,0.97)';
   const borderColor = dark
-    ? 'rgba(201,169,110,0.08)'
-    : '#E8E2D8';
-  const linkColor = dark ? 'rgba(255,252,246,0.6)' : '#5A5248';
-  const activeLinkColor = dark ? '#FFFCF6' : '#1A1714';
-  const logoSrc = dark ? '/logo-white.png' : '/logo-white.png';
+    ? 'rgba(60,122,85,0.08)'
+    : '#DDE0DA';
+  const linkColor = dark ? 'rgba(238,238,232,0.55)' : '#556358';
+  const activeLinkColor = dark ? '#EEEEE8' : '#0F1A13';
+  // Use green logo on light backgrounds so it's visible
+  const logoSrc = dark ? '/logo-white.png' : '/logo-green.png';
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
@@ -126,15 +127,15 @@ export default function Navbar({ dark = false }: NavbarProps) {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   style={{
                     display: 'flex', alignItems: 'center', gap: '8px',
-                    background: dropdownOpen ? 'rgba(201,169,110,0.10)' : 'transparent',
-                    border: `1px solid ${dropdownOpen ? '#C9A96E' : (dark ? 'rgba(201,169,110,0.25)' : '#E8E2D8')}`,
+                    background: dropdownOpen ? 'rgba(74,139,100,0.10)' : 'transparent',
+                    border: `1px solid ${dropdownOpen ? '#4A8B64' : (dark ? 'rgba(74,139,100,0.25)' : '#E8E2D8')}`,
                     borderRadius: '8px', padding: '6px 12px', cursor: 'pointer', transition: 'all 0.15s',
                     fontFamily: bg, fontSize: '13px', fontWeight: 500,
                     color: dark ? '#FFFCF6' : '#1A1714',
                   }}
                 >
                   <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #1B3A2D, #2D6A4F)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <span style={{ fontSize: '10px', fontWeight: 700, color: '#C9A96E', fontFamily: bg }}>
+                    <span style={{ fontSize: '10px', fontWeight: 700, color: '#4A8B64', fontFamily: bg }}>
                       {user.email?.[0]?.toUpperCase() ?? 'U'}
                     </span>
                   </div>
@@ -221,7 +222,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
                   style={{
                     fontFamily: bg, fontSize: '13px', fontWeight: 600,
                     color: '#0C1C14',
-                    background: '#C9A96E',
+                    background: '#4A8B64',
                     padding: '8px 18px', borderRadius: '8px',
                     textDecoration: 'none', transition: 'opacity 0.15s',
                   }}
@@ -273,13 +274,13 @@ export default function Navbar({ dark = false }: NavbarProps) {
           <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {user ? (
               <>
-                <Link href="/dashboard" style={{ fontFamily: bg, fontSize: '14px', color: dark ? '#C9A96E' : '#1B3A2D', textDecoration: 'none' }}>→ Dashboard</Link>
+                <Link href="/dashboard" style={{ fontFamily: bg, fontSize: '14px', color: dark ? '#4A8B64' : '#1B3A2D', textDecoration: 'none' }}>→ Dashboard</Link>
                 <button onClick={handleSignOut} style={{ fontFamily: bg, fontSize: '14px', color: '#EF4444', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Sign out</button>
               </>
             ) : (
               <>
                 <Link href="/login" style={{ fontFamily: bg, fontSize: '15px', color: dark ? 'rgba(255,252,246,0.7)' : '#5A5248', textDecoration: 'none' }}>Sign in</Link>
-                <Link href="/register" style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', textAlign: 'center' }}>Get started</Link>
+                <Link href="/register" style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, color: '#0C1C14', background: '#4A8B64', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', textAlign: 'center' }}>Get started</Link>
               </>
             )}
           </div>

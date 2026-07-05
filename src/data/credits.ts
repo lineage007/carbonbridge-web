@@ -50,7 +50,7 @@ export const CREDIT_TYPE_COLORS: Record<CreditType, string> = {
   'REDD+': '#6B4226',
   'Biochar': '#3D3D3D',
   'Soil Carbon': '#7B5B3A',
-  'Savanna': '#C9A96E',
+  'Savanna': '#4A8B64',
   'Landfill Gas': '#4A6741',
   'Energy Efficiency': '#2E5984',
   'IFM': '#3A5F3A',

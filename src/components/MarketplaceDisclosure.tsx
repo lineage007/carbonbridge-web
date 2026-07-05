@@ -101,7 +101,7 @@ export function MarketplaceDisclosure({ phase }: MarketplaceDisclosureProps) {
       </ul>
       <a
         href={DISCLOSURE_LINK}
-        style={{ color: '#C9A96E', textDecoration: 'underline', fontSize: '11px' }}
+        style={{ color: '#4A8B64', textDecoration: 'underline', fontSize: '11px' }}
       >
         Full risk disclosure ↗
       </a>
