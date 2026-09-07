@@ -13,6 +13,24 @@ import type { OrderReservationInsert, PaymentMethodValue } from './types';
 
 export const RESERVATION_WINDOW_HOURS = 24;
 
+/**
+ * The single payment-method default for the whole reservation → agreement flow
+ * (review finding 4). The reserve route and the purchase-agreement builder both
+ * read it, so an order created without an explicit payment_method and the
+ * agreement rendered for that order can never disagree.
+ */
+export const DEFAULT_PAYMENT_METHOD: PaymentMethodValue = 'bank_transfer';
+
+/** Days a purchase agreement stays valid, by payment method. */
+export const AGREEMENT_VALIDITY_DAYS: Record<PaymentMethodValue, number> = {
+  bank_transfer: 5,
+  card: 3,
+};
+
+export function agreementValidityDays(paymentMethod: PaymentMethodValue): number {
+  return AGREEMENT_VALIDITY_DAYS[paymentMethod];
+}
+
 /** Postgres `uuid` literal. Validated here so a malformed id never reaches PostgREST. */
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
@@ -20,7 +38,7 @@ export const ReserveRequestSchema = z.object({
   listing_id: z.string().regex(UUID_RE, 'listing_id must be a uuid'),
   quantity: z.number().int().positive(),
   // orders.payment_method is NOT NULL with check (card|bank_transfer).
-  payment_method: z.enum(['card', 'bank_transfer']).default('bank_transfer'),
+  payment_method: z.enum(['card', 'bank_transfer']).default(DEFAULT_PAYMENT_METHOD),
 });
 
 export type ReserveRequest = z.infer<typeof ReserveRequestSchema>;

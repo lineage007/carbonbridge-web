@@ -386,6 +386,8 @@ export interface SettlementRow {
   id: string;
   order_id: string;
   status: 'pending' | 'buyer_paid' | 'credits_transferred' | 'completed' | 'disputed' | 'failed';
+  /** Status held immediately before a `disputed` transition; null otherwise. */
+  previous_status: 'pending' | 'buyer_paid' | 'credits_transferred' | null;
   payment_reference: string | null;
   payment_amount: number | null;
   payment_received_at: string | null;

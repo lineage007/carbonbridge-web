@@ -2,6 +2,8 @@
 // Generates the full legal agreement as structured data for PDF rendering
 // Based on: ISDA VCC Definitions 2022, IETA ETMA structure, ADGM English Common Law framework
 
+import { DEFAULT_PAYMENT_METHOD, agreementValidityDays } from './reservation';
+
 export interface AgreementParty {
   companyName: string;
   registeredAddress: string;
@@ -171,7 +173,8 @@ export function buildAgreementDataFromOrder(input: {
 }): AgreementData {
   const { order, listing, buyer, seller } = input;
   const isCBDirect = listing?.is_cb_direct === true;
-  const paymentMethod = order.payment_method ?? 'card';
+  // Review finding 4: one default, shared with POST /api/credits/reserve.
+  const paymentMethod = order.payment_method ?? DEFAULT_PAYMENT_METHOD;
 
   return {
     reference: order.agreement_ref || input.fallbackReference || generateAgreementReference(),
@@ -225,7 +228,7 @@ export function buildAgreementDataFromOrder(input: {
     ),
     paymentMethod,
     totalAmount: order.total_amount,
-    validityPeriod: paymentMethod === 'bank_transfer' ? 5 : 3,
+    validityPeriod: agreementValidityDays(paymentMethod),
     acceptedAt: order.agreement_accepted_at ?? undefined,
   };
 }

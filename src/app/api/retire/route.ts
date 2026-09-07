@@ -17,7 +17,7 @@
  *   - ACR: POST to APX/Xpansiv API
  */
 
-import { createClient } from '@/lib/supabase-server';
+import { createClient, createServiceClient } from '@/lib/supabase-server';
 import { buildApiOffsetLog, buildCertificateRef, isWellFormedApiKey } from '@/lib/api-usage';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -141,7 +141,14 @@ export async function POST(req: NextRequest) {
     // Create retirement certificate record. serial_numbers stays empty until
     // the registry retirement is executed and real serials come back — the
     // CarbonBridge-side reference lives in certificate_ref.
-    const { data: cert, error: certErr } = await supabase
+    // Review finding 1: retirement_certificates has RLS with a
+    // `buyer_id = auth.uid()` insert policy. An API-key caller has no session,
+    // so auth.uid() is null and the insert would be denied. The caller is
+    // already authenticated and the order ownership checked above, so the
+    // write goes through the service-role client.
+    const admin = createServiceClient();
+
+    const { data: cert, error: certErr } = await admin
       .from('retirement_certificates')
       .insert({
         certificate_ref: certRef,
@@ -278,6 +285,7 @@ export async function GET(req: NextRequest) {
       certificates: (certs ?? []).map(
         (c: {
           id: string;
+          certificate_ref?: string | null;
           serial_numbers?: string[];
           order_id: string;
           orders?: {
@@ -295,7 +303,10 @@ export async function GET(req: NextRequest) {
           pdf_url?: string;
         }) => ({
           id: c.id,
-          reference: c.serial_numbers?.[0] ?? c.id,
+          // The CarbonBridge reference lives in certificate_ref; serial_numbers
+          // holds registry serials and stays empty until the registry
+          // retirement is executed.
+          reference: c.certificate_ref ?? c.id,
           order_id: c.order_id,
           project: c.orders?.listings?.project_name,
           credit_type: c.orders?.listings?.credit_type,

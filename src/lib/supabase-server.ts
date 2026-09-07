@@ -65,13 +65,33 @@ export async function requireSuperAdmin() {
 }
 
 /**
- * Service-role client — bypasses RLS. Use only in server-side API routes
- * for admin operations. NEVER import from a Client Component.
+ * Service-role client — bypasses RLS. Use only in server-side API routes,
+ * and only AFTER the route has performed its own authorisation check.
+ * NEVER import from a Client Component.
+ *
+ * Review finding 1: the settlements and retirement_certificates tables created
+ * by 005_phase1_contract_alignment.sql carry admin-only write policies, and
+ * /api/retire accepts API-key callers that have no session (auth.uid() is
+ * null). Those routes therefore write through this client rather than the
+ * session client, having already established who the caller is.
+ *
+ * Throws rather than falling back to a placeholder key — a silent placeholder
+ * turns a misconfiguration into an opaque 401 from PostgREST.
  */
 export function createServiceClient() {
-  return createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder',
-    { auth: { autoRefreshToken: false, persistSession: false } },
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url) {
+    throw new Error('createServiceClient: NEXT_PUBLIC_SUPABASE_URL is not set');
+  }
+  if (!serviceRoleKey) {
+    throw new Error(
+      'createServiceClient: SUPABASE_SERVICE_ROLE_KEY is not set — required for server-side writes to RLS-protected tables (settlements, retirement_certificates)',
+    );
+  }
+
+  return createSupabaseClient(url, serviceRoleKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
