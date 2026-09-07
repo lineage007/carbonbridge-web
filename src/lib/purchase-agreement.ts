@@ -60,6 +60,176 @@ export function generateAgreementReference(): string {
   return `PA-${year}-${seq}`;
 }
 
+// ═══════════════════════════════════════════════════
+// Schema → AgreementData mapping (Phase 1 alignment — CB-004)
+//
+// Every field read below is a real column in supabase/migrations. Notably:
+//   - the agreement reference column is `agreement_ref`, not
+//     `agreement_reference`
+//   - CB Direct is the `listings.is_cb_direct` boolean; `listing_type` is
+//     constrained to 'spot' | 'forward'
+//   - there is no `insurance_policies` table; insurance lives on
+//     orders.insurance_products (jsonb) + insurance_premium_total
+//   - acceptance is `orders.agreement_accepted_at`, not inferred from status
+// ═══════════════════════════════════════════════════
+
+const UNDERWRITERS: Record<string, string> = {
+  kita: "Kita Earth Ltd (Lloyd's Coverholder)",
+  cfc: "CFC Underwriting Ltd (Lloyd's)",
+};
+
+/** Order columns the agreement needs. Mirrors OrderRow in types.ts. */
+export interface AgreementOrderSource {
+  created_at: string;
+  quantity: number;
+  unit_price: number;
+  total_amount: number;
+  payment_method: 'card' | 'bank_transfer' | null;
+  agreement_ref: string | null;
+  agreement_accepted_at: string | null;
+  insurance_products: unknown;
+  insurance_premium_total: number | null;
+  insurance_policy_ref: string | null;
+  verra_serial_numbers: string | null;
+}
+
+/** Listing columns the agreement needs. Mirrors ListingRow in types.ts. */
+export interface AgreementListingSource {
+  project_name: string | null;
+  project_id_verra: string | null;
+  registry: string | null;
+  methodology: string | null;
+  credit_type: string | null;
+  vintage_year: number | null;
+  quality_rating: string | null;
+  corsia_eligible: boolean | null;
+  cbam_eligible: boolean | null;
+  nrcc_eligible: boolean | null;
+  icvcm_ccp_aligned: boolean | null;
+  is_cb_direct: boolean | null;
+}
+
+/** Profile columns the agreement needs. Mirrors ProfileRow in types.ts. */
+export interface AgreementProfileSource {
+  company_name: string | null;
+  contact_name: string | null;
+  email: string | null;
+  country: string | null;
+}
+
+export const CARBONBRIDGE_PARTY: AgreementParty = {
+  companyName: 'CarbonBridge Ltd',
+  registeredAddress: 'Abu Dhabi Global Market, Al Maryah Island, Abu Dhabi, UAE',
+  registrationNumber: '[ADGM Registration Number]',
+  contactPerson: 'CarbonBridge Operations',
+  email: 'operations@carbonbridge.ae',
+  country: 'AE',
+};
+
+/**
+ * Read orders.insurance_products (jsonb, documented as
+ * `[{type, premium, provider}]`) into the agreement's InsuranceDetails.
+ */
+export function parseInsuranceProducts(
+  raw: unknown,
+  premiumTotal?: number | null,
+  policyRef?: string | null,
+): InsuranceDetails {
+  const rows = Array.isArray(raw) ? raw : [];
+
+  const products = rows
+    .filter((row): row is Record<string, unknown> => typeof row === 'object' && row !== null)
+    .map((row) => {
+      const premium = typeof row.premium === 'number' ? row.premium : 0;
+      const provider = typeof row.provider === 'string' ? row.provider : '';
+      return {
+        type: typeof row.type === 'string' ? row.type : 'unknown',
+        premium,
+        premiumRate: typeof row.premium_rate === 'number' ? row.premium_rate : 0,
+        underwriter: UNDERWRITERS[provider.toLowerCase()] ?? provider ?? '',
+        policyReference:
+          typeof row.policy_reference === 'string' ? row.policy_reference : policyRef ?? undefined,
+      };
+    });
+
+  // Prefer the stored total; fall back to summing the products.
+  const totalPremium =
+    typeof premiumTotal === 'number' && premiumTotal > 0
+      ? premiumTotal
+      : products.reduce((sum, p) => sum + p.premium, 0);
+
+  return { selected: products.length > 0, products, totalPremium };
+}
+
+export function buildAgreementDataFromOrder(input: {
+  order: AgreementOrderSource;
+  listing: AgreementListingSource | null;
+  buyer: AgreementProfileSource | null;
+  seller: AgreementProfileSource | null;
+  /** Injected so callers (and tests) control the fallback reference. */
+  fallbackReference?: string;
+}): AgreementData {
+  const { order, listing, buyer, seller } = input;
+  const isCBDirect = listing?.is_cb_direct === true;
+  const paymentMethod = order.payment_method ?? 'card';
+
+  return {
+    reference: order.agreement_ref || input.fallbackReference || generateAgreementReference(),
+    date: new Date(order.created_at).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }),
+    buyer: {
+      companyName: buyer?.company_name || 'Unknown',
+      registeredAddress: buyer?.country || 'Not provided',
+      registrationNumber: undefined,
+      contactPerson: buyer?.contact_name || 'Not provided',
+      email: buyer?.email || '',
+      country: buyer?.country || 'AE',
+    },
+    seller: isCBDirect
+      ? CARBONBRIDGE_PARTY
+      : {
+          companyName: seller?.company_name || 'Third-Party Seller',
+          registeredAddress: seller?.country || 'Not provided',
+          registrationNumber: undefined,
+          contactPerson: seller?.contact_name || 'Not provided',
+          email: seller?.email || '',
+          country: seller?.country || '',
+        },
+    isCBDirect,
+    credits: {
+      projectName: listing?.project_name || 'Unknown Project',
+      registryProjectId: listing?.project_id_verra || 'N/A',
+      registry: listing?.registry || 'verra',
+      methodology: listing?.methodology || 'N/A',
+      creditType: listing?.credit_type || 'unknown',
+      vintageYear: listing?.vintage_year || new Date().getFullYear(),
+      qualityRating: listing?.quality_rating || 'Unrated',
+      quantity: order.quantity,
+      unitPrice: order.unit_price,
+      totalPrice: order.quantity * order.unit_price,
+      complianceEligibility: [
+        ...(listing?.corsia_eligible ? ['CORSIA'] : []),
+        ...(listing?.cbam_eligible ? ['CBAM'] : []),
+        ...(listing?.nrcc_eligible ? ['NRCC'] : []),
+        ...(listing?.icvcm_ccp_aligned ? ['ICVCM CCP'] : []),
+      ],
+      serialRange: order.verra_serial_numbers ?? undefined,
+    },
+    insurance: parseInsuranceProducts(
+      order.insurance_products,
+      order.insurance_premium_total,
+      order.insurance_policy_ref,
+    ),
+    paymentMethod,
+    totalAmount: order.total_amount,
+    validityPeriod: paymentMethod === 'bank_transfer' ? 5 : 3,
+    acceptedAt: order.agreement_accepted_at ?? undefined,
+  };
+}
+
 export function generateAgreementHTML(data: AgreementData): string {
   const { buyer, seller, credits, insurance, isCBDirect, paymentMethod } = data;
   const isBank = paymentMethod === 'bank_transfer';

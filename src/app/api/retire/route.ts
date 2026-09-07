@@ -18,6 +18,7 @@
  */
 
 import { createClient } from '@/lib/supabase-server';
+import { buildApiOffsetLog, buildCertificateRef, isWellFormedApiKey } from '@/lib/api-usage';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -42,9 +43,13 @@ export async function POST(req: NextRequest) {
 
     // Support both session auth and API key auth
     const apiKey = req.headers.get('x-api-key');
+    const viaApiKey = apiKey !== null;
     let userId: string;
 
     if (apiKey) {
+      if (!isWellFormedApiKey(apiKey)) {
+        return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+      }
       const { data: profile } = await supabase
         .from('profiles')
         .select('id')
@@ -54,13 +59,8 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
       }
       userId = profile.id;
-
-      await supabase.from('api_offset_logs').insert({
-        client_id: userId,
-        endpoint: '/api/retire',
-        method: 'POST',
-        status_code: 200,
-      });
+      // NOTE: the api_offset_logs row is written after validation, once
+      // co2_tonnes is known — the column is NOT NULL (CB-005).
     } else {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -136,12 +136,15 @@ export async function POST(req: NextRequest) {
 
     // Generate deterministic certificate reference
     // Format: CB-RET-{timestamp36}-{creditIdFragment}
-    const certRef = `CB-RET-${Date.now().toString(36).toUpperCase()}-${credit_id.slice(-6).toUpperCase()}`;
+    const certRef = buildCertificateRef(credit_id);
 
-    // Create retirement certificate record
+    // Create retirement certificate record. serial_numbers stays empty until
+    // the registry retirement is executed and real serials come back — the
+    // CarbonBridge-side reference lives in certificate_ref.
     const { data: cert, error: certErr } = await supabase
       .from('retirement_certificates')
       .insert({
+        certificate_ref: certRef,
         order_id,
         buyer_id: userId,
         registry: order.listings?.registry ?? 'verra',
@@ -149,13 +152,30 @@ export async function POST(req: NextRequest) {
         beneficiary_name: beneficiary_name ?? 'On behalf of certificate holder',
         retirement_reason,
         status: 'processing',
-        serial_numbers: [certRef],
+        serial_numbers: [],
       })
       .select()
       .single();
 
     if (certErr || !cert) {
       return NextResponse.json({ error: 'Certificate creation failed' }, { status: 500 });
+    }
+
+    // Meter the call against the client's API plan. api_offset_logs requires
+    // co2_tonnes and billing_period; endpoint/method/status_code are not
+    // columns and go into the metadata jsonb.
+    if (viaApiKey) {
+      await supabase.from('api_offset_logs').insert(
+        buildApiOffsetLog({
+          clientId: userId,
+          co2Tonnes: retireQty,
+          endpoint: '/api/retire',
+          method: 'POST',
+          statusCode: 201,
+          creditTypeAllocated: order.listings?.credit_type ?? null,
+          externalRef: certRef,
+        }),
+      );
     }
 
     // TODO (live integration): execute registry retirement here.
@@ -226,6 +246,9 @@ export async function GET(req: NextRequest) {
     let userId: string;
 
     if (apiKey) {
+      if (!isWellFormedApiKey(apiKey)) {
+        return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+      }
       const { data: profile } = await supabase
         .from('profiles')
         .select('id')
