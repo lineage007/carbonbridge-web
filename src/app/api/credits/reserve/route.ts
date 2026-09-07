@@ -1,9 +1,26 @@
 import { createClient } from '@/lib/supabase-server';
+import {
+  ReserveRequestSchema,
+  RESERVABLE_LISTING_COLUMNS,
+  RESERVATION_WINDOW_HOURS,
+  applyReservationToListing,
+  buildReservationOrder,
+  releaseReservationFromListing,
+  reservationExpiry,
+  type ReservableListing,
+} from '@/lib/reservation';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Credit Locking / Reservation System (V4.1 Part 6)
 // POST: Reserve credits for 24 hours pending payment
 // DELETE: Release expired reservations
+//
+// Schema contract: every column written here exists in
+// supabase/migrations/001_initial_schema.sql, with status 'pending_payment'
+// coming from 002_fix_order_status_pending_payment.sql. The reservation
+// deadline lives in orders.reservation_expires_at — there is no
+// `payment_deadline` column, so the response field of that name is derived
+// from it for API compatibility.
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,18 +28,23 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { listing_id, quantity } = await req.json();
-    if (!listing_id || !quantity || quantity <= 0) {
-      return NextResponse.json({ error: 'listing_id and positive quantity required' }, { status: 400 });
+    const parsed = ReserveRequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: 'listing_id (uuid) and positive integer quantity required', details: parsed.error.flatten() },
+        { status: 400 },
+      );
     }
+    const { listing_id, quantity, payment_method } = parsed.data;
 
-    // Check availability
+    // Check availability. The seller/credit columns are needed because orders
+    // declares seller_id, project_name, credit_type and registry NOT NULL.
     const { data: listing, error: listErr } = await supabase
       .from('listings')
-      .select('id, available_tonnes, reserved_tonnes, price_per_tonne, project_name')
+      .select(RESERVABLE_LISTING_COLUMNS)
       .eq('id', listing_id)
       .eq('status', 'active')
-      .single();
+      .single<ReservableListing>();
 
     if (listErr || !listing) {
       return NextResponse.json({ error: 'Listing not found or not active' }, { status: 404 });
@@ -40,8 +62,7 @@ export async function POST(req: NextRequest) {
     const { error: updateErr } = await supabase
       .from('listings')
       .update({
-        available_tonnes: listing.available_tonnes - quantity,
-        reserved_tonnes: (listing.reserved_tonnes || 0) + quantity,
+        ...applyReservationToListing(listing, quantity),
         updated_at: new Date().toISOString(),
       })
       .eq('id', listing_id)
@@ -51,30 +72,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Reservation failed — credits may have been taken' }, { status: 409 });
     }
 
-    // Create order with 24-hour payment deadline
-    const deadline = new Date();
-    deadline.setHours(deadline.getHours() + 24);
+    // Create order with a 24-hour payment deadline
+    const expiresAt = reservationExpiry();
 
     const { data: order, error: orderErr } = await supabase
       .from('orders')
-      .insert({
-        buyer_id: user.id,
-        listing_id,
+      .insert(buildReservationOrder({
+        buyerId: user.id,
+        listing,
         quantity,
-        unit_price: listing.price_per_tonne,
-        total_amount: listing.price_per_tonne * quantity,
-        status: 'pending_payment',
-        payment_deadline: deadline.toISOString(),
-        reservation_expires_at: deadline.toISOString(),
-      })
-      .select('id, total_amount, payment_deadline')
+        paymentMethod: payment_method,
+        expiresAt,
+      }))
+      .select('id, order_ref, total_amount, reservation_expires_at')
       .single();
 
-    if (orderErr) {
+    if (orderErr || !order) {
       // Rollback reservation
       await supabase.from('listings').update({
         available_tonnes: listing.available_tonnes,
-        reserved_tonnes: listing.reserved_tonnes,
+        reserved_tonnes: listing.reserved_tonnes ?? 0,
       }).eq('id', listing_id);
       return NextResponse.json({ error: 'Order creation failed' }, { status: 500 });
     }
@@ -85,18 +102,21 @@ export async function POST(req: NextRequest) {
       action: 'credit_reserved',
       entity_type: 'order',
       entity_id: order.id,
-      details: { listing_id, quantity, project: listing.project_name, expires: deadline.toISOString() },
+      details: { listing_id, quantity, project: listing.project_name, expires: expiresAt.toISOString() },
     });
 
     return NextResponse.json({
       order_id: order.id,
+      order_ref: order.order_ref,
       credits_reserved: quantity,
       total_amount: order.total_amount,
-      payment_deadline: order.payment_deadline,
-      message: `${quantity} tCO₂e reserved for 24 hours. Payment required by ${deadline.toISOString()}.`,
+      reservation_expires_at: order.reservation_expires_at,
+      // Retained for API compatibility; sourced from reservation_expires_at.
+      payment_deadline: order.reservation_expires_at,
+      message: `${quantity} tCO₂e reserved for ${RESERVATION_WINDOW_HOURS} hours. Payment required by ${expiresAt.toISOString()}.`,
     }, { status: 201 });
 
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
   }
 }
@@ -130,11 +150,12 @@ export async function DELETE(req: NextRequest) {
       }
     }
 
-    // Find expired reservations
+    // Find expired reservations that have not already been released
     const { data: expired } = await supabase
       .from('orders')
       .select('id, listing_id, quantity')
       .eq('status', 'pending_payment')
+      .eq('credits_released', false)
       .lt('reservation_expires_at', new Date().toISOString());
 
     if (!expired || expired.length === 0) {
@@ -151,14 +172,20 @@ export async function DELETE(req: NextRequest) {
         .single();
 
       if (listing) {
-        await supabase.from('listings').update({
-          available_tonnes: listing.available_tonnes + order.quantity,
-          reserved_tonnes: Math.max(0, (listing.reserved_tonnes || 0) - order.quantity),
-        }).eq('id', order.listing_id);
+        await supabase
+          .from('listings')
+          .update(releaseReservationFromListing(listing, order.quantity))
+          .eq('id', order.listing_id);
       }
 
-      // Mark order as expired
-      await supabase.from('orders').update({ status: 'expired' }).eq('id', order.id);
+      // Mark order as expired and flag the credits as returned to the pool, so
+      // a second sweep cannot double-credit the listing.
+      await supabase.from('orders').update({
+        status: 'expired',
+        credits_reserved: false,
+        credits_released: true,
+        updated_at: new Date().toISOString(),
+      }).eq('id', order.id);
 
       // Log
       await supabase.from('activity_log').insert({

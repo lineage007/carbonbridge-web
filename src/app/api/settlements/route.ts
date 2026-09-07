@@ -1,8 +1,25 @@
-import { createClient } from '@/lib/supabase-server';
+import { createClient, createServiceClient } from '@/lib/supabase-server';
+import {
+  ADMIN_OR_SELLER_ACTIONS,
+  SETTLEMENT_ACTIONS,
+  SETTLEMENT_TRANSITIONS,
+  buildSettlementUpdate,
+  canTransition,
+  isSettlementAction,
+  missingRequiredFields,
+  orderStatusForTransition,
+  resolveTargetStatus,
+} from '@/lib/settlement';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Settlement Workflow (V4.1 Part 7)
 // State machine: pending → buyer_paid → credits_transferred → completed
+//
+// The transitions themselves live in src/lib/settlement.ts (review finding 5);
+// this route does auth, I/O and side effects only. Writes to `settlements`,
+// `orders` and `retirement_certificates` use the service-role client because
+// 005_phase1_contract_alignment.sql restricts direct writes on those tables to
+// admins — the route's own authorisation checks below are the gate.
 
 export async function GET(req: NextRequest) {
   const supabase = await createClient();
@@ -37,7 +54,8 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { order_id, action, payment_reference, verra_transfer_ref, notes } = await req.json();
+  const { order_id, action, payment_reference, verra_transfer_ref, notes, target_status } =
+    await req.json();
 
   if (!order_id || !action) {
     return NextResponse.json({ error: 'order_id and action required' }, { status: 400 });
@@ -46,7 +64,7 @@ export async function POST(req: NextRequest) {
   // Fetch the order to verify ownership before any state transition
   const { data: order } = await supabase
     .from('orders')
-    .select('id, buyer_id, seller_id')
+    .select('id, buyer_id, seller_id, total_amount')
     .eq('id', order_id)
     .single();
 
@@ -64,7 +82,7 @@ export async function POST(req: NextRequest) {
     callerProfile?.role === 'admin' || callerProfile?.role === 'super_admin';
 
   // Actions restricted to admin or seller only
-  const adminOrSellerActions = ['initiate_transfer', 'confirm_delivery', 'mark_failed', 'resolve_dispute'];
+  const adminOrSellerActions: string[] = ADMIN_OR_SELLER_ACTIONS;
   // Actions restricted to buyer, seller, or admin (i.e. no random user)
   const isParty =
     user.id === order.buyer_id || user.id === order.seller_id || isAdmin;
@@ -83,6 +101,24 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  if (!isSettlementAction(action)) {
+    return NextResponse.json(
+      { error: `Unknown action: ${action}`, valid_actions: SETTLEMENT_ACTIONS },
+      { status: 400 },
+    );
+  }
+
+  const missing = missingRequiredFields(action, { payment_reference, verra_transfer_ref });
+  if (missing.length > 0) {
+    return NextResponse.json(
+      { error: `Missing required field(s) for '${action}': ${missing.join(', ')}` },
+      { status: 400 },
+    );
+  }
+
+  // RLS write gate — see the module header.
+  const admin = createServiceClient();
+
   // Get current settlement state
   let { data: settlement } = await supabase
     .from('settlements')
@@ -92,7 +128,7 @@ export async function POST(req: NextRequest) {
 
   // If no settlement exists, create one
   if (!settlement) {
-    const { data: newSettlement, error } = await supabase
+    const { data: newSettlement, error } = await admin
       .from('settlements')
       .insert({ order_id, status: 'pending' })
       .select()
@@ -101,22 +137,9 @@ export async function POST(req: NextRequest) {
     settlement = newSettlement;
   }
 
-  // State machine transitions
-  const transitions: Record<string, { from: string[]; to: string; required?: string[] }> = {
-    'confirm_payment': { from: ['pending'], to: 'buyer_paid', required: ['payment_reference'] },
-    'initiate_transfer': { from: ['buyer_paid'], to: 'credits_transferred' },
-    'confirm_delivery': { from: ['credits_transferred'], to: 'completed', required: ['verra_transfer_ref'] },
-    'flag_dispute': { from: ['pending', 'buyer_paid', 'credits_transferred'], to: 'disputed' },
-    'resolve_dispute': { from: ['disputed'], to: 'buyer_paid' },
-    'mark_failed': { from: ['pending', 'buyer_paid', 'disputed'], to: 'failed' },
-  };
+  const transition = SETTLEMENT_TRANSITIONS[action];
 
-  const transition = transitions[action];
-  if (!transition) {
-    return NextResponse.json({ error: `Unknown action: ${action}`, valid_actions: Object.keys(transitions) }, { status: 400 });
-  }
-
-  if (!transition.from.includes(settlement.status)) {
+  if (!canTransition(settlement.status, action)) {
     return NextResponse.json({
       error: `Cannot ${action} from status '${settlement.status}'`,
       current_status: settlement.status,
@@ -124,24 +147,25 @@ export async function POST(req: NextRequest) {
     }, { status: 409 });
   }
 
-  // Build update
-  const update: Record<string, unknown> = {
-    status: transition.to,
-    updated_at: new Date().toISOString(),
-  };
-  if (notes) update.notes = notes;
-  if (action === 'confirm_payment') {
-    update.payment_received_at = new Date().toISOString();
-    update.payment_amount = 0; // Will be set from order total
-    update.payment_reference = payment_reference;
-  }
-  if (action === 'confirm_delivery') {
-    update.credits_transferred_at = new Date().toISOString();
-    update.verra_transfer_ref = verra_transfer_ref;
-    update.completed_at = new Date().toISOString();
-  }
+  // A dispute resolves back into whatever status preceded it — resolving a
+  // dispute raised from `pending` must not assert a payment (finding 3).
+  const targetStatus = resolveTargetStatus(action, {
+    previousStatus: settlement.previous_status,
+    targetStatus: target_status,
+  });
 
-  const { error: updateErr } = await supabase
+  const update = buildSettlementUpdate(action, {
+    now: new Date(),
+    fromStatus: settlement.status,
+    previousStatus: settlement.previous_status,
+    targetStatus: target_status,
+    paymentReference: payment_reference,
+    paymentAmount: order.total_amount ?? null,
+    verraTransferRef: verra_transfer_ref,
+    notes,
+  });
+
+  const { error: updateErr } = await admin
     .from('settlements')
     .update(update)
     .eq('id', settlement.id);
@@ -149,25 +173,19 @@ export async function POST(req: NextRequest) {
   if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 });
 
   // Update order status to match
-  const orderStatusMap: Record<string, string> = {
-    'buyer_paid': 'payment_received',
-    'credits_transferred': 'transfer_in_progress',
-    'completed': 'completed',
-    'failed': 'cancelled',
-    'disputed': 'disputed',
-  };
-  if (orderStatusMap[transition.to]) {
-    await supabase.from('orders').update({ status: orderStatusMap[transition.to] }).eq('id', order_id);
+  const nextOrderStatus = orderStatusForTransition(action, targetStatus);
+  if (nextOrderStatus) {
+    await admin.from('orders').update({ status: nextOrderStatus }).eq('id', order_id);
   }
 
   // If completed, generate retirement certificate trigger
-  if (transition.to === 'completed') {
+  if (targetStatus === 'completed') {
     const { data: order } = await supabase.from('orders').select('buyer_id, listing_id, quantity').eq('id', order_id).single();
     const { data: listing } = await supabase.from('listings').select('registry, project_name').eq('id', order?.listing_id).single();
     
     if (order && listing) {
       const { data: buyer } = await supabase.from('profiles').select('company_name').eq('id', order.buyer_id).single();
-      await supabase.from('retirement_certificates').insert({
+      await admin.from('retirement_certificates').insert({
         order_id,
         buyer_id: order.buyer_id,
         registry: listing.registry,
@@ -195,13 +213,13 @@ export async function POST(req: NextRequest) {
     action: `settlement_${action}`,
     entity_type: 'settlement',
     entity_id: settlement.id,
-    details: { order_id, from: settlement.status, to: transition.to, payment_reference, verra_transfer_ref },
+    details: { order_id, from: settlement.status, to: targetStatus, payment_reference, verra_transfer_ref },
   });
 
   return NextResponse.json({
     settlement_id: settlement.id,
     previous_status: settlement.status,
-    new_status: transition.to,
+    new_status: targetStatus,
     message: `Settlement ${action} successful`,
   });
 }
