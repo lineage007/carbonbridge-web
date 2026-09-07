@@ -113,3 +113,22 @@ also revisit the reserve/release path for concurrency: the current
 read-then-conditional-update is guarded by an `.eq()` filter and a rollback, but
 the durable fix is a Postgres function that decrements `available_tonnes`
 atomically.
+
+## Review fixes (passes 3–4, same night)
+
+A code review of the first commit raised six points; this is what landed.
+
+1. **RLS vs the routes' own writes** — `settlements` and `retirement_certificates` carry admin-only / buyer-only write policies, and `/api/retire` accepts API-key callers with no session. The retire and settlements routes now perform their writes through `createServiceClient()` (service-role key) *after* their own auth checks; `createServiceClient()` throws if `SUPABASE_SERVICE_ROLE_KEY` is missing instead of silently using a placeholder. **Vercel must have `SUPABASE_SERVICE_ROLE_KEY` set** (server-side only) before this branch is deployed.
+2. **Migration ordering** — 003 is itself an unapplied draft that depends on two columns added in section 3 of 005; the header of 005 now states the exact order to run on a fresh database vs the live project. Nothing in 005 is order-sensitive within itself and every statement is idempotent.
+3. **`resolve_dispute` target** — `flag_dispute` now records `settlements.previous_status` and `resolve_dispute` returns to it (or to an explicit `target_status` in the body, restricted to `pending | buyer_paid | credits_transferred`); a dispute raised from `pending` can no longer resolve into `buyer_paid`. Column added to 005; covered by tests.
+4. **`payment_method` default** — one shared default in `src/lib/reservation.ts`, imported by the reserve route and the agreement builder, so reservation validity (3 vs 5 days) is computed from the same value everywhere.
+5. **`settlement.ts` wired into `POST /api/settlements`** — the route's inline transition table was replaced by the state machine; auth checks are unchanged.
+6. **Types** — `AgreementData` declares `credits.serialRange` and `products[].policyReference`; `tsc --noEmit` is clean.
+
+## Known behaviour changes (check the UI before merging)
+
+- `quantity` in `POST /api/credits/reserve` must now be a positive integer.
+- `acceptedAt` in the agreement payload is `undefined` for orders that have no `agreement_accepted_at`.
+- `serial_numbers` on a retirement certificate no longer carries the certificate reference — read `certificate_ref` instead.
+- `mark_failed` / `cancelled` still does not release reserved tonnes back to the listing (pre-existing; Phase 3).
+- The empty-string `x-api-key` edge case in `/api/retire` (`viaApiKey` true while the session path is taken) is unchanged — worth a one-line fix in Phase 3.

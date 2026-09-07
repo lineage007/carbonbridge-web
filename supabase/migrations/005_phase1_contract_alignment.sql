@@ -25,9 +25,12 @@
 -- APPLY INSTRUCTIONS (needs-gary):
 --   1. Target the CarbonBridge Supabase project (ixoxhzlwaspjfvbgfgff).
 --      NEVER run against dcemanhmabsjmkitskil (Ledgable production).
---   2. Apply BEFORE 003_rls_uncovered_tables.sql — 003's policies depend on
---      the two columns added in section 3 below. Both are unapplied drafts, so
---      running 005 first is safe; no ordering has been broken in production.
+--   2. 003_rls_uncovered_tables.sql is ALSO an unapplied draft whose policies
+--      depend on the two columns added in section 3 below. Migration tooling
+--      applies files in name order, so on a fresh database run section 3 of
+--      this file by hand first, then 003, then the rest of this file; on the
+--      live project (where 003 has not been applied) apply this whole file
+--      first, then 003. Every statement here is idempotent, so re-running is safe.
 --   3. Verify:
 --        select to_regclass('public.settlements');              -- not null
 --        select to_regclass('public.retirement_certificates');  -- not null
@@ -53,6 +56,10 @@ CREATE TABLE IF NOT EXISTS public.settlements (
       'disputed',
       'failed'
     )),
+
+  -- Pre-dispute status, written by flag_dispute and read back by resolve_dispute
+  previous_status text
+    CHECK (previous_status IS NULL OR previous_status IN ('pending', 'buyer_paid', 'credits_transferred')),
 
   -- Payment leg
   payment_reference text,

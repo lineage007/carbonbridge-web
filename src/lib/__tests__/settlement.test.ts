@@ -177,6 +177,7 @@ describe('buildSettlementUpdate', () => {
       'verra_transfer_ref',
       'completed_at',
       'updated_at',
+      'previous_status',
     ]);
     for (const action of SETTLEMENT_ACTIONS) {
       const update = buildSettlementUpdate(action, {

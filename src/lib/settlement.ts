@@ -11,6 +11,8 @@
 import type { OrderStatusValue, SettlementRow } from './types';
 
 export type SettlementStatus = SettlementRow['status'];
+/** Statuses a settlement can be returned to after a dispute (= settlements.previous_status). */
+export type ResolutionStatus = NonNullable<SettlementRow['previous_status']>;
 
 export type SettlementAction =
   | 'confirm_payment'
@@ -44,7 +46,7 @@ export const SETTLEMENT_TRANSITIONS: Record<SettlementAction, SettlementTransiti
  * finding 3). `flag_dispute` stores the pre-dispute status in
  * settlements.previous_status; `resolve_dispute` reads it back.
  */
-export const DISPUTE_RESOLUTION_STATUSES: SettlementStatus[] = [
+export const DISPUTE_RESOLUTION_STATUSES: ResolutionStatus[] = [
   'pending',
   'buyer_paid',
   'credits_transferred',
@@ -61,9 +63,9 @@ export interface TargetStatusContext {
   targetStatus?: SettlementStatus | string | null;
 }
 
-function asResolutionStatus(value: unknown): SettlementStatus | null {
+export function asResolutionStatus(value: unknown): ResolutionStatus | null {
   return typeof value === 'string' && (DISPUTE_RESOLUTION_STATUSES as string[]).includes(value)
-    ? (value as SettlementStatus)
+    ? (value as ResolutionStatus)
     : null;
 }
 
@@ -178,9 +180,11 @@ export function buildSettlementUpdate(
 
   if (ctx.notes) update.notes = ctx.notes;
 
-  if (action === 'flag_dispute' && ctx.fromStatus) {
-    // Remember where to come back to when the dispute is resolved.
-    update.previous_status = ctx.fromStatus;
+  if (action === 'flag_dispute') {
+    // Remember where to come back to when the dispute is resolved. Only the
+    // three pre-dispute statuses are valid targets; anything else stays null.
+    const previous = asResolutionStatus(ctx.fromStatus);
+    if (previous) update.previous_status = previous;
   }
 
   if (action === 'resolve_dispute') {
