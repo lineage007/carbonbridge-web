@@ -206,7 +206,7 @@ export async function POST(req: NextRequest) {
         status: 'processing',
         mode: 'stub' as const,
         message:
-          'Retirement request submitted. Certificate will be generated once the registry retirement is confirmed (typically 1–3 business days). Registry write is currently manual — automated registry integration pending ADGM authorisation.',
+          'Retirement request submitted. The CarbonBridge operations team executes the retirement against the issuing registry; your certificate is generated once the registry confirms, typically 1–3 business days.',
         certificate_url: `/api/certificates/${cert.id}`,
       },
       { status: 201 },
