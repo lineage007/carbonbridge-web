@@ -702,7 +702,7 @@ export default function Home() {
             <div>
               <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
-                MENA&apos;s first integrated carbon credit marketplace. Abu Dhabi, UAE. ADGM authorisation in progress.
+                MENA&apos;s first integrated carbon credit marketplace. Abu Dhabi Global Market, Abu Dhabi, UAE.
               </p>
             </div>
             {[
