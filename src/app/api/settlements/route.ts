@@ -54,12 +54,30 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { order_id, action, payment_reference, verra_transfer_ref, notes, target_status } =
-    await req.json();
+  // Parse defensively: invalid JSON rejects req.json(), and a `null` or scalar
+  // body used to throw on destructuring. Next.js turns an uncaught route error
+  // into a bare 500, so both cases are caught here and answered with the
+  // route's own structured 400.
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
 
-  if (!order_id || !action) {
+  if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+    return NextResponse.json({ error: 'Request body must be a JSON object' }, { status: 400 });
+  }
+
+  const { order_id, action, payment_reference, verra_transfer_ref, notes } =
+    body as Record<string, unknown>;
+
+  if (typeof order_id !== 'string' || !order_id || typeof action !== 'string' || !action) {
     return NextResponse.json({ error: 'order_id and action required' }, { status: 400 });
   }
+
+  const asString = (value: unknown): string | undefined =>
+    typeof value === 'string' ? value : undefined;
 
   // Fetch the order to verify ownership before any state transition
   const { data: order } = await supabase
@@ -148,29 +166,44 @@ export async function POST(req: NextRequest) {
   }
 
   // A dispute resolves back into whatever status preceded it — resolving a
-  // dispute raised from `pending` must not assert a payment (finding 3).
+  // dispute raised from `pending` must not assert a payment (finding 3). The
+  // target comes from the stored previous_status only; the request body has no
+  // say in it.
   const targetStatus = resolveTargetStatus(action, {
     previousStatus: settlement.previous_status,
-    targetStatus: target_status,
   });
 
   const update = buildSettlementUpdate(action, {
     now: new Date(),
     fromStatus: settlement.status,
     previousStatus: settlement.previous_status,
-    targetStatus: target_status,
-    paymentReference: payment_reference,
+    paymentReference: asString(payment_reference),
     paymentAmount: order.total_amount ?? null,
-    verraTransferRef: verra_transfer_ref,
-    notes,
+    verraTransferRef: asString(verra_transfer_ref),
+    notes: asString(notes),
   });
 
-  const { error: updateErr } = await admin
+  // Compare-and-set. `canTransition` above validated the move against
+  // `settlement.status` as it was read; filtering the UPDATE on that same
+  // status means a concurrent request that already moved the settlement makes
+  // this one match zero rows instead of overwriting it. The 409 returns before
+  // the order update and the completion side effects run, so two concurrent
+  // completions cannot both mint a retirement certificate.
+  const { data: transitioned, error: updateErr } = await admin
     .from('settlements')
     .update(update)
-    .eq('id', settlement.id);
+    .eq('id', settlement.id)
+    .eq('status', settlement.status)
+    .select('id');
 
   if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 });
+
+  if (!transitioned || transitioned.length === 0) {
+    return NextResponse.json(
+      { error: 'Settlement changed concurrently — retry' },
+      { status: 409 },
+    );
+  }
 
   // Update order status to match
   const nextOrderStatus = orderStatusForTransition(action, targetStatus);

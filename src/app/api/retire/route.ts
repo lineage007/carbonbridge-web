@@ -19,8 +19,22 @@
 
 import { createClient, createServiceClient } from '@/lib/supabase-server';
 import { buildApiOffsetLog, buildCertificateRef, isWellFormedApiKey } from '@/lib/api-usage';
+import { retirementError } from '@/lib/rpc-errors';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+
+/**
+ * Row returned by public.create_retirement_certificate
+ * (006_phase1_atomic_operations.sql). The function RETURNS the composite
+ * retirement_certificates row, so PostgREST hands back a single object rather
+ * than an array.
+ */
+interface RetirementCertificateRow {
+  id: string;
+  certificate_ref: string | null;
+  status: string;
+  tonnes_retired: number;
+}
 
 // ─── Input schema ─────────────────────────────────────────────────────────────
 
@@ -41,9 +55,16 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = await createClient();
 
-    // Support both session auth and API key auth
+    // Support both session auth and API key auth.
+    // An x-api-key header that is present but empty is a broken API-key call,
+    // not a session call: reject it rather than silently falling back to
+    // session auth. viaApiKey then uses the same truthy test as the branch
+    // below, so the two can never disagree.
     const apiKey = req.headers.get('x-api-key');
-    const viaApiKey = apiKey !== null;
+    if (apiKey !== null && apiKey.trim() === '') {
+      return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+    }
+    const viaApiKey = Boolean(apiKey);
     let userId: string;
 
     if (apiKey) {
@@ -109,70 +130,65 @@ export async function POST(req: NextRequest) {
 
     const retireQty = quantity ?? order.quantity;
 
-    // Check already-retired volume
-    const { data: existing } = await supabase
-      .from('retirement_certificates')
-      .select('id, tonnes_retired')
-      .eq('order_id', order_id)
-      .eq('status', 'completed');
-
-    const alreadyRetired =
-      existing?.reduce((s: number, c: { tonnes_retired?: number }) => s + (c.tonnes_retired ?? 0), 0) ?? 0;
-
-    if (alreadyRetired >= order.quantity) {
-      return NextResponse.json(
-        { error: 'All credits from this order already retired', already_retired: alreadyRetired },
-        { status: 409 },
-      );
-    }
-
-    const remaining = order.quantity - alreadyRetired;
-    if (retireQty > remaining) {
-      return NextResponse.json(
-        { error: `Only ${remaining} tCO₂e remaining to retire`, remaining },
-        { status: 409 },
-      );
-    }
-
     // Generate deterministic certificate reference
-    // Format: CB-RET-{timestamp36}-{creditIdFragment}
+    // Format: CB-RET-{timestamp36}-{creditIdFragment}-{6 hex}
     const certRef = buildCertificateRef(credit_id);
 
-    // Create retirement certificate record. serial_numbers stays empty until
-    // the registry retirement is executed and real serials come back — the
-    // CarbonBridge-side reference lives in certificate_ref.
+    // Create the retirement certificate. The remaining-volume check and the
+    // insert happen inside create_retirement_certificate
+    // (006_phase1_atomic_operations.sql), which locks the order row and counts
+    // pending and processing certificates as well as completed ones. Doing it
+    // here in two round trips let two requests submitted before the registry
+    // write each consume the same remaining tonnage, because the read only
+    // counted `completed` while the insert created a `processing` row.
+    //
+    // serial_numbers stays empty until the registry retirement is executed and
+    // real serials come back — the CarbonBridge-side reference lives in
+    // certificate_ref.
+    //
     // Review finding 1: retirement_certificates has RLS with a
     // `buyer_id = auth.uid()` insert policy. An API-key caller has no session,
     // so auth.uid() is null and the insert would be denied. The caller is
-    // already authenticated and the order ownership checked above, so the
-    // write goes through the service-role client.
+    // already authenticated and the order ownership checked above, so the call
+    // goes through the service-role client.
     const admin = createServiceClient();
 
-    const { data: cert, error: certErr } = await admin
-      .from('retirement_certificates')
-      .insert({
-        certificate_ref: certRef,
-        order_id,
-        buyer_id: userId,
-        registry: order.listings?.registry ?? 'verra',
-        tonnes_retired: retireQty,
-        beneficiary_name: beneficiary_name ?? 'On behalf of certificate holder',
-        retirement_reason,
-        status: 'processing',
-        serial_numbers: [],
-      })
-      .select()
-      .single();
+    const { data: cert, error: certErr } = await admin.rpc('create_retirement_certificate', {
+      p_order_id: order_id,
+      p_buyer_id: userId,
+      p_quantity: retireQty,
+      p_registry: order.listings?.registry ?? 'verra',
+      p_beneficiary_name: beneficiary_name ?? 'On behalf of certificate holder',
+      p_retirement_reason: retirement_reason,
+      p_certificate_ref: certRef,
+    });
 
-    if (certErr || !cert) {
+    if (certErr) {
+      const mapped = retirementError(certErr.message);
+      if (mapped) return NextResponse.json(mapped.body, { status: mapped.status });
+      return NextResponse.json({ error: 'Certificate creation failed' }, { status: 500 });
+    }
+
+    const certificate = cert as RetirementCertificateRow | null;
+    if (!certificate) {
       return NextResponse.json({ error: 'Certificate creation failed' }, { status: 500 });
     }
 
     // Meter the call against the client's API plan. api_offset_logs requires
     // co2_tonnes and billing_period; endpoint/method/status_code are not
     // columns and go into the metadata jsonb.
+    //
+    // The certificate already exists at this point and is NOT undone if
+    // metering fails — a failed meter is a billing problem, not a reason to
+    // lose a retirement request. Instead the failure is surfaced: a red
+    // admin_alert names the certificate so an operator can reconcile, and the
+    // response carries `metered: false` so the caller knows the call was not
+    // billed. The write goes through the service-role client for the same
+    // reason as the certificate insert above: an API-key caller has no
+    // session, so auth.uid() is null and RLS would reject it.
+    let metered: boolean | undefined;
     if (viaApiKey) {
-      await supabase.from('api_offset_logs').insert(
+      const { error: meterErr } = await admin.from('api_offset_logs').insert(
         buildApiOffsetLog({
           clientId: userId,
           co2Tonnes: retireQty,
@@ -183,6 +199,19 @@ export async function POST(req: NextRequest) {
           externalRef: certRef,
         }),
       );
+
+      metered = !meterErr;
+
+      if (meterErr) {
+        await admin.from('admin_alerts').insert({
+          priority: 'red',
+          alert_type: 'api_metering_failed',
+          title: `API metering failed for certificate ${certificate.id} — ${retireQty} tCO₂e not billed`,
+          entity_type: 'retirement_certificate',
+          entity_id: certificate.id,
+          action_url: `/admin/orders`,
+        });
+      }
     }
 
     // TODO (live integration): execute registry retirement here.
@@ -198,7 +227,7 @@ export async function POST(req: NextRequest) {
       alert_type: 'retirement_requested',
       title: `Retirement requested: ${retireQty} tCO₂e — Order ${order_id}`,
       entity_type: 'retirement_certificate',
-      entity_id: cert.id,
+      entity_id: certificate.id,
       action_url: `/admin/orders`,
     });
 
@@ -206,7 +235,7 @@ export async function POST(req: NextRequest) {
       actor_id: userId,
       action: 'retirement_requested',
       entity_type: 'retirement_certificate',
-      entity_id: cert.id,
+      entity_id: certificate.id,
       details: {
         order_id,
         credit_id,
@@ -219,7 +248,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        certificate_id: cert.id,
+        certificate_id: certificate.id,
         reference: certRef,
         order_id,
         credit_id,
@@ -232,9 +261,12 @@ export async function POST(req: NextRequest) {
         buyer_wallet: buyer_wallet ?? null,
         status: 'processing',
         mode: 'stub' as const,
+        // Only meaningful for API-key callers; omitted for session callers,
+        // whose retirements are not metered at all.
+        ...(metered === undefined ? {} : { metered }),
         message:
           'Retirement request submitted. Certificate will be generated once the registry retirement is confirmed (typically 1–3 business days). Registry write is currently manual — automated registry integration pending ADGM authorisation.',
-        certificate_url: `/api/certificates/${cert.id}`,
+        certificate_url: `/api/certificates/${certificate.id}`,
       },
       { status: 201 },
     );
@@ -249,7 +281,12 @@ export async function GET(req: NextRequest) {
   try {
     const supabase = await createClient();
 
+    // Same rule as POST: a present-but-empty x-api-key is rejected, never
+    // downgraded to session auth.
     const apiKey = req.headers.get('x-api-key');
+    if (apiKey !== null && apiKey.trim() === '') {
+      return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+    }
     let userId: string;
 
     if (apiKey) {

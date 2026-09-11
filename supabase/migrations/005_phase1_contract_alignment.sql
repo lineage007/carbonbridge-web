@@ -25,12 +25,13 @@
 -- APPLY INSTRUCTIONS (needs-gary):
 --   1. Target the CarbonBridge Supabase project (ixoxhzlwaspjfvbgfgff).
 --      NEVER run against dcemanhmabsjmkitskil (Ledgable production).
---   2. 003_rls_uncovered_tables.sql is ALSO an unapplied draft whose policies
---      depend on the two columns added in section 3 below. Migration tooling
---      applies files in name order, so on a fresh database run section 3 of
---      this file by hand first, then 003, then the rest of this file; on the
---      live project (where 003 has not been applied) apply this whole file
---      first, then 003. Every statement here is idempotent, so re-running is safe.
+--   2. Ordering is no longer manual. 003_rls_uncovered_tables.sql now adds
+--      rfqs.seller_id and insurance_claims.claimant_id itself, at the top of
+--      the file and before its policies, so a clean `supabase db reset` runs
+--      001 → 002 → 003 → 004 → 005 → 006 without intervention. The copies in
+--      section 3 below are kept because both forms are ADD COLUMN IF NOT
+--      EXISTS: whichever file runs first wins and the other is a no-op. Every
+--      statement here is idempotent, so re-running is safe.
 --   3. Verify:
 --        select to_regclass('public.settlements');              -- not null
 --        select to_regclass('public.retirement_certificates');  -- not null
@@ -162,12 +163,40 @@ BEGIN
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 
-DO $$
-BEGIN
-  CREATE POLICY "retirement_certificates: buyers can request own"
-    ON public.retirement_certificates FOR INSERT WITH CHECK (buyer_id = auth.uid());
-EXCEPTION WHEN duplicate_object THEN NULL;
-END $$;
+-- A buyer may only record a retirement *request* against an order that is
+-- actually theirs. Checking buyer_id alone let a caller pair their own
+-- buyer_id with another buyer's order_id (IDOR), and left `completed` open to
+-- self-assertion even though no registry retirement had happened. The EXISTS
+-- clause binds the row to the order owner; the status clause keeps a buyer on
+-- the request side of the stub boundary. Recreated rather than exception-
+-- guarded because the weaker policy may already exist.
+DROP POLICY IF EXISTS "retirement_certificates: buyers can request own"
+  ON public.retirement_certificates;
+
+CREATE POLICY "retirement_certificates: buyers can request own"
+  ON public.retirement_certificates FOR INSERT WITH CHECK (
+    buyer_id = auth.uid()
+    AND status IN ('pending', 'processing')
+    AND EXISTS (
+      SELECT 1 FROM public.orders o
+      WHERE o.id = order_id AND o.buyer_id = auth.uid()
+    )
+  );
+
+-- The settlement completion path inserts a certificate on the buyer's behalf,
+-- and an operator marks one `completed` once the registry retirement is
+-- executed. Admins are therefore not status-restricted. (The service role
+-- bypasses RLS entirely and is what the API routes actually use.)
+DROP POLICY IF EXISTS "retirement_certificates: admins can insert"
+  ON public.retirement_certificates;
+
+CREATE POLICY "retirement_certificates: admins can insert"
+  ON public.retirement_certificates FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
+    )
+  );
 
 DO $$
 BEGIN

@@ -52,15 +52,13 @@ export const DISPUTE_RESOLUTION_STATUSES: ResolutionStatus[] = [
   'credits_transferred',
 ];
 
-/** Used when neither an explicit target nor a stored previous_status is available. */
+/** Used when no stored previous_status is available. */
 export const DEFAULT_DISPUTE_RESOLUTION_STATUS: SettlementStatus =
   SETTLEMENT_TRANSITIONS.resolve_dispute.to;
 
 export interface TargetStatusContext {
   /** settlements.previous_status — written by flag_dispute. */
   previousStatus?: SettlementStatus | string | null;
-  /** Explicit override supplied by the caller (`target_status` in the body). */
-  targetStatus?: SettlementStatus | string | null;
 }
 
 export function asResolutionStatus(value: unknown): ResolutionStatus | null {
@@ -72,17 +70,22 @@ export function asResolutionStatus(value: unknown): ResolutionStatus | null {
 /**
  * The status a transition actually lands on. Static for every action except
  * `resolve_dispute`, which returns to the pre-dispute state.
+ *
+ * The resolution target is the recorded `previous_status` and nothing else. It
+ * used to honour a caller-supplied `target_status` first, which let a seller
+ * resolve a dispute raised from `pending` straight into `credits_transferred`
+ * and move the order to `transfer_in_progress` with no payment and no transfer
+ * ever confirmed. An administrative override of the resolution target is a
+ * separate, audited transition that does not exist yet: it would need its own
+ * action, an admin-only check, and an activity_log entry naming the overridden
+ * value. Until then, the only way out of a dispute is back where it came from.
  */
 export function resolveTargetStatus(
   action: SettlementAction,
   ctx: TargetStatusContext = {},
 ): SettlementStatus {
   if (action !== 'resolve_dispute') return SETTLEMENT_TRANSITIONS[action].to;
-  return (
-    asResolutionStatus(ctx.targetStatus) ??
-    asResolutionStatus(ctx.previousStatus) ??
-    DEFAULT_DISPUTE_RESOLUTION_STATUS
-  );
+  return asResolutionStatus(ctx.previousStatus) ?? DEFAULT_DISPUTE_RESOLUTION_STATUS;
 }
 
 /** Actions a buyer may not perform — restricted to the seller or an admin. */

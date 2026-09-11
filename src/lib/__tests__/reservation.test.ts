@@ -204,11 +204,37 @@ describe('releaseReservationFromListing', () => {
     });
   });
 
-  it('clamps reserved_tonnes at zero rather than going negative', () => {
+  it('releases only what is actually reserved, moving both counters by the same amount', () => {
+    // Releasing 20 against reserved_tonnes = 5 must not invent 15 tonnes of
+    // inventory: only the 5 that are really held come back.
     expect(releaseReservationFromListing({ available_tonnes: 0, reserved_tonnes: 5 }, 20)).toEqual({
-      available_tonnes: 20,
+      available_tonnes: 5,
       reserved_tonnes: 0,
     });
+  });
+
+  it('never drives reserved_tonnes negative', () => {
+    expect(releaseReservationFromListing({ available_tonnes: 10, reserved_tonnes: 0 }, 7)).toEqual({
+      available_tonnes: 10,
+      reserved_tonnes: 0,
+    });
+    expect(releaseReservationFromListing({ available_tonnes: 10, reserved_tonnes: null }, 7)).toEqual({
+      available_tonnes: 10,
+      reserved_tonnes: 0,
+    });
+  });
+
+  it('keeps the sum of the two counters constant', () => {
+    for (const [available, reserved, quantity] of [
+      [800, 250, 200],
+      [0, 5, 20],
+      [10, 0, 7],
+      [100, 100, 100],
+    ]) {
+      const before = { available_tonnes: available, reserved_tonnes: reserved };
+      const after = releaseReservationFromListing(before, quantity);
+      expect(after.available_tonnes + after.reserved_tonnes).toBe(available + reserved);
+    }
   });
 
   it('round-trips a reserve then release back to the original counters', () => {

@@ -28,7 +28,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ orde
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  // Get order with all related data
+  // Get order with all related data. The `*` covers every AgreementOrderSource
+  // column, including orders.credit_total, which the agreement shows as the
+  // credit line total instead of recomputing quantity × unit_price.
   const { data: order } = await supabase
     .from('orders')
     .select('*, listings(*, profiles!listings_seller_id_fkey(*)), profiles!orders_buyer_id_fkey(*)')

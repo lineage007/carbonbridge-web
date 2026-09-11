@@ -31,11 +31,10 @@ export function agreementValidityDays(paymentMethod: PaymentMethodValue): number
   return AGREEMENT_VALIDITY_DAYS[paymentMethod];
 }
 
-/** Postgres `uuid` literal. Validated here so a malformed id never reaches PostgREST. */
-const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-
 export const ReserveRequestSchema = z.object({
-  listing_id: z.string().regex(UUID_RE, 'listing_id must be a uuid'),
+  // Postgres `uuid` literal, validated here so a malformed id never reaches
+  // PostgREST. Zod's own uuid check replaces the hand-rolled regex.
+  listing_id: z.uuid('listing_id must be a uuid'),
   quantity: z.number().int().positive(),
   // orders.payment_method is NOT NULL with check (card|bank_transfer).
   payment_method: z.enum(['card', 'bank_transfer']).default(DEFAULT_PAYMENT_METHOD),
@@ -56,7 +55,13 @@ export interface ReservableListing {
   reserved_tonnes: number | null;
 }
 
-/** Columns selected from `listings` by the reserve route — kept in one place so route and tests agree. */
+/**
+ * Columns the reservation flow needs from `listings`.
+ *
+ * The route no longer issues this SELECT itself: public.reserve_credits reads
+ * the listing under a row lock instead. The list is kept because it documents,
+ * and lets the tests assert, which listing columns the order insert depends on.
+ */
 export const RESERVABLE_LISTING_COLUMNS =
   'id, seller_id, project_name, credit_type, registry, price_per_tonne, vintage_year, available_tonnes, reserved_tonnes';
 
@@ -75,6 +80,13 @@ function toMoney(value: number): number {
  * project_name, credit_type, registry, quantity, unit_price, credit_total,
  * total_amount, payment_method. `order_ref` and `agreement_ref` are filled by
  * database triggers.
+ *
+ * MIRRORED IN SQL: public.reserve_credits in
+ * supabase/migrations/006_phase1_atomic_operations.sql builds the same INSERT.
+ * The route calls that function rather than this one, so the reservation is
+ * atomic; this stays the readable, unit-tested statement of the column
+ * contract. Change the column list or the credit_total rounding in one place
+ * and you must change the other.
  */
 export function buildReservationOrder(params: {
   buyerId: string;
@@ -108,7 +120,12 @@ export function buildReservationOrder(params: {
   };
 }
 
-/** New listing counters after reserving `quantity` tonnes. */
+/**
+ * New listing counters after reserving `quantity` tonnes.
+ *
+ * MIRRORED IN SQL: the counter update inside public.reserve_credits
+ * (006_phase1_atomic_operations.sql) does the same arithmetic under a row lock.
+ */
 export function applyReservationToListing(
   listing: Pick<ReservableListing, 'available_tonnes' | 'reserved_tonnes'>,
   quantity: number,
@@ -119,13 +136,29 @@ export function applyReservationToListing(
   };
 }
 
-/** New listing counters after releasing an expired reservation of `quantity` tonnes. */
+/**
+ * New listing counters after releasing an expired reservation of `quantity`
+ * tonnes.
+ *
+ * Only what is actually reserved can be released. Clamping reserved_tonnes at
+ * zero while adding the full `quantity` back to available_tonnes invented
+ * inventory whenever the two counters had already drifted (say a manual
+ * correction, or a release that ran twice): releasing 20 against
+ * reserved_tonnes = 5 used to add 20 available and drop 5 reserved. Both sides
+ * now move by the same min(), so the pair stays balanced.
+ *
+ * MIRRORED IN SQL: public.release_expired_reservations
+ * (006_phase1_atomic_operations.sql) applies the same LEAST() to both counters
+ * while holding the listing row locked. The sweep route calls that function;
+ * this remains the unit-tested statement of the arithmetic.
+ */
 export function releaseReservationFromListing(
   listing: Pick<ReservableListing, 'available_tonnes' | 'reserved_tonnes'>,
   quantity: number,
 ): { available_tonnes: number; reserved_tonnes: number } {
+  const releasable = Math.min(quantity, listing.reserved_tonnes ?? 0);
   return {
-    available_tonnes: listing.available_tonnes + quantity,
-    reserved_tonnes: Math.max(0, (listing.reserved_tonnes ?? 0) - quantity),
+    available_tonnes: listing.available_tonnes + releasable,
+    reserved_tonnes: (listing.reserved_tonnes ?? 0) - releasable,
   };
 }

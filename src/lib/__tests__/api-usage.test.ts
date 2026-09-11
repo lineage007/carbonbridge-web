@@ -144,31 +144,51 @@ describe('buildApiOffsetLog', () => {
 
 describe('buildCertificateRef', () => {
   const at = new Date('2026-09-08T12:00:00.000Z');
+  const TS = at.getTime().toString(36).toUpperCase();
 
-  it('produces CB-RET-<base36 timestamp>-<credit id tail>', () => {
-    const ref = buildCertificateRef('cb-au-arr-001abc', at);
-    expect(ref).toBe(`CB-RET-${at.getTime().toString(36).toUpperCase()}-001ABC`);
-    expect(ref).toMatch(/^CB-RET-[0-9A-Z]+-[0-9A-Z]+$/);
+  it('produces CB-RET-<base36 timestamp>-<credit id tail>-<6 hex>', () => {
+    const ref = buildCertificateRef('cb-au-arr-001abc', at, 'a1b2c3');
+    expect(ref).toBe(`CB-RET-${TS}-001ABC-A1B2C3`);
+    expect(ref).toMatch(/^CB-RET-[0-9A-Z]+-[0-9A-Z]+-[0-9A-F]{6}$/);
   });
 
   it('strips non-alphanumerics before taking the tail', () => {
     // 'a-b-c-d-e-f-g' → 'abcdefg' → last six characters.
-    expect(buildCertificateRef('a-b-c-d-e-f-g', at).endsWith('-BCDEFG')).toBe(true);
-    expect(buildCertificateRef('----12', at)).toBe(
-      `CB-RET-${at.getTime().toString(36).toUpperCase()}-12`,
+    expect(buildCertificateRef('a-b-c-d-e-f-g', at, '000000')).toBe(
+      `CB-RET-${TS}-BCDEFG-000000`,
     );
+    expect(buildCertificateRef('----12', at, '000000')).toBe(`CB-RET-${TS}-12-000000`);
   });
 
   it('falls back to UNKNOWN when the credit id has no alphanumerics', () => {
-    expect(buildCertificateRef('---', at)).toBe(
-      `CB-RET-${at.getTime().toString(36).toUpperCase()}-UNKNOWN`,
-    );
-    expect(buildCertificateRef('', at)).toContain('-UNKNOWN');
+    expect(buildCertificateRef('---', at, '000000')).toBe(`CB-RET-${TS}-UNKNOWN-000000`);
+    expect(buildCertificateRef('', at, '000000')).toContain('-UNKNOWN-');
   });
 
   it('is unique across distinct timestamps', () => {
-    const a = buildCertificateRef('credit-000001', new Date('2026-09-08T12:00:00.000Z'));
-    const b = buildCertificateRef('credit-000001', new Date('2026-09-08T12:00:01.000Z'));
+    const a = buildCertificateRef('credit-000001', new Date('2026-09-08T12:00:00.000Z'), 'aaaaaa');
+    const b = buildCertificateRef('credit-000001', new Date('2026-09-08T12:00:01.000Z'), 'aaaaaa');
     expect(a).not.toBe(b);
+  });
+
+  it('emits six uppercase hex characters even without an explicit entropy value', () => {
+    const ref = buildCertificateRef('credit-000001', at);
+    expect(ref).toMatch(new RegExp(`^CB-RET-${TS}-000001-[0-9A-F]{6}$`));
+  });
+
+  it('does not collide for two calls in the same millisecond', () => {
+    // The timestamp component is identical, so only the random tail can differ.
+    const refs = new Set(
+      Array.from({ length: 200 }, () => buildCertificateRef('credit-000001', at)),
+    );
+    // 200 draws from 16^6 values: a repeat is possible but vanishingly rare.
+    // What matters is that the refs are not all identical, which they were
+    // before the entropy component existed.
+    expect(refs.size).toBeGreaterThan(190);
+  });
+
+  it('normalises a short or dirty entropy value to six hex characters', () => {
+    expect(buildCertificateRef('credit-1', at, 'ff')).toBe(`CB-RET-${TS}-REDIT1-0000FF`);
+    expect(buildCertificateRef('credit-1', at, 'zz-ab-cd-ef')).toBe(`CB-RET-${TS}-REDIT1-ABCDEF`);
   });
 });

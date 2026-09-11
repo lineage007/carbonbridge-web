@@ -7,6 +7,7 @@
  * goes into the existing `metadata` jsonb column.
  */
 
+import { randomBytes } from 'node:crypto';
 import type { ApiOffsetLogInsert } from './types';
 
 /**
@@ -60,11 +61,27 @@ export function buildApiOffsetLog(ctx: ApiOffsetLogContext): ApiOffsetLogInsert 
   };
 }
 
+/** Normalise an entropy component to exactly six uppercase hex characters. */
+function hexComponent(entropy?: string): string {
+  const raw = entropy ?? randomBytes(3).toString('hex');
+  return raw.replace(/[^0-9a-fA-F]/g, '').slice(0, 6).padStart(6, '0').toUpperCase();
+}
+
 /**
- * Retirement certificate reference: `CB-RET-<base36 timestamp>-<credit id tail>`.
- * Stored in retirement_certificates.certificate_ref (unique).
+ * Retirement certificate reference:
+ * `CB-RET-<base36 timestamp>-<credit id tail>-<6 hex>`.
+ *
+ * Stored in retirement_certificates.certificate_ref, which is UNIQUE. The
+ * timestamp has millisecond resolution, so two retirements of the same credit
+ * inside one millisecond used to collide and the second insert would fail. The
+ * random hex component removes that. `entropy` is only there so tests can pin
+ * the value; production callers leave it unset.
  */
-export function buildCertificateRef(creditId: string, at: Date = new Date()): string {
+export function buildCertificateRef(
+  creditId: string,
+  at: Date = new Date(),
+  entropy?: string,
+): string {
   const tail = creditId.replace(/[^A-Za-z0-9]/g, '').slice(-6).toUpperCase() || 'UNKNOWN';
-  return `CB-RET-${at.getTime().toString(36).toUpperCase()}-${tail}`;
+  return `CB-RET-${at.getTime().toString(36).toUpperCase()}-${tail}-${hexComponent(entropy)}`;
 }

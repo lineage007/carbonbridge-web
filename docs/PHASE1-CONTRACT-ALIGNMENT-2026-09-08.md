@@ -3,6 +3,11 @@
 Branch: `night/20260908-carbonbridge-phase1-contract`
 Scope: findings **CB-003 … CB-006** of `CARBONBRIDGE-AUDIT-CHECKLIST-2026-04-30.json`.
 
+**Dates.** The contract checks and the review fixes described in the body of this
+file ran on 2026-09-07 and 2026-09-08 (night shift). The reviewer follow-up at the
+end of the file ran on 2026-09-11 and supersedes the body where the two disagree,
+notably on the `resolve_dispute` target.
+
 Phase 1 is the "the code writes columns that do not exist" class of finding. Every
 API route in scope now writes only columns that exist in `supabase/migrations/`,
 and the payload-building logic has been extracted into pure modules under

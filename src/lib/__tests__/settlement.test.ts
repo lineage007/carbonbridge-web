@@ -8,6 +8,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   ADMIN_OR_SELLER_ACTIONS,
+  DEFAULT_DISPUTE_RESOLUTION_STATUS,
   ORDER_STATUS_BY_SETTLEMENT_STATUS,
   SETTLEMENT_ACTIONS,
   SETTLEMENT_TRANSITIONS,
@@ -15,6 +16,8 @@ import {
   canTransition,
   isSettlementAction,
   missingRequiredFields,
+  orderStatusForTransition,
+  resolveTargetStatus,
   type SettlementAction,
   type SettlementStatus,
 } from '../settlement';
@@ -114,6 +117,53 @@ describe('missingRequiredFields', () => {
     for (const action of ['initiate_transfer', 'flag_dispute', 'resolve_dispute', 'mark_failed'] as SettlementAction[]) {
       expect(missingRequiredFields(action, {})).toEqual([]);
     }
+  });
+});
+
+describe('resolveTargetStatus', () => {
+  it('is the static target for every action other than resolve_dispute', () => {
+    for (const action of SETTLEMENT_ACTIONS) {
+      if (action === 'resolve_dispute') continue;
+      expect(resolveTargetStatus(action, { previousStatus: 'credits_transferred' })).toBe(
+        SETTLEMENT_TRANSITIONS[action].to,
+      );
+    }
+  });
+
+  it('resolves a dispute back into the recorded previous_status', () => {
+    expect(resolveTargetStatus('resolve_dispute', { previousStatus: 'buyer_paid' })).toBe('buyer_paid');
+    expect(resolveTargetStatus('resolve_dispute', { previousStatus: 'credits_transferred' })).toBe(
+      'credits_transferred',
+    );
+  });
+
+  it('falls back to the default when no previous_status was recorded', () => {
+    expect(resolveTargetStatus('resolve_dispute', {})).toBe(DEFAULT_DISPUTE_RESOLUTION_STATUS);
+    expect(resolveTargetStatus('resolve_dispute', { previousStatus: null })).toBe(
+      DEFAULT_DISPUTE_RESOLUTION_STATUS,
+    );
+    expect(resolveTargetStatus('resolve_dispute', { previousStatus: 'completed' })).toBe(
+      DEFAULT_DISPUTE_RESOLUTION_STATUS,
+    );
+  });
+
+  it('ignores any caller-supplied target and uses previous_status only', () => {
+    // A seller must not be able to resolve a dispute raised from `pending`
+    // into `credits_transferred` by naming the target in the request body.
+    const ctx = {
+      previousStatus: 'pending',
+      targetStatus: 'credits_transferred',
+      target_status: 'credits_transferred',
+    };
+    const target = resolveTargetStatus('resolve_dispute', ctx);
+    expect(target).toBe('pending');
+    expect(orderStatusForTransition('resolve_dispute', target)).toBe('pending_payment');
+  });
+
+  it('never lets a dispute resolution assert an unearned order status', () => {
+    const target = resolveTargetStatus('resolve_dispute', { previousStatus: 'pending' });
+    expect(target).toBe('pending');
+    expect(ORDER_STATUS_BY_SETTLEMENT_STATUS[target]).toBeNull();
   });
 });
 
