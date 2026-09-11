@@ -137,3 +137,31 @@ A code review of the first commit raised six points; this is what landed.
 - `serial_numbers` on a retirement certificate no longer carries the certificate reference — read `certificate_ref` instead.
 - `mark_failed` / `cancelled` still does not release reserved tonnes back to the listing (pre-existing; Phase 3).
 - The empty-string `x-api-key` edge case in `/api/retire` (`viaApiKey` true while the session path is taken) is unchanged — worth a one-line fix in Phase 3.
+
+## Night-six follow-up (2026-09-11): the remaining CodeRabbit items on PR #4
+
+Reviewer comments on this PR came in three rounds (17 + 4 + 3). This is what landed on 2026-09-11, verified with `npx tsc --noEmit` clean and `npx vitest run` 126/126 (was 87). Nothing in this section has been run against a live Supabase instance; the SQL functions are proven by reading and by the route-level mapping tests only.
+
+**Done**
+
+- Reserve (`POST /api/credits/reserve`): the availability check, listing counter update and order insert now run inside one Postgres function, `public.reserve_credits(...)` in `supabase/migrations/006_phase1_atomic_operations.sql` (row lock on the listing, exceptions `LISTING_NOT_FOUND` / `INSUFFICIENT_CREDITS:<available>`), called through the service-role client after session auth and Zod validation. The old optimistic-lock update and its unconditional rollback are gone. `src/lib/rpc-errors.ts` maps the exception text to the previous 404/409 responses and is unit-tested.
+- Expiry sweep (`DELETE /api/credits/reserve`): `public.release_expired_reservations()` claims each expired order with `FOR UPDATE SKIP LOCKED`, marks it released and restores the listing in the same transaction, returning the released rows; the route writes one `activity_log` row per returned order. Two overlapping sweeps can no longer restore the same quantity twice.
+- Retire (`POST /api/retire`): `public.create_retirement_certificate(...)` locks the order, requires it to belong to the caller and be `completed`, sums `tonnes_retired` over `pending`, `processing` and `completed` certificates (previously only `completed`), and inserts the `processing` certificate in the same transaction (`ORDER_NOT_FOUND`, `ALREADY_RETIRED:<n>`, `EXCEEDS_REMAINING:<n>`). Duplicate allocation from concurrent requests is closed.
+- Retire metering: an `x-api-key` header that is present but empty is rejected with 401 in POST and GET instead of silently falling back to session auth; `viaApiKey` uses the same truthy condition as the auth branch; a failed `api_offset_logs` insert now raises a red `admin_alerts` row (`api_metering_failed`) and the response carries `metered: false` (`metered: true` on success for API-key callers). The certificate is never undone.
+- `buildCertificateRef` appends a six-hex-character random component (`node:crypto`), so two requests in the same millisecond cannot collide on the `UNIQUE certificate_ref`; tests pass explicit entropy.
+- Purchase agreement: every untrusted string is passed through `escapeHtml()` before interpolation (XSS finding); the agreement date is rendered with `timeZone: 'UTC'`; the credit line uses the stored `orders.credit_total` instead of recomputing `quantity * unit_price`; a stored `insurance_premium_total` of 0 is used as 0 rather than re-summed from product rows. New `src/lib/__tests__/purchase-agreement.test.ts`.
+- Reservation helpers: `releaseReservationFromListing` releases `min(quantity, reserved_tonnes)` from both counters so the pair stays balanced; `ReserveRequestSchema` uses `z.uuid()`.
+- Settlements: dispute resolution returns to the recorded `previous_status` only; the caller-supplied `target_status` override described in "Review fixes" item 3 above is removed (an admin override would be a separate audited transition). Request bodies are parsed as `unknown` and rejected with a structured 400 when not an object or not valid JSON. Each transition is compare-and-set: the update filters on the status the transition was validated against and returns 409 `Settlement changed concurrently — retry` when zero rows match, before any order update or side effect.
+- Migrations: the two prerequisite columns (`rfqs.seller_id`, `insurance_claims.claimant_id`) are now added idempotently at the top of `003_rls_uncovered_tables.sql`, so a clean `supabase db reset` replays in filename order (the copies in 005 stay, also idempotent). In 005 the buyer INSERT policy on `retirement_certificates` now requires `buyer_id = auth.uid()`, a status of `pending` or `processing`, and an `EXISTS` check that the order belongs to the same buyer; a separate admin INSERT policy has no status restriction.
+
+**Deliberately not done**
+
+- Squawk lock warnings (add foreign keys as `NOT VALID` then validate; create indexes `CONCURRENTLY`; batch the `claimant_id` backfill): the affected tables hold a handful of rows and Supabase applies each migration file inside one transaction, where `CONCURRENTLY` is not allowed. Revisit when there is production volume.
+- `docs/PHASE1-CONTRACT-ALIGNMENT-2026-09-08.md` filename date: kept; the dates note at the top of the file records when each pass ran.
+- Integration tests against a real database: nothing here executes SQL offline. The `p_*` argument order of the three functions is asserted by the route tests only.
+
+**Deploy order (unchanged in spirit, now with 006)**
+
+1. Apply `005_phase1_contract_alignment.sql`, then `006_phase1_atomic_operations.sql`, on the live project; refresh the PostgREST schema cache.
+2. Set `SUPABASE_SERVICE_ROLE_KEY` in Vercel (the reserve, sweep, retire and settlements routes call `createServiceClient()` after their own auth checks).
+3. Deploy this branch. Until 1 and 2 are done the reserve, sweep and retire routes return 500 (missing function / missing key), so merge and deploy together, not separately.
