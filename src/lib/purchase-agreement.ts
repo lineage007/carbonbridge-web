@@ -176,7 +176,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 
 <div class="definition"><strong>&ldquo;ICVCM CCP&rdquo;</strong> means the Core Carbon Principles established by the Integrity Council for the Voluntary Carbon Market.</div>
 
-<div class="definition"><strong>&ldquo;Insurance Products&rdquo;</strong> means optional carbon credit guarantee insurance products distributed by CarbonBridge, underwritten by Lloyd&rsquo;s of London syndicates including Kita Earth Ltd and CFC Underwriting Ltd.</div>
+<div class="definition"><strong>&ldquo;Insurance Products&rdquo;</strong> means optional carbon credit guarantee insurance products arranged through CarbonBridge and underwritten by the insurer named in the applicable policy documentation.</div>
 
 <h1>3. Subject of the Agreement</h1>
 
@@ -240,7 +240,7 @@ ${insurance.selected ? `
   </table>
 </div>
 
-<p>Insurance Products are distributed by CarbonBridge Ltd. CarbonBridge does not underwrite, assess claims, pay claims, or hold insurance reserves. All insurance is underwritten by Kita Earth Ltd (FCA authorised, Lloyd&rsquo;s Coverholder) and/or CFC Underwriting Ltd (Lloyd&rsquo;s syndicate). Full policy wording is available upon request or via the CarbonBridge Platform.</p>
+<p>Insurance Products are arranged through CarbonBridge Ltd. CarbonBridge does not underwrite, assess claims, pay claims, or hold insurance reserves. Each policy is underwritten by the insurer named in that policy&rsquo;s documentation. Full policy wording is available upon request or via the CarbonBridge Platform.</p>
 
 <p><strong>Claims Process:</strong> Claims shall be submitted through the CarbonBridge Platform. CarbonBridge routes the claim to the relevant underwriter. Resolution is governed by the applicable insurance policy terms and conditions.</p>
 
