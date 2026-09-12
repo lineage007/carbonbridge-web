@@ -196,7 +196,7 @@ function CheckoutInner() {
           </div>
 
           <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '16px', fontStyle: 'italic' }}>
-            Insurance facilitated through Kita and Lloyd&apos;s of London syndicates. Full terms provided before confirmation.
+            Cover is arranged with specialist carbon insurers. The underwriter and full policy terms are provided before confirmation.
           </p>
         </div>
       )}

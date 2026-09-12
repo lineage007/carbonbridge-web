@@ -92,7 +92,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ orde
         type: p.policy_type,
         premium: p.premium_amount,
         premiumRate: p.premium_rate,
-        underwriter: p.provider === 'kita' ? 'Kita Earth Ltd (Lloyd\'s Coverholder)' : 'CFC Underwriting Ltd (Lloyd\'s)',
+        // Report whatever the bound policy actually records. Do not map a provider
+        // slug onto a named insurer or a Lloyd's designation we have not agreed.
+        underwriter: p.provider || 'As stated in the policy documentation',
       })),
       totalPremium: (insurancePolicies || []).reduce((s: number, p: { premium_amount: number }) => s + p.premium_amount, 0),
     },
