@@ -108,7 +108,7 @@ export default function EuCbamPage() {
         <Section id="who-pays" eyebrow="Who pays" title="The importer files. The exporter sets the bill.">
           <P>
             The legal obligation belongs to the EU importer, who must be registered as an authorised CBAM declarant, buy CBAM
-            certificates, and file an annual declaration. A producer in Jebel Ali or Ruwais never files anything with the EU.
+            certificates, and file an annual declaration. A producer in Jebel Ali or Ruwais never files a CBAM declaration with the EU.
           </P>
           <P>
             That is not the same as being unaffected. Three things flow back to the exporter:
