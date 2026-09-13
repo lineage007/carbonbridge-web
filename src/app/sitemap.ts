@@ -30,6 +30,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/compliance/eu-cbam`,
+      lastModified: new Date('2026-09-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/compliance/uae-nrcc`,
+      lastModified: new Date('2026-09-14'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/about`,
       lastModified: now,
       changeFrequency: 'monthly',
