@@ -33,9 +33,9 @@ const OFFSET_PORTFOLIO = [
 ];
 
 const COMPLIANCE = [
-  { reg: 'UAE NRCC', deadline: '30 May 2026', status: 'Action Required' as const, requirement: 'Report Scope 1+2 emissions and offset mandatory portion', progress: 35 },
-  { reg: 'EU CBAM', deadline: '1 Jan 2027', status: 'Monitoring' as const, requirement: 'Purchase carbon certificates for EU exports (aluminium, steel)', progress: 15 },
-  { reg: 'CORSIA Phase 1', deadline: 'Ongoing', status: 'Compliant' as const, requirement: 'Offset international aviation emissions above 2019 baseline', progress: 100 },
+  { reg: 'UAE NRCC', deadline: 'In force', status: 'Action Required' as const, requirement: 'Register and report verified emissions to the National Register for Carbon Credits', progress: 35 },
+  { reg: 'EU CBAM', deadline: '1 Feb 2027', status: 'Monitoring' as const, requirement: 'Supply verified embedded-emissions data to EU importers (aluminium, steel)', progress: 15 },
+  { reg: 'CORSIA Phase 1', deadline: '31 Jan 2028', status: 'Compliant' as const, requirement: 'Offset international aviation emissions above 85% of the 2019 baseline', progress: 100 },
 ];
 
 const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
