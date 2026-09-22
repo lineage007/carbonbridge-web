@@ -36,11 +36,11 @@ const MONTHLY_VOLUME = [
 
 const REGULATORY_TIMELINE = [
   { date: 'Jul 2025', event: 'ICVCM CCP Labels begin', status: 'completed', detail: 'First batch of Verra and Gold Standard methodologies receive CCP approval. Labels now visible on VCU serial numbers.' },
-  { date: 'Jan 2026', event: 'CORSIA Phase 1 begins', status: 'active', detail: 'Mandatory carbon offsetting for international aviation. Airlines must retire CORSIA-eligible credits for emissions above 85% of 2019 baseline.' },
-  { date: 'Jan 2026', event: 'EU CBAM transition ends', status: 'active', detail: 'Full CBAM implementation. Importers of cement, iron, steel, aluminium, fertilisers, electricity, and hydrogen must surrender CBAM certificates.' },
-  { date: 'May 2026', event: 'UAE NRCC compliance deadline', status: 'upcoming', detail: 'National Register for Carbon Credits. All designated entities must complete registration with MOCCAE. Fines of AED 50,000–2,000,000 for non-compliance. Federal Decree-Law No. 11/2024.' },
-  { date: 'Jan 2027', event: 'VCMI Claims Code mandatory', status: 'upcoming', detail: 'Companies making net-zero or carbon-neutral claims must follow VCMI Claims Code requirements, including use of CCP-labelled credits.' },
-  { date: 'Jan 2028', event: 'SBTi BVCM framework', status: 'upcoming', detail: 'Science-Based Targets initiative requires Beyond Value Chain Mitigation commitments from all validated companies.' },
+  { date: 'Jan 2026', event: 'EU CBAM definitive period begins', status: 'active', detail: 'Only authorised CBAM declarants may import cement, iron and steel, aluminium, fertilisers, electricity and hydrogen above the 50-tonne threshold. Certificate sales open 1 February 2027; the first annual declaration, covering 2026 imports, is due 30 September 2027. Carbon credits cannot be surrendered against CBAM.' },
+  { date: 'May 2026', event: 'UAE NRCC adjustment period ended', status: 'completed', detail: 'End of the Climate Change Law\'s one-year adjustment period, not a filing deadline. Entities at or above 500,000 tCO₂e a year must be on the National Register for Carbon Credits; fines under Federal Decree-Law No. 11/2024 run from AED 50,000 to AED 2,000,000 per violation.' },
+  { date: 'Jan 2027', event: 'CORSIA second phase begins', status: 'upcoming', detail: 'Participation becomes mandatory for all but exempted States. Airlines offset growth above 85% of 2019 emissions with ICAO-eligible, host-country-authorised units; units for the 2024–2026 period must be cancelled by 31 January 2028.' },
+  { date: 'Ongoing', event: 'VCMI Claims Code of Practice', status: 'active', detail: 'Voluntary integrity framework for companies making net-zero or carbon-neutral claims; it expects high-integrity (CCP-labelled) credits. A market norm, not a regulatory deadline.' },
+  { date: 'Ongoing', event: 'SBTi Beyond Value Chain Mitigation guidance', status: 'active', detail: 'Guidance encouraging companies with validated targets to finance mitigation beyond their value chains, including through high-integrity credits. Not a compliance requirement.' },
 ];
 
 const TYPE_BREAKDOWN = (() => {

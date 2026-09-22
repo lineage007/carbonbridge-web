@@ -391,7 +391,7 @@ export default function Home() {
             {[
               { reg: 'UAE NRCC', deadline: 'Adjustment period ended May 30, 2026', days: 'In force', desc: 'The Climate Change Law\'s one-year adjustment period has ended. Emitters at or above 500,000 tCO₂e must be on the National Register for Carbon Credits; every UAE source must be ready to report when designated.', color: '#EF4444' },
               { reg: 'EU CBAM', deadline: 'February 1, 2027', days: `${daysUntil('2027-02-01')} days`, desc: 'Carbon Border Adjustment Mechanism. In force since 1 January 2026; certificate sales open 1 February 2027. EU importers of UAE aluminium, steel, cement and fertiliser pay on verified embedded emissions — carbon credits cannot be surrendered against it.', color: '#F59E0B' },
-              { reg: 'CORSIA Phase 2', deadline: '2027–2035', days: 'Procurement starting now', desc: 'Mandatory carbon offsetting for international aviation. Emirates, Etihad, and Qatar Airways face multi-million credit requirements annually.', color: '#0EA5E9' },
+              { reg: 'CORSIA Phase 2', deadline: 'Mandatory from January 1, 2027', days: 'Units due 31 Jan 2028', desc: 'ICAO\'s offsetting scheme for international aviation. From 2027 all but exempted States take part; airlines offset growth above 85% of 2019 emissions, and only ICAO-eligible units with host-country authorisation count. Units for 2024–2026 must be cancelled by 31 January 2028.', color: '#0EA5E9' },
             ].map((r, i) => (
               <FadeIn key={r.reg} delay={i * 150}>
                 <div style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '24px', borderLeft: `3px solid ${r.color}`, transition: 'box-shadow 0.3s' }} className="hover:shadow-md">
@@ -716,7 +716,8 @@ export default function Home() {
               { title: 'Solutions', items: [
                 { label: 'Corporate Buyers', href: '/#solutions' },
                 { label: 'Project Developers', href: '/#solutions' },
-                { label: 'Airlines & CORSIA', href: '/#solutions' },
+                { label: 'Compliance explainers', href: '/compliance' },
+                { label: 'CORSIA explainer', href: '/compliance/corsia' },
                 { label: 'EU CBAM explainer', href: '/compliance/eu-cbam' },
                 { label: 'UAE NRCC explainer', href: '/compliance/uae-nrcc' },
                 { label: 'Advisory', href: 'mailto:hello@carbonbridge.ae' },

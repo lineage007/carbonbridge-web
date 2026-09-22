@@ -30,6 +30,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/compliance`,
+      lastModified: new Date('2026-09-19'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/compliance/corsia`,
+      lastModified: new Date('2026-09-19'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/compliance/eu-cbam`,
       lastModified: new Date('2026-09-14'),
       changeFrequency: 'monthly',
