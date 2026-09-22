@@ -10,7 +10,9 @@ const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
 const mono = "'JetBrains Mono', 'DM Mono', monospace";
 
-// ─── Market data (indicative benchmarks) ───────────────────
+// ─── Price indices: illustrative placeholders, not market prices ──
+// Replace with indices computed from settled marketplace transactions
+// once CarbonBridge trades. The UI labels every card "Illustrative".
 const PRICE_INDICES = [
   { name: 'CB Nature Index', desc: 'Nature-based credits (ARR, REDD+, IFM, Blue Carbon)', price: 14.80, change: +1.2, sparkline: [12.4, 12.8, 13.1, 13.5, 14.0, 14.3, 14.8] },
   { name: 'CB Tech Removal Index', desc: 'Engineered CDR (Biochar, DACCS, Enhanced Weathering)', price: 96.50, change: -2.1, sparkline: [105.0, 103.2, 101.5, 100.0, 98.8, 97.2, 96.5] },
@@ -19,15 +21,18 @@ const PRICE_INDICES = [
   { name: 'CB CORSIA Eligible', desc: 'Credits eligible for airline compliance', price: 19.40, change: +1.8, sparkline: [17.0, 17.4, 17.9, 18.2, 18.6, 19.0, 19.4] },
 ];
 
+// Sourced, dated reference figures. One line each in
+// docs/FACT-CHECK-2026-09-22-data-page.md; refresh when SOVCM 2026 is out.
 const MARKET_STATS = [
-  { label: 'VCM Total Value (2025)', value: '$1.7B', sub: 'Ecosystem Marketplace' },
-  { label: 'Tonnes Retired (2025)', value: '164M', sub: 'Verra + Gold Standard' },
-  { label: 'Avg. Nature Credit', value: '$8.40', sub: 'Global weighted average' },
-  { label: 'Avg. CDR Credit', value: '$96.50', sub: 'Biochar + DACCS blend' },
-  { label: 'ACCU Spot Price', value: 'A$32.50', sub: 'Clean Energy Regulator' },
-  { label: 'EU ETS (EUA)', value: '€68.20', sub: 'ICE Futures Europe' },
+  { label: 'VCM transaction value (2024)', value: '$535M', sub: 'Ecosystem Marketplace, SOVCM 2025' },
+  { label: 'VCM volume traded (2024)', value: '84 Mt', sub: 'Ecosystem Marketplace, SOVCM 2025' },
+  { label: 'VCM average price (2024)', value: '$6.34/t', sub: 'Ecosystem Marketplace, SOVCM 2025' },
+  { label: 'Credits retired (2024)', value: '182 Mt', sub: 'Ten largest standards, EM SOVCM 2025' },
+  { label: 'UAE NRCC threshold', value: '0.5 Mt/yr', sub: 'Scope 1 + 2 tCO₂e, mandatory registration' },
+  { label: 'CORSIA baseline', value: '85%', sub: 'of 2019 emissions, from 2024 (ICAO)' },
 ];
 
+// Illustrative placeholder series, not registry data (labelled in the UI).
 const MONTHLY_VOLUME = [
   { month: 'Oct', nature: 12.4, tech: 2.1 }, { month: 'Nov', nature: 14.2, tech: 2.8 },
   { month: 'Dec', nature: 11.8, tech: 3.1 }, { month: 'Jan', nature: 15.6, tech: 3.4 },
@@ -35,8 +40,8 @@ const MONTHLY_VOLUME = [
 ];
 
 const REGULATORY_TIMELINE = [
-  { date: 'Jul 2025', event: 'ICVCM CCP Labels begin', status: 'completed', detail: 'First batch of Verra and Gold Standard methodologies receive CCP approval. Labels now visible on VCU serial numbers.' },
-  { date: 'Jan 2026', event: 'EU CBAM definitive period begins', status: 'active', detail: 'Only authorised CBAM declarants may import cement, iron and steel, aluminium, fertilisers, electricity and hydrogen above the 50-tonne threshold. Certificate sales open 1 February 2027; the first annual declaration, covering 2026 imports, is due 30 September 2027. Carbon credits cannot be surrendered against CBAM.' },
+  { date: 'Jun 2024', event: 'First ICVCM CCP labels approved', status: 'completed', detail: 'The Integrity Council approved its first seven Core Carbon Principles methodologies, for landfill gas and ozone-depleting-substance destruction (ACR, Climate Action Reserve, and the CDM methodologies ACM0001 and AMS-III.G that Verra and Gold Standard also use), making about 27 million credits eligible for the label. Assessments of further categories continue.' },
+  { date: 'Jan 2026', event: 'EU CBAM definitive period begins', status: 'active', detail: 'Only authorised CBAM declarants may import CBAM goods: cement, iron and steel, aluminium and fertilisers above the 50-tonne annual de minimis, and electricity and hydrogen in any quantity. Certificate sales open 1 February 2027; the first annual declaration, covering 2026 imports, is due 30 September 2027. Carbon credits cannot be surrendered against CBAM.' },
   { date: 'May 2026', event: 'UAE NRCC adjustment period ended', status: 'completed', detail: 'End of the Climate Change Law\'s one-year adjustment period, not a filing deadline. Entities at or above 500,000 tCO₂e a year must be on the National Register for Carbon Credits; fines under Federal Decree-Law No. 11/2024 run from AED 50,000 to AED 2,000,000 per violation.' },
   { date: 'Jan 2027', event: 'CORSIA second phase begins', status: 'upcoming', detail: 'Participation becomes mandatory for all but exempted States. Airlines offset growth above 85% of 2019 emissions with ICAO-eligible, host-country-authorised units; units for the 2024–2026 period must be cancelled by 31 January 2028.' },
   { date: 'Ongoing', event: 'VCMI Claims Code of Practice', status: 'active', detail: 'Voluntary integrity framework for companies making net-zero or carbon-neutral claims; it expects high-integrity (CCP-labelled) credits. A market norm, not a regulatory deadline.' },
@@ -69,14 +74,14 @@ export default function DataPage() {
         <div style={{ background: 'linear-gradient(175deg, #0C1C14, #1B3A2D)', padding: '48px 0 40px', borderBottom: '1px solid rgba(201,169,110,0.1)' }}>
           <div className="max-w-[1200px] mx-auto px-4 lg:px-8">
             <h1 style={{ fontFamily: fr, fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 700, color: '#FFFCF6', letterSpacing: '-0.02em', marginBottom: '8px' }}>Market Data & Insights</h1>
-            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>Real-time carbon credit price indices, market intelligence, and regulatory tracking.</p>
+            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>Market reference figures, compliance milestones and CarbonBridge&apos;s compliance guides.</p>
           </div>
         </div>
 
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10">
 
           {/* ═══ PRICE INDICES ═══ */}
-          <Section title="CarbonBridge Price Indices" sub="Proprietary benchmark indices updated daily. Based on weighted transaction data across major registries.">
+          <Section title="CarbonBridge Price Indices (in development)" sub="Illustrative layout. CarbonBridge will publish indices built from settled marketplace transactions once trading starts. The figures below are placeholders, not market prices.">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {PRICE_INDICES.map(idx => (
                 <div key={idx.name} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '22px', transition: 'all 0.2s' }}
@@ -86,6 +91,9 @@ export default function DataPage() {
                       <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#1A1714' }}>{idx.name}</h3>
                       <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '2px' }}>{idx.desc}</p>
                     </div>
+                    <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', flexShrink: 0 }}>
+                      Illustrative
+                    </span>
                   </div>
                   <div className="flex items-end justify-between mt-4">
                     <div>
@@ -115,12 +123,12 @@ export default function DataPage() {
               ))}
             </div>
             <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '12px', fontStyle: 'italic' }}>
-              Indices are indicative benchmarks. Not investment advice. Source: CarbonBridge proprietary data, Ecosystem Marketplace, ACX.
+              Illustrative placeholders only: not live or historical prices, and not investment advice.
             </p>
           </Section>
 
           {/* ═══ MARKET OVERVIEW ═══ */}
-          <Section title="Market Overview" sub="Key metrics across global voluntary and compliance carbon markets.">
+          <Section title="Market Overview" sub="Published reference figures for the voluntary market (calendar 2024, the latest full-year report) and two compliance thresholds. Source under each figure.">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               {MARKET_STATS.map(s => (
                 <div key={s.label} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '18px', textAlign: 'center' }}>
@@ -133,7 +141,7 @@ export default function DataPage() {
           </Section>
 
           {/* ═══ VOLUME BY TYPE ═══ */}
-          <Section title="Available Volume by Credit Type" sub="Current marketplace inventory across all listed projects.">
+          <Section title="Available Volume by Credit Type" sub="Indicative volumes across the projects shown on the marketplace. Availability and price are confirmed at settlement.">
             <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
               <div className="space-y-4">
                 {TYPE_BREAKDOWN.map(t => (
@@ -156,9 +164,12 @@ export default function DataPage() {
           </Section>
 
           {/* ═══ MONTHLY TRADING VOLUME ═══ */}
-          <Section title="Monthly Trading Volume" sub="Nature-based vs. technology-based credit retirements (millions of tonnes).">
+          <Section title="Monthly Retirements (illustrative)" sub="Illustrative layout, not registry data. Placeholder nature-based and technology-based figures in millions of tonnes.">
             <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
               <div className="flex items-center gap-2 mb-6">
+                <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', marginRight: '8px' }}>
+                  Illustrative
+                </span>
                 {(['6m', '1y', 'all'] as const).map(t => (
                   <button key={t} onClick={() => setTimeframe(t)} style={{
                     fontFamily: bg, fontSize: '11px', fontWeight: timeframe === t ? 700 : 500,
@@ -194,7 +205,7 @@ export default function DataPage() {
           </Section>
 
           {/* ═══ REGULATORY TIMELINE ═══ */}
-          <Section title="Regulatory Timeline" sub="Key compliance milestones driving carbon credit demand.">
+          <Section title="Regulatory Timeline" sub="Key compliance and market-integrity milestones.">
             <div className="space-y-0">
               {REGULATORY_TIMELINE.map((r, i) => (
                 <div key={r.event} className="flex gap-4" style={{ position: 'relative' }}>
@@ -228,26 +239,24 @@ export default function DataPage() {
             </div>
           </Section>
 
-          {/* ═══ RESEARCH ═══ */}
-          <Section title="Research & Reports" sub="Market analysis and regulatory intelligence from the CarbonBridge research team.">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* ═══ COMPLIANCE GUIDES ═══ */}
+          <Section title="Compliance Guides" sub="Primary-source explainers from CarbonBridge, each with a review date and its sources.">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { title: 'NRCC Buyer\'s Guide: What Australian Corporates Need to Know', date: 'March 2026', tag: 'Compliance', reading: '12 min' },
-                { title: 'CORSIA Phase 1: Which Credits Qualify and at What Price?', date: 'February 2026', tag: 'Aviation', reading: '8 min' },
-                { title: 'MENA Carbon Markets: The Gulf\'s Compliance Wave', date: 'January 2026', tag: 'Market Analysis', reading: '15 min' },
-                { title: 'Blue Carbon Pricing Outlook 2026-2030', date: 'December 2025', tag: 'Pricing', reading: '10 min' },
-                { title: 'CBAM Impact Assessment: What Exporters to the EU Must Prepare', date: 'November 2025', tag: 'Trade', reading: '14 min' },
-                { title: 'Credit Insurance: Why It Matters and Who Provides It', date: 'October 2025', tag: 'Insurance', reading: '7 min' },
+                { title: 'Carbon compliance explainers for the Gulf: CORSIA, EU CBAM, UAE NRCC', href: '/compliance', tag: 'Overview', reviewed: '19 September 2026' },
+                { title: 'CORSIA for Gulf airlines and their suppliers: the 2027 phase explained', href: '/compliance/corsia', tag: 'Aviation', reviewed: '19 September 2026' },
+                { title: 'EU CBAM for UAE and GCC exporters: what changed in 2026', href: '/compliance/eu-cbam', tag: 'Trade', reviewed: '14 September 2026' },
+                { title: 'UAE NRCC and the Climate Change Law: who must report, and when', href: '/compliance/uae-nrcc', tag: 'Compliance', reviewed: '14 September 2026' },
               ].map(r => (
-                <div key={r.title} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '22px', cursor: 'pointer', transition: 'all 0.2s' }}
+                <Link key={r.href} href={r.href} style={{ display: 'block', textDecoration: 'none', background: 'white', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '22px', transition: 'all 0.2s' }}
                   className="hover:shadow-md hover:border-[rgba(201,169,110,0.3)]">
                   <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#C9A96E', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{r.tag}</span>
                   <h4 style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#1A1714', marginTop: '8px', marginBottom: '12px', lineHeight: 1.4 }}>{r.title}</h4>
                   <div className="flex items-center justify-between" style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A' }}>
-                    <span>{r.date}</span>
-                    <span>{r.reading} read</span>
+                    <span>Reviewed {r.reviewed}</span>
+                    <span style={{ color: '#1B3A2D', fontWeight: 600 }}>Read the guide →</span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </Section>
