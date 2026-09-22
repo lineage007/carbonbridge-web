@@ -2,6 +2,8 @@
 // Generates the full legal agreement as structured data for PDF rendering
 // Based on: ISDA VCC Definitions 2022, IETA ETMA structure, ADGM English Common Law framework
 
+import { DEFAULT_PAYMENT_METHOD, agreementValidityDays } from './reservation';
+
 export interface AgreementParty {
   companyName: string;
   registeredAddress: string;
@@ -60,19 +62,225 @@ export function generateAgreementReference(): string {
   return `PA-${year}-${seq}`;
 }
 
+// ═══════════════════════════════════════════════════
+// Schema → AgreementData mapping (Phase 1 alignment — CB-004)
+//
+// Every field read below is a real column in supabase/migrations. Notably:
+//   - the agreement reference column is `agreement_ref`, not
+//     `agreement_reference`
+//   - CB Direct is the `listings.is_cb_direct` boolean; `listing_type` is
+//     constrained to 'spot' | 'forward'
+//   - there is no `insurance_policies` table; insurance lives on
+//     orders.insurance_products (jsonb) + insurance_premium_total
+//   - acceptance is `orders.agreement_accepted_at`, not inferred from status
+// ═══════════════════════════════════════════════════
+
+const UNDERWRITERS: Record<string, string> = {
+  kita: "Kita Earth Ltd (Lloyd's Coverholder)",
+  cfc: "CFC Underwriting Ltd (Lloyd's)",
+};
+
+/** Order columns the agreement needs. Mirrors OrderRow in types.ts. */
+export interface AgreementOrderSource {
+  created_at: string;
+  quantity: number;
+  unit_price: number;
+  /**
+   * orders.credit_total — the stored line total for the credits. The agreement
+   * must show this rather than recomputing `quantity * unit_price`, which
+   * silently diverges from the order whenever the stored total was rounded or
+   * adjusted.
+   */
+  credit_total: number;
+  total_amount: number;
+  payment_method: 'card' | 'bank_transfer' | null;
+  agreement_ref: string | null;
+  agreement_accepted_at: string | null;
+  insurance_products: unknown;
+  insurance_premium_total: number | null;
+  insurance_policy_ref: string | null;
+  verra_serial_numbers: string | null;
+}
+
+/** Listing columns the agreement needs. Mirrors ListingRow in types.ts. */
+export interface AgreementListingSource {
+  project_name: string | null;
+  project_id_verra: string | null;
+  registry: string | null;
+  methodology: string | null;
+  credit_type: string | null;
+  vintage_year: number | null;
+  quality_rating: string | null;
+  corsia_eligible: boolean | null;
+  cbam_eligible: boolean | null;
+  nrcc_eligible: boolean | null;
+  icvcm_ccp_aligned: boolean | null;
+  is_cb_direct: boolean | null;
+}
+
+/** Profile columns the agreement needs. Mirrors ProfileRow in types.ts. */
+export interface AgreementProfileSource {
+  company_name: string | null;
+  contact_name: string | null;
+  email: string | null;
+  country: string | null;
+}
+
+export const CARBONBRIDGE_PARTY: AgreementParty = {
+  companyName: 'CarbonBridge Ltd',
+  registeredAddress: 'Abu Dhabi Global Market, Al Maryah Island, Abu Dhabi, UAE',
+  registrationNumber: '[ADGM Registration Number]',
+  contactPerson: 'CarbonBridge Operations',
+  email: 'operations@carbonbridge.ae',
+  country: 'AE',
+};
+
+/**
+ * Read orders.insurance_products (jsonb, documented as
+ * `[{type, premium, provider}]`) into the agreement's InsuranceDetails.
+ */
+export function parseInsuranceProducts(
+  raw: unknown,
+  premiumTotal?: number | null,
+  policyRef?: string | null,
+): InsuranceDetails {
+  const rows = Array.isArray(raw) ? raw : [];
+
+  const products = rows
+    .filter((row): row is Record<string, unknown> => typeof row === 'object' && row !== null)
+    .map((row) => {
+      const premium = typeof row.premium === 'number' ? row.premium : 0;
+      const provider = typeof row.provider === 'string' ? row.provider : '';
+      return {
+        type: typeof row.type === 'string' ? row.type : 'unknown',
+        premium,
+        premiumRate: typeof row.premium_rate === 'number' ? row.premium_rate : 0,
+        underwriter: UNDERWRITERS[provider.toLowerCase()] ?? provider ?? '',
+        policyReference:
+          typeof row.policy_reference === 'string' ? row.policy_reference : policyRef ?? undefined,
+      };
+    });
+
+  // Prefer the stored total whenever it is a number, including 0 — a waived or
+  // discounted premium is stored as 0 and must not be recomputed from the
+  // product rows, or the agreement would show charges the order never had.
+  // Only a null/absent stored total falls back to summing the products.
+  const totalPremium =
+    typeof premiumTotal === 'number'
+      ? premiumTotal
+      : products.reduce((sum, p) => sum + p.premium, 0);
+
+  return { selected: products.length > 0, products, totalPremium };
+}
+
+export function buildAgreementDataFromOrder(input: {
+  order: AgreementOrderSource;
+  listing: AgreementListingSource | null;
+  buyer: AgreementProfileSource | null;
+  seller: AgreementProfileSource | null;
+  /** Injected so callers (and tests) control the fallback reference. */
+  fallbackReference?: string;
+}): AgreementData {
+  const { order, listing, buyer, seller } = input;
+  const isCBDirect = listing?.is_cb_direct === true;
+  // Review finding 4: one default, shared with POST /api/credits/reserve.
+  const paymentMethod = order.payment_method ?? DEFAULT_PAYMENT_METHOD;
+
+  return {
+    reference: order.agreement_ref || input.fallbackReference || generateAgreementReference(),
+    // UTC, so the agreement date does not shift by a day depending on which
+    // region rendered it.
+    date: new Date(order.created_at).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }),
+    buyer: {
+      companyName: buyer?.company_name || 'Unknown',
+      registeredAddress: buyer?.country || 'Not provided',
+      registrationNumber: undefined,
+      contactPerson: buyer?.contact_name || 'Not provided',
+      email: buyer?.email || '',
+      country: buyer?.country || 'AE',
+    },
+    seller: isCBDirect
+      ? CARBONBRIDGE_PARTY
+      : {
+          companyName: seller?.company_name || 'Third-Party Seller',
+          registeredAddress: seller?.country || 'Not provided',
+          registrationNumber: undefined,
+          contactPerson: seller?.contact_name || 'Not provided',
+          email: seller?.email || '',
+          country: seller?.country || '',
+        },
+    isCBDirect,
+    credits: {
+      projectName: listing?.project_name || 'Unknown Project',
+      registryProjectId: listing?.project_id_verra || 'N/A',
+      registry: listing?.registry || 'verra',
+      methodology: listing?.methodology || 'N/A',
+      creditType: listing?.credit_type || 'unknown',
+      vintageYear: listing?.vintage_year || new Date().getFullYear(),
+      qualityRating: listing?.quality_rating || 'Unrated',
+      quantity: order.quantity,
+      unitPrice: order.unit_price,
+      // The stored line total, not a recomputation of quantity × unit_price.
+      totalPrice: order.credit_total,
+      complianceEligibility: [
+        ...(listing?.corsia_eligible ? ['CORSIA'] : []),
+        ...(listing?.cbam_eligible ? ['CBAM'] : []),
+        ...(listing?.nrcc_eligible ? ['NRCC'] : []),
+        ...(listing?.icvcm_ccp_aligned ? ['ICVCM CCP'] : []),
+      ],
+      serialRange: order.verra_serial_numbers ?? undefined,
+    },
+    insurance: parseInsuranceProducts(
+      order.insurance_products,
+      order.insurance_premium_total,
+      order.insurance_policy_ref,
+    ),
+    paymentMethod,
+    totalAmount: order.total_amount,
+    validityPeriod: agreementValidityDays(paymentMethod),
+    acceptedAt: order.agreement_accepted_at ?? undefined,
+  };
+}
+
+/**
+ * Escape a value for interpolation into the agreement HTML.
+ *
+ * GET /api/agreements/[orderId] serves generateAgreementHTML() as `text/html`
+ * with `Content-Disposition: inline`, so anything a registered user can put in
+ * a profile field (company name, contact name, address, email) or a listing
+ * field (project name, methodology) would otherwise execute in the browser of
+ * whoever opens the agreement. Every untrusted string below goes through this.
+ * Values the template formats itself (numbers, dates, fixed labels) do not.
+ */
+export function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export function generateAgreementHTML(data: AgreementData): string {
   const { buyer, seller, credits, insurance, isCBDirect, paymentMethod } = data;
   const isBank = paymentMethod === 'bank_transfer';
+  // Built from fixed labels in this module, so it carries no user input.
   const complianceList = credits.complianceEligibility.length > 0
     ? credits.complianceEligibility.join(', ')
     : 'None declared';
+  const reference = escapeHtml(data.reference);
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purchase Agreement ${data.reference}</title>
+<title>Purchase Agreement ${reference}</title>
 <style>
   @page { size: A4; margin: 25mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -115,7 +323,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
   <div class="header-top">
     <img src="https://carbonbridge-web.vercel.app/logo-green.png" alt="CarbonBridge" class="header-logo-img" />
     <div class="header-ref">
-      <span class="ref">${data.reference}</span>
+      <span class="ref">${reference}</span>
       ${data.date}
     </div>
   </div>
@@ -127,20 +335,20 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 
 <table>
   <tr><th colspan="2">BUYER</th></tr>
-  <tr><td width="160">Company Name</td><td><strong>${buyer.companyName}</strong></td></tr>
-  <tr><td>Registered Address</td><td>${buyer.registeredAddress}</td></tr>
-  ${buyer.registrationNumber ? `<tr><td>Registration No.</td><td>${buyer.registrationNumber}</td></tr>` : ''}
-  <tr><td>Contact Person</td><td>${buyer.contactPerson}</td></tr>
-  <tr><td>Email</td><td>${buyer.email}</td></tr>
+  <tr><td width="160">Company Name</td><td><strong>${escapeHtml(buyer.companyName)}</strong></td></tr>
+  <tr><td>Registered Address</td><td>${escapeHtml(buyer.registeredAddress)}</td></tr>
+  ${buyer.registrationNumber ? `<tr><td>Registration No.</td><td>${escapeHtml(buyer.registrationNumber)}</td></tr>` : ''}
+  <tr><td>Contact Person</td><td>${escapeHtml(buyer.contactPerson)}</td></tr>
+  <tr><td>Email</td><td>${escapeHtml(buyer.email)}</td></tr>
 </table>
 
 <table>
   <tr><th colspan="2">SELLER${isCBDirect ? ' (CarbonBridge Direct — Principal Seller)' : ''}</th></tr>
-  <tr><td width="160">Company Name</td><td><strong>${seller.companyName}</strong></td></tr>
-  <tr><td>Registered Address</td><td>${seller.registeredAddress}</td></tr>
-  ${seller.registrationNumber ? `<tr><td>Registration No.</td><td>${seller.registrationNumber}</td></tr>` : ''}
-  <tr><td>Contact Person</td><td>${seller.contactPerson}</td></tr>
-  <tr><td>Email</td><td>${seller.email}</td></tr>
+  <tr><td width="160">Company Name</td><td><strong>${escapeHtml(seller.companyName)}</strong></td></tr>
+  <tr><td>Registered Address</td><td>${escapeHtml(seller.registeredAddress)}</td></tr>
+  ${seller.registrationNumber ? `<tr><td>Registration No.</td><td>${escapeHtml(seller.registrationNumber)}</td></tr>` : ''}
+  <tr><td>Contact Person</td><td>${escapeHtml(seller.contactPerson)}</td></tr>
+  <tr><td>Email</td><td>${escapeHtml(seller.email)}</td></tr>
 </table>
 
 <p><strong>CarbonBridge's Role:</strong> ${isCBDirect
@@ -160,7 +368,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 
 <div class="definition"><strong>&ldquo;Retirement&rdquo;</strong> means the permanent cancellation of a Carbon Credit on the relevant Registry, such that it cannot be further transferred, sold, or used for any purpose, in accordance with the Registry&rsquo;s retirement procedures.</div>
 
-<div class="definition"><strong>&ldquo;Purchase Agreement Reference&rdquo;</strong> means the unique identifier <span class="highlight">${data.reference}</span> assigned to this transaction.</div>
+<div class="definition"><strong>&ldquo;Purchase Agreement Reference&rdquo;</strong> means the unique identifier <span class="highlight">${reference}</span> assigned to this transaction.</div>
 
 <div class="definition"><strong>&ldquo;CarbonBridge Platform&rdquo;</strong> means the carbon credit marketplace operated at carbonbridge.ae and any successor domains.</div>
 
@@ -183,19 +391,19 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 <div class="schedule-box">
   <table>
     <tr><th colspan="2">CREDIT DETAILS (Schedule 1)</th></tr>
-    <tr><td width="180">Project Name</td><td><strong>${credits.projectName}</strong></td></tr>
-    <tr><td>Registry Project ID</td><td>${credits.registryProjectId}</td></tr>
-    <tr><td>Registry</td><td>${credits.registry}</td></tr>
-    <tr><td>Methodology</td><td>${credits.methodology}</td></tr>
-    <tr><td>Credit Type</td><td>${credits.creditType}</td></tr>
+    <tr><td width="180">Project Name</td><td><strong>${escapeHtml(credits.projectName)}</strong></td></tr>
+    <tr><td>Registry Project ID</td><td>${escapeHtml(credits.registryProjectId)}</td></tr>
+    <tr><td>Registry</td><td>${escapeHtml(credits.registry)}</td></tr>
+    <tr><td>Methodology</td><td>${escapeHtml(credits.methodology)}</td></tr>
+    <tr><td>Credit Type</td><td>${escapeHtml(credits.creditType)}</td></tr>
     <tr><td>Vintage Year</td><td>${credits.vintageYear}</td></tr>
-    <tr><td>Quality Rating</td><td>${credits.qualityRating} (CarbonBridge assessment against ICVCM CCP criteria)</td></tr>
+    <tr><td>Quality Rating</td><td>${escapeHtml(credits.qualityRating)} (CarbonBridge assessment against ICVCM CCP criteria)</td></tr>
     <tr><td>Quantity</td><td class="amount">${credits.quantity.toLocaleString()} tCO&#8322;e</td></tr>
     <tr><td>Unit Price</td><td class="amount">USD ${credits.unitPrice.toFixed(2)} per tCO&#8322;e</td></tr>
     <tr><td>Credit Cost</td><td class="amount">USD ${credits.totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>
     <tr><td>Source</td><td>${isCBDirect ? 'CarbonBridge Direct (principal inventory)' : 'Third-party Seller via CarbonBridge Marketplace'}</td></tr>
     <tr><td>Compliance Eligibility</td><td>${complianceList}</td></tr>
-    ${credits.serialRange ? `<tr><td>Serial Number Range</td><td>${credits.serialRange}</td></tr>` : ''}
+    ${credits.serialRange ? `<tr><td>Serial Number Range</td><td>${escapeHtml(credits.serialRange)}</td></tr>` : ''}
   </table>
 </div>
 
@@ -206,7 +414,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 <table>
   <tr><th>Item</th><th style="text-align: right;">Amount (USD)</th></tr>
   <tr><td>Carbon Credits (${credits.quantity.toLocaleString()} tCO&#8322;e × $${credits.unitPrice.toFixed(2)})</td><td style="text-align: right;" class="amount">$${credits.totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>
-  ${insurance.selected ? insurance.products.map(p => `<tr><td>Insurance: ${p.type.replace(/_/g, ' ')} (${(p.premiumRate * 100).toFixed(1)}%)</td><td style="text-align: right;" class="amount">$${p.premium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>`).join('') : '<tr><td>Insurance</td><td style="text-align: right;">Not selected</td></tr>'}
+  ${insurance.selected ? insurance.products.map(p => `<tr><td>Insurance: ${escapeHtml(p.type.replace(/_/g, ' '))} (${(p.premiumRate * 100).toFixed(1)}%)</td><td style="text-align: right;" class="amount">$${p.premium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td></tr>`).join('') : '<tr><td>Insurance</td><td style="text-align: right;">Not selected</td></tr>'}
   <tr style="border-top: 2px solid #1B3A2D;"><td><strong>Total Amount Due</strong></td><td style="text-align: right;" class="amount"><strong>$${data.totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</strong></td></tr>
 </table>
 
@@ -220,7 +428,7 @@ ${isBank ? `
   Account Name: CarbonBridge Ltd — Client Escrow<br>
   IBAN: [To be provided]<br>
   SWIFT/BIC: [To be provided]<br>
-  Reference: <span class="highlight">${data.reference}</span>
+  Reference: <span class="highlight">${reference}</span>
 </div>
 <p>If funds are not received and cleared within the Purchase Agreement Validity Period, this Agreement expires automatically, the credit Reservation is released, and neither party shall have any further obligation under this Agreement.</p>
 ` : `
@@ -235,7 +443,7 @@ ${insurance.selected ? `
 <div class="schedule-box">
   <table>
     <tr><th>Product</th><th>Premium</th><th>Underwriter</th></tr>
-    ${insurance.products.map(p => `<tr><td>${p.type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</td><td class="amount">$${p.premium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td><td>${p.underwriter}</td></tr>`).join('')}
+    ${insurance.products.map(p => `<tr><td>${escapeHtml(p.type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()))}</td><td class="amount">$${p.premium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td><td>${escapeHtml(p.underwriter)}</td></tr>`).join('')}
     <tr style="border-top: 1px solid #E5DED3;"><td><strong>Total Premium</strong></td><td class="amount"><strong>$${insurance.totalPremium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</strong></td><td></td></tr>
   </table>
 </div>
@@ -386,15 +594,15 @@ ${isCBDirect ? '<p>12.2 Where CarbonBridge is the Seller (CarbonBridge Direct), 
   ${data.acceptedAt ? `
   <p>This Agreement was accepted electronically via the CarbonBridge Platform.</p>
   <table>
-    <tr><td width="140">Accepted by</td><td><strong>${buyer.companyName}</strong></td></tr>
-    <tr><td>Contact</td><td>${buyer.contactPerson} (${buyer.email})</td></tr>
-    <tr><td>Date &amp; Time</td><td>${data.acceptedAt} UTC</td></tr>
-    ${data.acceptedIP ? `<tr><td>IP Address</td><td>${data.acceptedIP}</td></tr>` : ''}
-    ${data.sessionId ? `<tr><td>Session ID</td><td style="font-family: monospace; font-size: 9pt;">${data.sessionId}</td></tr>` : ''}
+    <tr><td width="140">Accepted by</td><td><strong>${escapeHtml(buyer.companyName)}</strong></td></tr>
+    <tr><td>Contact</td><td>${escapeHtml(buyer.contactPerson)} (${escapeHtml(buyer.email)})</td></tr>
+    <tr><td>Date &amp; Time</td><td>${escapeHtml(data.acceptedAt)} UTC</td></tr>
+    ${data.acceptedIP ? `<tr><td>IP Address</td><td>${escapeHtml(data.acceptedIP)}</td></tr>` : ''}
+    ${data.sessionId ? `<tr><td>Session ID</td><td style="font-family: monospace; font-size: 9pt;">${escapeHtml(data.sessionId)}</td></tr>` : ''}
   </table>
   ` : `
   <p style="color: #8A8279;">This is a draft. The Agreement becomes binding upon electronic acceptance by the Buyer via the CarbonBridge Platform.</p>
-  <div class="sig-line">Authorised Signatory — ${buyer.companyName}</div>
+  <div class="sig-line">Authorised Signatory — ${escapeHtml(buyer.companyName)}</div>
   <div class="sig-line" style="margin-top: 28px;">CarbonBridge Ltd</div>
   `}
 </div>
@@ -410,7 +618,7 @@ ${isCBDirect ? '<p>12.2 Where CarbonBridge is the Seller (CarbonBridge Direct), 
 <div class="footer">
   <img src="https://carbonbridge-web.vercel.app/logo-green.png" alt="CarbonBridge" style="height: 24px; width: auto; margin-bottom: 6px;" />
   <p>CarbonBridge Ltd &middot; Abu Dhabi Global Market &middot; Al Maryah Island, Abu Dhabi, UAE</p>
-  <p>${data.reference} &middot; Generated ${data.date}</p>
+  <p>${reference} &middot; Generated ${data.date}</p>
 </div>
 
 </body>

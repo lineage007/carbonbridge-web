@@ -14,6 +14,22 @@
 -- STATUS: DRAFT — do not apply without Gary sign-off.
 
 -- ─────────────────────────────────────
+-- PREREQUISITE COLUMNS
+-- ─────────────────────────────────────
+-- The policies below reference rfqs.seller_id and insurance_claims.claimant_id,
+-- neither of which 001_initial_schema.sql creates. 005_phase1_contract_alignment.sql
+-- adds them, but file-name order runs 003 first, so a clean `supabase db reset`
+-- failed here with "column ... does not exist". Adding them at the top of 003
+-- makes the dependency executable instead of a manual instruction.
+--
+-- Both statements are ADD COLUMN IF NOT EXISTS, so they are harmless on a
+-- database where 003 has already run or where 005 got there first. The copies
+-- in 005 section 3 are left in place for the same reason.
+
+ALTER TABLE public.rfqs ADD COLUMN IF NOT EXISTS seller_id uuid REFERENCES public.profiles(id);
+ALTER TABLE public.insurance_claims ADD COLUMN IF NOT EXISTS claimant_id uuid REFERENCES public.profiles(id);
+
+-- ─────────────────────────────────────
 -- rfqs
 -- ─────────────────────────────────────
 ALTER TABLE public.rfqs ENABLE ROW LEVEL SECURITY;
