@@ -27,7 +27,7 @@ const MARKET_STATS = [
   { label: 'VCM transaction value (2024)', value: '$535M', sub: 'Ecosystem Marketplace, SOVCM 2025' },
   { label: 'VCM volume traded (2024)', value: '84 Mt', sub: 'Ecosystem Marketplace, SOVCM 2025' },
   { label: 'VCM average price (2024)', value: '$6.34/t', sub: 'Ecosystem Marketplace, SOVCM 2025' },
-  { label: 'Credits retired (2024)', value: '182 Mt', sub: 'Ten largest standards, Ecosystem Marketplace' },
+  { label: 'Credits retired (2024)', value: '182 Mt', sub: 'Ten largest standards, EM SOVCM 2025' },
   { label: 'UAE NRCC threshold', value: '0.5 Mt/yr', sub: 'Scope 1 + 2 tCO₂e, mandatory registration' },
   { label: 'CORSIA baseline', value: '85%', sub: 'of 2019 emissions, from 2024 (ICAO)' },
 ];
@@ -40,8 +40,8 @@ const MONTHLY_VOLUME = [
 ];
 
 const REGULATORY_TIMELINE = [
-  { date: 'Jul 2025', event: 'ICVCM CCP Labels begin', status: 'completed', detail: 'First batch of Verra and Gold Standard methodologies receive CCP approval. Labels now visible on VCU serial numbers.' },
-  { date: 'Jan 2026', event: 'EU CBAM definitive period begins', status: 'active', detail: 'Only authorised CBAM declarants may import cement, iron and steel, aluminium, fertilisers, electricity and hydrogen above the 50-tonne threshold. Certificate sales open 1 February 2027; the first annual declaration, covering 2026 imports, is due 30 September 2027. Carbon credits cannot be surrendered against CBAM.' },
+  { date: 'Jun 2024', event: 'First ICVCM CCP labels approved', status: 'completed', detail: 'The Integrity Council approved its first seven Core Carbon Principles methodologies, for landfill gas and ozone-depleting-substance destruction (ACR, Climate Action Reserve, and the CDM methodologies ACM0001 and AMS-III.G that Verra and Gold Standard also use), making about 27 million credits eligible for the label. Assessments of further categories continue.' },
+  { date: 'Jan 2026', event: 'EU CBAM definitive period begins', status: 'active', detail: 'Only authorised CBAM declarants may import CBAM goods: cement, iron and steel, aluminium and fertilisers above the 50-tonne annual de minimis, and electricity and hydrogen in any quantity. Certificate sales open 1 February 2027; the first annual declaration, covering 2026 imports, is due 30 September 2027. Carbon credits cannot be surrendered against CBAM.' },
   { date: 'May 2026', event: 'UAE NRCC adjustment period ended', status: 'completed', detail: 'End of the Climate Change Law\'s one-year adjustment period, not a filing deadline. Entities at or above 500,000 tCO₂e a year must be on the National Register for Carbon Credits; fines under Federal Decree-Law No. 11/2024 run from AED 50,000 to AED 2,000,000 per violation.' },
   { date: 'Jan 2027', event: 'CORSIA second phase begins', status: 'upcoming', detail: 'Participation becomes mandatory for all but exempted States. Airlines offset growth above 85% of 2019 emissions with ICAO-eligible, host-country-authorised units; units for the 2024–2026 period must be cancelled by 31 January 2028.' },
   { date: 'Ongoing', event: 'VCMI Claims Code of Practice', status: 'active', detail: 'Voluntary integrity framework for companies making net-zero or carbon-neutral claims; it expects high-integrity (CCP-labelled) credits. A market norm, not a regulatory deadline.' },
@@ -164,9 +164,12 @@ export default function DataPage() {
           </Section>
 
           {/* ═══ MONTHLY TRADING VOLUME ═══ */}
-          <Section title="Monthly Trading Volume" sub="Illustrative layout, not registry data. Nature-based and technology-based retirements (millions of tonnes) will be charted from registry data once the feed is live.">
+          <Section title="Monthly Retirements (illustrative)" sub="Illustrative layout, not registry data. Placeholder nature-based and technology-based figures in millions of tonnes.">
             <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
               <div className="flex items-center gap-2 mb-6">
+                <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', marginRight: '8px' }}>
+                  Illustrative
+                </span>
                 {(['6m', '1y', 'all'] as const).map(t => (
                   <button key={t} onClick={() => setTimeframe(t)} style={{
                     fontFamily: bg, fontSize: '11px', fontWeight: timeframe === t ? 700 : 500,
@@ -202,7 +205,7 @@ export default function DataPage() {
           </Section>
 
           {/* ═══ REGULATORY TIMELINE ═══ */}
-          <Section title="Regulatory Timeline" sub="Key compliance milestones driving carbon credit demand.">
+          <Section title="Regulatory Timeline" sub="Key compliance and market-integrity milestones.">
             <div className="space-y-0">
               {REGULATORY_TIMELINE.map((r, i) => (
                 <div key={r.event} className="flex gap-4" style={{ position: 'relative' }}>
