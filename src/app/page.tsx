@@ -416,7 +416,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-20">
             {[
               { step: '01', title: 'Discover', desc: 'Browse verified credits across Verra, Gold Standard, and ACR. Filter by type, geography, vintage, price, and ICVCM quality rating.' },
-              { step: '02', title: 'Evaluate', desc: 'Compare credits using independent quality ratings, co-benefit scores, permanence risk assessments, and real-time price benchmarks.' },
+              { step: '02', title: 'Evaluate', desc: 'Compare credits using independent quality ratings, co-benefit scores, permanence risk assessments, and indicative price benchmarks.' },
               { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout — non-delivery cover, invalidation protection, and CORSIA guarantees.' },
               { step: '04', title: 'Retire & Report', desc: 'Retire credits across any registry from one dashboard. Auto-generated retirement certificates and audit-ready compliance records.' },
             ].map((s, i) => (
@@ -437,8 +437,8 @@ export default function Home() {
               { icon: icons.globe, title: 'Marketplace', desc: 'Connect developers and buyers across multiple registries. Self-serve listings, RFQ system, and OTC facilitation.', tag: 'Core' },
               { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers.', tag: 'Core' },
               { icon: icons.chart, title: 'Data & Ratings', desc: 'Independent credit quality ratings (AAA–C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
-              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Log offset requests in real-time. Monthly retirement and branded certificate delivery. From $0.15/call.', tag: 'Developer' },
-              { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with dynamic tools and real-time market data.', tag: 'Enterprise' },
+              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Log offset requests per transaction, with monthly retirement and branded certificate delivery. From $0.15/call.', tag: 'Developer' },
+              { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with indicative market data.', tag: 'Enterprise' },
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
             ].map((f, i) => (
               <FadeIn key={f.title} delay={i * 80}>
@@ -467,9 +467,9 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
             { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings remove guesswork. Insurance removes risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA–C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
-            { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on the region\'s first dedicated marketplace. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
+            { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
-            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with real-time offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
+            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with per-transaction offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
             <div key={s.role} style={{ background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
               <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '16px' }}>{s.icon}</div>
@@ -499,7 +499,7 @@ export default function Home() {
             <div className="space-y-4 mt-8">
               {[
                 { title: 'Quality Ratings', desc: 'AAA to C scale based on ICVCM CCP assessment — additionality, permanence, leakage risk, co-benefit scoring, and methodology integrity.' },
-                { title: 'Price Intelligence', desc: 'Real-time benchmarks by credit type, geography, vintage, and quality tier. Historical trends, forward curves, and spread analysis.' },
+                { title: 'Price Intelligence', desc: 'Indicative benchmarks by credit type, geography, vintage and quality tier, built from public registry data.' },
                 { title: 'Compliance Mapping', desc: 'Instant eligibility checks: which credits qualify for NRCC, CBAM, CORSIA, SBTi BVCM, and VCMI claims — before you buy.' },
                 { title: 'Risk Scores', desc: 'Permanence risk, political risk, and reversal probability scores for every project. Know what you\'re buying.' },
               ].map(item => (
@@ -615,7 +615,7 @@ export default function Home() {
           <div style={{ background: 'var(--forest)', borderRadius: '18px', padding: '36px' }}>
             <div style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '20px' }}>Our Position</div>
             <blockquote style={{ fontFamily: fr, fontSize: '20px', fontWeight: 400, fontStyle: 'italic', color: '#FFFCF6', lineHeight: 1.5, borderLeft: '2px solid rgba(201,169,110,0.3)', paddingLeft: '20px', margin: '0 0 24px' }}>
-              &ldquo;The first self-serve carbon credit marketplace with integrated insurance, data analytics, and compliance tools — built specifically for the MENA market.&rdquo;
+              &ldquo;A carbon credit marketplace with quality data and compliance tools, built for the MENA market.&rdquo;
             </blockquote>
             <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74', lineHeight: 1.6 }}>
               No existing platform combines marketplace, brokerage, insurance distribution, data ratings, API services, carbon management SaaS, and managed procurement in one product. We do.
@@ -685,7 +685,7 @@ export default function Home() {
             <div>
               <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
-                MENA&apos;s first integrated carbon credit marketplace. Abu Dhabi Global Market, Abu Dhabi, UAE.
+                An institutional carbon credit marketplace for MENA. Abu Dhabi Global Market, Abu Dhabi, UAE.
               </p>
             </div>
             {[
