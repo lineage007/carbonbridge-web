@@ -248,7 +248,7 @@ function PurchaseInner() {
               Demonstration only — no payment taken
             </p>
             <p style={{ fontFamily: bg, fontSize: '12px', color: '#6B5B5B', lineHeight: 1.6 }}>
-              Payment integration is pending ADGM FSP authorisation. Clicking "Place in Escrow" does not charge any payment method. This is a demonstration of the escrow flow only.
+              Clicking &quot;Place in Escrow&quot; does not charge any payment method and creates no binding obligation. This is a demonstration of the escrow flow only. To transact, contact the CarbonBridge team at info@carbonbridge.ae.
             </p>
           </div>
         </div>

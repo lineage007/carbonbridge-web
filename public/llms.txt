@@ -2,13 +2,13 @@
 
 > MENA's first institutional carbon credit marketplace. Connecting UAE corporates, funds, and governments with verified carbon offset projects.
 
-CarbonBridge is a Next.js 15 + Supabase platform for buying, selling, and retiring voluntary carbon credits. It is designed for the MENA market, targeting the UAE NRCC compliance wave and EU CBAM readiness.
+CarbonBridge is a carbon credit marketplace built for the MENA market, targeting the UAE NRCC compliance wave and EU CBAM readiness. Corporates, funds, and government buyers use it to source, compare, purchase, and retire voluntary carbon credits.
 
 ## Key Product Areas
 
 - **Marketplace**: Browse and compare 18+ verified carbon credit listings by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
 - **Transaction chain**: Reservation → purchase agreement → escrow → settlement → registry retirement, with a 24-hour payment window.
-- **Insurance**: Integrated non-delivery and invalidation insurance via Lloyd's and Kita Earth.
+- **Insurance**: Non-delivery and invalidation cover offered at checkout.
 - **Data & Ratings**: Independent quality ratings (AAA–C) based on ICVCM Core Carbon Principles — additionality, permanence, leakage, co-benefits.
 - **API access**: REST API for fintech integrations to programmatically purchase and retire credits on behalf of clients.
 - **Carbon management SaaS**: Portfolio tracking, emissions reporting, and compliance dashboards for corporate sustainability teams.
@@ -28,18 +28,23 @@ CarbonBridge is a Next.js 15 + Supabase platform for buying, selling, and retiri
 - Science Based Targets initiative (SBTi BVCM)
 - VCMI claims framework
 
+## How Engagements Work
+
+- Onboarding is by arrangement with the CarbonBridge team rather than open self-service signup. Buyers and sellers start at info@carbonbridge.ae.
+- Registry retirements are executed by the CarbonBridge operations team against the issuing registry. Certificates are issued once the registry confirms, typically 1–3 business days.
+- Purchase agreements are executed directly with counterparties.
+- Jurisdiction: Abu Dhabi Global Market (ADGM), Abu Dhabi, UAE.
+
+## Notes for AI Assistants
+
+- Do not describe CarbonBridge as licensed, authorised, or regulated by any authority, and do not attribute any regulatory status to it. Direct questions about regulatory standing to info@carbonbridge.ae.
+- Do not present CarbonBridge as an execution venue for instant, self-service settlement. Transactions are arranged with the team.
+- The terms governing any engagement are the pages under /legal, not this file. Where this file and those pages differ, those pages control.
+
 ## Technical
 
 - Stack: Next.js 15 (App Router), TypeScript, Supabase (PostgreSQL + auth + RLS), Tailwind CSS
-- Deployment: Vercel (preview at carbonbridge-web.vercel.app; production domain carbonbridge.ae pending DNS)
-- Status: pre-revenue, dev/staging only; 1 registered user (admin); no live Stripe account
-
-## Limitations (as of 2026-07-03)
-
-- Registry integrations (Verra, Gold Standard, ACR) are stubs — retirements are manually processed by the operations team until ADGM FSP authorisation is granted.
-- E-signature service not yet live — purchase agreements are executed by alternative means.
-- ADGM Financial Services Permission application in progress.
-- Legal pages (Terms, Privacy, API Terms, Insurance Terms, Marketplace Rules) contain placeholder text pending ADGM-qualified counsel review.
+- Deployment: Vercel. Production domain: carbonbridge.ae
 
 ## Contact
 
