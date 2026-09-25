@@ -346,17 +346,16 @@ export default function CreditDetailPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                     {[
-                      { name: 'Non-Delivery Protection', desc: 'Guarantees credit delivery to your registry account. If the seller fails to transfer credits within the agreed timeframe, you receive a full refund.', rate: '2-3%', provider: 'Kita' },
-                      { name: 'Invalidation Cover', desc: 'Protects against post-issuance credit invalidation by the registry. If credits are revoked due to methodological re-assessment, you are made whole.', rate: '3-5%', provider: "Lloyd's Syndicate" },
-                      { name: 'Political Risk', desc: 'Covers sovereign-level risks: government policy changes, export bans, or retroactive regulation that renders your credits non-compliant.', rate: '1-2%', provider: "Lloyd's Syndicate" },
-                      { name: 'Buffer Pool Shortfall', desc: 'For REDD+ credits with buffer pool allocations — covers the scenario where the project\'s buffer pool is insufficient to cover reversals.', rate: '2-4%', provider: 'Kita' },
+                      { name: 'Non-Delivery Protection', desc: 'Guarantees credit delivery to your registry account. If the seller fails to transfer credits within the agreed timeframe, you receive a full refund.', rate: '2-3%' },
+                      { name: 'Invalidation Cover', desc: 'Protects against post-issuance credit invalidation by the registry. If credits are revoked due to methodological re-assessment, you are made whole.', rate: '3-5%' },
+                      { name: 'Political Risk', desc: 'Covers sovereign-level risks: government policy changes, export bans, or retroactive regulation that renders your credits non-compliant.', rate: '1-2%' },
+                      { name: 'Buffer Pool Shortfall', desc: 'For REDD+ credits with buffer pool allocations — covers the scenario where the project\'s buffer pool is insufficient to cover reversals.', rate: '2-4%' },
                     ].map(ins => (
                       <div key={ins.name} style={{ background: '#FDFBF7', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '20px' }}>
                         <h4 style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#1A1714', marginBottom: '6px' }}>{ins.name}</h4>
                         <p style={{ fontFamily: bg, fontSize: '12.5px', color: '#8B8178', lineHeight: 1.6, marginBottom: '12px' }}>{ins.desc}</p>
                         <div className="flex items-center justify-between">
                           <span style={{ fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#C9A96E' }}>{ins.rate} of purchase</span>
-                          <span style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A' }}>{ins.provider}</span>
                         </div>
                       </div>
                     ))}
@@ -364,8 +363,8 @@ export default function CreditDetailPage() {
 
                   <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)', borderRadius: '12px', padding: '18px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>
-                      Insurance products are available at checkout. Coverage is optional and never pre-selected. Full terms and conditions provided before purchase confirmation. 
-                      Insurance facilitated through CarbonBridge&apos;s partnerships with <strong style={{ color: '#1A1714' }}>Kita</strong> (carbon-specific guarantee products) and <strong style={{ color: '#1A1714' }}>Lloyd&apos;s of London</strong> syndicates (political and invalidation risk).
+                      Insurance products are available at checkout. Coverage is optional and never pre-selected. Full terms and conditions provided before purchase confirmation.
+                      Cover is arranged with specialist carbon insurers; the underwriter for each product is named in the policy documentation.
                     </p>
                   </div>
                 </div>

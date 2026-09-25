@@ -352,7 +352,7 @@ export default function Home() {
       <section style={{ background: 'var(--parchment)', borderBottom: '1px solid var(--border-light)', padding: '40px 0' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="text-center mb-6">
-            <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: 'var(--ink-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.5 }}>Trusted Settlement &amp; Insurance Infrastructure</span>
+            <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: 'var(--ink-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.5 }}>Registries &amp; Exchange Infrastructure</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5" style={{ opacity: 0.3 }}>
             {[
@@ -360,11 +360,8 @@ export default function Home() {
               { src: '/partners/carbonplace.svg', alt: 'Carbonplace', w: 115 },
               { src: '/partners/cix.svg', alt: 'CIX Singapore', w: 95 },
               { src: '/partners/xpansiv.svg', alt: 'Xpansiv CBL', w: 80 },
-              { src: '/partners/lloyds.svg', alt: "Lloyd's of London", w: 120 },
               { src: '/partners/verra.svg', alt: 'Verra', w: 70 },
               { src: '/partners/goldstandard.svg', alt: 'Gold Standard', w: 105 },
-              { src: '/partners/kita.svg', alt: 'Kita', w: 55 },
-              { src: '/partners/munichre.svg', alt: 'Munich Re', w: 100 },
             ].map(p => (
               <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '20px', width: 'auto', filter: 'grayscale(1)', transition: 'all 0.3s' }} className="hover:grayscale-0 hover:opacity-80" />
             ))}
@@ -420,7 +417,7 @@ export default function Home() {
             {[
               { step: '01', title: 'Discover', desc: 'Browse verified credits across Verra, Gold Standard, and ACR. Filter by type, geography, vintage, price, and ICVCM quality rating.' },
               { step: '02', title: 'Evaluate', desc: 'Compare credits using independent quality ratings, co-benefit scores, permanence risk assessments, and real-time price benchmarks.' },
-              { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout — non-delivery cover, invalidation protection, and CORSIA guarantees backed by Lloyd\'s.' },
+              { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout — non-delivery cover, invalidation protection, and CORSIA guarantees.' },
               { step: '04', title: 'Retire & Report', desc: 'Retire credits across any registry from one dashboard. Auto-generated retirement certificates and audit-ready compliance records.' },
             ].map((s, i) => (
               <FadeIn key={s.step} delay={i * 100}>
@@ -438,7 +435,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               { icon: icons.globe, title: 'Marketplace', desc: 'Connect developers and buyers across multiple registries. Self-serve listings, RFQ system, and OTC facilitation.', tag: 'Core' },
-              { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers via Kita and CFC (Lloyd\'s syndicates).', tag: 'Unique' },
+              { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers.', tag: 'Core' },
               { icon: icons.chart, title: 'Data & Ratings', desc: 'Independent credit quality ratings (AAA–C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
               { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Log offset requests in real-time. Monthly retirement and branded certificate delivery. From $0.15/call.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with dynamic tools and real-time market data.', tag: 'Enterprise' },
@@ -469,7 +466,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings remove guesswork. Insurance removes risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA–C)', 'Insurance at checkout (Lloyd\'s-backed)', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
+            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings remove guesswork. Insurance removes risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA–C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
             { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on the region\'s first dedicated marketplace. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
             { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with real-time offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
@@ -565,7 +562,7 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(45,90,63,0.4) 0%, transparent 60%)' }} />
         <GeoCircles side="left" />
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
-          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Optional insurance at checkout — the only carbon marketplace with integrated credit guarantee products backed by Lloyd's of London." dark />
+          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Optional credit guarantee insurance at checkout — non-delivery, invalidation, political risk and CORSIA cover." dark />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -582,23 +579,9 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Insurance partner logos */}
           <div className="mt-12" style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '24px' }}>
-            <div className="text-center mb-5">
-              <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Insurance &amp; Underwriting Partners</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4" style={{ opacity: 0.35 }}>
-              {[
-                { src: '/partners/lloyds.svg', alt: "Lloyd's of London", w: 120 },
-                { src: '/partners/kita.svg', alt: 'Kita', w: 60 },
-                { src: '/partners/munichre.svg', alt: 'Munich Re', w: 100 },
-                { src: '/partners/cfc.svg', alt: 'CFC Underwriting', w: 50 },
-              ].map(p => (
-                <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '24px', width: 'auto', filter: 'brightness(0) invert(1)', transition: 'opacity 0.3s' }} className="hover:opacity-100" />
-              ))}
-            </div>
-            <p className="text-center mt-4" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
-              Insurance distributed by CarbonBridge. Underwritten by Lloyd&apos;s of London syndicates.
+            <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
+              Cover is arranged with specialist carbon insurers. Policy terms are provided before any purchase is confirmed.
             </p>
           </div>
         </div>
@@ -618,7 +601,7 @@ export default function Home() {
                 'Verra General Account (target)',
                 'ACX Abu Dhabi (target)',
                 'Institutional-grade settlement',
-                'Lloyd\'s insurance distribution',
+                'Credit guarantee insurance (target)',
                 'Multi-registry access',
               ].map(item => (
                 <div key={item} className="flex items-start gap-2">
