@@ -1,6 +1,6 @@
 # CarbonBridge
 
-> MENA's first institutional carbon credit marketplace. Connecting UAE corporates, funds, and governments with verified carbon offset projects.
+> An institutional carbon credit marketplace for MENA, connecting UAE corporates, funds and governments with verified carbon offset projects.
 
 CarbonBridge is a carbon credit marketplace built for the MENA market, targeting the UAE NRCC compliance wave and EU CBAM readiness. Corporates, funds, and government buyers use it to source, compare, purchase, and retire voluntary carbon credits.
 
@@ -9,7 +9,7 @@ CarbonBridge is a carbon credit marketplace built for the MENA market, targeting
 - **Marketplace**: Browse and compare 18+ verified carbon credit listings by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
 - **Transaction chain**: Reservation → purchase agreement → escrow → settlement → registry retirement, with a 24-hour payment window.
 - **Insurance**: Non-delivery and invalidation cover offered at checkout.
-- **Data & Ratings**: Independent quality ratings (AAA–C) based on ICVCM Core Carbon Principles — additionality, permanence, leakage, co-benefits.
+- **Data & Ratings**: Independent quality ratings (AAA–C) based on ICVCM Core Carbon Principles: additionality, permanence, leakage, co-benefits.
 - **API access**: REST API for fintech integrations to programmatically purchase and retire credits on behalf of clients.
 - **Carbon management SaaS**: Portfolio tracking, emissions reporting, and compliance dashboards for corporate sustainability teams.
 - **Forward contracts**: Lock in future delivery of credits at agreed prices with 15% deposit structure.
@@ -49,4 +49,3 @@ CarbonBridge is a carbon credit marketplace built for the MENA market, targeting
 ## Contact
 
 - info@carbonbridge.ae (business inquiries)
-- gary@continode.com (founder)
