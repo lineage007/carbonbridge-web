@@ -63,7 +63,7 @@ const faqs: FaqItem[] = [
 const sources = [
   { label: 'Cabinet Resolution No. (67) of 2024 concerning the National Register for Carbon Credits (UAE Legislation portal)', href: 'https://uaelegislation.gov.ae/en/legislations' },
   { label: 'Federal Decree-Law No. (11) of 2024 on the Reduction of Climate Change Effects (UAE Legislation portal)', href: 'https://uaelegislation.gov.ae/en/legislations' },
-  { label: 'Ministry of Climate Change and Environment — climate change and MRV guidance', href: 'https://www.moccae.gov.ae/' },
+  { label: 'Ministry of Climate Change and Environment: climate change and MRV guidance', href: 'https://www.moccae.gov.ae/' },
 ];
 
 export default function UaeNrccPage() {
@@ -113,14 +113,14 @@ export default function UaeNrccPage() {
         </Section>
 
         <Section id="scope" eyebrow="Who is in scope" title="Three tiers of obligation">
-          <H3>Tier 1 — 500,000 tCO2e and above: NRCC registration is mandatory</H3>
+          <H3>Tier 1 (500,000 tCO2e and above): NRCC registration is mandatory</H3>
           <P>
             An entity whose combined Scope 1 and Scope 2 emissions reach 500,000 tonnes of CO2-equivalent in a year must register
             on the NRCC, report annually using Greenhouse Gas Protocol methods, and have that report verified by an accredited
             third party. Existing entities had until 28 June 2025 to regularise. In the UAE this tier is dominated by power and
             water, oil and gas, aluminium, steel, cement, petrochemicals and aviation.
           </P>
-          <H3>Tier 2 — designated sources under the Climate Change Law</H3>
+          <H3>Tier 2: designated sources under the Climate Change Law</H3>
           <P>
             The Decree-Law contains no size threshold of its own. Its MRV obligations attach once MOCCAE, or the competent emirate
             or free-zone authority for climate affairs, designates an entity as a source and tells it what to report, how and by
@@ -128,7 +128,7 @@ export default function UaeNrccPage() {
             tCO2e of Scope 1 emissions a year, on a calendar-year cycle with third-party verification becoming mandatory for 2026
             data. Other emirates and free zones are expected to follow with their own designations.
           </P>
-          <H3>Tier 3 — everyone else</H3>
+          <H3>Tier 3: everyone else</H3>
           <P>
             Any business that emits at all is a source in principle, and any entity may register with the NRCC voluntarily. Below
             the designation line the practical obligation today is to be able to produce a defensible Scope 1 and Scope 2

@@ -119,7 +119,7 @@ function RetireInner() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '28px' }}>
             <div>
               <p style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: '#B0A99A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px' }}>
-                CarbonBridge — Retirement Certificate
+                CarbonBridge Retirement Certificate
               </p>
               <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 700, color: '#1A1714', lineHeight: 1.1 }}>
                 Carbon Credit Retirement
@@ -130,7 +130,7 @@ function RetireInner() {
                 <p style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '2px' }}>
                   Demonstration Certificate
                 </p>
-                <p style={{ fontFamily: mono, fontSize: '11px', color: '#991B1B' }}>Stub mode — not registry-confirmed</p>
+                <p style={{ fontFamily: mono, fontSize: '11px', color: '#991B1B' }}>Stub mode, not registry-confirmed</p>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ function RetireInner() {
               { label: 'Beneficiary', value: beneficiary || session.buyerCompany },
               { label: 'Retirement Date', value: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
               { label: 'Escrow Status', value: 'Released', color: '#2D6A4F' },
-              { label: 'Mode', value: 'STUB — not a valid compliance document', color: '#991B1B', mono: true },
+              { label: 'Mode', value: 'STUB, not a valid compliance document', color: '#991B1B', mono: true },
             ].map(row => (
               <div key={row.label} style={{ background: '#FDFBF7', border: '1px solid #E8E2D6', borderRadius: '10px', padding: '14px' }}>
                 <div style={{ fontFamily: bg, fontSize: '10px', color: '#B0A99A', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>
@@ -167,7 +167,7 @@ function RetireInner() {
               What happens when live
             </p>
             <p style={{ fontFamily: bg, fontSize: '12px', color: '#5B4B3A', lineHeight: 1.7 }}>
-              CarbonBridge staff execute retirement on the relevant registry (Verra VCS, Gold Standard, or ACR) within 1–3 business days. Once confirmed, a verified certificate with registry serial numbers is issued. This demonstration certificate has no compliance value.
+              CarbonBridge staff execute retirement on the relevant registry (Verra VCS, Gold Standard, or ACR) within 1-3 business days. Once confirmed, a verified certificate with registry serial numbers is issued. This demonstration certificate has no compliance value.
             </p>
           </div>
         </div>
@@ -214,7 +214,7 @@ function RetireInner() {
           { label: 'Credit', value: session.creditName },
           { label: 'Quantity', value: `${session.quantity.toLocaleString()} tCO₂e`, mono: true },
           { label: 'Escrow status', value: 'Held', color: '#C9A96E' },
-          { label: 'Mode', value: 'STUB — demonstration only', color: '#991B1B' },
+          { label: 'Mode', value: 'STUB, demonstration only', color: '#991B1B' },
         ].map(row => (
           <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #F0EBE3' }}>
             <span style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>{row.label}</span>
