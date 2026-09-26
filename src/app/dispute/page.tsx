@@ -296,7 +296,7 @@ function DisputeInner() {
           <div style={{ background: '#FDFBF7', border: '2px dashed #E8E2D6', borderRadius: '12px', padding: '20px', textAlign: 'center', marginBottom: '12px' }}>
             <p style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>Attach files</p>
             <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', marginBottom: '12px' }}>
-              PDF, PNG, JPEG, XLSX, max 10 MB each
+              PDF, PNG, JPEG or XLSX; max 10 MB each
             </p>
             {/* Stub: text input simulates file name attachment */}
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>

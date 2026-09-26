@@ -377,7 +377,7 @@ export default function Home() {
           <div>
             <SectionHeader eyebrow="The Compliance Wave" title={<>Three regulations,<br />one deadline.</>} subtitle="" center={false} />
             <p style={{ fontFamily: bg, fontSize: '15px', color: 'var(--ink-muted)', lineHeight: 1.7 }}>
-              For the first time, MENA corporations face simultaneous carbon compliance obligations: the UAE&apos;s National Registry for Carbon Credits, the EU&apos;s Carbon Border Adjustment Mechanism, and ICAO&apos;s CORSIA mandate for airlines. Purchasing infrastructure and compliance tooling built for this region are still thin, and most companies are navigating a complex, opaque market with spreadsheets and phone calls.
+              For the first time, MENA corporations face simultaneous carbon compliance obligations: the UAE&apos;s National Registry for Carbon Credits, the EU&apos;s Carbon Border Adjustment Mechanism, and ICAO&apos;s CORSIA mandate for airlines. Purchasing infrastructure and compliance tooling built for this region are still limited, and most companies are navigating a complex, opaque market with spreadsheets and phone calls.
             </p>
             <p style={{ fontFamily: bg, fontSize: '15px', color: 'var(--ink-muted)', lineHeight: 1.7, marginTop: '16px' }}>
               CarbonBridge changes that.
@@ -466,7 +466,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance covers delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
+            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance covers non-delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
             { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
             { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with per-transaction offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
@@ -593,7 +593,7 @@ export default function Home() {
       <Section id="about">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionHeader eyebrow="About" title={<>Who is behind<br />CarbonBridge.</>} subtitle="CarbonBridge was founded by a team with deep experience across carbon markets, institutional finance, and technology. It is headquartered in the UAE with operations in Australia." center={false} />
+            <SectionHeader eyebrow="About" title={<>The team behind<br />CarbonBridge.</>} subtitle="CarbonBridge was founded by a team with deep experience across carbon markets, institutional finance, and technology. It is headquartered in the UAE with operations in Australia." center={false} />
             
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
