@@ -62,10 +62,10 @@ const faqs: FaqItem[] = [
 ];
 
 const sources = [
-  { label: 'ICAO — Carbon Offsetting and Reduction Scheme for International Aviation (CORSIA)', href: 'https://www.icao.int/environmental-protection/CORSIA/Pages/default.aspx' },
-  { label: 'ICAO — CORSIA Eligible Emissions Units (approved programmes and unit eligibility by phase)', href: 'https://www.icao.int/environmental-protection/CORSIA/Pages/CORSIA-Emissions-Units.aspx' },
-  { label: 'ICAO — CORSIA States for Chapter 3 State Pairs (participating States by year)', href: 'https://www.icao.int/environmental-protection/CORSIA/Pages/state-pairs.aspx' },
-  { label: 'UAE General Civil Aviation Authority — environment and CORSIA', href: 'https://www.gcaa.gov.ae/' },
+  { label: 'ICAO: Carbon Offsetting and Reduction Scheme for International Aviation (CORSIA)', href: 'https://www.icao.int/environmental-protection/CORSIA/Pages/default.aspx' },
+  { label: 'ICAO: CORSIA Eligible Emissions Units (approved programmes and unit eligibility by phase)', href: 'https://www.icao.int/environmental-protection/CORSIA/Pages/CORSIA-Emissions-Units.aspx' },
+  { label: 'ICAO: CORSIA States for Chapter 3 State Pairs (participating States by year)', href: 'https://www.icao.int/environmental-protection/CORSIA/Pages/state-pairs.aspx' },
+  { label: 'UAE General Civil Aviation Authority: environment and CORSIA', href: 'https://www.gcaa.gov.ae/' },
 ];
 
 export default function CorsiaPage() {

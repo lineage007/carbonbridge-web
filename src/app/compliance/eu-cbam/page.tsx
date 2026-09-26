@@ -11,14 +11,14 @@ const REVIEWED = '14 September 2026';
 export const metadata: Metadata = {
   title: 'EU CBAM for UAE and GCC exporters: what changed in 2026',
   description:
-    'The EU Carbon Border Adjustment Mechanism entered its definitive period on 1 January 2026. Who pays, which goods are covered, the 2026–2027 dates, why voluntary carbon credits cannot be used against CBAM, and what a Gulf producer can do about the cost.',
+    'The EU Carbon Border Adjustment Mechanism entered its definitive period on 1 January 2026. Who pays, which goods are covered, the 2026-2027 dates, why voluntary carbon credits cannot be used against CBAM, and what a Gulf producer can do about the cost.',
   alternates: { canonical: URL },
   openGraph: {
     type: 'article',
     url: URL,
     title: 'EU CBAM for UAE and GCC exporters: what changed in 2026',
     description:
-      'Who pays, which goods are covered, the 2026–2027 dates, and why carbon credits cannot be surrendered against CBAM. A plain-language explainer for Gulf producers.',
+      'Who pays, which goods are covered, the 2026-2027 dates, and why carbon credits cannot be surrendered against CBAM. A plain-language explainer for Gulf producers.',
     siteName: 'CarbonBridge',
     locale: 'en_AE',
   },
@@ -63,7 +63,7 @@ const faqs: FaqItem[] = [
 const sources = [
   { label: 'Regulation (EU) 2023/956 establishing a carbon border adjustment mechanism (EUR-Lex)', href: 'https://eur-lex.europa.eu/eli/reg/2023/956/oj' },
   { label: 'Regulation (EU) 2025/2083 amending the CBAM Regulation (simplification, 50-tonne threshold, revised timeline)', href: 'https://eur-lex.europa.eu/eli/reg/2025/2083/oj' },
-  { label: 'European Commission — Carbon Border Adjustment Mechanism (guidance, default values, registry)', href: 'https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en' },
+  { label: 'European Commission: Carbon Border Adjustment Mechanism (guidance, default values, registry)', href: 'https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en' },
 ];
 
 export default function EuCbamPage() {
@@ -173,7 +173,7 @@ export default function EuCbamPage() {
           <P>Actual values used in a declaration must be verified. An exporter that hands its customers a verified dataset removes their need to fall back on default values and removes a reason to look for another supplier.</P>
           <H3>4. Register the installation in the EU CBAM registry as a third-country operator</H3>
           <P>Operators outside the EU can register and share verified installation data directly with their importers through the registry, rather than re-sending spreadsheets to every customer.</P>
-          <H3>5. Model the full 2026–2034 schedule in contracts</H3>
+          <H3>5. Model the full 2026-2034 schedule in contracts</H3>
           <P>Decide, in writing, whether CBAM cost sits with the buyer, the seller or is shared, and how it is recalculated as the CBAM factor and the ETS price change. Silence in a supply agreement becomes a dispute in 2027.</P>
           <H3>6. Treat emissions intensity as a product specification</H3>
           <P>Where the production route allows it, lower direct emissions per tonne, and for cement and fertilisers, lower-carbon electricity, reduce the importer&apos;s bill directly. That is a decarbonisation case with an invoice attached.</P>

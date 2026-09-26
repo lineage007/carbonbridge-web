@@ -262,7 +262,7 @@ export default function Home() {
               </h1>
 
               <p style={{ fontFamily: bg, fontSize: '16px', color: '#8AAA92', lineHeight: 1.7, marginBottom: '36px', maxWidth: '480px' }}>
-                Discover, compare, and purchase verified carbon credits with integrated insurance, quality ratings, and institutional-grade settlement — in one platform.
+                Discover, compare, and purchase verified carbon credits with integrated insurance, quality ratings, and institutional-grade settlement, in one platform.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-14">
@@ -375,9 +375,9 @@ export default function Home() {
       <Section>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div>
-            <SectionHeader eyebrow="The Compliance Wave" title={<>Three regulations.<br />One deadline.<br />No platform.</>} subtitle="" center={false} />
+            <SectionHeader eyebrow="The Compliance Wave" title={<>Three regulations,<br />one deadline.</>} subtitle="" center={false} />
             <p style={{ fontFamily: bg, fontSize: '15px', color: 'var(--ink-muted)', lineHeight: 1.7 }}>
-              For the first time, MENA corporations face simultaneous carbon compliance obligations — the UAE&apos;s National Registry for Carbon Credits, the EU&apos;s Carbon Border Adjustment Mechanism, and ICAO&apos;s CORSIA mandate for airlines. Yet there is no marketplace, no integrated purchasing infrastructure, and no compliance tooling built for this region. Companies are navigating a complex, opaque market with spreadsheets and phone calls.
+              For the first time, MENA corporations face simultaneous carbon compliance obligations: the UAE&apos;s National Registry for Carbon Credits, the EU&apos;s Carbon Border Adjustment Mechanism, and ICAO&apos;s CORSIA mandate for airlines. Purchasing infrastructure and compliance tooling built for this region are still thin, and most companies are navigating a complex, opaque market with spreadsheets and phone calls.
             </p>
             <p style={{ fontFamily: bg, fontSize: '15px', color: 'var(--ink-muted)', lineHeight: 1.7, marginTop: '16px' }}>
               CarbonBridge changes that.
@@ -387,8 +387,8 @@ export default function Home() {
           <div className="space-y-4">
             {[
               { reg: 'UAE NRCC', deadline: 'Adjustment period ended May 30, 2026', days: 'In force', desc: 'The Climate Change Law\'s one-year adjustment period has ended. Emitters at or above 500,000 tCO₂e must be on the National Register for Carbon Credits; every UAE source must be ready to report when designated.', color: '#EF4444' },
-              { reg: 'EU CBAM', deadline: 'February 1, 2027', days: `${daysUntil('2027-02-01')} days`, desc: 'Carbon Border Adjustment Mechanism. In force since 1 January 2026; certificate sales open 1 February 2027. EU importers of UAE aluminium, steel, cement and fertiliser pay on verified embedded emissions — carbon credits cannot be surrendered against it.', color: '#F59E0B' },
-              { reg: 'CORSIA Phase 2', deadline: 'Mandatory from January 1, 2027', days: 'Units due 31 Jan 2028', desc: 'ICAO\'s offsetting scheme for international aviation. From 2027 all but exempted States take part; airlines offset growth above 85% of 2019 emissions, and only ICAO-eligible units with host-country authorisation count. Units for 2024–2026 must be cancelled by 31 January 2028.', color: '#0EA5E9' },
+              { reg: 'EU CBAM', deadline: 'February 1, 2027', days: `${daysUntil('2027-02-01')} days`, desc: 'Carbon Border Adjustment Mechanism. In force since 1 January 2026; certificate sales open 1 February 2027. EU importers of UAE aluminium, steel, cement and fertiliser pay on verified embedded emissions. Carbon credits cannot be surrendered against it.', color: '#F59E0B' },
+              { reg: 'CORSIA Phase 2', deadline: 'Mandatory from January 1, 2027', days: 'Units due 31 Jan 2028', desc: 'ICAO\'s offsetting scheme for international aviation. From 2027 all but exempted States take part; airlines offset growth above 85% of 2019 emissions, and only ICAO-eligible units with host-country authorisation count. Units for 2024-2026 must be cancelled by 31 January 2028.', color: '#0EA5E9' },
             ].map((r, i) => (
               <FadeIn key={r.reg} delay={i * 150}>
                 <div style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '24px', borderLeft: `3px solid ${r.color}`, transition: 'box-shadow 0.3s' }} className="hover:shadow-md">
@@ -417,7 +417,7 @@ export default function Home() {
             {[
               { step: '01', title: 'Discover', desc: 'Browse verified credits across Verra, Gold Standard, and ACR. Filter by type, geography, vintage, price, and ICVCM quality rating.' },
               { step: '02', title: 'Evaluate', desc: 'Compare credits using independent quality ratings, co-benefit scores, permanence risk assessments, and indicative price benchmarks.' },
-              { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout — non-delivery cover, invalidation protection, and CORSIA guarantees.' },
+              { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout: non-delivery cover, invalidation protection, and CORSIA guarantees.' },
               { step: '04', title: 'Retire & Report', desc: 'Retire credits across any registry from one dashboard. Auto-generated retirement certificates and audit-ready compliance records.' },
             ].map((s, i) => (
               <FadeIn key={s.step} delay={i * 100}>
@@ -436,7 +436,7 @@ export default function Home() {
             {[
               { icon: icons.globe, title: 'Marketplace', desc: 'Connect developers and buyers across multiple registries. Self-serve listings, RFQ system, and OTC facilitation.', tag: 'Core' },
               { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers.', tag: 'Core' },
-              { icon: icons.chart, title: 'Data & Ratings', desc: 'Independent credit quality ratings (AAA–C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
+              { icon: icons.chart, title: 'Data & Ratings', desc: 'Independent credit quality ratings (AAA-C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
               { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Log offset requests per transaction, with monthly retirement and branded certificate delivery. From $0.15/call.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with indicative market data.', tag: 'Enterprise' },
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
@@ -466,7 +466,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings remove guesswork. Insurance removes risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA–C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
+            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance covers delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
             { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
             { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with per-transaction offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
@@ -494,13 +494,13 @@ export default function Home() {
       <Section id="market-data">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionHeader eyebrow="Market Intelligence" title={<>Data you can<br />actually trust.</>} subtitle="Every credit on CarbonBridge is independently rated against ICVCM Core Carbon Principles. No guesswork. No greenwashing." center={false} />
+            <SectionHeader eyebrow="Market Intelligence" title={<>Data you can<br />actually trust.</>} subtitle="Every credit on CarbonBridge is independently rated against ICVCM Core Carbon Principles, so the quality of what you are buying is visible before you commit." center={false} />
             
             <div className="space-y-4 mt-8">
               {[
-                { title: 'Quality Ratings', desc: 'AAA to C scale based on ICVCM CCP assessment — additionality, permanence, leakage risk, co-benefit scoring, and methodology integrity.' },
+                { title: 'Quality Ratings', desc: 'AAA to C scale based on ICVCM CCP assessment: additionality, permanence, leakage risk, co-benefit scoring, and methodology integrity.' },
                 { title: 'Price Intelligence', desc: 'Indicative benchmarks by credit type, geography, vintage and quality tier, built from public registry data.' },
-                { title: 'Compliance Mapping', desc: 'Instant eligibility checks: which credits qualify for NRCC, CBAM, CORSIA, SBTi BVCM, and VCMI claims — before you buy.' },
+                { title: 'Compliance Mapping', desc: 'Instant eligibility checks: which credits qualify for NRCC, CBAM, CORSIA, SBTi BVCM, and VCMI claims, before you buy.' },
                 { title: 'Risk Scores', desc: 'Permanence risk, political risk, and reversal probability scores for every project. Know what you\'re buying.' },
               ].map(item => (
                 <div key={item.title} style={{ borderLeft: '2px solid var(--gold)', paddingLeft: '16px' }}>
@@ -562,7 +562,7 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(45,90,63,0.4) 0%, transparent 60%)' }} />
         <GeoCircles side="left" />
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
-          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Optional credit guarantee insurance at checkout — non-delivery, invalidation, political risk and CORSIA cover." dark />
+          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Optional credit guarantee insurance at checkout: non-delivery, invalidation, political risk and CORSIA cover." dark />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -593,11 +593,11 @@ export default function Home() {
       <Section id="about">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionHeader eyebrow="About" title={<>Built by operators,<br />not observers.</>} subtitle="CarbonBridge was founded by a team with deep experience across carbon markets, institutional finance, and technology — headquartered in the UAE with operations in Australia." center={false} />
+            <SectionHeader eyebrow="About" title={<>Who is behind<br />CarbonBridge.</>} subtitle="CarbonBridge was founded by a team with deep experience across carbon markets, institutional finance, and technology. It is headquartered in the UAE with operations in Australia." center={false} />
             
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                'ADGM jurisdiction — Abu Dhabi',
+                'ADGM jurisdiction, Abu Dhabi',
                 'Verra General Account (target)',
                 'ACX Abu Dhabi (target)',
                 'Institutional-grade settlement',
@@ -633,10 +633,10 @@ export default function Home() {
           <div className="space-y-0">
             {[
               { q: 'What registries do you support?', a: 'CarbonBridge supports credits from Verra (VCS), Gold Standard, and the American Carbon Registry (ACR). We also facilitate ACCU-adjacent projects registered directly with Verra.' },
-              { q: 'How are credits rated?', a: 'We use an independent rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity — from AAA (highest) to C.' },
-              { q: 'Is the insurance mandatory?', a: 'No. Insurance is optional and available at checkout. You choose the level of cover you need — from basic non-delivery protection to comprehensive CORSIA guarantees.' },
-              { q: 'How does settlement work?', a: 'All marketplace transactions settle via bank transfer (recommended) or card payment through Tap Payments or Stripe (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace — delivery versus payment.' },
-              { q: 'Do you sell your own credits?', a: 'Yes, through CarbonBridge Direct — our own curated inventory. These are always clearly labelled and never algorithmically favoured over third-party listings.' },
+              { q: 'How are credits rated?', a: 'We use an independent rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
+              { q: 'Is the insurance mandatory?', a: 'No. Insurance is optional and available at checkout. You choose the level of cover you need, from basic non-delivery protection to comprehensive CORSIA guarantees.' },
+              { q: 'How does settlement work?', a: 'All marketplace transactions settle via bank transfer (recommended) or card payment through Tap Payments or Stripe (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace on a delivery-versus-payment basis.' },
+              { q: 'Do you sell your own credits?', a: 'Yes, through CarbonBridge Direct, our own curated inventory. These are always clearly labelled and never algorithmically favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
             ].map(faq => (
               <details key={faq.q} className="group" style={{ borderBottom: '1px solid var(--border-light)', padding: '20px 0' }}>
@@ -663,7 +663,7 @@ export default function Home() {
             Ready to navigate the<br />carbon market with confidence?
           </h2>
           <p style={{ fontFamily: bg, fontSize: '15px', color: '#8AAA92', lineHeight: 1.65, marginBottom: '32px' }}>
-            Whether you&apos;re purchasing your first credit or managing a multi-million dollar compliance programme — our team is here to help.
+            From a first credit purchase to a multi-million dollar compliance programme, our team is here to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a href="mailto:hello@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
