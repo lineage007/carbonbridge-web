@@ -143,7 +143,7 @@ describe('resolveDispute', () => {
       disputeId,
       resolvedBy: 'admin-008',
       outcome: 'seller_wins',
-      notes: 'Credits comply with VCS methodology — buyer claim not supported by evidence',
+      notes: 'Credits comply with VCS methodology; buyer claim not supported by evidence',
     });
     expect(resolve.ok).toBe(true);
     expect(resolve.data?.outcome).toBe('seller_wins');
@@ -175,7 +175,7 @@ describe('resolveDispute', () => {
       orderId: 'order-7',
       escrowId: 'escrow-7',
       raisedBy: 'buyer',
-      reason: 'Partial delivery received — only 70% of contracted volume transferred',
+      reason: 'Partial delivery received: only 70% of contracted volume transferred',
       creditId: 'cb-ae-blue-001',
     });
     const disputeId = open.data!.disputeId;
@@ -184,7 +184,7 @@ describe('resolveDispute', () => {
       disputeId,
       resolvedBy: 'admin-009',
       outcome: 'split',
-      notes: 'Partial delivery confirmed — 70% to buyer, 30% to seller',
+      notes: 'Partial delivery confirmed: 70% to buyer, 30% to seller',
       splitBuyerPct: 70,
     });
     expect(resolve.ok).toBe(true);
@@ -234,7 +234,7 @@ describe('appealDispute', () => {
     const appeal = appealDispute({
       disputeId,
       appealedBy: 'seller',
-      grounds: 'Attempting appeal from open state — should fail',
+      grounds: 'Attempting appeal from open state, should fail',
     });
     expect(appeal.ok).toBe(false);
     expect(appeal.error).toBe('INVALID_STATE_TRANSITION');

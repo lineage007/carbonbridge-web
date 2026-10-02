@@ -125,7 +125,7 @@ export default function AdminUsersPage() {
                       { l: 'Total spend', v: fmt(u.totalSpend) },
                       { l: 'Total sales', v: fmt(u.totalSales) },
                       { l: 'Orders', v: u.ordersCount.toString() },
-                      { l: 'Compliance', v: u.compliance.length > 0 ? u.compliance.join(', ') : '—' },
+                      { l: 'Compliance', v: u.compliance.length > 0 ? u.compliance.join(', ') : '-' },
                     ].map(d => (
                       <div key={d.l}>
                         <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{d.l}</div>

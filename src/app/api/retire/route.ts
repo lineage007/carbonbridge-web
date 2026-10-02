@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         return NextResponse.json(
-          { error: 'Unauthorized — provide session or x-api-key header' },
+          { error: 'Unauthorized: provide session or x-api-key header' },
           { status: 401 },
         );
       }
@@ -169,7 +169,7 @@ export async function POST(req: NextRequest) {
     await supabase.from('admin_alerts').insert({
       priority: 'amber',
       alert_type: 'retirement_requested',
-      title: `Retirement requested: ${retireQty} tCO₂e — Order ${order_id}`,
+      title: `Retirement requested: ${retireQty} tCO₂e, Order ${order_id}`,
       entity_type: 'retirement_certificate',
       entity_id: cert.id,
       action_url: `/admin/orders`,
@@ -206,7 +206,7 @@ export async function POST(req: NextRequest) {
         status: 'processing',
         mode: 'stub' as const,
         message:
-          'Retirement request submitted. The CarbonBridge operations team executes the retirement against the issuing registry; your certificate is generated once the registry confirms, typically 1–3 business days.',
+          'Retirement request submitted. The CarbonBridge operations team executes the retirement against the issuing registry; your certificate is generated once the registry confirms, typically 1-3 business days.',
         certificate_url: `/api/certificates/${cert.id}`,
       },
       { status: 201 },
