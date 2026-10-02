@@ -195,7 +195,7 @@ export default function CreditDetailPage() {
                     </div>
                     {qtyNum >= 10000 && (
                       <p style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', marginTop: '8px', fontWeight: 600 }}>
-                        Volume over 10,000 tCO₂e: preferred pricing available via RFQ.
+                        Volume over 10,000 tCO₂e — preferred pricing available via RFQ.
                       </p>
                     )}
                   </div>
@@ -349,7 +349,7 @@ export default function CreditDetailPage() {
                       { name: 'Non-Delivery Protection', desc: 'Guarantees credit delivery to your registry account. If the seller fails to transfer credits within the agreed timeframe, you receive a full refund.', rate: '2-3%' },
                       { name: 'Invalidation Cover', desc: 'Protects against post-issuance credit invalidation by the registry. If credits are revoked due to methodological re-assessment, you are made whole.', rate: '3-5%' },
                       { name: 'Political Risk', desc: 'Covers sovereign-level risks: government policy changes, export bans, or retroactive regulation that renders your credits non-compliant.', rate: '1-2%' },
-                      { name: 'Buffer Pool Shortfall', desc: 'For REDD+ credits with buffer pool allocations; covers the scenario where the project\'s buffer pool is insufficient to cover reversals.', rate: '2-4%' },
+                      { name: 'Buffer Pool Shortfall', desc: 'For REDD+ credits with buffer pool allocations — covers the scenario where the project\'s buffer pool is insufficient to cover reversals.', rate: '2-4%' },
                     ].map(ins => (
                       <div key={ins.name} style={{ background: '#FDFBF7', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '20px' }}>
                         <h4 style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#1A1714', marginBottom: '6px' }}>{ins.name}</h4>
