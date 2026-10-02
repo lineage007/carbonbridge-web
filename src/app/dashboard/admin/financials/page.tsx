@@ -58,7 +58,7 @@ export default function AdminFinancialsPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
           <h1 style={{ fontFamily: fr, fontSize: '26px', fontWeight: 600, color: '#F2ECE0', marginBottom: '4px' }}>Financials</h1>
-          <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74' }}>P&L, revenue breakdown, cash flow — super-admin only</p>
+          <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74' }}>P&L, revenue breakdown, cash flow (super-admin only)</p>
         </div>
         <div style={{ display: 'flex', gap: '4px', background: 'rgba(255,252,246,0.02)', borderRadius: '8px', padding: '3px' }}>
           {(['1m', '3m', '6m', 'ytd', 'all'] as Period[]).map(p => (

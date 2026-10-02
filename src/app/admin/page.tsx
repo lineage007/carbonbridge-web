@@ -22,14 +22,14 @@ const METRICS = [
 type Alert = { id: string; priority: 'red' | 'amber' | 'blue'; type: string; title: string; time: string; actionUrl: string };
 
 const ALERTS: Alert[] = [
-  { id: '1', priority: 'red', type: 'Settlement overdue', title: 'CB-2026-00142 — transfer not initiated (52h)', time: '52 hours', actionUrl: '/admin/orders' },
-  { id: '2', priority: 'red', type: 'Agreement expiring', title: 'PA-2026-00089 — bank transfer due in 8h', time: '8 hours', actionUrl: '/admin/orders' },
+  { id: '1', priority: 'red', type: 'Settlement overdue', title: 'CB-2026-00142: transfer not initiated (52h)', time: '52 hours', actionUrl: '/admin/orders' },
+  { id: '2', priority: 'red', type: 'Agreement expiring', title: 'PA-2026-00089: bank transfer due in 8h', time: '8 hours', actionUrl: '/admin/orders' },
   { id: '3', priority: 'amber', type: 'New orders', title: '2 orders awaiting processing', time: '3 hours', actionUrl: '/admin/orders' },
-  { id: '4', priority: 'amber', type: 'Seller pending', title: 'GreenField Carbon — application 3 days old', time: '3 days', actionUrl: '/admin/users' },
-  { id: '5', priority: 'amber', type: 'Listing pending', title: 'Borneo Peatland REDD+ — awaiting review', time: '1 day', actionUrl: '/admin/listings' },
-  { id: '6', priority: 'amber', type: 'Inventory low', title: 'Blue Carbon — only 2,400 tCO₂e remaining', time: '', actionUrl: '/admin/inventory' },
+  { id: '4', priority: 'amber', type: 'Seller pending', title: 'GreenField Carbon: application 3 days old', time: '3 days', actionUrl: '/admin/users' },
+  { id: '5', priority: 'amber', type: 'Listing pending', title: 'Borneo Peatland REDD+: awaiting review', time: '1 day', actionUrl: '/admin/listings' },
+  { id: '6', priority: 'amber', type: 'Inventory low', title: 'Blue Carbon: only 2,400 tCO₂e remaining', time: '', actionUrl: '/admin/inventory' },
   { id: '7', priority: 'blue', type: 'New registration', title: 'Emirates Steel Industries signed up', time: '2 hours', actionUrl: '/admin/users' },
-  { id: '8', priority: 'blue', type: 'Completed', title: 'CB-2026-00138 settled — $128K, 10K tCO₂e', time: '6 hours', actionUrl: '/admin/orders' },
+  { id: '8', priority: 'blue', type: 'Completed', title: 'CB-2026-00138 settled, $128K, 10K tCO₂e', time: '6 hours', actionUrl: '/admin/orders' },
   { id: '9', priority: 'blue', type: 'Milestone', title: '🎉 Platform crossed $2M total volume', time: '1 day', actionUrl: '/admin/analytics' },
 ];
 
@@ -137,7 +137,7 @@ export default function AdminCommandCentre() {
             );
           })}
           {filtered.length === 0 && (
-            <div style={{ fontFamily: bg, fontSize: '14px', color: '#6B8A74', textAlign: 'center', padding: '40px 0' }}>All clear — no pending alerts ✓</div>
+            <div style={{ fontFamily: bg, fontSize: '14px', color: '#6B8A74', textAlign: 'center', padding: '40px 0' }}>All clear, no pending alerts ✓</div>
           )}
         </div>
       </div>
