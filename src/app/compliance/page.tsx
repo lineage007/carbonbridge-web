@@ -18,6 +18,7 @@ export const metadata: Metadata = {
       'Who is caught, what it costs, which dates matter, and where carbon credits do and do not help. Three explainers for Gulf businesses.',
     siteName: 'CarbonBridge',
     locale: 'en_AE',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CarbonBridge, carbon credit marketplace for MENA' }],
   },
 };
 

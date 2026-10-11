@@ -21,6 +21,7 @@ export const metadata: Metadata = {
       'The National Register for Carbon Credits and the Climate Change Law explained for UAE companies: thresholds, dates, MRV, penalties, and what to do now.',
     siteName: 'CarbonBridge',
     locale: 'en_AE',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CarbonBridge, carbon credit marketplace for MENA' }],
   },
 };
 

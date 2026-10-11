@@ -21,6 +21,7 @@ export const metadata: Metadata = {
       'Who offsets, how the requirement is calculated, which credits count, and the dates through 2028. A plain-language explainer for Gulf aviation.',
     siteName: 'CarbonBridge',
     locale: 'en_AE',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CarbonBridge, carbon credit marketplace for MENA' }],
   },
 };
 

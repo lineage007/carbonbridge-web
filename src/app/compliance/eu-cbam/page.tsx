@@ -21,6 +21,7 @@ export const metadata: Metadata = {
       'Who pays, which goods are covered, the 2026–2027 dates, and why carbon credits cannot be surrendered against CBAM. A plain-language explainer for Gulf producers.',
     siteName: 'CarbonBridge',
     locale: 'en_AE',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CarbonBridge, carbon credit marketplace for MENA' }],
   },
 };
 
