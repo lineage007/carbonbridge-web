@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       .eq('available_tonnes', listing.available_tonnes); // Optimistic lock
 
     if (updateErr) {
-      return NextResponse.json({ error: 'Reservation failed — credits may have been taken' }, { status: 409 });
+      return NextResponse.json({ error: 'Reservation failed: credits may have been taken' }, { status: 409 });
     }
 
     // Create order with 24-hour payment deadline
@@ -126,7 +126,7 @@ export async function DELETE(req: NextRequest) {
       const isAdmin =
         profile?.role === 'admin' || profile?.role === 'super_admin';
       if (!isAdmin) {
-        return NextResponse.json({ error: 'Forbidden — admin only' }, { status: 403 });
+        return NextResponse.json({ error: 'Forbidden: admin only' }, { status: 403 });
       }
     }
 

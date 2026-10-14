@@ -115,7 +115,7 @@ export default function DashboardPage() {
               <tbody>{orders.slice(0, 5).map((o, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid #F0EBE0' }}>
                   <td style={{ padding: '10px 0', fontFamily: mono, fontSize: '11px', color: '#C9A96E' }}>{o.reference || `CB-${String(i+1).padStart(4, '0')}`}</td>
-                  <td style={{ padding: '10px 0', color: '#1A1714' }}>{o.listing?.project_name || '—'}</td>
+                  <td style={{ padding: '10px 0', color: '#1A1714' }}>{o.listing?.project_name || '-'}</td>
                   <td style={{ padding: '10px 0', textAlign: 'right', fontFamily: mono }}>{fmt(o.total_amount || 0)}</td>
                   <td style={{ padding: '10px 0', textAlign: 'right' }}>
                     <span style={{ fontSize: '11px', fontWeight: 600, padding: '2px 8px', borderRadius: '4px',

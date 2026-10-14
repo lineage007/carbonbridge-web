@@ -62,14 +62,14 @@ export default function DashboardSubPage() {
         </div>
         <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '20px' }}>
           <div style={{ fontFamily: bg, fontSize: '12px', color: '#8A7E70', marginBottom: '8px' }}>Live API Key</div>
-          <div style={{ fontFamily: mono, fontSize: '13px', color: '#8A7E70', background: '#F5F0E8', padding: '10px 14px', borderRadius: '8px' }}>Not activated — request access below</div>
+          <div style={{ fontFamily: mono, fontSize: '13px', color: '#8A7E70', background: '#F5F0E8', padding: '10px 14px', borderRadius: '8px' }}>Not activated: request access below</div>
           <button style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer', marginTop: '8px', fontWeight: 600 }}>Request Live Access</button>
         </div>
       </div>
       <div style={{ background: '#FFFCF6', border: '1px solid #E5DED3', borderRadius: '12px', padding: '20px' }}>
         <h3 style={{ fontFamily: fr, fontSize: '16px', color: '#1A1714', marginBottom: '12px' }}>Usage This Month</h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '16px' }}>
-          {[{ label: 'API Calls', val: '0' }, { label: 'Credits Retired', val: '0 tCO₂e' }, { label: 'Revenue', val: '$0.00' }, { label: 'Avg Latency', val: '—' }].map(m => (
+          {[{ label: 'API Calls', val: '0' }, { label: 'Credits Retired', val: '0 tCO₂e' }, { label: 'Revenue', val: '$0.00' }, { label: 'Avg Latency', val: '-' }].map(m => (
             <div key={m.label}><div style={{ fontFamily: bg, fontSize: '11px', color: '#8A7E70' }}>{m.label}</div><div style={{ fontFamily: mono, fontSize: '18px', fontWeight: 700, color: '#1A1714' }}>{m.val}</div></div>
           ))}
         </div>

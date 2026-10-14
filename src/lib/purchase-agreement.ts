@@ -120,7 +120,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
     </div>
   </div>
   <div class="header-title">Purchase Agreement</div>
-  <div class="header-subtitle">Carbon Credit Sale and Purchase — governed by the laws of Abu Dhabi Global Market</div>
+  <div class="header-subtitle">Carbon Credit Sale and Purchase, governed by the laws of Abu Dhabi Global Market</div>
 </div>
 
 <h1>1. Parties</h1>
@@ -135,7 +135,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 </table>
 
 <table>
-  <tr><th colspan="2">SELLER${isCBDirect ? ' (CarbonBridge Direct — Principal Seller)' : ''}</th></tr>
+  <tr><th colspan="2">SELLER${isCBDirect ? ' (CarbonBridge Direct, Principal Seller)' : ''}</th></tr>
   <tr><td width="160">Company Name</td><td><strong>${seller.companyName}</strong></td></tr>
   <tr><td>Registered Address</td><td>${seller.registeredAddress}</td></tr>
   ${seller.registrationNumber ? `<tr><td>Registration No.</td><td>${seller.registrationNumber}</td></tr>` : ''}
@@ -145,7 +145,7 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 
 <p><strong>CarbonBridge's Role:</strong> ${isCBDirect
   ? 'CarbonBridge Ltd acts as both marketplace operator and principal Seller in this transaction. This dual role is disclosed. CarbonBridge Direct inventory is clearly labelled on the Platform and is not algorithmically favoured over third-party listings.'
-  : 'CarbonBridge Ltd acts as marketplace facilitator and escrow agent. CarbonBridge is NOT a party to this sale — the sale is between the Buyer and the Seller. CarbonBridge&rsquo;s obligations are limited to holding funds in escrow, facilitating communication, monitoring the registry transfer, and releasing funds to the Seller upon confirmed Delivery.'
+  : 'CarbonBridge Ltd acts as marketplace facilitator and escrow agent. CarbonBridge is NOT a party to this sale: the sale is between the Buyer and the Seller. CarbonBridge&rsquo;s obligations are limited to holding funds in escrow, facilitating communication, monitoring the registry transfer, and releasing funds to the Seller upon confirmed Delivery.'
 }</p>
 
 <h1>2. Definitions</h1>
@@ -215,9 +215,9 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 ${isBank ? `
 <p>The Buyer shall transfer the full Total Amount Due within the Purchase Agreement Validity Period (five Business Days from the date of this Agreement) to the following account:</p>
 <div class="schedule-box">
-  <strong>CarbonBridge Ltd — Escrow Account</strong><br>
+  <strong>CarbonBridge Ltd: Escrow Account</strong><br>
   Bank: [ADGM Bank Name]<br>
-  Account Name: CarbonBridge Ltd — Client Escrow<br>
+  Account Name: CarbonBridge Ltd (Client Escrow)<br>
   IBAN: [To be provided]<br>
   SWIFT/BIC: [To be provided]<br>
   Reference: <span class="highlight">${data.reference}</span>
@@ -227,7 +227,7 @@ ${isBank ? `
 <p>Payment has been captured at checkout via Stripe Connect. Funds are held in escrow by CarbonBridge until Delivery is confirmed by the relevant Registry.</p>
 `}
 
-<p>CarbonBridge&rsquo;s marketplace fee is deducted from the Seller&rsquo;s proceeds at Settlement. The Buyer pays the listed price — the fee structure is transparent and does not affect the Buyer&rsquo;s total obligation.</p>
+<p>CarbonBridge&rsquo;s marketplace fee is deducted from the Seller&rsquo;s proceeds at Settlement. The Buyer pays the listed price; the fee structure is transparent and does not affect the Buyer&rsquo;s total obligation.</p>
 
 ${insurance.selected ? `
 <h1>5. Insurance</h1>
@@ -320,7 +320,7 @@ ${isBank ? `
 
 <p>${isCBDirect
   ? '11.1 In this transaction, CarbonBridge acts as both marketplace operator and principal Seller. The dual role is disclosed to the Buyer. CarbonBridge Direct inventory is clearly labelled on the Platform and is never algorithmically favoured over third-party listings.'
-  : '11.1 In this transaction, CarbonBridge acts as marketplace facilitator and escrow agent. CarbonBridge is NOT a party to the sale &mdash; the sale is between the Buyer and the Seller. CarbonBridge&rsquo;s obligations are limited to holding funds in escrow, facilitating communication between the parties, monitoring the Registry transfer, and releasing funds upon confirmed Delivery.'
+  : '11.1 In this transaction, CarbonBridge acts as marketplace facilitator and escrow agent. CarbonBridge is NOT a party to the sale: the sale is between the Buyer and the Seller. CarbonBridge&rsquo;s obligations are limited to holding funds in escrow, facilitating communication between the parties, monitoring the Registry transfer, and releasing funds upon confirmed Delivery.'
 }</p>
 
 <p>11.2 CarbonBridge does not guarantee the quality, additionality, permanence, or environmental integrity of any Carbon Credit. Quality ratings and compliance eligibility assessments are provided for informational purposes only and should not be relied upon as legal, regulatory, or investment advice.</p>
@@ -394,17 +394,17 @@ ${isCBDirect ? '<p>12.2 Where CarbonBridge is the Seller (CarbonBridge Direct), 
   </table>
   ` : `
   <p style="color: #8A8279;">This is a draft. The Agreement becomes binding upon electronic acceptance by the Buyer via the CarbonBridge Platform.</p>
-  <div class="sig-line">Authorised Signatory — ${buyer.companyName}</div>
+  <div class="sig-line">Authorised Signatory, ${buyer.companyName}</div>
   <div class="sig-line" style="margin-top: 28px;">CarbonBridge Ltd</div>
   `}
 </div>
 
 <div class="schedule-box" style="margin-top: 28px;">
   <h3>Schedules Incorporated by Reference</h3>
-  <p><strong>Schedule 1:</strong> Credit Details — as set out in Section 3 above</p>
-  ${insurance.selected ? '<p><strong>Schedule 2:</strong> Insurance Details — as set out in Section 5 above</p>' : ''}
-  <p><strong>Schedule ${insurance.selected ? '3' : '2'}:</strong> CarbonBridge Marketplace Rules — available at carbonbridge.ae/legal/marketplace-rules</p>
-  <p><strong>Schedule ${insurance.selected ? '4' : '3'}:</strong> CarbonBridge Privacy Policy — available at carbonbridge.ae/legal/privacy</p>
+  <p><strong>Schedule 1:</strong> Credit Details, as set out in Section 3 above</p>
+  ${insurance.selected ? '<p><strong>Schedule 2:</strong> Insurance Details, as set out in Section 5 above</p>' : ''}
+  <p><strong>Schedule ${insurance.selected ? '3' : '2'}:</strong> CarbonBridge Marketplace Rules, available at carbonbridge.ae/legal/marketplace-rules</p>
+  <p><strong>Schedule ${insurance.selected ? '4' : '3'}:</strong> CarbonBridge Privacy Policy, available at carbonbridge.ae/legal/privacy</p>
 </div>
 
 <div class="footer">

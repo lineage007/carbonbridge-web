@@ -70,14 +70,14 @@ export async function POST(req: NextRequest) {
     user.id === order.buyer_id || user.id === order.seller_id || isAdmin;
 
   if (!isParty) {
-    return NextResponse.json({ error: 'Forbidden — not a party to this order' }, { status: 403 });
+    return NextResponse.json({ error: 'Forbidden: not a party to this order' }, { status: 403 });
   }
 
   if (adminOrSellerActions.includes(action)) {
     const isAdminOrSeller = isAdmin || user.id === order.seller_id;
     if (!isAdminOrSeller) {
       return NextResponse.json(
-        { error: `Forbidden — action '${action}' requires admin or seller role` },
+        { error: `Forbidden: action '${action}' requires admin or seller role` },
         { status: 403 },
       );
     }

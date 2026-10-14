@@ -99,7 +99,7 @@ export default function AdminInventoryPage() {
                       }}>{item.rating}</span>
                     </td>
                     <td style={{ fontFamily: mono, fontSize: '12px', color: '#F2ECE0', padding: '14px 12px' }}>{item.available.toLocaleString()}</td>
-                    <td style={{ fontFamily: mono, fontSize: '12px', color: item.reserved > 0 ? '#F59E0B' : '#6B8A74', padding: '14px 12px' }}>{item.reserved > 0 ? item.reserved.toLocaleString() : '—'}</td>
+                    <td style={{ fontFamily: mono, fontSize: '12px', color: item.reserved > 0 ? '#F59E0B' : '#6B8A74', padding: '14px 12px' }}>{item.reserved > 0 ? item.reserved.toLocaleString() : '-'}</td>
                     <td style={{ padding: '14px 12px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <div style={{ width: '60px', height: '4px', background: 'rgba(255,252,246,0.04)', borderRadius: '2px' }}>

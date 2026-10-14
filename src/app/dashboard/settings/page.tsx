@@ -95,8 +95,8 @@ export default function SettingsPage() {
               style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #E5DED3', fontSize: '14px', background: '#fff' }}>
               <option value="">Select...</option>
               <option value="under_1k">Under 1,000 tCO₂e</option>
-              <option value="1k_10k">1,000 – 10,000 tCO₂e</option>
-              <option value="10k_100k">10,000 – 100,000 tCO₂e</option>
+              <option value="1k_10k">1,000 to 10,000 tCO₂e</option>
+              <option value="10k_100k">10,000 to 100,000 tCO₂e</option>
               <option value="100k_plus">100,000+ tCO₂e</option>
             </select>
           </div>

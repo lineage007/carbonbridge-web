@@ -64,16 +64,16 @@ export default function PortfolioPage() {
                 <tr key={i} onClick={() => p.listing?.id && (window.location.href = `/credits/${p.listing.id}`)}
                   style={{ borderBottom: '1px solid #F0EBE0', cursor: 'pointer', transition: 'background 120ms' }}
                   className="hover:bg-[#F5F0E8]">
-                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#1B3A2D' }}>{p.listing?.project_name || '—'}</td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontSize: '11px', color: '#5A5248' }}>{p.listing?.credit_type?.replace(/_/g, ' ')?.toUpperCase() || '—'}</td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontSize: '11px' }}>{p.listing?.registry || '—'}</td>
-                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono }}>{p.listing?.vintage_year || '—'}</td>
+                  <td style={{ padding: '12px 14px', fontWeight: 600, color: '#1B3A2D' }}>{p.listing?.project_name || '-'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontSize: '11px', color: '#5A5248' }}>{p.listing?.credit_type?.replace(/_/g, ' ')?.toUpperCase() || '-'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontSize: '11px' }}>{p.listing?.registry || '-'}</td>
+                  <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono }}>{p.listing?.vintage_year || '-'}</td>
                   <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono, fontWeight: 600 }}>{(p.quantity || 0).toLocaleString()}</td>
                   <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono }}>${(p.listing?.price_per_tonne || 0).toFixed(2)}</td>
                   <td style={{ padding: '12px 14px', textAlign: 'right', fontFamily: mono, fontWeight: 600 }}>{fmt((p.listing?.price_per_tonne || 0) * (p.quantity || 0))}</td>
                   <td style={{ padding: '12px 14px', textAlign: 'right' }}>
                     <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', background: '#F5F0E8', color: '#1B3A2D' }}>
-                      {p.listing?.quality_rating || '—'}
+                      {p.listing?.quality_rating || '-'}
                     </span>
                   </td>
                 </tr>
