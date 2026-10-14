@@ -1,6 +1,6 @@
 const fr = "'Fraunces', Georgia, serif";
 
-export const metadata = { title: 'Insurance Disclaimer | CarbonBridge' };
+export const metadata = { title: 'Insurance Disclaimer' };
 
 export default function insurancePage() {
   return (
