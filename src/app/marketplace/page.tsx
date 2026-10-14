@@ -163,7 +163,7 @@ export default function MarketplacePage() {
               </FilterSection>
 
               {/* Price Range */}
-              <FilterSection title={`Price: $${priceRange[0]} – $${priceRange[1] >= 200 ? '200+' : priceRange[1]}`}>
+              <FilterSection title={`Price: $${priceRange[0]} to $${priceRange[1] >= 200 ? '200+' : priceRange[1]}`}>
                 <input type="range" min={0} max={200} step={5} value={priceRange[1]} onChange={e => setPriceRange([priceRange[0], parseInt(e.target.value)])} style={{ width: '100%', accentColor: '#C9A96E' }} />
               </FilterSection>
 

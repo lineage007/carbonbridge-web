@@ -245,7 +245,7 @@ function PurchaseInner() {
           {/* Payment stub warning */}
           <div style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.15)', borderLeft: '3px solid rgba(239,68,68,0.5)', borderRadius: '8px', padding: '14px 16px', marginBottom: '4px' }}>
             <p style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>
-              Demonstration only — no payment taken
+              Demonstration only, no payment taken
             </p>
             <p style={{ fontFamily: bg, fontSize: '12px', color: '#6B5B5B', lineHeight: 1.6 }}>
               Clicking &quot;Place in Escrow&quot; does not charge any payment method and creates no binding obligation. This is a demonstration of the escrow flow only. To transact, contact the CarbonBridge team at info@carbonbridge.ae.
@@ -259,7 +259,7 @@ function PurchaseInner() {
         <div>
           <h2 style={{ fontFamily: fr, fontSize: '26px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Place funds in escrow</h2>
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
-            In the live system, your payment is held in a CarbonBridge escrow account — released to the seller only after your credits are confirmed retired on the registry. Credits are not transferred until escrow is released.
+            In the live system, your payment is held in a CarbonBridge escrow account and released to the seller only after your credits are confirmed retired on the registry. Credits are not transferred until escrow is released.
           </p>
 
           {/* Escrow info card */}
@@ -283,9 +283,9 @@ function PurchaseInner() {
           <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '18px', marginBottom: '20px' }}>
             <p style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#7B5B3A', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>How it works</p>
             {[
-              '1. Your payment is held — seller cannot access it yet.',
+              '1. Your payment is held; the seller cannot access it yet.',
               '2. Seller delivers credits to your registry account.',
-              '3. You confirm retirement — funds release to seller.',
+              '3. You confirm retirement and the funds release to the seller.',
               '4. If delivery fails, you can raise a dispute and funds are refunded.',
             ].map(s => (
               <p key={s} style={{ fontFamily: bg, fontSize: '12px', color: '#5B4B3A', lineHeight: 1.7, marginBottom: '4px' }}>{s}</p>
@@ -295,7 +295,7 @@ function PurchaseInner() {
           {/* Stub warning */}
           <div style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.15)', borderLeft: '3px solid rgba(239,68,68,0.5)', borderRadius: '8px', padding: '14px 16px', marginBottom: '16px' }}>
             <p style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>
-              Demonstration mode — escrow state machine only
+              Demonstration mode: escrow state machine only
             </p>
             <p style={{ fontFamily: bg, fontSize: '12px', color: '#6B5B5B', lineHeight: 1.6 }}>
               No real payment will be captured. The escrow state transitions (idle → held → released/refunded/frozen) run in the browser's in-memory store to demonstrate the flow.
@@ -332,12 +332,12 @@ function PurchaseInner() {
               </span>
             </div>
             {[
-              { label: 'Escrow ID', value: session.escrowId ?? '—', mono: true },
+              { label: 'Escrow ID', value: session.escrowId ?? '-', mono: true },
               { label: 'Order ID', value: session.orderId, mono: true },
               { label: 'Amount held', value: `$${session.totalUsd.toLocaleString(undefined, { minimumFractionDigits: 2 })}`, mono: true },
               { label: 'Credit', value: session.creditName },
               { label: 'Quantity', value: `${session.quantity.toLocaleString()} tCO₂e`, mono: true },
-              { label: 'Mode', value: 'STUB — demonstration only', color: '#991B1B' },
+              { label: 'Mode', value: 'STUB, demonstration only', color: '#991B1B' },
             ].map(row => (
               <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #F0EBE3' }}>
                 <span style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>{row.label}</span>
@@ -363,7 +363,7 @@ function PurchaseInner() {
           </div>
 
           <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '20px', fontStyle: 'italic' }}>
-            Demonstration mode — escrow state is held in browser memory only.
+            Demonstration mode: escrow state is held in browser memory only.
           </p>
         </div>
       )}

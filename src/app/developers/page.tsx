@@ -148,7 +148,7 @@ export default function DevelopersPage() {
             <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '28px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '24px' }}>
                 {[
-                  { label: 'Per-call fee', value: '$0.05–0.15', note: 'Based on volume tier' },
+                  { label: 'Per-call fee', value: '$0.05-0.15', note: 'Based on volume tier' },
                   { label: 'Credit cost', value: 'At wholesale', note: '+ 15-25% margin' },
                   { label: 'Monthly minimum', value: '$500/mo', note: 'Usage below → billed at minimum' },
                   { label: 'Billing cycle', value: 'Net 14', note: 'Monthly invoicing, Net 14 terms' },

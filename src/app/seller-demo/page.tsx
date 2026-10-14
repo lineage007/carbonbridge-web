@@ -37,10 +37,10 @@ const DEMO_LISTINGS = [
 
 const ESCROW_STATE_COLORS: Record<EscrowState | 'idle', { bg: string; text: string; label: string }> = {
   idle: { bg: 'rgba(176,169,154,0.1)', text: '#B0A99A', label: 'Not started' },
-  held: { bg: 'rgba(201,169,110,0.1)', text: '#C9A96E', label: 'Held — awaiting retirement' },
+  held: { bg: 'rgba(201,169,110,0.1)', text: '#C9A96E', label: 'Held, awaiting retirement' },
   released: { bg: 'rgba(22,163,74,0.08)', text: '#16A34A', label: 'Released' },
   refunded: { bg: 'rgba(239,68,68,0.08)', text: '#DC2626', label: 'Refunded' },
-  frozen: { bg: 'rgba(245,158,11,0.1)', text: '#D97706', label: 'Frozen — dispute open' },
+  frozen: { bg: 'rgba(245,158,11,0.1)', text: '#D97706', label: 'Frozen, dispute open' },
 };
 
 type Tab = 'overview' | 'listings' | 'orders' | 'disputes';
@@ -79,7 +79,7 @@ export default function SellerDemoPage() {
                   </span>
                 </div>
                 <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>
-                  Pacific Carbon Developments — STUB data + live demo-session escrow states
+                  Pacific Carbon Developments: STUB data + live demo-session escrow states
                 </p>
               </div>
               <div style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.12)', borderRadius: '10px', padding: '10px 16px' }}>
@@ -128,7 +128,7 @@ export default function SellerDemoPage() {
               {/* Escrow state summary */}
               <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '22px' }}>
                 <h3 style={{ fontFamily: fr, fontSize: '16px', fontWeight: 600, color: '#1A1714', marginBottom: '16px' }}>
-                  Escrow states — demo orders
+                  Escrow states: demo orders
                 </h3>
                 {demoOrders.length === 0 ? (
                   <div style={{ textAlign: 'center', padding: '32px 0' }}>
@@ -297,7 +297,7 @@ export default function SellerDemoPage() {
                                   Retire →
                                 </Link>
                               ) : (
-                                <span style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A' }}>—</span>
+                                <span style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A' }}>-</span>
                               )}
                             </td>
                             <td style={{ padding: '12px 14px' }}>
@@ -319,7 +319,7 @@ export default function SellerDemoPage() {
                   </table>
                   <div style={{ padding: '12px 14px', background: '#FDFBF7', borderTop: '1px solid #F0EBE3' }}>
                     <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', fontStyle: 'italic' }}>
-                      Demo session orders — held in browser memory. Resets on page reload.
+                      Demo session orders are held in browser memory and reset on page reload.
                     </p>
                   </div>
                 </div>
@@ -363,9 +363,9 @@ export default function SellerDemoPage() {
                         </div>
 
                         {[
-                          { label: 'Buyer', value: `${o.buyerName} — ${o.buyerCompany}` },
+                          { label: 'Buyer', value: `${o.buyerName}, ${o.buyerCompany}` },
                           { label: 'Quantity', value: `${o.quantity.toLocaleString()} tCO₂e`, mono: true },
-                          { label: 'Dispute state', value: o.disputeState ?? '—' },
+                          { label: 'Dispute state', value: o.disputeState ?? '-' },
                         ].map(row => (
                           <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #F0EBE3', fontSize: '12px' }}>
                             <span style={{ fontFamily: bg, color: '#8B8178' }}>{row.label}</span>

@@ -99,7 +99,7 @@ export default function SignPage() {
           </div>
 
           <p style={{ marginTop: '28px', fontSize: '11px', color: '#8A8279' }}>
-            HTTP 503 — Service temporarily unavailable
+            HTTP 503: Service temporarily unavailable
           </p>
         </div>
       </div>

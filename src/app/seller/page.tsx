@@ -245,7 +245,7 @@ export default function SellerDashboard() {
                     <td style={{ padding: '12px 14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>{o.qty.toLocaleString()}</td>
                     <td style={{ padding: '12px 14px', fontFamily: mono, fontSize: '12px', color: '#1A1714' }}>${o.price.toFixed(2)}</td>
                     <td style={{ padding: '12px 14px', fontFamily: mono, fontSize: '13px', fontWeight: 600, color: '#2D6A4F' }}>{fmt(o.total)}</td>
-                    <td style={{ padding: '12px 14px' }}>{o.insurance ? <span style={{ color: '#16A34A', fontSize: '14px' }}>✓</span> : <span style={{ color: '#D1D5DB', fontSize: '14px' }}>—</span>}</td>
+                    <td style={{ padding: '12px 14px' }}>{o.insurance ? <span style={{ color: '#16A34A', fontSize: '14px' }}>✓</span> : <span style={{ color: '#D1D5DB', fontSize: '14px' }}>-</span>}</td>
                     <td style={{ padding: '12px 14px' }}><span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, padding: '3px 8px', borderRadius: '4px', background: STATUS_COLORS[o.status]?.bg, color: STATUS_COLORS[o.status]?.text }}>{o.status}</span></td>
                   </tr>
                 ))}

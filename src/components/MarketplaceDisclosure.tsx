@@ -22,7 +22,7 @@ const PHASE_TEXT: Record<
   { heading: string; body: string; allowed: string[] }
 > = {
   browsing: {
-    heading: 'Information only — not a financial service',
+    heading: 'Information only, not a financial service',
     body: 'CarbonBridge does not currently hold an ADGM/FSRA Financial Services Permission. Browsing and comparing credit listings is permitted. Prices shown are indicative benchmarks from public registry data, not binding quotes. Authorisation application in progress.',
     allowed: [
       'Browsing credit listings',
@@ -32,7 +32,7 @@ const PHASE_TEXT: Record<
     ],
   },
   transacting: {
-    heading: 'Pilot transactions only — authorisation pending',
+    heading: 'Pilot transactions only, authorisation pending',
     body: 'CarbonBridge does not currently hold an ADGM/FSRA Financial Services Permission. Operations are limited to pilot transactions under bilateral purchase agreements with accredited counterparties. No credits will be transferred until a signed Purchase Agreement is in place and payment is confirmed. Authorisation application in progress.',
     allowed: [
       'Executing bilateral purchase agreements with eligible counterparties',
@@ -42,8 +42,8 @@ const PHASE_TEXT: Record<
     ],
   },
   retiring: {
-    heading: 'Registry retirement is manual — not automated',
-    body: 'CarbonBridge does not currently hold an ADGM/FSRA Financial Services Permission. Registry retirement calls (Verra, Gold Standard, ACR) are executed manually by CarbonBridge staff after receiving your retirement request. Automated registry integration is pending ADGM authorisation and registry partner agreements. Certificate processing time is 1–3 business days.',
+    heading: 'Registry retirement is manual, not automated',
+    body: 'CarbonBridge does not currently hold an ADGM/FSRA Financial Services Permission. Registry retirement calls (Verra, Gold Standard, ACR) are executed manually by CarbonBridge staff after receiving your retirement request. Automated registry integration is pending ADGM authorisation and registry partner agreements. Certificate processing time is 1-3 business days.',
     allowed: [
       'Submitting retirement requests for completed purchases',
       'Receiving retirement certificates after manual registry execution',

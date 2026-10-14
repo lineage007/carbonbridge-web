@@ -52,8 +52,8 @@ export default function CookieConsent() {
 
       {showDetails && (
         <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(255,255,255,0.04)', borderRadius: '8px', fontSize: '11px', color: 'rgba(255,252,246,0.5)', lineHeight: 1.6 }}>
-          <div style={{ marginBottom: '6px' }}><strong style={{ color: 'rgba(255,252,246,0.8)' }}>Essential cookies</strong> — Always active. Required for authentication, session management, and security. Cannot be disabled.</div>
-          <div><strong style={{ color: 'rgba(255,252,246,0.8)' }}>Analytics cookies</strong> — Optional. Help us understand how the platform is used so we can improve it. No personal data is sold.</div>
+          <div style={{ marginBottom: '6px' }}><strong style={{ color: 'rgba(255,252,246,0.8)' }}>Essential cookies</strong>: always active. Required for authentication, session management, and security. Cannot be disabled.</div>
+          <div><strong style={{ color: 'rgba(255,252,246,0.8)' }}>Analytics cookies</strong>: optional. Help us understand how the platform is used so we can improve it. No personal data is sold.</div>
           <div style={{ marginTop: '6px', color: 'rgba(255,252,246,0.3)' }}>Required under ADGM Data Protection Regulations and UAE Federal Decree-Law No. 45 of 2021.</div>
         </div>
       )}

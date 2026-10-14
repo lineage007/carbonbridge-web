@@ -83,7 +83,7 @@ export default function ForwardContractsPage() {
                     <td style={{ padding: '12px', fontFamily: mono }}>{fmt(c.price)}</td>
                     <td style={{ padding: '12px', fontFamily: mono, fontWeight: 600 }}>{fmt(c.volume * c.price)}</td>
                     <td style={{ padding: '12px', color: '#8B8178' }}>{c.delivery}</td>
-                    <td style={{ padding: '12px' }}>{c.insurance ? <span style={{ color: '#2D6A4F', fontWeight: 600 }}>✓ Covered</span> : <span style={{ color: '#C5BFB3' }}>—</span>}</td>
+                    <td style={{ padding: '12px' }}>{c.insurance ? <span style={{ color: '#2D6A4F', fontWeight: 600 }}>✓ Covered</span> : <span style={{ color: '#C5BFB3' }}>-</span>}</td>
                     <td style={{ padding: '12px' }}><span style={{ fontSize: '11px', fontWeight: 600, padding: '3px 10px', borderRadius: '100px', background: s.bg, color: s.text }}>{s.label}</span></td>
                   </tr>
                 );

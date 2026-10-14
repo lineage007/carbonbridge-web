@@ -93,7 +93,7 @@ function DisputeInner() {
       <div style={{ maxWidth: '600px', margin: '60px auto', padding: '0 20px', textAlign: 'center' }}>
         <h2 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714', marginBottom: '12px' }}>Cannot raise dispute</h2>
         <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7 }}>
-          Escrow has already been released — credits have been retired. Disputes can only be raised while escrow is held or frozen.
+          Escrow has already been released and the credits have been retired. Disputes can only be raised while escrow is held or frozen.
         </p>
       </div>
     );
@@ -248,7 +248,7 @@ function DisputeInner() {
         <div>
           <h2 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Describe the problem</h2>
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '16px', lineHeight: 1.7 }}>
-            Tell us what went wrong. Be specific — include dates, expected vs. actual outcomes, and any communication with the seller.
+            Tell us what went wrong. Be specific: include dates, expected versus actual outcomes, and any communication with the seller.
           </p>
           <textarea
             value={reason} onChange={e => setReason(e.target.value)}
@@ -273,7 +273,7 @@ function DisputeInner() {
           <div style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: '12px', padding: '16px', marginBottom: '24px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
             <span style={{ fontSize: '18px', flexShrink: 0 }}>⚠</span>
             <div>
-              <p style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#92400E', marginBottom: '4px' }}>Dispute opened — escrow frozen</p>
+              <p style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#92400E', marginBottom: '4px' }}>Dispute opened, escrow frozen</p>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#78350F', lineHeight: 1.6 }}>
                 Dispute ID: <span style={{ fontFamily: mono }}>{session.disputeId}</span><br />
                 Funds are frozen and cannot be released or refunded until this dispute is resolved by a CarbonBridge admin.
@@ -283,7 +283,7 @@ function DisputeInner() {
 
           <h2 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Submit evidence</h2>
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '16px', lineHeight: 1.7 }}>
-            Upload supporting documents — emails, screenshots, delivery confirmations, registry records. The more specific, the better.
+            Upload supporting documents: emails, screenshots, delivery confirmations, registry records. The more specific, the better.
           </p>
 
           <textarea
@@ -296,7 +296,7 @@ function DisputeInner() {
           <div style={{ background: '#FDFBF7', border: '2px dashed #E8E2D6', borderRadius: '12px', padding: '20px', textAlign: 'center', marginBottom: '12px' }}>
             <p style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>Attach files</p>
             <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', marginBottom: '12px' }}>
-              PDF, PNG, JPEG, XLSX — max 10 MB each
+              PDF, PNG, JPEG or XLSX; max 10 MB each
             </p>
             {/* Stub: text input simulates file name attachment */}
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
@@ -313,7 +313,7 @@ function DisputeInner() {
               </button>
             </div>
             <p style={{ fontFamily: bg, fontSize: '10px', color: '#B0A99A', marginTop: '8px', fontStyle: 'italic' }}>
-              File upload stub — no files are stored (demonstration only)
+              File upload stub: no files are stored (demonstration only)
             </p>
             {fileNames.length > 0 && (
               <div style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
@@ -341,7 +341,7 @@ function DisputeInner() {
           <div style={{ background: 'rgba(59,130,246,0.04)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: '12px', padding: '16px', marginBottom: '24px', display: 'flex', gap: '12px' }}>
             <span style={{ fontSize: '18px', flexShrink: 0 }}>◎</span>
             <div>
-              <p style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#1E40AF', marginBottom: '4px' }}>Evidence received — under review</p>
+              <p style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#1E40AF', marginBottom: '4px' }}>Evidence received, under review</p>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#3B4D6B', lineHeight: 1.6 }}>
                 Dispute ID: <span style={{ fontFamily: mono }}>{session.disputeId}</span><br />
                 A CarbonBridge admin will review both parties&apos; evidence and communicate an outcome within 5 business days.
@@ -383,22 +383,22 @@ function DisputeInner() {
               {resolution === 'buyer_wins' ? '◈' : '◇'}
             </div>
             <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 700, color: '#1A1714', marginBottom: '6px' }}>
-              {resolution === 'buyer_wins' ? 'Dispute resolved — refund issued' : 'Dispute resolved — funds released'}
+              {resolution === 'buyer_wins' ? 'Dispute resolved, refund issued' : 'Dispute resolved, funds released'}
             </h2>
             <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.7 }}>
               {resolution === 'buyer_wins'
-                ? 'The dispute was resolved in your favour. The escrow has been refunded. No real funds have been moved — this is a demonstration.'
-                : 'The dispute was resolved in the seller\'s favour. Escrow has been released. No real funds have been moved — this is a demonstration.'}
+                ? 'The dispute was resolved in your favour. The escrow has been refunded. No real funds have been moved; this is a demonstration.'
+                : 'The dispute was resolved in the seller\'s favour. Escrow has been released. No real funds have been moved; this is a demonstration.'}
             </p>
           </div>
 
           {/* Final state summary */}
           <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '20px', marginBottom: '20px' }}>
             {[
-              { label: 'Dispute ID', value: session.disputeId ?? '—', mono: true },
-              { label: 'Escrow final state', value: (session.escrowState ?? '—').toUpperCase(), color: session.escrowState === 'refunded' ? '#2D6A4F' : '#C9A96E' },
+              { label: 'Dispute ID', value: session.disputeId ?? '-', mono: true },
+              { label: 'Escrow final state', value: (session.escrowState ?? '-').toUpperCase(), color: session.escrowState === 'refunded' ? '#2D6A4F' : '#C9A96E' },
               { label: 'Outcome', value: resolution === 'buyer_wins' ? 'Buyer wins' : 'Seller wins' },
-              { label: 'Mode', value: 'STUB — no funds moved', color: '#991B1B' },
+              { label: 'Mode', value: 'STUB, no funds moved', color: '#991B1B' },
             ].map(row => (
               <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', borderBottom: '1px solid #F0EBE3' }}>
                 <span style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>{row.label}</span>

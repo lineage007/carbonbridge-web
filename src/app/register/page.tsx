@@ -20,8 +20,8 @@ const COMPANY_TYPES = [
 const COMPLIANCE = ['NRCC', 'CBAM', 'CORSIA', 'Voluntary', 'SBTi'];
 const VOLUMES = [
   { value: 'under_1k', label: 'Under 1,000 tCO₂e' },
-  { value: '1k_10k', label: '1,000 – 10,000 tCO₂e' },
-  { value: '10k_100k', label: '10,000 – 100,000 tCO₂e' },
+  { value: '1k_10k', label: '1,000 to 10,000 tCO₂e' },
+  { value: '10k_100k', label: '10,000 to 100,000 tCO₂e' },
   { value: '100k_plus', label: '100,000+ tCO₂e' },
 ];
 

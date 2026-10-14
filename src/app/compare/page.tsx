@@ -46,13 +46,13 @@ function getCellValue(credit: CreditListing, key: string): string {
     case 'price': return `$${credit.price.toFixed(2)}`;
     case 'available': return credit.volumeAvailable.toLocaleString() + ' tCO₂e';
     case 'qualityRating': return credit.qualityRating;
-    case 'permanence': return 'High — verified by ' + credit.verificationBody;
-    case 'additionality': return 'Verified — ' + credit.methodology;
+    case 'permanence': return 'High, verified by ' + credit.verificationBody;
+    case 'additionality': return 'Verified: ' + credit.methodology;
     case 'coBenefits': return credit.coBenefits.join(', ');
-    case 'insurance': return credit.ccpLabelled ? '✓ Available' : '—';
+    case 'insurance': return credit.ccpLabelled ? '✓ Available' : '-';
     case 'corsiaEligible': return credit.compliance.includes('CORSIA') ? '✓ Eligible' : '✗ Not eligible';
     case 'cbamEligible': return credit.compliance.includes('CBAM') ? '✓ Eligible' : '✗ Not eligible';
-    default: return '—';
+    default: return '-';
   }
 }
 
@@ -93,7 +93,7 @@ export default function ComparePage() {
           <div style={{ textAlign: 'center', padding: '80px 24px', background: '#fff', borderRadius: '16px', border: '2px dashed #E8E2D8', marginBottom: '32px' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚖️</div>
             <h2 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Nothing to compare yet</h2>
-            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '24px' }}>Select 2–4 credits from the marketplace to compare them side by side.</p>
+            <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '24px' }}>Select 2-4 credits from the marketplace to compare them side by side.</p>
             <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>Browse Marketplace</Link>
           </div>
         )}
