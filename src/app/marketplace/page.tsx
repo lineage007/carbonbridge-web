@@ -107,7 +107,7 @@ export default function MarketplacePage() {
               Carbon Credit Marketplace
             </h1>
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', marginBottom: '24px' }}>
-              {filtered.length} verified credit{filtered.length !== 1 ? 's' : ''} available · Browse, compare, and purchase with institutional-grade settlement
+              {filtered.length} illustrative listing{filtered.length !== 1 ? 's' : ''} · Examples of how the marketplace works
             </p>
 
             {/* Search bar */}
@@ -229,6 +229,9 @@ export default function MarketplacePage() {
 
             {/* Credit grid */}
             <div className="flex-1 min-w-0">
+              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '16px' }}>
+                These listings are illustrative examples to show how the marketplace works. They are not offers, and no credit shown here is available to buy.
+              </p>
               {filtered.length === 0 ? (
                 <div className="text-center py-20">
                   <p style={{ fontFamily: bg, fontSize: '16px', color: '#8B8178', marginBottom: '8px' }}>No credits match your filters.</p>
@@ -243,7 +246,7 @@ export default function MarketplacePage() {
               )}
 
               <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '24px', fontStyle: 'italic' }}>
-                Prices are indicative benchmarks. Actual transaction prices confirmed at settlement. CarbonBridge quality ratings are proprietary assessments based on ICVCM CCP criteria.
+                Prices, quality ratings and every other figure on this page are illustrative. They are not offers or assessments of any real credit.
               </p>
             </div>
           </div>
