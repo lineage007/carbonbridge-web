@@ -94,6 +94,10 @@ export default function CreditDetailPage() {
                 {credit.projectName}
               </h1>
 
+              <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '12px' }}>
+                These listings are illustrative examples to show how the marketplace works. They are not offers, and no credit shown here is available to buy.
+              </p>
+
               {/* Developer */}
               <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '20px' }}>
                 by <span style={{ color: '#1B3A2D', fontWeight: 600 }}>{credit.developer}</span> · {credit.location}
@@ -264,8 +268,8 @@ export default function CreditDetailPage() {
                       { label: 'Registry', value: credit.registry },
                       { label: 'Methodology', value: credit.methodology },
                       { label: 'Validation & Verification Body', value: credit.verificationBody },
-                      { label: 'Validated', value: new Date(credit.validatedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
-                      { label: 'Last Verified', value: new Date(credit.lastVerified).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
+                      { label: 'Validated (illustrative date)', value: new Date(credit.validatedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
+                      { label: 'Last verified (illustrative date)', value: new Date(credit.lastVerified).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
                       { label: 'Total Volume Issued', value: `${credit.volumeTotal.toLocaleString()} tCO₂e` },
                     ].map(item => (
                       <div key={item.label} style={{ background: '#FDFBF7', border: '1px solid #E8E2D6', borderRadius: '10px', padding: '16px' }}>
@@ -276,8 +280,7 @@ export default function CreditDetailPage() {
                   </div>
                   <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.7 }}>
-                      Documentation available upon request: Validation Report, Monitoring Report, Verification Report, Project Design Document (PDD). 
-                      Contact <span style={{ color: '#C9A96E', fontWeight: 600 }}>team@carbonbridge.ae</span> for access.
+                      No documentation exists for illustrative listings.
                     </p>
                   </div>
                 </div>
@@ -289,7 +292,7 @@ export default function CreditDetailPage() {
                   
                   {credit.coBenefits.length > 0 && (
                     <div className="mb-8">
-                      <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '12px' }}>Verified Co-benefits</h3>
+                      <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '12px' }}>Co-benefits (illustrative)</h3>
                       <div className="flex flex-wrap gap-3">
                         {credit.coBenefits.map(b => (
                           <div key={b} style={{ background: 'rgba(27,58,45,0.04)', border: '1px solid rgba(27,58,45,0.1)', borderRadius: '10px', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
