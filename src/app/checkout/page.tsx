@@ -54,7 +54,7 @@ function CheckoutInner() {
           <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'rgba(45,106,79,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h1 style={{ fontFamily: fr, fontSize: '32px', fontWeight: 700, color: '#1A1714', marginBottom: '8px' }}>Purchase request submitted</h1>
+          <h1 style={{ fontFamily: fr, fontSize: '32px', fontWeight: 700, color: '#1A1714', marginBottom: '8px' }}>Demonstration checkout</h1>
           <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
             Our team will confirm availability and send you settlement instructions within 24 hours.
           </p>
@@ -75,7 +75,7 @@ function CheckoutInner() {
             </div>
           </div>
           <p style={{ fontFamily: bg, fontSize: '12px', color: '#B0A99A', marginBottom: '20px' }}>
-            A confirmation email has been sent to {contactEmail || 'your email address'}.
+            This checkout is a demonstration. Your request has not been saved and no email has been sent. To buy, email info@carbonbridge.ae.
           </p>
           <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', display: 'inline-block' }}>
             Continue browsing →
@@ -260,7 +260,7 @@ function CheckoutInner() {
         <div className="text-center">
           <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Confirm your purchase request</h2>
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>
-            By clicking confirm, you&apos;re submitting a binding purchase request. Our team will contact you within 24 hours with settlement instructions.
+            This checkout is a demonstration. Confirming does not create a purchase or any obligation.
           </p>
           <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px', marginBottom: '24px', textAlign: 'left', maxWidth: '400px', margin: '0 auto 24px' }}>
             <div style={{ fontFamily: bg, fontSize: '13px', color: '#1A1714', lineHeight: 2 }}>
