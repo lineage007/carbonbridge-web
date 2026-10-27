@@ -56,7 +56,7 @@ function CheckoutInner() {
           </div>
           <h1 style={{ fontFamily: fr, fontSize: '32px', fontWeight: 700, color: '#1A1714', marginBottom: '8px' }}>Demonstration checkout</h1>
           <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
-            Our team will confirm availability and send you settlement instructions within 24 hours.
+            No credits have been reserved.
           </p>
           <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px', marginBottom: '28px', textAlign: 'left' }}>
             <div className="grid grid-cols-2 gap-3" style={{ fontFamily: bg, fontSize: '13px' }}>
@@ -242,7 +242,7 @@ function CheckoutInner() {
       {step === 4 && (
         <div>
           <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Your details</h2>
-          <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>We&apos;ll use this to send your confirmation and settlement instructions.</p>
+          <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>In this demonstration your details are not saved or sent.</p>
           <div className="space-y-4">
             <InputField label="Company name" value={companyName} onChange={setCompanyName} required />
             <InputField label="Contact name" value={contactName} onChange={setContactName} required />
