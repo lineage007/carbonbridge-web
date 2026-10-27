@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Developer API',
-  description: 'REST API for point-of-sale carbon offsetting. Real-time retirement and certificate generation from $0.05 per call.',
+  description: 'Planned REST API for point-of-sale carbon offsetting. Not yet available.',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
