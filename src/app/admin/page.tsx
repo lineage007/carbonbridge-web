@@ -25,10 +25,10 @@ const ALERTS: Alert[] = [
   { id: '1', priority: 'red', type: 'Settlement overdue', title: 'CB-2026-00142: transfer not initiated (52h)', time: '52 hours', actionUrl: '/admin/orders' },
   { id: '2', priority: 'red', type: 'Agreement expiring', title: 'PA-2026-00089: bank transfer due in 8h', time: '8 hours', actionUrl: '/admin/orders' },
   { id: '3', priority: 'amber', type: 'New orders', title: '2 orders awaiting processing', time: '3 hours', actionUrl: '/admin/orders' },
-  { id: '4', priority: 'amber', type: 'Seller pending', title: 'GreenField Carbon: application 3 days old', time: '3 days', actionUrl: '/admin/users' },
+  { id: '4', priority: 'amber', type: 'Seller pending', title: 'Example Seller A: application 3 days old', time: '3 days', actionUrl: '/admin/users' },
   { id: '5', priority: 'amber', type: 'Listing pending', title: 'Borneo Peatland REDD+: awaiting review', time: '1 day', actionUrl: '/admin/listings' },
   { id: '6', priority: 'amber', type: 'Inventory low', title: 'Blue Carbon: only 2,400 tCO₂e remaining', time: '', actionUrl: '/admin/inventory' },
-  { id: '7', priority: 'blue', type: 'New registration', title: 'Emirates Steel Industries signed up', time: '2 hours', actionUrl: '/admin/users' },
+  { id: '7', priority: 'blue', type: 'New registration', title: 'Example Buyer E signed up', time: '2 hours', actionUrl: '/admin/users' },
   { id: '8', priority: 'blue', type: 'Completed', title: 'CB-2026-00138 settled, $128K, 10K tCO₂e', time: '6 hours', actionUrl: '/admin/orders' },
   { id: '9', priority: 'blue', type: 'Milestone', title: '🎉 Platform crossed $2M total volume', time: '1 day', actionUrl: '/admin/analytics' },
 ];
