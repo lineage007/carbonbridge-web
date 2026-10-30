@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 const PROTECTED_ROUTES = ['/dashboard', '/checkout', '/admin', '/seller', '/carbon-management', '/forward-contracts', '/settings']
-const ADMIN_ROUTES = ['/admin']
+const ADMIN_ROUTES = ['/admin', '/dashboard/admin']
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request })

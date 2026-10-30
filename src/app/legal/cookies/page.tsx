@@ -1,6 +1,6 @@
 const fr = "'Fraunces', Georgia, serif";
 
-export const metadata = { title: 'Cookie Policy | CarbonBridge' };
+export const metadata = { title: 'Cookie Policy' };
 
 export default function cookiesPage() {
   return (

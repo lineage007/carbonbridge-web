@@ -375,7 +375,7 @@ export default function Home() {
       <Section>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div>
-            <SectionHeader eyebrow="The Compliance Wave" title={<>Three regulations,<br />one deadline.</>} subtitle="" center={false} />
+            <SectionHeader eyebrow="The Compliance Wave" title={<>Three regulations,<br />one compliance programme.</>} subtitle="" center={false} />
             <p style={{ fontFamily: bg, fontSize: '15px', color: 'var(--ink-muted)', lineHeight: 1.7 }}>
               For the first time, MENA corporations face simultaneous carbon compliance obligations: the UAE&apos;s National Registry for Carbon Credits, the EU&apos;s Carbon Border Adjustment Mechanism, and ICAO&apos;s CORSIA mandate for airlines. Purchasing infrastructure and compliance tooling built for this region are still limited, and most companies are navigating a complex, opaque market with spreadsheets and phone calls.
             </p>
@@ -416,7 +416,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-20">
             {[
               { step: '01', title: 'Discover', desc: 'Browse verified credits across Verra, Gold Standard, and ACR. Filter by type, geography, vintage, price, and ICVCM quality rating.' },
-              { step: '02', title: 'Evaluate', desc: 'Compare credits using independent quality ratings, co-benefit scores, permanence risk assessments, and indicative price benchmarks.' },
+              { step: '02', title: 'Evaluate', desc: 'Compare credits using quality ratings, co-benefit scores, permanence risk assessments, and indicative price benchmarks.' },
               { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout: non-delivery cover, invalidation protection, and CORSIA guarantees.' },
               { step: '04', title: 'Retire & Report', desc: 'Retire credits across any registry from one dashboard. Auto-generated retirement certificates and audit-ready compliance records.' },
             ].map((s, i) => (
@@ -436,8 +436,8 @@ export default function Home() {
             {[
               { icon: icons.globe, title: 'Marketplace', desc: 'Connect developers and buyers across multiple registries. Self-serve listings, RFQ system, and OTC facilitation.', tag: 'Core' },
               { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers.', tag: 'Core' },
-              { icon: icons.chart, title: 'Data & Ratings', desc: 'Independent credit quality ratings (AAA-C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
-              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. Log offset requests per transaction, with monthly retirement and branded certificate delivery. From $0.15/call.', tag: 'Developer' },
+              { icon: icons.chart, title: 'Data & Ratings', desc: 'Credit quality ratings (AAA-C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
+              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. In development: log offset requests per transaction, with monthly retirement and branded certificate delivery. Indicative pricing from $0.15/call.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with indicative market data.', tag: 'Enterprise' },
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
             ].map((f, i) => (
@@ -466,10 +466,10 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance covers non-delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Independent quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
+            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance is designed to cover non-delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
             { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
-            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. REST API with per-transaction offset logging and monthly retirement.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment for testing', 'From $0.15/call + 25% margin on credit cost'] },
+            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. A REST API for per-transaction offset logging and monthly retirement is in development.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment (planned)', 'Indicative: from $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
             <div key={s.role} style={{ background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
               <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '16px' }}>{s.icon}</div>
@@ -494,7 +494,7 @@ export default function Home() {
       <Section id="market-data">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionHeader eyebrow="Market Intelligence" title={<>Data you can<br />actually trust.</>} subtitle="Every credit on CarbonBridge is independently rated against ICVCM Core Carbon Principles, so the quality of what you are buying is visible before you commit." center={false} />
+            <SectionHeader eyebrow="Market Intelligence" title={<>Quality you can<br />see before you buy.</>} subtitle="Every credit on CarbonBridge is rated against ICVCM Core Carbon Principles, so the quality of what you are buying is visible before you commit." center={false} />
             
             <div className="space-y-4 mt-8">
               {[
@@ -618,7 +618,7 @@ export default function Home() {
               &ldquo;A carbon credit marketplace with quality data and compliance tools, built for the MENA market.&rdquo;
             </blockquote>
             <p style={{ fontFamily: bg, fontSize: '13px', color: '#6B8A74', lineHeight: 1.6 }}>
-              No existing platform combines marketplace, brokerage, insurance distribution, data ratings, API services, carbon management SaaS, and managed procurement in one product. We do.
+              CarbonBridge is being built to combine marketplace, brokerage, insurance distribution, data ratings, API services, carbon management SaaS, and managed procurement in one product.
             </p>
           </div>
         </div>
@@ -633,7 +633,7 @@ export default function Home() {
           <div className="space-y-0">
             {[
               { q: 'What registries do you support?', a: 'CarbonBridge supports credits from Verra (VCS), Gold Standard, and the American Carbon Registry (ACR). We also facilitate ACCU-adjacent projects registered directly with Verra.' },
-              { q: 'How are credits rated?', a: 'We use an independent rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
+              { q: 'How are credits rated?', a: 'We use a rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
               { q: 'Is the insurance mandatory?', a: 'No. Insurance is optional and available at checkout. You choose the level of cover you need, from basic non-delivery protection to comprehensive CORSIA guarantees.' },
               { q: 'How does settlement work?', a: 'All marketplace transactions settle via bank transfer (recommended) or card payment through Tap Payments or Stripe (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace on a delivery-versus-payment basis.' },
               { q: 'Do you sell your own credits?', a: 'Yes, through CarbonBridge Direct, our own curated inventory. These are always clearly labelled and never algorithmically favoured over third-party listings.' },

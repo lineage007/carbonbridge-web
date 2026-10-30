@@ -19,14 +19,14 @@ type User = {
 };
 
 const USERS: User[] = [
-  { id: '1', company: 'Emirates Industrial Group', contact: 'Ahmed Al-Rashidi', email: 'ahmed@eig.ae', role: 'buyer', sellerStatus: null, country: 'AE', joined: '15 Feb 2026', lastActive: '2 hours ago', totalSpend: 374100, totalSales: 0, ordersCount: 3, compliance: ['NRCC', 'CBAM'] },
-  { id: '2', company: 'Abu Dhabi Airports', contact: 'Fatima Al-Ketbi', email: 'f.alketbi@adairports.ae', role: 'buyer', sellerStatus: null, country: 'AE', joined: '20 Feb 2026', lastActive: '5 hours ago', totalSpend: 192000, totalSales: 0, ordersCount: 1, compliance: ['CORSIA'] },
-  { id: '3', company: 'GreenField Carbon Pty Ltd', contact: 'Marcus Reid', email: 'marcus@greenfieldcarbon.com.au', role: 'seller', sellerStatus: 'pending', country: 'AU', joined: '22 Mar 2026', lastActive: '3 days ago', totalSpend: 0, totalSales: 0, ordersCount: 0, compliance: [] },
-  { id: '4', company: 'Masdar Clean Energy', contact: 'Omar Khoury', email: 'o.khoury@masdar.ae', role: 'both', sellerStatus: 'approved', country: 'AE', joined: '10 Jan 2026', lastActive: '1 hour ago', totalSpend: 260000, totalSales: 45000, ordersCount: 4, compliance: ['NRCC'] },
-  { id: '5', company: 'ADNOC', contact: 'Khalid Al-Suwaidi', email: 'k.suwaidi@adnoc.ae', role: 'buyer', sellerStatus: null, country: 'AE', joined: '5 Mar 2026', lastActive: '1 day ago', totalSpend: 162500, totalSales: 0, ordersCount: 1, compliance: ['NRCC', 'CBAM'] },
-  { id: '6', company: 'Emirates Steel Arkan', contact: 'Rashed Al-Nuaimi', email: 'r.nuaimi@emiratessteel.com', role: 'buyer', sellerStatus: null, country: 'AE', joined: '12 Mar 2026', lastActive: '6 hours ago', totalSpend: 128000, totalSales: 0, ordersCount: 1, compliance: ['CBAM'] },
-  { id: '7', company: 'South Pole Group', contact: 'Lisa Chen', email: 'l.chen@southpole.com', role: 'seller', sellerStatus: 'approved', country: 'CH', joined: '1 Feb 2026', lastActive: '4 hours ago', totalSpend: 0, totalSales: 890000, ordersCount: 0, compliance: [] },
-  { id: '8', company: 'TechFlow API', contact: 'Dev Team', email: 'dev@techflow.io', role: 'api_client', sellerStatus: null, country: 'SG', joined: '1 Mar 2026', lastActive: '10 min ago', totalSpend: 4200, totalSales: 0, ordersCount: 0, compliance: [] },
+  { id: '1', company: 'Example Buyer A', contact: 'Demo Contact 1', email: 'demo1@example.com', role: 'buyer', sellerStatus: null, country: 'AE', joined: '15 Feb 2026', lastActive: '2 hours ago', totalSpend: 374100, totalSales: 0, ordersCount: 3, compliance: ['NRCC', 'CBAM'] },
+  { id: '2', company: 'Example Buyer B', contact: 'Demo Contact 2', email: 'demo2@example.com', role: 'buyer', sellerStatus: null, country: 'AE', joined: '20 Feb 2026', lastActive: '5 hours ago', totalSpend: 192000, totalSales: 0, ordersCount: 1, compliance: ['CORSIA'] },
+  { id: '3', company: 'Example Seller A', contact: 'Demo Contact 3', email: 'demo3@example.com', role: 'seller', sellerStatus: 'pending', country: 'AU', joined: '22 Mar 2026', lastActive: '3 days ago', totalSpend: 0, totalSales: 0, ordersCount: 0, compliance: [] },
+  { id: '4', company: 'Example Buyer C', contact: 'Demo Contact 4', email: 'demo4@example.com', role: 'both', sellerStatus: 'approved', country: 'AE', joined: '10 Jan 2026', lastActive: '1 hour ago', totalSpend: 260000, totalSales: 45000, ordersCount: 4, compliance: ['NRCC'] },
+  { id: '5', company: 'Example Buyer D', contact: 'Demo Contact 5', email: 'demo5@example.com', role: 'buyer', sellerStatus: null, country: 'AE', joined: '5 Mar 2026', lastActive: '1 day ago', totalSpend: 162500, totalSales: 0, ordersCount: 1, compliance: ['NRCC', 'CBAM'] },
+  { id: '6', company: 'Example Buyer E', contact: 'Demo Contact 6', email: 'demo6@example.com', role: 'buyer', sellerStatus: null, country: 'AE', joined: '12 Mar 2026', lastActive: '6 hours ago', totalSpend: 128000, totalSales: 0, ordersCount: 1, compliance: ['CBAM'] },
+  { id: '7', company: 'Example Seller B', contact: 'Demo Contact 7', email: 'demo7@example.com', role: 'seller', sellerStatus: 'approved', country: 'CH', joined: '1 Feb 2026', lastActive: '4 hours ago', totalSpend: 0, totalSales: 890000, ordersCount: 0, compliance: [] },
+  { id: '8', company: 'Example API Client', contact: 'Demo Contact 8', email: 'demo8@example.com', role: 'api_client', sellerStatus: null, country: 'SG', joined: '1 Mar 2026', lastActive: '10 min ago', totalSpend: 4200, totalSales: 0, ordersCount: 0, compliance: [] },
 ];
 
 const ROLE_COLORS: Record<UserRole, { label: string; bg: string; text: string }> = {
