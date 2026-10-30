@@ -158,7 +158,7 @@ function CheckoutInner() {
           {isLargeVolume && (
             <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '10px', padding: '14px', marginTop: '12px' }}>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                <strong style={{ color: '#C9A96E' }}>Large volume order.</strong> For purchases over 10,000 tCO₂e, preferred pricing may be available. You can proceed here or <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ color: '#C9A96E', fontWeight: 600 }}>request a custom quote</Link>.
+                <strong style={{ color: '#C9A96E' }}>Large volume order.</strong> For purchases over 10,000 tCO₂e, preferred pricing may be available. You can proceed here or <Link href="/rfq" style={{ color: '#C9A96E', fontWeight: 600 }}>request a custom quote</Link>.
               </p>
             </div>
           )}
@@ -196,7 +196,7 @@ function CheckoutInner() {
           </div>
 
           <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '16px', fontStyle: 'italic' }}>
-            Cover is arranged with specialist carbon insurers. The underwriter and full policy terms are provided before confirmation.
+            Insurance at checkout is planned. No cover is arranged in this demonstration.
           </p>
         </div>
       )}
@@ -232,7 +232,7 @@ function CheckoutInner() {
             </div>
             <div style={{ background: '#F5F0E8', borderRadius: '10px', padding: '14px', marginTop: '16px' }}>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                <strong style={{ color: '#1A1714' }}>Settlement:</strong> Stripe escrow for transactions under $100K. Institutional DvP via ACX/Carbonplace for $100K+. Our team will confirm the settlement method after submission.
+                <strong style={{ color: '#1A1714' }}>Settlement:</strong> Stripe escrow for transactions under $100K. Institutional DvP via ACX/Carbonplace for $100K+. Nothing is submitted in this demonstration.
               </p>
             </div>
           </div>
