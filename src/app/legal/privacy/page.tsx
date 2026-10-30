@@ -1,6 +1,6 @@
 const fr = "'Fraunces', Georgia, serif";
 
-export const metadata = { title: 'Privacy Policy | CarbonBridge' };
+export const metadata = { title: 'Privacy Policy' };
 
 export default function privacyPage() {
   return (
