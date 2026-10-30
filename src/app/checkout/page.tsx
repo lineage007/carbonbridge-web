@@ -56,7 +56,7 @@ function CheckoutInner() {
           </div>
           <h1 style={{ fontFamily: fr, fontSize: '32px', fontWeight: 700, color: '#1A1714', marginBottom: '8px' }}>Demonstration checkout</h1>
           <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', lineHeight: 1.7, marginBottom: '24px' }}>
-            Our team will confirm availability and send you settlement instructions within 24 hours.
+            No credits have been reserved.
           </p>
           <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px', marginBottom: '28px', textAlign: 'left' }}>
             <div className="grid grid-cols-2 gap-3" style={{ fontFamily: bg, fontSize: '13px' }}>
@@ -158,7 +158,7 @@ function CheckoutInner() {
           {isLargeVolume && (
             <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '10px', padding: '14px', marginTop: '12px' }}>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                <strong style={{ color: '#C9A96E' }}>Large volume order.</strong> For purchases over 10,000 tCO₂e, preferred pricing may be available. You can proceed here or <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ color: '#C9A96E', fontWeight: 600 }}>request a custom quote</Link>.
+                <strong style={{ color: '#C9A96E' }}>Large volume order.</strong> For purchases over 10,000 tCO₂e, preferred pricing may be available. You can proceed here or <Link href="/rfq" style={{ color: '#C9A96E', fontWeight: 600 }}>request a custom quote</Link>.
               </p>
             </div>
           )}
@@ -196,7 +196,7 @@ function CheckoutInner() {
           </div>
 
           <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '16px', fontStyle: 'italic' }}>
-            Cover is arranged with specialist carbon insurers. The underwriter and full policy terms are provided before confirmation.
+            Insurance at checkout is planned. No cover is arranged in this demonstration.
           </p>
         </div>
       )}
@@ -232,7 +232,7 @@ function CheckoutInner() {
             </div>
             <div style={{ background: '#F5F0E8', borderRadius: '10px', padding: '14px', marginTop: '16px' }}>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                <strong style={{ color: '#1A1714' }}>Settlement:</strong> Stripe escrow for transactions under $100K. Institutional DvP via ACX/Carbonplace for $100K+. Our team will confirm the settlement method after submission.
+                <strong style={{ color: '#1A1714' }}>Settlement:</strong> Stripe escrow for transactions under $100K. Institutional DvP via ACX/Carbonplace for $100K+. Nothing is submitted in this demonstration.
               </p>
             </div>
           </div>
@@ -242,7 +242,7 @@ function CheckoutInner() {
       {step === 4 && (
         <div>
           <h2 style={{ fontFamily: fr, fontSize: '24px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Your details</h2>
-          <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>We&apos;ll use this to send your confirmation and settlement instructions.</p>
+          <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '24px' }}>In this demonstration your details are not saved or sent.</p>
           <div className="space-y-4">
             <InputField label="Company name" value={companyName} onChange={setCompanyName} required />
             <InputField label="Contact name" value={contactName} onChange={setContactName} required />
