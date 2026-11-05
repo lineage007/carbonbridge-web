@@ -11,8 +11,6 @@
  *   phase: 'browsing' | 'transacting' | 'retiring'
  */
 
-const DISCLOSURE_LINK = '/legal/risk-disclosure';
-
 interface MarketplaceDisclosureProps {
   phase: 'browsing' | 'transacting' | 'retiring';
 }
@@ -92,19 +90,13 @@ export function MarketplaceDisclosure({ phase }: MarketplaceDisclosureProps) {
       <p style={{ fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>
         Operations currently permitted:
       </p>
-      <ul style={{ paddingLeft: '16px', margin: '0 0 8px' }}>
+      <ul style={{ paddingLeft: '16px', margin: 0 }}>
         {allowed.map((item) => (
           <li key={item} style={{ marginBottom: '2px' }}>
             {item}
           </li>
         ))}
       </ul>
-      <a
-        href={DISCLOSURE_LINK}
-        style={{ color: '#C9A96E', textDecoration: 'underline', fontSize: '11px' }}
-      >
-        Full risk disclosure ↗
-      </a>
     </aside>
   );
 }
