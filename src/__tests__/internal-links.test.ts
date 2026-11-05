@@ -29,21 +29,27 @@ const extraRoutes = ['/sitemap.xml', '/robots.txt', '/favicon.ico', '/apple-icon
 function resolves(path: string): boolean {
   if (routes.some(r => r.test(path))) return true
   if (extraRoutes.includes(path)) return true
-  return existsSync(join(root, 'public', path))
+  const file = join(root, 'public', path)
+  return existsSync(file) && statSync(file).isFile()
 }
 
-// href="/x", href={'/x'}, href={`/x/${id}`} (static prefix only), and router.push('/x').
-const linkPattern = /(?:href=\{?\s*["'`]|router\.(?:push|replace)\(\s*["'`])(\/[^"'`\s?#]*)/g
+// href="/x", href={'/x'}, href={`/x/${id}`} (static prefix only), router.push('/x'),
+// object fields { href: '/x' } and { actionUrl: '/x' }, and constants such as DISCLOSURE_LINK = '/x'.
+const linkPattern = /(?:href=\{?\s*["'`]|router\.(?:push|replace)\(\s*["'`]|\b(?:href|actionUrl)\s*:\s*["'`]|\b[A-Z_]*(?:LINK|HREF|URL|PATH)\s*=\s*["'`])(\/[^"'`\s?#]*)/g
 
-const links: { file: string; path: string }[] = []
-for (const file of walk(srcDir).filter(f => /\.tsx?$/.test(f) && !f.includes('__tests__'))) {
+// AppShell.tsx is not imported anywhere; its settings menu points at pages that were never built.
+const ignored = [join('src', 'components', 'AppShell.tsx')]
+
+const links: { file: string; path: string; template: boolean }[] = []
+for (const file of walk(srcDir).filter(f => /\.tsx?$/.test(f) && !f.includes('__tests__') && !ignored.includes(relative(root, f)))) {
   const text = readFileSync(file, 'utf8')
   for (const m of text.matchAll(linkPattern)) {
     let path = m[1]
+    if (path.startsWith('//')) continue // protocol-relative external URL
     const dyn = path.indexOf('${')
     if (dyn !== -1) path = path.slice(0, dyn)
     if (path.endsWith('/') && path.length > 1) path = path.slice(0, -1)
-    links.push({ file: relative(root, file), path: path || '/' })
+    links.push({ file: relative(root, file), path: path || '/', template: dyn !== -1 })
   }
 }
 
@@ -54,9 +60,9 @@ describe('internal links', () => {
 
   it('every internal link resolves to a page, route or public file', () => {
     const broken = links.filter(l => {
-      // A template like `/credits/${id}` leaves a prefix such as /credits; accept it when a child route exists.
       if (resolves(l.path)) return false
-      return !routes.some(r => r.test(l.path + '/x'))
+      // A template like `/credits/${id}` leaves the prefix /credits; accept it only when a child route exists.
+      return !(l.template && routes.some(r => r.test(l.path + '/x')))
     })
     expect(broken).toEqual([])
   })
