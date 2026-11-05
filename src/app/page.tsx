@@ -262,7 +262,7 @@ export default function Home() {
               </h1>
 
               <p style={{ fontFamily: bg, fontSize: '16px', color: '#8AAA92', lineHeight: 1.7, marginBottom: '36px', maxWidth: '480px' }}>
-                Discover, compare, and purchase verified carbon credits with integrated insurance, quality ratings, and institutional-grade settlement, in one platform.
+                Discover and compare carbon credits with quality ratings and indicative price benchmarks. Integrated insurance and institutional settlement are being built into the same platform.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-14">
@@ -562,7 +562,7 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(45,90,63,0.4) 0%, transparent 60%)' }} />
         <GeoCircles side="left" />
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
-          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Optional credit guarantee insurance at checkout: non-delivery, invalidation, political risk and CORSIA cover." dark />
+          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Planned: optional credit guarantee insurance at checkout, covering non-delivery, invalidation, political risk and CORSIA eligibility. No cover is offered yet." dark />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -581,7 +581,7 @@ export default function Home() {
 
           <div className="mt-12" style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '24px' }}>
             <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
-              Cover is arranged with specialist carbon insurers. Policy terms are provided before any purchase is confirmed.
+              These covers are planned and not yet available. No policy is offered on this site.
             </p>
           </div>
         </div>

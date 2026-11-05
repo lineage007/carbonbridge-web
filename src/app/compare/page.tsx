@@ -47,9 +47,9 @@ function getCellValue(credit: CreditListing, key: string): string {
     case 'available': return credit.volumeAvailable.toLocaleString() + ' tCO₂e';
     case 'qualityRating': return credit.qualityRating;
     case 'permanence': return 'Not assessed (illustrative listing)';
-    case 'additionality': return credit.methodology;
+    case 'additionality': return 'Not assessed (illustrative listing)';
     case 'coBenefits': return credit.coBenefits.join(', ');
-    case 'insurance': return credit.ccpLabelled ? '✓ Available' : '-';
+    case 'insurance': return 'Planned';
     case 'corsiaEligible': return credit.compliance.includes('CORSIA') ? '✓ Eligible' : '✗ Not eligible';
     case 'cbamEligible': return credit.compliance.includes('CBAM') ? '✓ Eligible' : '✗ Not eligible';
     default: return '-';
