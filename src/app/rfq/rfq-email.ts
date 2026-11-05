@@ -1,4 +1,4 @@
-export const RFQ_EMAIL = 'hello@carbonbridge.ae';
+export const RFQ_EMAIL = 'info@carbonbridge.ae';
 export const RFQ_NOTES_MAX = 1000;
 // Windows hands a mailto link to the mail app through a limit of about 2,083 characters.
 export const RFQ_MAILTO_MAX = 2000;
