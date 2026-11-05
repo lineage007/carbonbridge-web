@@ -1,7 +1,6 @@
 'use client';
 
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { LISTINGS } from '@/data/credits';
 import Navbar from '@/components/Navbar';
@@ -64,7 +63,6 @@ const TYPE_BREAKDOWN = (() => {
 const maxVol = Math.max(...TYPE_BREAKDOWN.map(t => t.volume));
 
 export default function DataPage() {
-  const [timeframe, setTimeframe] = useState<'6m' | '1y' | 'all'>('6m');
 
   return (
     <div style={{ background: '#FDFBF7', minHeight: '100vh' }}>
@@ -98,9 +96,6 @@ export default function DataPage() {
                   <div className="flex items-end justify-between mt-4">
                     <div>
                       <span style={{ fontFamily: fr, fontSize: '28px', fontWeight: 700, color: '#1A1714', fontFeatureSettings: "'tnum'" }}>${idx.price.toFixed(2)}</span>
-                      <span style={{ fontFamily: mono, fontSize: '12px', fontWeight: 600, color: idx.change >= 0 ? '#2D6A4F' : '#B91C1C', marginLeft: '8px' }}>
-                        {idx.change >= 0 ? '▲' : '▼'} {Math.abs(idx.change).toFixed(1)}%
-                      </span>
                     </div>
                     {/* Sparkline */}
                     <svg width="80" height="28" viewBox="0 0 80 28" fill="none">
@@ -113,7 +108,7 @@ export default function DataPage() {
                           const y = 26 - ((v - min) / range) * 24;
                           return `${x},${y}`;
                         }).join(' ')}
-                        stroke={idx.change >= 0 ? '#2D6A4F' : '#B91C1C'}
+                        stroke={'#8B8178'}
                         strokeWidth="1.5"
                         fill="none"
                       />
@@ -170,15 +165,6 @@ export default function DataPage() {
                 <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', marginRight: '8px' }}>
                   Illustrative
                 </span>
-                {(['6m', '1y', 'all'] as const).map(t => (
-                  <button key={t} onClick={() => setTimeframe(t)} style={{
-                    fontFamily: bg, fontSize: '11px', fontWeight: timeframe === t ? 700 : 500,
-                    color: timeframe === t ? '#1B3A2D' : '#B0A99A',
-                    background: timeframe === t ? 'rgba(27,58,45,0.06)' : 'transparent',
-                    border: `1px solid ${timeframe === t ? '#1B3A2D' : '#E8E2D6'}`,
-                    padding: '5px 12px', borderRadius: '6px', cursor: 'pointer',
-                  }}>{t === '6m' ? '6 months' : t === '1y' ? '1 year' : 'All time'}</button>
-                ))}
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '180px' }}>
                 {MONTHLY_VOLUME.map(m => {

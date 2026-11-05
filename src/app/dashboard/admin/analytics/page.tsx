@@ -8,12 +8,12 @@ const mono = "'JetBrains Mono', monospace";
 const fmt = (n: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n);
 
 const BUYER_ANALYTICS = [
-  { company: 'Emirates Industrial Group', orders: 3, volume: 15500, spend: 374100, avgPrice: 24.13, compliance: ['NRCC', 'CBAM'], lastOrder: '22 Mar', retention: 'high' },
-  { company: 'Masdar Clean Energy', orders: 4, volume: 18000, spend: 422500, avgPrice: 23.47, compliance: ['NRCC'], lastOrder: '20 Mar', retention: 'high' },
-  { company: 'Abu Dhabi Airports', orders: 1, volume: 15000, spend: 192000, avgPrice: 12.80, compliance: ['CORSIA'], lastOrder: '21 Mar', retention: 'new' },
-  { company: 'ADNOC', orders: 1, volume: 5000, spend: 162500, avgPrice: 32.50, compliance: ['NRCC', 'CBAM'], lastOrder: '10 Mar', retention: 'at_risk' },
-  { company: 'Emirates Steel Arkan', orders: 1, volume: 10000, spend: 128000, avgPrice: 12.80, compliance: ['CBAM'], lastOrder: '18 Mar', retention: 'new' },
-  { company: 'Dubai Holding', orders: 1, volume: 8000, spend: 145600, avgPrice: 18.20, compliance: [], lastOrder: '28 Feb', retention: 'at_risk' },
+  { company: 'Example Buyer A', orders: 3, volume: 15500, spend: 374100, avgPrice: 24.13, compliance: ['NRCC', 'CBAM'], lastOrder: '22 Mar', retention: 'high' },
+  { company: 'Example Buyer C', orders: 4, volume: 18000, spend: 422500, avgPrice: 23.47, compliance: ['NRCC'], lastOrder: '20 Mar', retention: 'high' },
+  { company: 'Example Buyer B', orders: 1, volume: 15000, spend: 192000, avgPrice: 12.80, compliance: ['CORSIA'], lastOrder: '21 Mar', retention: 'new' },
+  { company: 'Example Buyer D', orders: 1, volume: 5000, spend: 162500, avgPrice: 32.50, compliance: ['NRCC', 'CBAM'], lastOrder: '10 Mar', retention: 'at_risk' },
+  { company: 'Example Buyer E', orders: 1, volume: 10000, spend: 128000, avgPrice: 12.80, compliance: ['CBAM'], lastOrder: '18 Mar', retention: 'new' },
+  { company: 'Example Buyer F', orders: 1, volume: 8000, spend: 145600, avgPrice: 18.20, compliance: [], lastOrder: '28 Feb', retention: 'at_risk' },
 ];
 
 const CREDIT_TYPE_DATA = [
