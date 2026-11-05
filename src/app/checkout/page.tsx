@@ -232,7 +232,7 @@ function CheckoutInner() {
             </div>
             <div style={{ background: '#F5F0E8', borderRadius: '10px', padding: '14px', marginTop: '16px' }}>
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#8B8178', lineHeight: 1.6 }}>
-                <strong style={{ color: '#1A1714' }}>Settlement:</strong> Stripe escrow for transactions under $100K. Institutional DvP via ACX/Carbonplace for $100K+. Nothing is submitted in this demonstration.
+                <strong style={{ color: '#1A1714' }}>Settlement:</strong> Live settlement is planned and not available yet. Nothing is submitted in this demonstration.
               </p>
             </div>
           </div>

@@ -632,11 +632,11 @@ export default function Home() {
           <SectionHeader eyebrow="FAQ" title="Common questions." />
           <div className="space-y-0">
             {[
-              { q: 'What registries do you support?', a: 'CarbonBridge supports credits from Verra (VCS), Gold Standard, and the American Carbon Registry (ACR). We also facilitate ACCU-adjacent projects registered directly with Verra.' },
+              { q: 'What registries do you support?', a: 'CarbonBridge is designed for credits from Verra (VCS), Gold Standard and the American Carbon Registry (ACR). The listings on the site today are illustrative examples.' },
               { q: 'How are credits rated?', a: 'We use a rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
-              { q: 'Is the insurance mandatory?', a: 'No. Insurance is optional and available at checkout. You choose the level of cover you need, from basic non-delivery protection to comprehensive CORSIA guarantees.' },
-              { q: 'How does settlement work?', a: 'All marketplace transactions settle via bank transfer (recommended) or card payment through Tap Payments or Stripe (buyer\'s choice). Bank transfer purchases generate a legally binding Purchase Agreement valid for 5 business days. For institutional-grade credit settlement, transfers are executed through ACX Abu Dhabi, CIX Singapore, or Carbonplace on a delivery-versus-payment basis.' },
-              { q: 'Do you sell your own credits?', a: 'Yes, through CarbonBridge Direct, our own curated inventory. These are always clearly labelled and never algorithmically favoured over third-party listings.' },
+              { q: 'Is the insurance mandatory?', a: 'No. Insurance at checkout is planned and will be optional. No cover is offered yet.' },
+              { q: 'How does settlement work?', a: 'Live settlement is not available yet. CarbonBridge does not currently hold an ADGM/FSRA Financial Services Permission, and the application is in progress. The checkout on this site is a demonstration and takes no payment. To discuss a purchase, email info@carbonbridge.ae.' },
+              { q: 'Do you sell your own credits?', a: 'Not today. CarbonBridge Direct, our own curated inventory, is planned. Its listings will be clearly labelled and never favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
             ].map(faq => (
               <details key={faq.q} className="group" style={{ borderBottom: '1px solid var(--border-light)', padding: '20px 0' }}>

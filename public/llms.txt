@@ -6,9 +6,9 @@ CarbonBridge is a carbon credit marketplace built for the MENA market, targeting
 
 ## Key Product Areas
 
-- **Marketplace**: Browse and compare 18+ verified carbon credit listings by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
+- **Marketplace**: Browse and compare illustrative carbon credit listings (examples, not live offers) by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
 - **Transaction chain**: Reservation → purchase agreement → escrow → settlement → registry retirement, with a 24-hour payment window.
-- **Insurance**: Non-delivery and invalidation cover offered at checkout.
+- **Insurance**: Non-delivery and invalidation cover at checkout is planned. No cover is offered yet.
 - **Data & Ratings**: Quality ratings (AAA-C) based on ICVCM Core Carbon Principles: additionality, permanence, leakage, co-benefits.
 - **API access**: REST API for fintech integrations to programmatically purchase and retire credits on behalf of clients.
 - **Carbon management SaaS**: Portfolio tracking, emissions reporting, and compliance dashboards for corporate sustainability teams.
@@ -23,7 +23,7 @@ CarbonBridge is a carbon credit marketplace built for the MENA market, targeting
 ## Compliance Frameworks Covered
 
 - UAE NRCC (National Registry of Carbon Credits)
-- EU CBAM (Carbon Border Adjustment Mechanism, effective 2027)
+- EU CBAM (Carbon Border Adjustment Mechanism, definitive period from 1 January 2026)
 - ICAO CORSIA (aviation)
 - Science Based Targets initiative (SBTi BVCM)
 - VCMI claims framework

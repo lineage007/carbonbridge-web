@@ -217,7 +217,7 @@ export default function CreditDetailPage() {
                     ♡ Watchlist
                   </button>
                 </div>
-                <Link href={`/contact?subject=RFQ: ${credit.projectName}`} style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', fontWeight: 600, display: 'block', textAlign: 'center', marginTop: '12px' }}>
+                <Link href="/rfq" style={{ fontFamily: bg, fontSize: '12px', color: '#C9A96E', fontWeight: 600, display: 'block', textAlign: 'center', marginTop: '12px' }}>
                   Request quote for large volumes →
                 </Link>
               </div>
@@ -366,8 +366,7 @@ export default function CreditDetailPage() {
 
                   <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)', borderRadius: '12px', padding: '18px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>
-                      Insurance products are available at checkout. Coverage is optional and never pre-selected. Full terms and conditions provided before purchase confirmation.
-                      Cover is arranged with specialist carbon insurers; the underwriter for each product is named in the policy documentation.
+                      Insurance at checkout is planned and will be optional. No cover is arranged while listings are illustrative.
                     </p>
                   </div>
                 </div>
