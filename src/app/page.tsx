@@ -597,12 +597,12 @@ export default function Home() {
             
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                'ADGM jurisdiction, Abu Dhabi',
+                'ADGM authorisation (in progress)',
                 'Verra General Account (target)',
                 'ACX Abu Dhabi (target)',
-                'Institutional-grade settlement',
+                'Institutional settlement (planned)',
                 'Credit guarantee insurance (target)',
-                'Multi-registry access',
+                'Multi-registry access (planned)',
               ].map(item => (
                 <div key={item} className="flex items-start gap-2">
                   <span style={{ color: 'var(--gold)', flexShrink: 0, marginTop: '1px' }}>{icons.check}</span>
