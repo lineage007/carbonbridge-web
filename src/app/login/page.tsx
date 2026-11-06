@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
@@ -17,6 +17,13 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [resetMode, setResetMode] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+
+  // /auth/callback sends failed email links here with ?error=auth_failed.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('error') === 'auth_failed') {
+      setError('That sign in link did not work. It may have expired or been opened in a different browser. Sign in below or request a new link.');
+    }
+  }, []);
 
   const handleLogin = async () => {
     setLoading(true); setError('');

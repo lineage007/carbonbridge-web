@@ -7,7 +7,8 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl
   const code = searchParams.get('code')
   // Password recovery links must land on the page that sets the new password.
-  const next = searchParams.get('type') === 'recovery' ? '/reset-password' : safeRedirectPath(searchParams.get('redirect'))
+  const recovery = searchParams.get('type') === 'recovery'
+  const next = recovery ? '/reset-password' : safeRedirectPath(searchParams.get('redirect'))
 
   if (code) {
     const cookieStore = await cookies()
@@ -26,5 +27,6 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) return NextResponse.redirect(`${origin}${next}`)
   }
-  return NextResponse.redirect(`${origin}/login?error=auth_failed`)
+  // A failed recovery link (expired, used, or opened in another browser) explains itself on /reset-password.
+  return NextResponse.redirect(recovery ? `${origin}/reset-password?error=link` : `${origin}/login?error=auth_failed`)
 }

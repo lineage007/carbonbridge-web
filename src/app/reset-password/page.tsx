@@ -20,6 +20,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('error')) { setStatus('no-session'); return; }
     (async () => {
       try {
         const { data: { user } } = await createClient().auth.getUser();
@@ -61,8 +62,8 @@ export default function ResetPasswordPage() {
 
           {status === 'no-session' && (
             <div style={{ textAlign: 'center' }}>
-              <p style={textStyle}>This reset link has expired or was already used. Request a new one from the sign in page.</p>
-              <Link href="/login" style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', display: 'inline-block', marginTop: '16px' }}>Go to sign in</Link>
+              <p style={textStyle}>This reset link has expired, was already used, or was opened in a different browser from the one you requested it in. Request a new link from the sign in page.</p>
+              <Link href="/login" style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', display: 'inline-block', marginTop: '16px' }}>Request a new link</Link>
             </div>
           )}
 
