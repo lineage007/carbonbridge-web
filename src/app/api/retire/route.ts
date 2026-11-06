@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     const apiKey = req.headers.get('x-api-key');
     let userId: string;
 
-    if (apiKey !== null && !isWellFormedApiKey(apiKey)) {
+    if (apiKey && !isWellFormedApiKey(apiKey)) {
       return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
     }
     if (apiKey) {
@@ -229,7 +229,7 @@ export async function GET(req: NextRequest) {
     const apiKey = req.headers.get('x-api-key');
     let userId: string;
 
-    if (apiKey !== null && !isWellFormedApiKey(apiKey)) {
+    if (apiKey && !isWellFormedApiKey(apiKey)) {
       return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
     }
     if (apiKey) {
