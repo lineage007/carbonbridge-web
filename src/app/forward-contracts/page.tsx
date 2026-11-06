@@ -11,9 +11,9 @@ const mono = "'JetBrains Mono', monospace";
 function fmt(n: number) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2 }); }
 
 const CONTRACTS = [
-  { id: 'FC-001', seller: 'Great Southern Carbon', credit: 'Forest Restoration (ARR)', volume: 10000, price: 24.50, delivery: '2026-09-30', insurance: true, status: 'awaiting' as const },
-  { id: 'FC-002', seller: 'Queensland Carbon Projects', credit: 'Soil Carbon Initiative', volume: 5000, price: 16.80, delivery: '2026-12-15', insurance: false, status: 'in_progress' as const },
-  { id: 'FC-003', seller: 'Abu Dhabi Mangroves Trust', credit: 'Blue Carbon Restoration', volume: 15000, price: 30.00, delivery: '2027-03-31', insurance: true, status: 'awaiting' as const },
+  { id: 'FC-001', seller: 'Example Developer A', credit: 'Forest Restoration (ARR)', volume: 10000, price: 24.50, delivery: '2026-09-30', insurance: true, status: 'awaiting' as const },
+  { id: 'FC-002', seller: 'Example Developer B', credit: 'Soil Carbon Initiative', volume: 5000, price: 16.80, delivery: '2026-12-15', insurance: false, status: 'in_progress' as const },
+  { id: 'FC-003', seller: 'Example Developer C', credit: 'Blue Carbon Restoration', volume: 15000, price: 30.00, delivery: '2027-03-31', insurance: true, status: 'awaiting' as const },
 ];
 
 const statusMap: Record<string, { label: string; bg: string; text: string }> = {

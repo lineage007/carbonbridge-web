@@ -184,7 +184,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #1B3A2D, #2D6A4F)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#C9A96E' }}>E</span>
                 </div>
-                <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 500, color: '#1A1714' }}>Emirates Industrial</span>
+                <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 500, color: '#1A1714' }}>Example Company</span>
                 <span style={{ fontSize: '10px', color: '#8B8178', transform: profileOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>▾</span>
               </button>
 
@@ -197,7 +197,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 }}>
                   {/* User info header */}
                   <div style={{ padding: '14px 16px', borderBottom: '1px solid #F0EDE6', background: '#FAFAF7' }}>
-                    <div style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>Emirates Industrial Group</div>
+                    <div style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#1A1714' }}>Example Company</div>
                     <div style={{ fontFamily: bg, fontSize: '11px', color: '#8B8178' }}>Corporate · Premium Plan</div>
                   </div>
                   {/* Menu items */}

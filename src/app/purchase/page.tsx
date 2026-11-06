@@ -224,7 +224,7 @@ function PurchaseInner() {
             <h3 style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '14px' }}>Your details</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[
-                { label: 'Company', value: buyerCompany, setter: setBuyerCompany, placeholder: 'Emirates Industrial Group' },
+                { label: 'Company', value: buyerCompany, setter: setBuyerCompany, placeholder: 'Company name' },
                 { label: 'Contact name', value: buyerName, setter: setBuyerName, placeholder: 'Your full name' },
                 { label: 'Email', value: buyerEmail, setter: setBuyerEmail, placeholder: 'you@company.com', type: 'email' },
               ].map(f => (
