@@ -70,36 +70,36 @@ export default function RFQPage() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div>
-            <label style={labelStyle}>Credit types required *</label>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <p id="rfq-credit-types" style={labelStyle}>Credit types required *</p>
+            <div role="group" aria-labelledby="rfq-credit-types" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {CREDIT_TYPES.map(t => {
                 const active = form.creditTypes.includes(t);
-                return <button key={t} onClick={() => toggleType(t)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 14px', borderRadius: '8px', border: `1px solid ${active ? '#1B3A2D' : '#E5DED3'}`, background: active ? 'rgba(27,58,45,0.06)' : 'transparent', color: active ? '#1B3A2D' : '#6B6259', cursor: 'pointer' }}>{t}</button>;
+                return <button key={t} type="button" aria-pressed={active} onClick={() => toggleType(t)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 14px', borderRadius: '8px', border: `1px solid ${active ? '#1B3A2D' : '#E5DED3'}`, background: active ? 'rgba(27,58,45,0.06)' : 'transparent', color: active ? '#1B3A2D' : '#6B6259', cursor: 'pointer' }}>{t}</button>;
               })}
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
-            <div><label style={labelStyle}>Quantity (tCO₂e) *</label><input style={inputStyle} placeholder="Min 10,000" maxLength={40} value={form.quantity} onChange={e => setForm(f => ({ ...f, quantity: e.target.value }))} /></div>
-            <div><label style={labelStyle}>Target price min ($/t)</label><input style={inputStyle} placeholder="Optional" maxLength={20} value={form.priceMin} onChange={e => setForm(f => ({ ...f, priceMin: e.target.value }))} /></div>
-            <div><label style={labelStyle}>Target price max ($/t)</label><input style={inputStyle} placeholder="Optional" maxLength={20} value={form.priceMax} onChange={e => setForm(f => ({ ...f, priceMax: e.target.value }))} /></div>
+          <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: '16px' }}>
+            <div><label htmlFor="rfq-quantity" style={labelStyle}>Quantity (tCO₂e) *</label><input id="rfq-quantity" style={inputStyle} placeholder="Min 10,000" maxLength={40} value={form.quantity} onChange={e => setForm(f => ({ ...f, quantity: e.target.value }))} /></div>
+            <div><label htmlFor="rfq-price-min" style={labelStyle}>Target price min ($/t)</label><input id="rfq-price-min" style={inputStyle} placeholder="Optional" maxLength={20} value={form.priceMin} onChange={e => setForm(f => ({ ...f, priceMin: e.target.value }))} /></div>
+            <div><label htmlFor="rfq-price-max" style={labelStyle}>Target price max ($/t)</label><input id="rfq-price-max" style={inputStyle} placeholder="Optional" maxLength={20} value={form.priceMax} onChange={e => setForm(f => ({ ...f, priceMax: e.target.value }))} /></div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '16px' }}>
             <div>
-              <label style={labelStyle}>Delivery timeline</label>
-              <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.delivery} onChange={e => setForm(f => ({ ...f, delivery: e.target.value }))}>
+              <label htmlFor="rfq-delivery-timeline" style={labelStyle}>Delivery timeline</label>
+              <select id="rfq-delivery-timeline" style={{ ...inputStyle, appearance: 'none' as const }} value={form.delivery} onChange={e => setForm(f => ({ ...f, delivery: e.target.value }))}>
                 <option value="immediate">Immediate</option><option value="3m">Within 3 months</option><option value="6m">Within 6 months</option><option value="flexible">Flexible</option>
               </select>
             </div>
             <div>
-              <label style={labelStyle}>Minimum quality</label>
-              <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.quality} onChange={e => setForm(f => ({ ...f, quality: e.target.value }))}>
+              <label htmlFor="rfq-minimum-quality" style={labelStyle}>Minimum quality</label>
+              <select id="rfq-minimum-quality" style={{ ...inputStyle, appearance: 'none' as const }} value={form.quality} onChange={e => setForm(f => ({ ...f, quality: e.target.value }))}>
                 {QUALITY_OPTIONS.map(q => <option key={q} value={q.toLowerCase()}>{q}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label style={labelStyle}>Additional notes</label>
-            <textarea style={{ ...inputStyle, minHeight: '100px', resize: 'vertical' as const }} placeholder="Specific requirements, compliance context, preferred geography..." maxLength={RFQ_NOTES_MAX} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
+            <label htmlFor="rfq-additional-notes" style={labelStyle}>Additional notes</label>
+            <textarea id="rfq-additional-notes" style={{ ...inputStyle, minHeight: '100px', resize: 'vertical' as const }} placeholder="Specific requirements, compliance context, preferred geography..." maxLength={RFQ_NOTES_MAX} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
           </div>
           {problem && <p role="alert" style={{ fontFamily: bg, fontSize: '14px', color: '#9B2C2C', margin: 0 }}>{problem}</p>}
           <button onClick={emailRequest} style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, padding: '16px', borderRadius: '10px', border: 'none', background: '#1B3A2D', color: '#F2ECE0', cursor: 'pointer', width: '100%' }}>

@@ -110,29 +110,29 @@ export default function RegisterPage() {
         </div>
 
         <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
-          {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
+          {error && <div role="alert" style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
 
           {step === 1 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div><label style={labelStyle}>Contact name *</label><input style={inputStyle} value={form.contactName} onChange={e => set('contactName', e.target.value)} placeholder="Your full name" /></div>
-                <div><label style={labelStyle}>Company name *</label><input style={inputStyle} value={form.companyName} onChange={e => set('companyName', e.target.value)} placeholder="Company Ltd" /></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '12px' }}>
+                <div><label htmlFor="reg-contact-name" style={labelStyle}>Contact name *</label><input id="reg-contact-name" autoComplete="name" style={inputStyle} value={form.contactName} onChange={e => set('contactName', e.target.value)} placeholder="Your full name" /></div>
+                <div><label htmlFor="reg-company-name" style={labelStyle}>Company name *</label><input id="reg-company-name" autoComplete="organization" style={inputStyle} value={form.companyName} onChange={e => set('companyName', e.target.value)} placeholder="Company Ltd" /></div>
               </div>
-              <div><label style={labelStyle}>Email *</label><input type="email" style={inputStyle} value={form.email} onChange={e => set('email', e.target.value)} placeholder="you@company.com" /></div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div><label style={labelStyle}>Password *</label><input type="password" style={inputStyle} value={form.password} onChange={e => set('password', e.target.value)} placeholder="Min 8 characters" /></div>
-                <div><label style={labelStyle}>Confirm password *</label><input type="password" style={inputStyle} value={form.confirmPassword} onChange={e => set('confirmPassword', e.target.value)} /></div>
+              <div><label htmlFor="reg-email" style={labelStyle}>Email *</label><input id="reg-email" type="email" autoComplete="email" style={inputStyle} value={form.email} onChange={e => set('email', e.target.value)} placeholder="you@company.com" /></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '12px' }}>
+                <div><label htmlFor="reg-password" style={labelStyle}>Password *</label><input id="reg-password" type="password" autoComplete="new-password" style={inputStyle} value={form.password} onChange={e => set('password', e.target.value)} placeholder="Min 8 characters" /></div>
+                <div><label htmlFor="reg-confirm-password" style={labelStyle}>Confirm password *</label><input id="reg-confirm-password" type="password" autoComplete="new-password" style={inputStyle} value={form.confirmPassword} onChange={e => set('confirmPassword', e.target.value)} /></div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '12px' }}>
                 <div>
-                  <label style={labelStyle}>Country *</label>
-                  <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.country} onChange={e => set('country', e.target.value)}>
+                  <label htmlFor="reg-country" style={labelStyle}>Country *</label>
+                  <select id="reg-country" style={{ ...inputStyle, appearance: 'none' as const }} value={form.country} onChange={e => set('country', e.target.value)}>
                     <option value="AE">United Arab Emirates</option><option value="SA">Saudi Arabia</option><option value="QA">Qatar</option><option value="KW">Kuwait</option><option value="BH">Bahrain</option><option value="OM">Oman</option><option value="AU">Australia</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="SG">Singapore</option><option value="OTHER">Other</option>
                   </select>
                 </div>
                 <div>
-                  <label style={labelStyle}>Company type *</label>
-                  <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.companyType} onChange={e => set('companyType', e.target.value)}>
+                  <label htmlFor="reg-company-type" style={labelStyle}>Company type *</label>
+                  <select id="reg-company-type" style={{ ...inputStyle, appearance: 'none' as const }} value={form.companyType} onChange={e => set('companyType', e.target.value)}>
                     {COMPANY_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                   </select>
                 </div>
@@ -147,38 +147,38 @@ export default function RegisterPage() {
           {step === 2 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div>
-                <label style={labelStyle}>I plan to... *</label>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <p id="reg-plans" style={labelStyle}>I plan to... *</p>
+                <div role="group" aria-labelledby="reg-plans" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {['Buy credits', 'Sell credits', 'Both', 'Not sure yet'].map(opt => {
                     const val = opt.toLowerCase().replace(/ /g, '_');
                     const active = form.plansTo.includes(val);
-                    return <button key={opt} onClick={() => toggleArr('plansTo', val)} style={{ fontFamily: bg, fontSize: '13px', padding: '8px 16px', borderRadius: '8px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.15)'}`, background: active ? 'rgba(201,169,110,0.1)' : 'transparent', color: active ? '#C9A96E' : '#8AAA92', cursor: 'pointer' }}>{opt}</button>;
+                    return <button key={opt} type="button" aria-pressed={active} onClick={() => toggleArr('plansTo', val)} style={{ fontFamily: bg, fontSize: '13px', padding: '8px 16px', borderRadius: '8px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.15)'}`, background: active ? 'rgba(201,169,110,0.1)' : 'transparent', color: active ? '#C9A96E' : '#8AAA92', cursor: 'pointer' }}>{opt}</button>;
                   })}
                 </div>
               </div>
               <div>
-                <label style={labelStyle}>Compliance needs (optional)</label>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <p id="reg-compliance" style={labelStyle}>Compliance needs (optional)</p>
+                <div role="group" aria-labelledby="reg-compliance" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {COMPLIANCE.map(c => {
                     const active = form.compliance.includes(c.toLowerCase());
-                    return <button key={c} onClick={() => toggleArr('compliance', c.toLowerCase())} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{c}</button>;
+                    return <button key={c} type="button" aria-pressed={active} onClick={() => toggleArr('compliance', c.toLowerCase())} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{c}</button>;
                   })}
                 </div>
               </div>
               <div>
-                <label style={labelStyle}>Estimated annual volume (optional)</label>
-                <select style={{ ...inputStyle, appearance: 'none' as const }} value={form.volume} onChange={e => set('volume', e.target.value)}>
+                <label htmlFor="reg-volume" style={labelStyle}>Estimated annual volume (optional)</label>
+                <select id="reg-volume" style={{ ...inputStyle, appearance: 'none' as const }} value={form.volume} onChange={e => set('volume', e.target.value)}>
                   <option value="">Select...</option>
                   {VOLUMES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
                 </select>
               </div>
               <div>
-                <label style={labelStyle}>Registry accounts held (optional)</label>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <p id="reg-registries" style={labelStyle}>Registry accounts held (optional)</p>
+                <div role="group" aria-labelledby="reg-registries" style={{ display: 'flex', gap: '8px' }}>
                   {['Verra', 'Gold Standard', 'ACR'].map(r => {
                     const val = r.toLowerCase().replace(/ /g, '_');
                     const active = form.registries.includes(val);
-                    return <button key={r} onClick={() => toggleArr('registries', val)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{r}</button>;
+                    return <button key={r} type="button" aria-pressed={active} onClick={() => toggleArr('registries', val)} style={{ fontFamily: bg, fontSize: '12px', padding: '6px 12px', borderRadius: '6px', border: `1px solid ${active ? '#C9A96E' : 'rgba(201,169,110,0.12)'}`, background: active ? 'rgba(201,169,110,0.08)' : 'transparent', color: active ? '#C9A96E' : '#6B8A74', cursor: 'pointer' }}>{r}</button>;
                   })}
                 </div>
               </div>
