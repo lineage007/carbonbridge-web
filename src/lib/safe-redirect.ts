@@ -13,7 +13,9 @@ export function safeRedirectPath(value: string | null | undefined, fallback = '/
     const base = 'https://carbonbridge.invalid'
     const url = new URL(value, base)
     if (url.origin !== base) return fallback
-    return url.pathname + url.search + url.hash
+    // Re-check after normalisation: "/..//evil.example" resolves to "//evil.example".
+    const out = url.pathname + url.search + url.hash
+    return out.startsWith('//') || out.startsWith('/\\') ? fallback : out
   } catch {
     return fallback
   }
