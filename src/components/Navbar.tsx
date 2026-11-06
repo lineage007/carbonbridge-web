@@ -237,6 +237,8 @@ export default function Navbar({ dark = false }: NavbarProps) {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
               style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: dark ? '#FFFCF6' : '#1A1714', padding: '4px' }}
               className="md:hidden"
             >
