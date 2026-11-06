@@ -668,7 +668,7 @@ export default function Home() {
             From a first credit purchase to a multi-million dollar compliance programme, our team is here to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="mailto:hello@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
+            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
               Contact our team {icons.arrow}
             </a>
             <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '14px 32px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 transition-all">
@@ -705,11 +705,11 @@ export default function Home() {
                 { label: 'CORSIA explainer', href: '/compliance/corsia' },
                 { label: 'EU CBAM explainer', href: '/compliance/eu-cbam' },
                 { label: 'UAE NRCC explainer', href: '/compliance/uae-nrcc' },
-                { label: 'Advisory', href: 'mailto:hello@carbonbridge.ae' },
+                { label: 'Advisory', href: 'mailto:info@carbonbridge.ae' },
               ] },
               { title: 'Company', items: [
                 { label: 'About', href: '/about' },
-                { label: 'Contact', href: 'mailto:hello@carbonbridge.ae' },
+                { label: 'Contact', href: 'mailto:info@carbonbridge.ae' },
                 { label: 'Privacy', href: '/legal/privacy' },
                 { label: 'Terms', href: '/legal/terms' },
                 { label: 'Insurance Terms', href: '/legal/insurance' },
@@ -732,7 +732,7 @@ export default function Home() {
             <span style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }}>
               © {new Date().getFullYear()} CarbonBridge. Registered in Abu Dhabi Global Market.
             </span>
-            <a href="mailto:hello@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">hello@carbonbridge.ae</a>
+            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">info@carbonbridge.ae</a>
           </div>
         </div>
       </footer>
