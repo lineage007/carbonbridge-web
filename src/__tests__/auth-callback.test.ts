@@ -5,8 +5,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 
 vi.mock('next/headers', () => ({ cookies: async () => ({ getAll: () => [], set: () => {} }) }))
+let exchangeError: { message: string } | null = null
 vi.mock('@supabase/ssr', () => ({
-  createServerClient: () => ({ auth: { exchangeCodeForSession: async () => ({ error: null }) } }),
+  createServerClient: () => ({ auth: { exchangeCodeForSession: async () => ({ error: exchangeError }) } }),
 }))
 
 import { GET } from '../app/auth/callback/route'
@@ -31,4 +32,26 @@ describe('/auth/callback redirect', () => {
       expect(loc).toBe('https://carbonbridge.ae/dashboard')
     },
   )
+})
+
+describe('/auth/callback password recovery', () => {
+  it('sends recovery links to the page that sets a new password', async () => {
+    expect(await location('?code=abc&type=recovery')).toBe('https://carbonbridge.ae/reset-password')
+  })
+
+  it('ignores a redirect parameter on recovery links', async () => {
+    expect(await location('?code=abc&type=recovery&redirect=/checkout')).toBe('https://carbonbridge.ae/reset-password')
+  })
+})
+
+describe('/auth/callback failures', () => {
+  it('sends a failed recovery link to /reset-password with an explanation', async () => {
+    exchangeError = { message: 'code verifier missing' }
+    try {
+      expect(await location('?code=abc&type=recovery')).toBe('https://carbonbridge.ae/reset-password?error=link')
+      expect(await location('?code=abc')).toBe('https://carbonbridge.ae/login?error=auth_failed')
+    } finally {
+      exchangeError = null
+    }
+  })
 })

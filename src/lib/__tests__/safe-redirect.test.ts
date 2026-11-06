@@ -28,6 +28,7 @@ describe('safeRedirectPath', () => {
     '/.//evil.example',
     '/%2e%2e//evil.example',
     '/a/../..//evil.example',
+    '/.%2e//evil.example',
   ])('rejects %s', (v) => {
     const out = safeRedirectPath(v)
     expect(out.startsWith('/')).toBe(true)

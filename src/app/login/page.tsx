@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
@@ -17,6 +17,15 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [resetMode, setResetMode] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+
+  // /auth/callback sends failed email links here with ?error=auth_failed; /reset-password links here with ?reset=1.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('reset') === '1') setResetMode(true);
+    if (params.get('error') === 'auth_failed') {
+      setError('That email link did not work. It may have expired or been opened in a different browser. Sign in below, or use "Forgot password?" to get a new reset link.');
+    }
+  }, []);
 
   const handleLogin = async () => {
     setLoading(true); setError('');
@@ -71,7 +80,7 @@ export default function LoginPage() {
         </div>
 
         <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
-          {error && <div style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
+          {error && <div role="alert" style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px', marginBottom: '20px' }}>{error}</div>}
           
           {resetSent ? (
             <div style={{ textAlign: 'center' }}>
@@ -84,16 +93,16 @@ export default function LoginPage() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92', marginBottom: '6px', display: 'block' }}>Email</label>
-                <input type="email" style={inputStyle} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" onKeyDown={e => e.key === 'Enter' && (resetMode ? handleReset() : handleLogin())} />
+                <label htmlFor="login-email" style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92', marginBottom: '6px', display: 'block' }}>Email</label>
+                <input id="login-email" type="email" autoComplete="email" style={inputStyle} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" onKeyDown={e => e.key === 'Enter' && (resetMode ? handleReset() : handleLogin())} />
               </div>
               {!resetMode && (
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <label style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Password</label>
+                    <label htmlFor="login-password" style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Password</label>
                     <button onClick={() => setResetMode(true)} style={{ fontFamily: bg, fontSize: '11px', color: '#C9A96E', background: 'none', border: 'none', cursor: 'pointer' }}>Forgot password?</button>
                   </div>
-                  <input type="password" style={inputStyle} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" onKeyDown={e => e.key === 'Enter' && handleLogin()} />
+                  <input id="login-password" type="password" autoComplete="current-password" style={inputStyle} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" onKeyDown={e => e.key === 'Enter' && handleLogin()} />
                 </div>
               )}
               <button onClick={resetMode ? handleReset : handleLogin} disabled={loading}
