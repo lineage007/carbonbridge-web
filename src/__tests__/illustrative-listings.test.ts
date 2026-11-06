@@ -85,7 +85,7 @@ describe('illustrative listings: page copy (E9)', () => {
   });
 
   it('credit detail page offers no documentation and claims no verified co-benefits', () => {
-    const page = read('src/app/credits/[id]/page.tsx');
+    const page = read('src/app/credits/[id]/CreditDetail.tsx');
     expect(page).not.toContain('Documentation available upon request');
     expect(page).not.toContain('Verified Co-benefits');
     expect(page).toContain('No documentation exists for illustrative listings.');

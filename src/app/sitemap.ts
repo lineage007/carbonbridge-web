@@ -60,6 +60,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/developers`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    ...['terms', 'privacy', 'cookies', 'marketplace-rules', 'insurance', 'api-terms'].map(slug => ({
+      url: `${baseUrl}/legal/${slug}`,
+      lastModified: now,
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    })),
+    {
       url: `${baseUrl}/login`,
       lastModified: now,
       changeFrequency: 'monthly',
