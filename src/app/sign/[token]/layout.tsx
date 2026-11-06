@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Agreement signature',
+  title: 'Agreement signature (not yet live)',
   // Links carry a private signing token.
   robots: { index: false, follow: false },
 };
