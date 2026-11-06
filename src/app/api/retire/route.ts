@@ -20,6 +20,7 @@
 import { createClient } from '@/lib/supabase-server';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { isWellFormedApiKey } from '@/lib/api-key';
 
 // ─── Input schema ─────────────────────────────────────────────────────────────
 
@@ -44,6 +45,9 @@ export async function POST(req: NextRequest) {
     const apiKey = req.headers.get('x-api-key');
     let userId: string;
 
+    if (apiKey !== null && !isWellFormedApiKey(apiKey)) {
+      return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+    }
     if (apiKey) {
       const { data: profile } = await supabase
         .from('profiles')
@@ -225,6 +229,9 @@ export async function GET(req: NextRequest) {
     const apiKey = req.headers.get('x-api-key');
     let userId: string;
 
+    if (apiKey !== null && !isWellFormedApiKey(apiKey)) {
+      return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+    }
     if (apiKey) {
       const { data: profile } = await supabase
         .from('profiles')
