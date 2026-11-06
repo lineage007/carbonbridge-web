@@ -17,10 +17,11 @@ export async function GET(req: NextRequest) {
   const status = searchParams.get('status');
   const orderId = searchParams.get('order_id');
 
-  let query = supabase.from('settlements').select('*, orders(*, listings(project_name, credit_type), profiles!orders_buyer_id_fkey(company_name))');
+  let query = supabase.from('settlements').select('*, orders!inner(*, listings(project_name, credit_type), profiles!orders_buyer_id_fkey(company_name))');
   
   if (!isAdmin) {
-    // Regular users only see their own settlements
+    // Regular users only see their own settlements. orders!inner above makes this filter
+    // drop non-matching settlement rows; with a plain embed it only blanked the order.
     query = query.eq('orders.buyer_id', user.id);
   }
   if (status) query = query.eq('status', status);
