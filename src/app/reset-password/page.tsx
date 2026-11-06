@@ -58,12 +58,12 @@ export default function ResetPasswordPage() {
         </div>
 
         <div style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
-          {status === 'checking' && <p style={{ ...textStyle, textAlign: 'center' }}>Checking your reset link...</p>}
+          {status === 'checking' && <p role="status" style={{ ...textStyle, textAlign: 'center' }}>Checking your reset link...</p>}
 
           {status === 'no-session' && (
             <div style={{ textAlign: 'center' }}>
               <p style={textStyle}>This reset link has expired, was already used, or was opened in a different browser from the one you requested it in. Request a new link from the sign in page.</p>
-              <Link href="/login" style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', display: 'inline-block', marginTop: '16px' }}>Request a new link</Link>
+              <Link href="/login?reset=1" style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', display: 'inline-block', marginTop: '16px' }}>Request a new link</Link>
             </div>
           )}
 
@@ -76,7 +76,8 @@ export default function ResetPasswordPage() {
               {error && <div role="alert" style={{ fontFamily: bg, fontSize: '13px', color: '#EF4444', background: 'rgba(239,68,68,0.08)', padding: '10px 14px', borderRadius: '8px' }}>{error}</div>}
               <div>
                 <label htmlFor="new-password" style={labelStyle}>New password</label>
-                <input id="new-password" type="password" autoComplete="new-password" required minLength={MIN_PASSWORD_LENGTH} style={inputStyle} value={password} onChange={e => setPassword(e.target.value)} />
+                <input id="new-password" type="password" autoComplete="new-password" required minLength={MIN_PASSWORD_LENGTH} aria-describedby="new-password-hint" style={inputStyle} value={password} onChange={e => setPassword(e.target.value)} />
+                <p id="new-password-hint" style={{ fontFamily: bg, fontSize: '12px', color: '#6B8A74', marginTop: '6px' }}>At least {MIN_PASSWORD_LENGTH} characters.</p>
               </div>
               <div>
                 <label htmlFor="confirm-password" style={labelStyle}>Confirm new password</label>

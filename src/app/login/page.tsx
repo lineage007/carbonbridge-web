@@ -18,10 +18,12 @@ export default function LoginPage() {
   const [resetMode, setResetMode] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
-  // /auth/callback sends failed email links here with ?error=auth_failed.
+  // /auth/callback sends failed email links here with ?error=auth_failed; /reset-password links here with ?reset=1.
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get('error') === 'auth_failed') {
-      setError('That sign in link did not work. It may have expired or been opened in a different browser. Sign in below or request a new link.');
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('reset') === '1') setResetMode(true);
+    if (params.get('error') === 'auth_failed') {
+      setError('That email link did not work. It may have expired or been opened in a different browser. Sign in below, or use "Forgot password?" to get a new reset link.');
     }
   }, []);
 
