@@ -19,6 +19,8 @@ describe('/credits/[id]', () => {
     const meta = await page.generateMetadata({ params: Promise.resolve({ id: l.id }) })
     expect(meta.title).toBe(l.projectName)
     expect(String(meta.description)).toMatch(/^Example listing, not a live offer\./)
+    expect(String(meta.description).length).toBeLessThanOrEqual(160)
+    expect(meta.openGraph?.images).toBeTruthy()
   })
 })
 
