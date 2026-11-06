@@ -7,16 +7,17 @@ import { join } from 'node:path'
 import { LISTINGS } from '@/data/credits'
 
 const appDir = join(__dirname, '..', 'app')
+const componentsDir = join(__dirname, '..', 'components')
 const walk = (d: string): string[] =>
   readdirSync(d).flatMap(n => { const p = join(d, n); return statSync(p).isDirectory() ? walk(p) : [p] })
 
-const REAL_NAMES = ['Etihad', 'ADNOC', 'DP World', 'DEWA', 'Emirates Industrial Group', 'Pacific Carbon Developments']
+const REAL_NAMES = ['Etihad', 'ADNOC', 'DP World', 'DEWA', 'Emirates Industrial', 'emiratesindustrial', 'Pacific Carbon Developments', 'Abu Dhabi Mangroves Trust', 'Queensland Carbon Projects']
 
 describe('sample data names', () => {
   it('no page names a real company as a buyer or seller', () => {
-    const found = walk(appDir)
+    const found = [...walk(appDir), ...walk(componentsDir)]
       .filter(f => f.endsWith('.tsx'))
-      .flatMap(f => REAL_NAMES.filter(n => readFileSync(f, 'utf8').includes(n)).map(n => `${f.slice(appDir.length)}: ${n}`))
+      .flatMap(f => REAL_NAMES.filter(n => readFileSync(f, 'utf8').includes(n)).map(n => `${f}: ${n}`))
     expect(found).toEqual([])
   })
 
