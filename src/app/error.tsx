@@ -8,7 +8,7 @@ const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
 
 // Shown when a page throws while rendering. No Navbar here: if the error came from the
 // shared chrome, rendering it again would fail the same way.
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -21,7 +21,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           This page could not be loaded
         </h1>
         <p style={{ fontFamily: bg, fontSize: '15px', color: '#8B8178', lineHeight: 1.7, marginBottom: '32px' }}>
-          Please try again. If it keeps happening, email info@carbonbridge.ae{error.digest ? ` and quote reference ${error.digest}` : ''}.
+          Please try again. If it keeps happening, email <a href="mailto:info@carbonbridge.ae" style={{ color: '#1B3A2D', textDecoration: 'underline' }}>info@carbonbridge.ae</a>{error.digest ? ` and quote reference ${error.digest}` : ''}.
         </p>
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button type="button" onClick={reset} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px', border: 'none', cursor: 'pointer' }}>
