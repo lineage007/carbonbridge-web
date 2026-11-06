@@ -274,9 +274,9 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Trust bar — Settlement partner logos */}
+              {/* Registries and exchanges in the market. CarbonBridge has no agreements with them yet (see About), so no partner wording. */}
               <div style={{ borderTop: '1px solid rgba(201,169,110,0.1)', paddingTop: '24px' }}>
-                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.45)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>Settlement &amp; Registry Partners</div>
+                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.45)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>Registries &amp; exchanges</div>
                 <div className="flex flex-wrap items-center gap-x-10 gap-y-4" style={{ opacity: 0.4 }}>
                   {[
                     { src: '/partners/acx.svg', alt: 'ACX Abu Dhabi', w: 80 },
@@ -289,6 +289,7 @@ export default function Home() {
                     <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '22px', width: 'auto', filter: 'brightness(0) invert(1)', transition: 'opacity 0.3s' }} className="hover:opacity-100" />
                   ))}
                 </div>
+                <p style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.55)', marginTop: '12px' }}>Shown for reference. No partnership or endorsement is implied.</p>
               </div>
             </div>
 
@@ -347,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          PARTNER LOGOS — Full-width credibility bar
+          REGISTRY AND EXCHANGE LOGOS: market infrastructure, not partners
           ═══════════════════════════════════════════════════════ */}
       <section style={{ background: 'var(--parchment)', borderBottom: '1px solid var(--border-light)', padding: '40px 0' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
@@ -366,6 +367,7 @@ export default function Home() {
               <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '20px', width: 'auto', filter: 'grayscale(1)', transition: 'all 0.3s' }} className="hover:grayscale-0 hover:opacity-80" />
             ))}
           </div>
+          <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'var(--ink-muted)', opacity: 0.7, marginTop: '16px' }}>Shown for reference. No partnership or endorsement is implied.</p>
         </div>
       </section>
 
