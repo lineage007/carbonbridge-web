@@ -32,3 +32,13 @@ describe('/auth/callback redirect', () => {
     },
   )
 })
+
+describe('/auth/callback password recovery', () => {
+  it('sends recovery links to the page that sets a new password', async () => {
+    expect(await location('?code=abc&type=recovery')).toBe('https://carbonbridge.ae/reset-password')
+  })
+
+  it('ignores a redirect parameter on recovery links', async () => {
+    expect(await location('?code=abc&type=recovery&redirect=/checkout')).toBe('https://carbonbridge.ae/reset-password')
+  })
+})

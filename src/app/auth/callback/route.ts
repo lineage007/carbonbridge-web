@@ -6,7 +6,8 @@ import { safeRedirectPath } from '@/lib/safe-redirect'
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl
   const code = searchParams.get('code')
-  const next = safeRedirectPath(searchParams.get('redirect'))
+  // Password recovery links must land on the page that sets the new password.
+  const next = searchParams.get('type') === 'recovery' ? '/reset-password' : safeRedirectPath(searchParams.get('redirect'))
 
   if (code) {
     const cookieStore = await cookies()
