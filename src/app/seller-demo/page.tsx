@@ -29,10 +29,10 @@ const fmt = (n: number) => '$' + n.toLocaleString(undefined, { minimumFractionDi
 
 // Static demo listings (same as seller/page.tsx)
 const DEMO_LISTINGS = [
-  { id: 'cb-au-arr-001', name: 'Great Southern Forest Restoration', type: 'ARR', vintage: 2025, rating: 'AA', price: 26.40, available: 45000, total: 80000, sold: 35000, status: 'Active' as const },
-  { id: 'cb-au-bio-001', name: 'Queensland Biochar Sequestration', type: 'Biochar', vintage: 2026, rating: 'AA+', price: 142.00, available: 8200, total: 12000, sold: 3800, status: 'Active' as const },
-  { id: 'cb-au-soil-001', name: 'Queensland Soil Carbon Initiative', type: 'Soil Carbon', vintage: 2025, rating: 'AA', price: 18.20, available: 32000, total: 50000, sold: 18000, status: 'Active' as const },
-  { id: 'cb-ae-blue-001', name: 'Abu Dhabi Blue Carbon', type: 'Blue Carbon', vintage: 2025, rating: 'AAA', price: 32.50, available: 28000, total: 40000, sold: 12000, status: 'Active' as const },
+  { id: 'cb-au-arr-001', name: 'Illustrative listing A: ARR, Australia', type: 'ARR', vintage: 2025, rating: 'AA', price: 26.40, available: 45000, total: 80000, sold: 35000, status: 'Active' as const },
+  { id: 'cb-au-bio-001', name: 'Illustrative listing P: Biochar, Australia', type: 'Biochar', vintage: 2026, rating: 'AA+', price: 142.00, available: 8200, total: 12000, sold: 3800, status: 'Active' as const },
+  { id: 'cb-au-soil-001', name: 'Illustrative listing D: Soil Carbon, Australia', type: 'Soil Carbon', vintage: 2025, rating: 'AA', price: 18.20, available: 32000, total: 50000, sold: 18000, status: 'Active' as const },
+  { id: 'cb-ae-blue-001', name: 'Illustrative listing F: Blue Carbon, United Arab Emirates', type: 'Blue Carbon', vintage: 2025, rating: 'AAA', price: 32.50, available: 28000, total: 40000, sold: 12000, status: 'Active' as const },
 ];
 
 const ESCROW_STATE_COLORS: Record<EscrowState | 'idle', { bg: string; text: string; label: string }> = {
@@ -79,7 +79,7 @@ export default function SellerDemoPage() {
                   </span>
                 </div>
                 <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>
-                  Pacific Carbon Developments: STUB data + live demo-session escrow states
+                  Example Developer A: sample data and live demo-session escrow states
                 </p>
               </div>
               <div style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.12)', borderRadius: '10px', padding: '10px 16px' }}>

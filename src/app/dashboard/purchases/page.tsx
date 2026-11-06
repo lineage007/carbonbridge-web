@@ -5,10 +5,10 @@ const mono = "'JetBrains Mono', monospace";
 const fmt = (n: number) => '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
 const ORDERS = [
-  { ref: 'CB-2026-00142', date: '22 Mar 2026', project: 'Great Southern Forest Restoration', type: 'ARR', qty: 2500, price: 26.40, total: 66000, insurance: true, insPremium: 2310, status: 'Confirmed', settlement: 'credits_transferred' },
+  { ref: 'CB-2026-00142', date: '22 Mar 2026', project: 'Illustrative listing A: ARR, Australia', type: 'ARR', qty: 2500, price: 26.40, total: 66000, insurance: true, insPremium: 2310, status: 'Confirmed', settlement: 'credits_transferred' },
   { ref: 'CB-2026-00138', date: '18 Mar 2026', project: 'Kalimantan Peatland Conservation', type: 'REDD+', qty: 10000, price: 12.80, total: 128000, insurance: true, insPremium: 4480, status: 'Completed', settlement: 'completed' },
-  { ref: 'CB-2026-00125', date: '10 Mar 2026', project: 'Abu Dhabi Blue Carbon', type: 'Blue Carbon', qty: 5000, price: 32.50, total: 162500, insurance: false, insPremium: 0, status: 'Completed', settlement: 'completed' },
-  { ref: 'CB-2026-00098', date: '28 Feb 2026', project: 'Queensland Soil Carbon Initiative', type: 'Soil Carbon', qty: 8000, price: 18.20, total: 145600, insurance: true, insPremium: 5096, status: 'Completed', settlement: 'completed' },
+  { ref: 'CB-2026-00125', date: '10 Mar 2026', project: 'Illustrative listing F: Blue Carbon, United Arab Emirates', type: 'Blue Carbon', qty: 5000, price: 32.50, total: 162500, insurance: false, insPremium: 0, status: 'Completed', settlement: 'completed' },
+  { ref: 'CB-2026-00098', date: '28 Feb 2026', project: 'Illustrative listing D: Soil Carbon, Australia', type: 'Soil Carbon', qty: 8000, price: 18.20, total: 145600, insurance: true, insPremium: 5096, status: 'Completed', settlement: 'completed' },
 ];
 
 const SC: Record<string, { bg: string; text: string }> = {

@@ -511,12 +511,12 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Credit card preview — tactile hover states */}
+          {/* Credit card preview: same values as the illustrative listings in src/data/credits.ts (pinned by a test) */}
           <div className="space-y-4">
             {[
-              { type: 'ARR / Reforestation', project: 'Great Southern Forest Restoration', location: 'Victoria, Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A', id: 'cb-au-arr-001' },
-              { type: 'Blue Carbon', project: 'Abu Dhabi Mangrove Conservation', location: 'Abu Dhabi, UAE', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$42.50', volume: '12,000', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
-              { type: 'Biochar', project: 'Queensland Biochar Sequestration', location: 'Queensland, Australia', registry: 'Verra VCS', vintage: '2026', rating: 'AA+', price: '$142.00', volume: '8,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6', id: 'cb-au-bio-001' },
+              { type: 'ARR / Reforestation', project: 'Illustrative listing A: ARR, Australia', location: 'Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A', id: 'cb-au-arr-001' },
+              { type: 'Blue Carbon', project: 'Illustrative listing F: Blue Carbon, United Arab Emirates', location: 'United Arab Emirates', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$42.50', volume: '8,500', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
+              { type: 'Biochar', project: 'Illustrative listing P: Biochar, Australia', location: 'Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$85.00', volume: '4,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6', id: 'cb-au-bio-001' },
             ].map((c, i) => (
               <FadeIn key={c.project} delay={i * 120}>
                 <a href={`/credits/${c.id}`}
