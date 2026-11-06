@@ -24,15 +24,20 @@ describe('safeRedirectPath', () => {
     'javascript:alert(1)',
     '/\tevil',
     '/%0a',
+    '/..//evil.example',
+    '/.//evil.example',
+    '/%2e%2e//evil.example',
+    '/a/../..//evil.example',
   ])('rejects %s', (v) => {
     const out = safeRedirectPath(v)
     expect(out.startsWith('/')).toBe(true)
     expect(out.startsWith('//')).toBe(false)
+    expect(out.startsWith('/\\')).toBe(false)
     expect(new URL(out, 'https://carbonbridge.ae').origin).toBe('https://carbonbridge.ae')
   })
 
   it('rejects the cross-site forms outright', () => {
-    for (const v of ['https://evil.example', '//evil.example', '/\\evil.example', '@evil.example', '.evil.example']) {
+    for (const v of ['https://evil.example', '//evil.example', '/\\evil.example', '@evil.example', '.evil.example', '/..//evil.example', '/%2e%2e//evil.example']) {
       expect(safeRedirectPath(v)).toBe('/dashboard')
     }
   })
