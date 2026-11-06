@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
+import { safeRedirectPath } from '@/lib/safe-redirect';
 
 const fr = "'Fraunces', Georgia, serif";
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
@@ -32,7 +33,7 @@ export default function LoginPage() {
           router.push('/admin');
         } else {
           const params = new URLSearchParams(window.location.search);
-          router.push(params.get('redirect') || '/dashboard');
+          router.push(safeRedirectPath(params.get('redirect')));
         }
       }
     } catch (e: unknown) {
