@@ -15,8 +15,8 @@ type InventoryItem = {
 };
 
 const INVENTORY: InventoryItem[] = [
-  { id: '1', project: 'Illustrative listing A', type: 'ARR', registry: 'Verra', totalTonnes: 50000, available: 35000, reserved: 2500, sold: 12500, costBasis: 18.00, listPrice: 26.40, margin: 31.8, vintage: 2024, rating: 'AA', cbDirect: true },
-  { id: '2', project: 'Illustrative listing F: Blue Carbon, United Arab Emirates', type: 'Blue Carbon', registry: 'Verra', totalTonnes: 25000, available: 12000, reserved: 0, sold: 13000, costBasis: 22.00, listPrice: 32.50, margin: 32.3, vintage: 2025, rating: 'AAA', cbDirect: true },
+  { id: '1', project: 'Listing A', type: 'ARR', registry: 'Verra', totalTonnes: 50000, available: 35000, reserved: 2500, sold: 12500, costBasis: 18.00, listPrice: 26.40, margin: 31.8, vintage: 2024, rating: 'AA', cbDirect: true },
+  { id: '2', project: 'Listing F: Blue Carbon, United Arab Emirates', type: 'Blue Carbon', registry: 'Verra', totalTonnes: 25000, available: 12000, reserved: 0, sold: 13000, costBasis: 22.00, listPrice: 32.50, margin: 32.3, vintage: 2025, rating: 'AAA', cbDirect: true },
   { id: '3', project: 'Example project B', type: 'REDD+', registry: 'Verra', totalTonnes: 100000, available: 65000, reserved: 15000, sold: 20000, costBasis: 8.50, listPrice: 12.80, margin: 33.6, vintage: 2024, rating: 'A', cbDirect: false },
   { id: '4', project: 'Example project C', type: 'Soil Carbon', registry: 'ACR', totalTonnes: 30000, available: 22000, reserved: 0, sold: 8000, costBasis: 12.00, listPrice: 18.20, margin: 34.1, vintage: 2025, rating: 'AA', cbDirect: true },
   { id: '5', project: 'Example project D', type: 'Cookstove', registry: 'Gold Standard', totalTonnes: 80000, available: 72000, reserved: 0, sold: 8000, costBasis: 5.50, listPrice: 9.00, margin: 38.9, vintage: 2024, rating: 'BBB', cbDirect: false },

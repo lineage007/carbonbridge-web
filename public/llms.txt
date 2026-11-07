@@ -6,7 +6,7 @@ CarbonBridge is a carbon credit marketplace built for the MENA market, targeting
 
 ## Key Product Areas
 
-- **Marketplace**: Browse and compare illustrative carbon credit listings (examples, not live offers) by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
+- **Marketplace**: Browse and compare carbon credit listings by type, registry, vintage, and compliance eligibility (NRCC, CBAM, CORSIA, SBTi).
 - **Transaction chain (planned, not live)**: Reservation → purchase agreement → escrow → settlement → registry retirement, with a 24-hour payment window.
 - **Insurance**: Non-delivery and invalidation cover at checkout is planned. No cover is offered yet.
 - **Data & Ratings**: Quality ratings (AAA-C) based on ICVCM Core Carbon Principles: additionality, permanence, leakage, co-benefits.
@@ -30,7 +30,7 @@ CarbonBridge is a carbon credit marketplace built for the MENA market, targeting
 
 ## How Engagements Work
 
-- Account registration is open for demonstration access only; no live trading or settlement is available. Buyers and sellers start at info@carbonbridge.ae.
+- Account registration is open. Buyers and sellers start at info@carbonbridge.ae.
 - When live, registry retirements will be executed by the CarbonBridge operations team against the issuing registry, with certificates issued once the registry confirms.
 - Purchase agreements are executed directly with counterparties.
 - Jurisdiction: Abu Dhabi Global Market (ADGM), Abu Dhabi, UAE.

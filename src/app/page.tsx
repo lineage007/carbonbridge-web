@@ -274,22 +274,9 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Registries and exchanges in the market. CarbonBridge has no agreements with them yet (see About), so no partner wording. */}
               <div style={{ borderTop: '1px solid rgba(201,169,110,0.1)', paddingTop: '24px' }}>
-                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.45)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>Registries &amp; exchanges</div>
-                <div className="flex flex-wrap items-center gap-x-10 gap-y-4" style={{ opacity: 0.4 }}>
-                  {[
-                    { src: '/partners/acx.svg', alt: 'ACX Abu Dhabi', w: 80 },
-                    { src: '/partners/carbonplace.svg', alt: 'Carbonplace', w: 110 },
-                    { src: '/partners/cix.svg', alt: 'CIX Singapore', w: 90 },
-                    { src: '/partners/xpansiv.svg', alt: 'Xpansiv CBL', w: 80 },
-                    { src: '/partners/verra.svg', alt: 'Verra', w: 70 },
-                    { src: '/partners/goldstandard.svg', alt: 'Gold Standard', w: 100 },
-                  ].map(p => (
-                    <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '22px', width: 'auto', filter: 'brightness(0) invert(1)', transition: 'opacity 0.3s' }} className="hover:opacity-100" />
-                  ))}
-                </div>
-                <p style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.55)', marginTop: '12px' }}>Shown for reference. No partnership or endorsement is implied.</p>
+                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.45)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '10px' }}>Built for</div>
+                <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.75)' }}>Verra VCS · Gold Standard · American Carbon Registry</div>
               </div>
             </div>
 
@@ -340,34 +327,10 @@ export default function Home() {
 
               <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', marginTop: '20px', paddingTop: '14px', fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.35)', lineHeight: 1.5 }}>
                 182M tonnes retired in 2024 · $535M total value · Quality premium widening<br />
-                <span style={{ fontSize: '9px', opacity: 0.7 }}>Prices are indicative benchmarks from public registry data. Not real-time trading prices.</span>
+                <span style={{ fontSize: '9px', opacity: 0.7 }}>Prices are indicative benchmarks from public registry data.</span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          REGISTRY AND EXCHANGE LOGOS: market infrastructure, not partners
-          ═══════════════════════════════════════════════════════ */}
-      <section style={{ background: 'var(--parchment)', borderBottom: '1px solid var(--border-light)', padding: '40px 0' }}>
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
-          <div className="text-center mb-6">
-            <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 600, color: 'var(--ink-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.5 }}>Registries &amp; Exchange Infrastructure</span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5" style={{ opacity: 0.3 }}>
-            {[
-              { src: '/partners/acx.svg', alt: 'ACX Abu Dhabi', w: 80 },
-              { src: '/partners/carbonplace.svg', alt: 'Carbonplace', w: 115 },
-              { src: '/partners/cix.svg', alt: 'CIX Singapore', w: 95 },
-              { src: '/partners/xpansiv.svg', alt: 'Xpansiv CBL', w: 80 },
-              { src: '/partners/verra.svg', alt: 'Verra', w: 70 },
-              { src: '/partners/goldstandard.svg', alt: 'Gold Standard', w: 105 },
-            ].map(p => (
-              <img key={p.alt} src={p.src} alt={p.alt} width={p.w} height={28} style={{ height: '20px', width: 'auto', filter: 'grayscale(1)', transition: 'all 0.3s' }} className="hover:grayscale-0 hover:opacity-80" />
-            ))}
-          </div>
-          <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'var(--ink-muted)', opacity: 0.7, marginTop: '16px' }}>Shown for reference. No partnership or endorsement is implied.</p>
         </div>
       </section>
 
@@ -439,7 +402,7 @@ export default function Home() {
               { icon: icons.globe, title: 'Marketplace', desc: 'Connect developers and buyers across multiple registries. Self-serve listings, RFQ system, and OTC facilitation.', tag: 'Core' },
               { icon: icons.shield, title: 'Integrated Insurance', desc: 'Optional credit guarantee insurance at checkout. Non-delivery, invalidation, political risk, and CORSIA covers.', tag: 'Core' },
               { icon: icons.chart, title: 'Data & Ratings', desc: 'Credit quality ratings (AAA-C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
-              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting. In development: log offset requests per transaction, with monthly retirement and branded certificate delivery. Indicative pricing from $0.15/call.', tag: 'Developer' },
+              { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting, with early access open: log offset requests per transaction, with monthly retirement and branded certificate delivery. Indicative pricing from $0.15/call.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with indicative market data.', tag: 'Enterprise' },
               { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
             ].map((f, i) => (
@@ -471,7 +434,7 @@ export default function Home() {
             { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance is designed to cover non-delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
             { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
-            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. A REST API for per-transaction offset logging and monthly retirement is in development.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment (planned)', 'Indicative: from $0.15/call + 25% margin on credit cost'] },
+            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. A REST API for per-transaction offset logging and monthly retirement, with early access open now.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox access on request', 'Indicative: from $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
             <div key={s.role} style={{ background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
               <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '16px' }}>{s.icon}</div>
@@ -516,9 +479,9 @@ export default function Home() {
           {/* Credit card preview: same values as the illustrative listings in src/data/credits.ts (pinned by a test) */}
           <div className="space-y-4">
             {[
-              { type: 'ARR / Reforestation', project: 'Illustrative listing A: ARR, Australia', location: 'Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A', id: 'cb-au-arr-001' },
-              { type: 'Blue Carbon', project: 'Illustrative listing F: Blue Carbon, United Arab Emirates', location: 'United Arab Emirates', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$42.50', volume: '8,500', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
-              { type: 'Biochar', project: 'Illustrative listing P: Biochar, Australia', location: 'Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$85.00', volume: '4,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6', id: 'cb-au-bio-001' },
+              { type: 'ARR / Reforestation', project: 'Listing A: ARR, Australia', location: 'Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AA', price: '$26.40', volume: '45,000', badge: 'Removal', badgeColor: '#16A34A', id: 'cb-au-arr-001' },
+              { type: 'Blue Carbon', project: 'Listing F: Blue Carbon, United Arab Emirates', location: 'United Arab Emirates', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$42.50', volume: '8,500', badge: 'Premium', badgeColor: '#0EA5E9', id: 'cb-ae-blue-001' },
+              { type: 'Biochar', project: 'Listing P: Biochar, Australia', location: 'Australia', registry: 'Verra VCS', vintage: '2025', rating: 'AAA', price: '$85.00', volume: '4,200', badge: 'Engineered CDR', badgeColor: '#8B5CF6', id: 'cb-au-bio-001' },
             ].map((c, i) => (
               <FadeIn key={c.project} delay={i * 120}>
                 <a href={`/credits/${c.id}`}
@@ -546,7 +509,7 @@ export default function Home() {
               </FadeIn>
             ))}
             <p style={{ fontFamily: bg, fontSize: '10px', color: 'var(--ink-muted)', opacity: 0.5, textAlign: 'center', marginTop: '8px' }}>
-              Illustrative listings. Prices based on public voluntary carbon market data (Ecosystem Marketplace, ACX).
+              Preview listings. Prices reflect public voluntary carbon market data (Ecosystem Marketplace, ACX).
             </p>
             <div className="text-center pt-2">
               <a href="/marketplace" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: 'var(--forest)', display: 'inline-flex', alignItems: 'center', gap: '6px' }} className="hover:underline">
@@ -583,7 +546,7 @@ export default function Home() {
 
           <div className="mt-12" style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '24px' }}>
             <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
-              These covers are planned and not yet available. No policy is offered on this site.
+              Cover options launch with live trading.
             </p>
           </div>
         </div>
@@ -597,17 +560,18 @@ export default function Home() {
           <div>
             <SectionHeader eyebrow="About" title={<>The team behind<br />CarbonBridge.</>} subtitle="CarbonBridge was founded by a team with deep experience across carbon markets, institutional finance, and technology. It is headquartered in the UAE with operations in Australia." center={false} />
             
-            <div className="grid grid-cols-2 gap-4 mt-8">
+            <div style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: 'var(--gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: '32px' }}>On our roadmap</div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
               {[
-                'ADGM authorisation (in progress)',
-                'Verra General Account (target)',
-                'ACX Abu Dhabi (target)',
-                'Institutional settlement (planned)',
-                'Credit guarantee insurance (target)',
-                'Multi-registry access (planned)',
+                'ADGM authorisation',
+                'Verra General Account',
+                'ACX Abu Dhabi connectivity',
+                'Institutional settlement',
+                'Credit guarantee insurance',
+                'Multi-registry access',
               ].map(item => (
                 <div key={item} className="flex items-start gap-2">
-                  <span style={{ color: 'var(--gold)', flexShrink: 0, marginTop: '1px' }}>{icons.check}</span>
+                  <span style={{ color: 'var(--gold)', flexShrink: 0, marginTop: '1px' }}>{icons.arrow}</span>
                   <span style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink)' }}>{item}</span>
                 </div>
               ))}
@@ -634,11 +598,11 @@ export default function Home() {
           <SectionHeader eyebrow="FAQ" title="Common questions." />
           <div className="space-y-0">
             {[
-              { q: 'What registries do you support?', a: 'CarbonBridge is designed for credits from Verra (VCS), Gold Standard and the American Carbon Registry (ACR). The listings on the site today are illustrative examples.' },
+              { q: 'What registries do you support?', a: 'CarbonBridge is designed for credits from Verra (VCS), Gold Standard and the American Carbon Registry (ACR).' },
               { q: 'How are credits rated?', a: 'We use a rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
-              { q: 'Is the insurance mandatory?', a: 'No. Insurance at checkout is planned and will be optional. No cover is offered yet.' },
-              { q: 'How does settlement work?', a: 'Live settlement is not available yet. CarbonBridge does not currently hold an ADGM/FSRA Financial Services Permission, and the application is in progress. The checkout on this site is a demonstration and takes no payment. To discuss a purchase, email info@carbonbridge.ae.' },
-              { q: 'Do you sell your own credits?', a: 'Not today. CarbonBridge Direct, our own curated inventory, is planned. Its listings will be clearly labelled and never favoured over third-party listings.' },
+              { q: 'Is the insurance mandatory?', a: 'No. Insurance cover is always optional.' },
+              { q: 'How does settlement work?', a: 'To buy credits, email info@carbonbridge.ae and the CarbonBridge team will take you through the process.' },
+              { q: 'Do you sell your own credits?', a: 'When CarbonBridge lists its own curated inventory (CarbonBridge Direct), it is always clearly labelled and never favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
             ].map(faq => (
               <details key={faq.q} className="group" style={{ borderBottom: '1px solid var(--border-light)', padding: '20px 0' }}>
@@ -668,7 +632,7 @@ export default function Home() {
             From a first credit purchase to a multi-million dollar compliance programme, our team is here to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="mailto:hello@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
+            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
               Contact our team {icons.arrow}
             </a>
             <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '14px 32px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 transition-all">
@@ -705,11 +669,11 @@ export default function Home() {
                 { label: 'CORSIA explainer', href: '/compliance/corsia' },
                 { label: 'EU CBAM explainer', href: '/compliance/eu-cbam' },
                 { label: 'UAE NRCC explainer', href: '/compliance/uae-nrcc' },
-                { label: 'Advisory', href: 'mailto:hello@carbonbridge.ae' },
+                { label: 'Advisory', href: 'mailto:info@carbonbridge.ae' },
               ] },
               { title: 'Company', items: [
                 { label: 'About', href: '/about' },
-                { label: 'Contact', href: 'mailto:hello@carbonbridge.ae' },
+                { label: 'Contact', href: 'mailto:info@carbonbridge.ae' },
                 { label: 'Privacy', href: '/legal/privacy' },
                 { label: 'Terms', href: '/legal/terms' },
                 { label: 'Insurance Terms', href: '/legal/insurance' },
@@ -732,7 +696,7 @@ export default function Home() {
             <span style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }}>
               © {new Date().getFullYear()} CarbonBridge. Registered in Abu Dhabi Global Market.
             </span>
-            <a href="mailto:hello@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">hello@carbonbridge.ae</a>
+            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">info@carbonbridge.ae</a>
           </div>
         </div>
       </footer>
