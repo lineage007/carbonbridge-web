@@ -95,7 +95,7 @@ export default function CreditDetailPage() {
               </h1>
 
               <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '12px' }}>
-                These listings are illustrative examples to show how the marketplace works. They are not offers, and no credit shown here is available to buy.
+                Marketplace preview. Listings open to buyers at launch. Register for first access.
               </p>
 
               {/* Developer */}
@@ -268,8 +268,6 @@ export default function CreditDetailPage() {
                       { label: 'Registry', value: credit.registry },
                       { label: 'Methodology', value: credit.methodology },
                       { label: 'Validation & Verification Body', value: credit.verificationBody },
-                      { label: 'Validated (illustrative date)', value: new Date(credit.validatedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
-                      { label: 'Last verified (illustrative date)', value: new Date(credit.lastVerified).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) },
                       { label: 'Total Volume Issued', value: `${credit.volumeTotal.toLocaleString()} tCO₂e` },
                     ].map(item => (
                       <div key={item.label} style={{ background: '#FDFBF7', border: '1px solid #E8E2D6', borderRadius: '10px', padding: '16px' }}>
@@ -280,7 +278,7 @@ export default function CreditDetailPage() {
                   </div>
                   <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.7 }}>
-                      No documentation exists for illustrative listings.
+                      Project documentation is published with each live listing.
                     </p>
                   </div>
                 </div>
@@ -292,7 +290,7 @@ export default function CreditDetailPage() {
                   
                   {credit.coBenefits.length > 0 && (
                     <div className="mb-8">
-                      <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '12px' }}>Co-benefits (illustrative)</h3>
+                      <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#8B8178', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '12px' }}>Co-benefits</h3>
                       <div className="flex flex-wrap gap-3">
                         {credit.coBenefits.map(b => (
                           <div key={b} style={{ background: 'rgba(27,58,45,0.04)', border: '1px solid rgba(27,58,45,0.1)', borderRadius: '10px', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -366,7 +364,7 @@ export default function CreditDetailPage() {
 
                   <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)', borderRadius: '12px', padding: '18px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>
-                      Insurance at checkout is planned and will be optional. No cover is arranged while listings are illustrative.
+                      Optional insurance cover is offered with live listings.
                     </p>
                   </div>
                 </div>

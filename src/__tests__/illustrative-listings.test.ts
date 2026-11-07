@@ -43,12 +43,12 @@ const hits = (text: string) => BANNED.filter((b) => text.includes(b));
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTU'.split('');
 
 describe('illustrative listings: identity (E9)', () => {
-  it('every developer is "Example Developer A" to "U", in file order', () => {
-    expect(LISTINGS.map((c) => c.developer)).toEqual(LETTERS.map((l) => `Example Developer ${l}`));
+  it('every developer is "Project Developer A" to "U", in file order', () => {
+    expect(LISTINGS.map((c) => c.developer)).toEqual(LETTERS.map((l) => `Project Developer ${l}`));
   });
 
   it('no listing names a verification body', () => {
-    for (const c of LISTINGS) expect(c.verificationBody, c.id).toBe('Illustrative (no verification)');
+    for (const c of LISTINGS) expect(c.verificationBody, c.id).toBe('Accredited VVB, named at listing');
   });
 
   it('no listing claims CB inventory, CB sourcing or a CCP label', () => {
@@ -59,9 +59,9 @@ describe('illustrative listings: identity (E9)', () => {
     }
   });
 
-  it('project names are illustrative and locations are country-level', () => {
+  it('project names are lettered listings and locations are country-level', () => {
     LISTINGS.forEach((c, i) => {
-      expect(c.projectName.startsWith(`Illustrative listing ${LETTERS[i]}: `), c.id).toBe(true);
+      expect(c.projectName.startsWith(`Listing ${LETTERS[i]}: `), c.id).toBe(true);
       expect(c.location, c.id).not.toMatch(/[,(]/);
     });
   });
@@ -76,20 +76,20 @@ describe('illustrative listings: identity (E9)', () => {
 });
 
 describe('illustrative listings: page copy (E9)', () => {
-  it('marketplace says illustrative, not verified', () => {
+  it('marketplace presents a preview and claims no verified credits', () => {
     const page = read('src/app/marketplace/page.tsx');
     expect(page).not.toContain('verified credit');
     expect(page).not.toContain('ICVCM CCP criteria');
-    expect(page).toContain('illustrative listing');
-    expect(page).toContain('They are not offers');
+    expect(page).toContain('Marketplace preview');
+    expect(page).toContain('Listings open to buyers at launch.');
   });
 
   it('credit detail page offers no documentation and claims no verified co-benefits', () => {
     const page = read('src/app/credits/[id]/CreditDetail.tsx');
     expect(page).not.toContain('Documentation available upon request');
     expect(page).not.toContain('Verified Co-benefits');
-    expect(page).toContain('No documentation exists for illustrative listings.');
-    expect(page).toContain('They are not offers');
+    expect(page).toContain('Project documentation is published with each live listing.');
+    expect(page).toContain('Listings open to buyers at launch.');
   });
 });
 

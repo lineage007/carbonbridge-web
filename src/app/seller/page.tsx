@@ -10,21 +10,21 @@ const mono = "'JetBrains Mono', 'DM Mono', monospace";
 
 function fmt(n: number) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }); }
 
-const SELLER = { name: 'Example Developer A', type: 'Project Developer', registries: ['Verra VCS', 'Gold Standard'] };
+const SELLER = { name: 'Project Developer A', type: 'Project Developer', registries: ['Verra VCS', 'Gold Standard'] };
 
 const LISTINGS_DATA = [
-  { id: 'cb-au-arr-001', name: 'Illustrative listing A: ARR, Australia', type: 'ARR / Reforestation', vintage: '2025', rating: 'AA', price: 26.40, available: 45000, total: 80000, sold: 35000, status: 'Active' as const, views: 1240, inquiries: 18 },
-  { id: 'cb-au-bio-001', name: 'Illustrative listing P: Biochar, Australia', type: 'Biochar / CDR', vintage: '2026', rating: 'AA+', price: 142.00, available: 8200, total: 12000, sold: 3800, status: 'Active' as const, views: 890, inquiries: 12 },
-  { id: 'cb-au-soil-001', name: 'Illustrative listing D: Soil Carbon, Australia', type: 'Soil Carbon', vintage: '2025', rating: 'AA', price: 18.20, available: 32000, total: 50000, sold: 18000, status: 'Active' as const, views: 560, inquiries: 7 },
+  { id: 'cb-au-arr-001', name: 'Listing A: ARR, Australia', type: 'ARR / Reforestation', vintage: '2025', rating: 'AA', price: 26.40, available: 45000, total: 80000, sold: 35000, status: 'Active' as const, views: 1240, inquiries: 18 },
+  { id: 'cb-au-bio-001', name: 'Listing P: Biochar, Australia', type: 'Biochar / CDR', vintage: '2026', rating: 'AA+', price: 142.00, available: 8200, total: 12000, sold: 3800, status: 'Active' as const, views: 890, inquiries: 12 },
+  { id: 'cb-au-soil-001', name: 'Listing D: Soil Carbon, Australia', type: 'Soil Carbon', vintage: '2025', rating: 'AA', price: 18.20, available: 32000, total: 50000, sold: 18000, status: 'Active' as const, views: 560, inquiries: 7 },
   { id: 'cb-au-arr-002', name: 'Example sold-out listing', type: 'ARR / Reforestation', vintage: '2024', rating: 'A+', price: 22.80, available: 0, total: 25000, sold: 25000, status: 'Sold Out' as const, views: 2100, inquiries: 34 },
-  { id: 'cb-au-arr-003', name: 'Illustrative listing C: ARR, Australia', type: 'ARR / Reforestation', vintage: '2025', rating: 'A', price: 19.50, available: 60000, total: 60000, sold: 0, status: 'Pending Review' as const, views: 0, inquiries: 0 },
+  { id: 'cb-au-arr-003', name: 'Listing C: ARR, Australia', type: 'ARR / Reforestation', vintage: '2025', rating: 'A', price: 19.50, available: 60000, total: 60000, sold: 0, status: 'Pending Review' as const, views: 0, inquiries: 0 },
 ];
 
 const ORDERS = [
-  { id: 'SO-2026-0089', date: '2026-03-22', buyer: 'Example Buyer A', credit: 'Illustrative listing A', qty: 2500, price: 26.40, total: 66000, insurance: true, status: 'Confirmed' as const },
-  { id: 'SO-2026-0084', date: '2026-03-18', buyer: 'Example Buyer B', credit: 'Illustrative listing P', qty: 500, price: 142.00, total: 71000, insurance: true, status: 'Settled' as const },
-  { id: 'SO-2026-0078', date: '2026-03-12', buyer: 'Example Buyer C', credit: 'Illustrative listing A', qty: 5000, price: 26.40, total: 132000, insurance: false, status: 'Completed' as const },
-  { id: 'SO-2026-0071', date: '2026-03-05', buyer: 'Example Buyer D', credit: 'Illustrative listing D', qty: 10000, price: 18.20, total: 182000, insurance: true, status: 'Completed' as const },
+  { id: 'SO-2026-0089', date: '2026-03-22', buyer: 'Example Buyer A', credit: 'Listing A', qty: 2500, price: 26.40, total: 66000, insurance: true, status: 'Confirmed' as const },
+  { id: 'SO-2026-0084', date: '2026-03-18', buyer: 'Example Buyer B', credit: 'Listing P', qty: 500, price: 142.00, total: 71000, insurance: true, status: 'Settled' as const },
+  { id: 'SO-2026-0078', date: '2026-03-12', buyer: 'Example Buyer C', credit: 'Listing A', qty: 5000, price: 26.40, total: 132000, insurance: false, status: 'Completed' as const },
+  { id: 'SO-2026-0071', date: '2026-03-05', buyer: 'Example Buyer D', credit: 'Listing D', qty: 10000, price: 18.20, total: 182000, insurance: true, status: 'Completed' as const },
   { id: 'SO-2026-0062', date: '2026-02-26', buyer: 'Example Buyer E', credit: 'Example sold-out listing', qty: 8000, price: 22.80, total: 182400, insurance: false, status: 'Completed' as const },
 ];
 
@@ -64,7 +64,7 @@ export default function SellerDashboard() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
         {/* Header */}
         <div style={{ marginBottom: '28px' }}>
-          <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>Welcome back, Example Developer A</h1>
+          <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '4px' }}>Welcome back, Project Developer A</h1>
           <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178' }}>Manage your carbon credit listings, track sales, and monitor performance.</p>
         </div>
 
