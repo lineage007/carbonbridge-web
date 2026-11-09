@@ -419,8 +419,8 @@ export default function Home() {
             {[
               { step: '01', title: 'Discover', desc: 'Browse verified credits across Verra, Gold Standard, and ACR. Filter by type, geography, vintage, price, and ICVCM quality rating.' },
               { step: '02', title: 'Evaluate', desc: 'Compare credits using quality ratings, co-benefit scores, permanence risk assessments, and indicative price benchmarks.' },
-              { step: '03', title: 'Purchase & Insure', desc: 'Buy with integrated insurance at checkout: non-delivery cover, invalidation protection, and CORSIA guarantees.' },
-              { step: '04', title: 'Retire & Report', desc: 'Retire credits across any registry from one dashboard. Auto-generated retirement certificates and audit-ready compliance records.' },
+              { step: '03', title: 'Purchase & Insure', desc: 'Optional insurance at checkout is on our roadmap, covering non-delivery, invalidation and CORSIA eligibility.' },
+              { step: '04', title: 'Retire & Report', desc: 'One-dashboard retirement, with certificates and audit-ready records, is on our roadmap.' },
             ].map((s, i) => (
               <FadeIn key={s.step} delay={i * 100}>
                 <div style={{ position: 'relative' }}>
@@ -469,7 +469,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
             { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance is designed to cover non-delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Quality ratings (AAA-C)', 'Insurance at checkout', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
-            { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement via ACX, CIX, Carbonplace', 'Forward contract facilitation'] },
+            { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement on our roadmap', 'Forward contract facilitation'] },
             { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery guarantees', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
             { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. A REST API for per-transaction offset logging and monthly retirement is in development.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Sandbox environment (planned)', 'Indicative: from $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
