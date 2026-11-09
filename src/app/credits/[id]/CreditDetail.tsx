@@ -95,7 +95,7 @@ export default function CreditDetailPage() {
               </h1>
 
               <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '12px' }}>
-                Marketplace preview. Listings open to buyers at launch. Register for first access.
+                Marketplace preview: the listing format buyers will see at launch. Register for first access.
               </p>
 
               {/* Developer */}
@@ -364,7 +364,7 @@ export default function CreditDetailPage() {
 
                   <div style={{ background: 'rgba(201,169,110,0.06)', border: '1px solid rgba(201,169,110,0.15)', borderRadius: '12px', padding: '18px' }}>
                     <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', lineHeight: 1.6 }}>
-                      Optional insurance cover is offered with live listings.
+                      Optional insurance cover is on our roadmap.
                     </p>
                   </div>
                 </div>

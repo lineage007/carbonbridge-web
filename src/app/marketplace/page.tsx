@@ -230,7 +230,7 @@ export default function MarketplacePage() {
             {/* Credit grid */}
             <div className="flex-1 min-w-0">
               <p style={{ fontFamily: bg, fontSize: '13px', color: '#8B8178', marginBottom: '16px' }}>
-                Marketplace preview. Listings open to buyers at launch. Register for first access.
+                Marketplace preview: the listing format buyers will see at launch. Register for first access.
               </p>
               {filtered.length === 0 ? (
                 <div className="text-center py-20">
@@ -246,7 +246,7 @@ export default function MarketplacePage() {
               )}
 
               <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '24px', fontStyle: 'italic' }}>
-                Prices and quality ratings are indicative and are confirmed when each listing goes live.
+                Live listings carry confirmed prices and quality ratings.
               </p>
             </div>
           </div>

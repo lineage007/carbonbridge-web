@@ -48,7 +48,7 @@ describe('illustrative listings: identity (E9)', () => {
   });
 
   it('no listing names a verification body', () => {
-    for (const c of LISTINGS) expect(c.verificationBody, c.id).toBe('Accredited VVB, named at listing');
+    for (const c of LISTINGS) expect(c.verificationBody, c.id).toBe('Published with each live listing');
   });
 
   it('no listing claims CB inventory, CB sourcing or a CCP label', () => {
@@ -81,7 +81,7 @@ describe('illustrative listings: page copy (E9)', () => {
     expect(page).not.toContain('verified credit');
     expect(page).not.toContain('ICVCM CCP criteria');
     expect(page).toContain('Marketplace preview');
-    expect(page).toContain('Listings open to buyers at launch.');
+    expect(page).toContain('the listing format buyers will see at launch.');
   });
 
   it('credit detail page offers no documentation and claims no verified co-benefits', () => {
@@ -89,7 +89,7 @@ describe('illustrative listings: page copy (E9)', () => {
     expect(page).not.toContain('Documentation available upon request');
     expect(page).not.toContain('Verified Co-benefits');
     expect(page).toContain('Project documentation is published with each live listing.');
-    expect(page).toContain('Listings open to buyers at launch.');
+    expect(page).toContain('the listing format buyers will see at launch.');
   });
 });
 

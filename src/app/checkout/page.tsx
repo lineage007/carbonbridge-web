@@ -196,7 +196,7 @@ function CheckoutInner() {
           </div>
 
           <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '16px', fontStyle: 'italic' }}>
-            Insurance options are confirmed with your order.
+            Insurance cover is on our roadmap. Any insurance amount shown is indicative and is not charged.
           </p>
         </div>
       )}
