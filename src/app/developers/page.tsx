@@ -49,7 +49,7 @@ export default function DevelopersPage() {
           Embed carbon offsetting into any product. Point-of-sale offset logging, monthly retirement, branded certificates.
         </p>
         <p style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', maxWidth: '640px', lineHeight: 1.6, marginTop: '12px' }}>
-          This API is in development. The endpoints below describe the planned interface and are not live.
+          API design for the early-access programme.
         </p>
         <p style={{ fontFamily: bg, fontSize: '14px', color: '#6B8A74', marginTop: '12px' }}>
           Base URL: <code style={{ fontFamily: mono, fontSize: '13px', color: '#C9A96E', background: 'rgba(201,169,110,0.08)', padding: '2px 8px', borderRadius: '4px' }}>https://api.carbonbridge.ae/v1</code>
@@ -113,7 +113,7 @@ export default function DevelopersPage() {
             {/* Sandbox */}
             <div style={{ background: 'linear-gradient(135deg, rgba(27,58,45,0.3), rgba(201,169,110,0.05))', border: '1px solid rgba(201,169,110,0.12)', borderRadius: '14px', padding: '32px', textAlign: 'center' }}>
               <h2 style={{ fontFamily: fr, fontSize: '22px', color: '#F2ECE0', marginBottom: '8px' }}>Ready to integrate?</h2>
-              <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', marginBottom: '20px' }}>The API is in development. Email us for early access and we will tell you when sandbox keys are available.</p>
+              <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', marginBottom: '20px' }}>Email us to join the early-access list. Sandbox keys go to the list first.</p>
               <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '10px', textDecoration: 'none', display: 'inline-block' }}>
                 Request API access →
               </a>
@@ -148,7 +148,7 @@ export default function DevelopersPage() {
         {tab === 'pricing' && (
           <div style={{ paddingBottom: '80px' }}>
             <h2 style={{ fontFamily: fr, fontSize: '22px', color: '#F2ECE0', marginBottom: '8px' }}>API Pricing</h2>
-            <p style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', marginBottom: '20px' }}>Indicative pricing, API not yet available</p>
+            <p style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', marginBottom: '20px' }}>Indicative pricing · early access</p>
             <div style={{ background: 'rgba(255,252,246,0.02)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '14px', padding: '28px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '24px' }}>
                 {[
