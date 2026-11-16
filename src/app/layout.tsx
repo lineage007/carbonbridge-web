@@ -64,8 +64,6 @@ const jsonLd = {
         'Portfolio management',
         'UAE NRCC compliance tracking',
         'EU CBAM readiness tools',
-        'Carbon credit insurance',
-        'Forward contract trading',
         'RFQ (Request for Quote) system',
         'Data analytics and market insights',
       ],
