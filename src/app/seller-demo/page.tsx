@@ -82,15 +82,6 @@ export default function SellerDemoPage() {
                   Project Developer A: sample data and live demo-session escrow states
                 </p>
               </div>
-              <div style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.12)', borderRadius: '10px', padding: '10px 16px' }}>
-                <p style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '2px' }}>
-                  Stub status
-                </p>
-                <p style={{ fontFamily: bg, fontSize: '11px', color: '#6B5B5B' }}>
-                  Payouts pending Stripe Connect.<br />
-                  Seller identity pending ADGM FSP authorisation.
-                </p>
-              </div>
             </div>
           </div>
 
@@ -245,7 +236,7 @@ export default function SellerDemoPage() {
               </table>
               <div style={{ padding: '14px 16px', background: '#FDFBF7', borderTop: '1px solid #F0EBE3' }}>
                 <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', fontStyle: 'italic' }}>
-                  Static demonstration data. Live system reads from Supabase listings table scoped to authenticated seller_id.
+                  Sample data.
                 </p>
               </div>
             </div>
@@ -388,26 +379,6 @@ export default function SellerDemoPage() {
               )}
             </div>
           )}
-
-          {/* Bottom stub notice */}
-          <div style={{ marginTop: '40px', background: 'rgba(239,68,68,0.03)', border: '1px solid rgba(239,68,68,0.1)', borderRadius: '12px', padding: '16px 20px' }}>
-            <p style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
-              What Gary needs to make this real
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px' }}>
-              {[
-                { item: 'ADGM FSP authorisation', desc: 'Enables live financial services' },
-                { item: 'Stripe Connect', desc: 'Escrow + seller payouts' },
-                { item: 'Verra / GS / ACR agreements', desc: 'Automated registry retirement' },
-                { item: 'Supabase persistence', desc: 'Replaces demo-session.ts' },
-              ].map(r => (
-                <div key={r.item} style={{ fontFamily: bg }}>
-                  <p style={{ fontSize: '12px', fontWeight: 600, color: '#991B1B', marginBottom: '2px' }}>{r.item}</p>
-                  <p style={{ fontSize: '11px', color: '#8B6B6B' }}>{r.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
 
         </div>
       </main>
