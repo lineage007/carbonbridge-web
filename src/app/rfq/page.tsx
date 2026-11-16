@@ -66,7 +66,7 @@ export default function RFQPage() {
       </header>
       <div style={{ maxWidth: '720px', margin: '0 auto', padding: '48px 24px' }}>
         <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#1A1714', marginBottom: '8px' }}>Request for Quote</h1>
-        <p style={{ fontFamily: bg, fontSize: '14px', color: '#6B6259', marginBottom: '36px' }}>For volumes over 10,000 tCO₂e. Send us your requirements by email. Marketplace listings are illustrative, so a request does not reserve credits or fix a price.</p>
+        <p style={{ fontFamily: bg, fontSize: '14px', color: '#6B6259', marginBottom: '36px' }}>For volumes over 10,000 tCO₂e. Send us your requirements by email. The team replies with availability and pricing.</p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div>

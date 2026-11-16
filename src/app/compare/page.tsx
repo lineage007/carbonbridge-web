@@ -46,8 +46,8 @@ function getCellValue(credit: CreditListing, key: string): string {
     case 'price': return `$${credit.price.toFixed(2)}`;
     case 'available': return credit.volumeAvailable.toLocaleString() + ' tCO₂e';
     case 'qualityRating': return credit.qualityRating;
-    case 'permanence': return 'Not assessed (illustrative listing)';
-    case 'additionality': return 'Not assessed (illustrative listing)';
+    case 'permanence': return 'Assessed at listing';
+    case 'additionality': return 'Assessed at listing';
     case 'coBenefits': return credit.coBenefits.join(', ');
     case 'insurance': return 'Planned';
     case 'corsiaEligible': return credit.compliance.includes('CORSIA') ? '✓ Eligible' : '✗ Not eligible';

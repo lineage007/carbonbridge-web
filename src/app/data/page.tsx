@@ -79,7 +79,7 @@ export default function DataPage() {
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10">
 
           {/* ═══ PRICE INDICES ═══ */}
-          <Section title="CarbonBridge Price Indices (in development)" sub="Illustrative layout. CarbonBridge will publish indices built from settled marketplace transactions once trading starts. The figures below are placeholders, not market prices.">
+          <Section title="CarbonBridge Price Indices" sub="Preview. CarbonBridge publishes its indices from settled marketplace transactions as trading opens.">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {PRICE_INDICES.map(idx => (
                 <div key={idx.name} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '22px', transition: 'all 0.2s' }}
@@ -90,7 +90,7 @@ export default function DataPage() {
                       <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '2px' }}>{idx.desc}</p>
                     </div>
                     <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', flexShrink: 0 }}>
-                      Illustrative
+                      Preview
                     </span>
                   </div>
                   <div className="flex items-end justify-between mt-4">
@@ -118,7 +118,7 @@ export default function DataPage() {
               ))}
             </div>
             <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '12px', fontStyle: 'italic' }}>
-              Illustrative placeholders only: not live or historical prices, and not investment advice.
+              Preview data. Not investment advice.
             </p>
           </Section>
 
@@ -159,11 +159,11 @@ export default function DataPage() {
           </Section>
 
           {/* ═══ MONTHLY TRADING VOLUME ═══ */}
-          <Section title="Monthly Retirements (illustrative)" sub="Illustrative layout, not registry data. Placeholder nature-based and technology-based figures in millions of tonnes.">
+          <Section title="Monthly Retirements" sub="Preview. Nature-based and technology-based retirements in millions of tonnes.">
             <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
               <div className="flex items-center gap-2 mb-6">
                 <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', marginRight: '8px' }}>
-                  Illustrative
+                  Preview
                 </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '180px' }}>

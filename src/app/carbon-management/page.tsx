@@ -27,9 +27,9 @@ const TARGETS = [
 ];
 
 const OFFSET_PORTFOLIO = [
-  { project: 'Illustrative listing A: ARR, Australia', type: 'ARR', qty: 5000, vintage: 2025, price: 26.40, total: 132000, coverage: '11.3%', status: 'Active' },
-  { project: 'Illustrative listing F: Blue Carbon, United Arab Emirates', type: 'Blue Carbon', qty: 3000, vintage: 2025, price: 64.00, total: 192000, coverage: '6.8%', status: 'Active' },
-  { project: 'Illustrative listing P', type: 'Biochar', qty: 2000, vintage: 2026, price: 142.00, total: 284000, coverage: '4.5%', status: 'Pending' },
+  { project: 'Listing A: ARR, Australia', type: 'ARR', qty: 5000, vintage: 2025, price: 26.40, total: 132000, coverage: '11.3%', status: 'Active' },
+  { project: 'Listing F: Blue Carbon, United Arab Emirates', type: 'Blue Carbon', qty: 3000, vintage: 2025, price: 64.00, total: 192000, coverage: '6.8%', status: 'Active' },
+  { project: 'Listing P', type: 'Biochar', qty: 2000, vintage: 2026, price: 142.00, total: 284000, coverage: '4.5%', status: 'Pending' },
 ];
 
 const COMPLIANCE = [

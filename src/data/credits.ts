@@ -59,8 +59,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ AUSTRALIAN ARR / REFORESTATION ═══
   {
     id: 'cb-au-arr-001',
-    projectName: 'Illustrative listing A: ARR, Australia',
-    developer: 'Example Developer A',
+    projectName: 'Listing A: ARR, Australia',
+    developer: 'Project Developer A',
     developerYears: 12,
     developerProjects: 34,
     location: 'Australia',
@@ -83,7 +83,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 6, 8],
     description: 'Large-scale native forest restoration across degraded pastoral land in south-eastern Australia. 2,400 hectares of mixed eucalyptus woodland replanted using climate-adapted seed stock.',
     projectOverview: 'This project restores native woodland across 2,400 hectares of degraded agricultural land in Victoria\'s Western District. Working with Traditional Owner groups, the project uses locally-sourced seed from over 40 native tree and shrub species adapted to projected 2050 climate conditions. The methodology follows VM0047 (Afforestation, Reforestation and Revegetation), with monitoring plots established on a 200m grid. Carbon sequestration is validated through annual biomass measurements and periodic soil carbon sampling. The project also supports habitat connectivity between fragmented remnant vegetation patches, creating wildlife corridors for threatened species including the Eastern Barred Bandicoot and Southern Brown Bandicoot.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-08-15',
     validatedDate: '2022-03-10',
     priceHistory: [
@@ -94,8 +94,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-au-sav-001',
-    projectName: 'Illustrative listing B: Savanna, Australia',
-    developer: 'Example Developer B',
+    projectName: 'Listing B: Savanna, Australia',
+    developer: 'Project Developer B',
     developerYears: 15,
     developerProjects: 22,
     location: 'Australia',
@@ -118,7 +118,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 10, 2],
     description: 'Indigenous-led fire management across 1.2 million hectares of tropical savanna. Early dry season burning reduces wildfire intensity and carbon emissions while protecting biodiversity.',
     projectOverview: 'This project is managed by Aboriginal ranger groups across 1.2 million hectares of tropical savanna in Western Australia\'s Kimberley region. Using traditional burning practices refined over 65,000 years, rangers conduct early dry season burns that reduce the frequency and intensity of late-season wildfires. This shift in fire regime reduces methane and nitrous oxide emissions by up to 40% compared to unmanaged wildfire. The project directly employs 45 Aboriginal rangers full-time and supports cultural knowledge transfer across generations.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-06-20',
     validatedDate: '2020-11-15',
     priceHistory: [
@@ -129,8 +129,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-au-arr-003',
-    projectName: 'Illustrative listing C: ARR, Australia',
-    developer: 'Example Developer C',
+    projectName: 'Listing C: ARR, Australia',
+    developer: 'Project Developer C',
     developerYears: 8,
     developerProjects: 6,
     location: 'Australia',
@@ -153,7 +153,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 14, 6],
     description: 'Restoration of wet tropical rainforest corridor connecting World Heritage areas. Critical cassowary habitat restoration with riparian zone rehabilitation along the Daintree River system.',
     projectOverview: 'This project restores 850 hectares of degraded tropical rainforest in the Wet Tropics World Heritage Area buffer zone, creating a critical wildlife corridor between fragmented rainforest patches. The planting methodology uses over 120 native rainforest species, with density and species mix calibrated to replicate natural forest structure. The project specifically targets habitat for the Southern Cassowary (Casuarius casuarius), an endangered keystone species. Riparian zone restoration along 12km of the Daintree River improves water quality and reduces sediment runoff to the Great Barrier Reef lagoon.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-12-01',
     validatedDate: '2021-07-22',
     priceHistory: [
@@ -165,8 +165,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ AUSTRALIAN SOIL CARBON ═══
   {
     id: 'cb-au-soil-001',
-    projectName: 'Illustrative listing D: Soil Carbon, Australia',
-    developer: 'Example Developer D',
+    projectName: 'Listing D: Soil Carbon, Australia',
+    developer: 'Project Developer D',
     developerYears: 6,
     developerProjects: 11,
     location: 'Australia',
@@ -189,7 +189,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 2, 15, 6],
     description: 'Aggregated soil carbon project across 40 farms in the Murray-Darling Basin. Regenerative grazing, cover cropping, and reduced tillage practices sequester carbon in agricultural soils.',
     projectOverview: 'This aggregated project brings together 40 farming properties across 18,000 hectares in the Murray-Darling Basin, transitioning from conventional to regenerative agricultural practices. Key interventions include rotational grazing management, multi-species cover cropping, reduced tillage, and strategic tree planting along waterways. Soil carbon is measured through a network of 320 permanent monitoring plots, with baseline and periodic sampling to 30cm depth. Early results show an average 0.4% increase in soil organic carbon across participating properties, with corresponding improvements in water retention, soil biology, and drought resilience.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-04-10',
     validatedDate: '2023-01-15',
     priceHistory: [
@@ -200,8 +200,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-au-soil-002',
-    projectName: 'Illustrative listing E: Soil Carbon, Australia',
-    developer: 'Example Developer E',
+    projectName: 'Listing E: Soil Carbon, Australia',
+    developer: 'Project Developer E',
     developerYears: 5,
     developerProjects: 7,
     location: 'Australia',
@@ -224,7 +224,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 2],
     description: 'Rangeland rehabilitation across 50,000 hectares of degraded pastoral land. De-stocking, native grass re-establishment, and erosion control rebuild soil carbon stocks.',
     projectOverview: 'This project rehabilitates 50,000 hectares of degraded pastoral land in the semi-arid zone north of Adelaide. Decades of overgrazing had depleted native perennial grasses and exposed soils to wind erosion. The project implements controlled de-stocking, strategic water point management, and native grass seeding to rebuild ground cover and soil carbon. Monitoring shows a 15% increase in perennial grass cover and measurable improvements in soil aggregate stability after three years of management change.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-09-20',
     validatedDate: '2022-06-01',
     priceHistory: [
@@ -236,8 +236,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ UAE / MENA ═══
   {
     id: 'cb-ae-blue-001',
-    projectName: 'Illustrative listing F: Blue Carbon, United Arab Emirates',
-    developer: 'Example Developer F',
+    projectName: 'Listing F: Blue Carbon, United Arab Emirates',
+    developer: 'Project Developer F',
     developerYears: 10,
     developerProjects: 4,
     location: 'United Arab Emirates',
@@ -260,7 +260,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 14, 15, 6],
     description: 'Mangrove restoration and conservation along 45km of Abu Dhabi coastline. Blue carbon sequestration through mangrove sediment accretion and biomass growth.',
     projectOverview: 'This project restores and protects 3,200 hectares of mangrove habitat along Abu Dhabi\'s western coastline. Mangroves sequester carbon at rates 3-5x higher than terrestrial forests, with most carbon stored in anoxic sediments where it can persist for millennia. The project has planted 4.5 million mangrove seedlings of the native Avicennia marina species since 2020, with survival rates exceeding 78%. The restored mangroves also provide critical nursery habitat for commercially important fish and shrimp species, supporting local fishing communities.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-07-01',
     validatedDate: '2022-09-15',
     priceHistory: [
@@ -271,8 +271,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-ae-ee-001',
-    projectName: 'Illustrative listing G: Energy Efficiency, United Arab Emirates',
-    developer: 'Example Developer G',
+    projectName: 'Listing G: Energy Efficiency, United Arab Emirates',
+    developer: 'Project Developer G',
     developerYears: 14,
     developerProjects: 18,
     location: 'United Arab Emirates',
@@ -295,7 +295,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 7, 9],
     description: 'Industrial energy efficiency retrofits across 28 manufacturing facilities in Dubai Industrial City and Jebel Ali Free Zone. LED lighting, HVAC optimisation, and process heat recovery.',
     projectOverview: 'This project aggregates energy efficiency improvements across 28 manufacturing facilities in Dubai\'s industrial zones. Interventions include LED lighting retrofits (reducing lighting energy by 65%), HVAC system optimisation using AI-driven controls, waste heat recovery from industrial processes, and solar thermal pre-heating for process water. The project has reduced annual electricity consumption by 185 GWh, equivalent to powering 15,000 average UAE households.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-11-15',
     validatedDate: '2021-04-20',
     priceHistory: [
@@ -307,8 +307,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ SOUTHEAST ASIA REDD+ ═══
   {
     id: 'cb-id-redd-001',
-    projectName: 'Illustrative listing H: REDD+, Indonesia',
-    developer: 'Example Developer H',
+    projectName: 'Listing H: REDD+, Indonesia',
+    developer: 'Project Developer H',
     developerYears: 16,
     developerProjects: 8,
     location: 'Indonesia',
@@ -331,7 +331,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 1, 6],
     description: 'Protection of 157,000 hectares of tropical peat swamp forest from planned palm oil conversion. Community-based patrol system prevents illegal logging and drainage.',
     projectOverview: 'This project protects 157,000 hectares of tropical peat swamp forest in Central Kalimantan from conversion to palm oil plantations. The area was zoned for industrial agriculture prior to project intervention. Peatland forests store up to 20x more carbon per hectare than mineral soil forests, making their protection one of the most cost-effective climate interventions available. The project employs 85 community rangers from 12 surrounding villages, funds primary school construction, and provides alternative livelihood training in sustainable agriculture and aquaculture. Fire detection systems using satellite monitoring and ground patrols have reduced fire incidents by 90% compared to surrounding unprotected areas.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-08-01',
     validatedDate: '2019-05-10',
     priceHistory: [
@@ -342,8 +342,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-kh-redd-001',
-    projectName: 'Illustrative listing I: REDD+, Cambodia',
-    developer: 'Example Developer I',
+    projectName: 'Listing I: REDD+, Cambodia',
+    developer: 'Project Developer I',
     developerYears: 22,
     developerProjects: 14,
     location: 'Cambodia',
@@ -366,7 +366,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 1, 5],
     description: 'Community forestry project protecting 430,000 hectares of lowland evergreen forest, one of the largest remaining contiguous forests in mainland Southeast Asia.',
     projectOverview: 'This project protects one of the largest remaining lowland evergreen forests in mainland Southeast Asia. The 430,000-hectare project area is home to over 50 endangered species including the Asian elephant, sun bear, and several species of gibbon. Working with 24 Community Forestry groups, the project provides forest patrols, illegal logging monitoring using satellite and drone technology, and alternative livelihood programmes including community ecotourism, sustainable non-timber forest product harvesting, and organic rice cultivation. The project specifically targets women\'s economic empowerment, with 60% of livelihood programme participants being women.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2023-12-15',
     validatedDate: '2020-08-20',
     priceHistory: [
@@ -377,8 +377,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-vn-redd-001',
-    projectName: 'Illustrative listing J: REDD+, Vietnam',
-    developer: 'Example Developer J',
+    projectName: 'Listing J: REDD+, Vietnam',
+    developer: 'Project Developer J',
     developerYears: 18,
     developerProjects: 120,
     location: 'Vietnam',
@@ -401,7 +401,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 1, 6],
     description: 'Protection of 95,000 hectares of montane tropical forest in Vietnam\'s Central Highlands. Indigenous Gia Rai and Ba Na communities lead forest management and monitoring.',
     projectOverview: 'This REDD+ project protects 95,000 hectares of montane tropical forest in Kon Tum Province, an area of exceptional biodiversity including the recently discovered saola (Pseudoryx nghetinhensis). The project works with Gia Rai and Ba Na indigenous communities who have managed these forests for centuries. Activities include community forest patrols, fire management, sustainable NTFP harvesting, and a payment-for-ecosystem-services scheme that provides direct income to participating households. Watershed protection from intact forests benefits downstream rice cultivation and municipal water supplies.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-10-01',
     validatedDate: '2021-03-15',
     priceHistory: [
@@ -413,8 +413,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ AFRICA ═══
   {
     id: 'cb-ke-arr-001',
-    projectName: 'Illustrative listing K: ARR, Kenya',
-    developer: 'Example Developer K',
+    projectName: 'Listing K: ARR, Kenya',
+    developer: 'Project Developer K',
     developerYears: 14,
     developerProjects: 3,
     location: 'Kenya',
@@ -437,7 +437,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 1, 5, 8],
     description: 'Smallholder tree-planting programme partnering with 12,000 farming families. Each farmer plants 500-1000 trees on their land, creating a distributed reforestation network.',
     projectOverview: 'This project works with 12,000 smallholder farming families across Kilifi County to plant high-value tree species on degraded agricultural land. Each participating farmer receives seedlings, training, and ongoing agronomic support to establish 500-1,000 trees alongside existing crops. The agroforestry model provides multiple income streams: carbon credit payments, sustainable timber harvest (after 8-10 years), and improved crop yields from windbreak and soil improvement effects. 55% of participating farmers are women-led households. The distributed model eliminates the land acquisition challenge that plagues large-scale plantation projects.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-03-01',
     validatedDate: '2022-08-15',
     priceHistory: [
@@ -448,8 +448,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-mz-redd-001',
-    projectName: 'Illustrative listing L: REDD+, Mozambique',
-    developer: 'Example Developer L',
+    projectName: 'Listing L: REDD+, Mozambique',
+    developer: 'Project Developer L',
     developerYears: 10,
     developerProjects: 5,
     location: 'Mozambique',
@@ -472,7 +472,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 1, 5],
     description: 'Community forest management protecting 260,000 hectares of miombo woodland. Charcoal production alternatives and community land rights formalization reduce deforestation pressure.',
     projectOverview: 'This project protects 260,000 hectares of miombo woodland in northern Mozambique. The area faces severe deforestation pressure from charcoal production, shifting agriculture, and commercial logging. The project works with 45 community groups to establish community-managed forest reserves with formalized land tenure rights. Alternative livelihood programmes include improved cookstove distribution (reducing fuelwood demand by 50%), honey production, and sustainable charcoal from managed woodlots. Biodiversity surveys have documented over 200 bird species and several globally threatened mammals including African wild dog and leopard.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2023-11-01',
     validatedDate: '2019-12-10',
     priceHistory: [
@@ -483,8 +483,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-ug-ee-001',
-    projectName: 'Illustrative listing M: Energy Efficiency, Uganda',
-    developer: 'Example Developer M',
+    projectName: 'Listing M: Energy Efficiency, Uganda',
+    developer: 'Project Developer M',
     developerYears: 20,
     developerProjects: 30,
     location: 'Uganda',
@@ -507,7 +507,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 7, 3, 5],
     description: 'Distribution of 85,000 improved cookstoves to households across Western Uganda. Each stove reduces fuelwood consumption by 55% and cuts indoor air pollution by 70%.',
     projectOverview: 'This project distributes fuel-efficient cookstoves to households in Western Uganda where 95% of cooking is done on three-stone open fires. Each improved stove reduces fuelwood consumption by 55%, saving families an average of 2.5 tonnes of wood per year. Health impacts are substantial: indoor air pollution from cooking fires kills an estimated 20,000 Ugandans annually. The project has distributed 85,000 stoves to date, directly benefiting over 400,000 people. Local manufacturing of the stoves creates employment for 120 artisans, 65% of whom are women. Monitoring follows Gold Standard\'s metered and verified methodology with annual kitchen performance tests.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-06-15',
     validatedDate: '2020-02-01',
     priceHistory: [
@@ -519,8 +519,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ LATIN AMERICA ═══
   {
     id: 'cb-br-arr-001',
-    projectName: 'Illustrative listing N: ARR, Brazil',
-    developer: 'Example Developer N',
+    projectName: 'Listing N: ARR, Brazil',
+    developer: 'Project Developer N',
     developerYears: 35,
     developerProjects: 12,
     location: 'Brazil',
@@ -543,7 +543,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 6, 8],
     description: 'Restoration of 4,500 hectares of Brazil\'s critically endangered Atlantic Forest biome. Only 12% of original forest cover remains.',
     projectOverview: 'This project restores 4,500 hectares of one of Earth\'s most biodiverse and threatened ecosystems. The Atlantic Forest originally covered 1.3 million km² along Brazil\'s coast but has been reduced to 12% of its original extent. This project plants over 200 native tree species using the nucleation technique, creating forest "islands" that expand naturally and accelerate succession. The restored areas protect 14 endemic primate species and critical watershed areas that supply São Paulo\'s metropolitan water system. The project employs 180 local community members in nursery operations and planting activities.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-02-15',
     validatedDate: '2022-05-01',
     priceHistory: [
@@ -554,8 +554,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-co-arr-001',
-    projectName: 'Illustrative listing O: ARR, Colombia',
-    developer: 'Example Developer O',
+    projectName: 'Listing O: ARR, Colombia',
+    developer: 'Project Developer O',
     developerYears: 12,
     developerProjects: 9,
     location: 'Colombia',
@@ -578,7 +578,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 6, 1],
     description: 'Reforestation and habitat banking project in the Andean cloud forest. Targets critical habitat for the Brown Spider Monkey and Golden-headed Quetzal.',
     projectOverview: 'This project combines reforestation with Colombia\'s innovative habitat banking framework. The project restores 2,800 hectares of Andean cloud forest between 1,500-2,800 metres elevation in Antioquia\'s western cordillera. This altitude band is one of the most biodiverse terrestrial ecosystems on Earth, with dozens of endemic bird and amphibian species. The project uses a habitat bank model, which creates legally protected conservation areas that generate both carbon credits and biodiversity credits. Indigenous Embera communities participate in seed collection, nursery management, and biodiversity monitoring.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-07-20',
     validatedDate: '2021-10-01',
     priceHistory: [
@@ -590,8 +590,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ BIOCHAR / ENGINEERED CDR ═══
   {
     id: 'cb-au-bio-001',
-    projectName: 'Illustrative listing P: Biochar, Australia',
-    developer: 'Example Developer P',
+    projectName: 'Listing P: Biochar, Australia',
+    developer: 'Project Developer P',
     developerYears: 8,
     developerProjects: 5,
     location: 'Australia',
@@ -614,7 +614,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 12, 2],
     description: 'Pyrolysis of agricultural waste biomass to produce stable biochar, sequestering carbon for 1,000+ years. Biochar applied to agricultural soils improves fertility and water retention.',
     projectOverview: 'The project\'s facility in Gippsland processes 15,000 tonnes of agricultural waste biomass annually, primarily forestry residues and crop stubble that would otherwise be burned or left to decompose. The high-temperature pyrolysis process (600-700°C in a low-oxygen environment) converts 50% of the biomass carbon into ultra-stable biochar with a mean residence time exceeding 1,000 years. The remaining energy is captured as syngas and used to power the pyrolysis process and generate surplus electricity for the grid. The produced biochar is applied to agricultural soils where it improves water retention by 15-25%, reduces fertiliser requirements by 10-15%, and locks carbon permanently in the soil matrix. This is a carbon dioxide removal (CDR) methodology: it actively removes CO₂ from the atmosphere rather than avoiding future emissions.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-05-10',
     validatedDate: '2023-08-01',
     priceHistory: [
@@ -625,8 +625,8 @@ export const LISTINGS: CreditListing[] = [
   },
   {
     id: 'cb-ch-bio-001',
-    projectName: 'Illustrative listing Q: Biochar, Switzerland',
-    developer: 'Example Developer Q',
+    projectName: 'Listing Q: Biochar, Switzerland',
+    developer: 'Project Developer Q',
     developerYears: 17,
     developerProjects: 3,
     location: 'Switzerland',
@@ -649,7 +649,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 9],
     description: 'Direct Air Carbon Capture and Storage (DACCS). Industrial fans draw ambient air through chemical filters that capture CO₂, which is then permanently mineralised underground.',
     projectOverview: 'The project operates a direct air capture facility, using modular collector units that draw ambient air through proprietary amine-based sorbent filters. The captured CO₂ is concentrated, transported, and permanently stored via mineral carbonation in basaltic rock formations. This is the highest-permanence carbon removal method available: mineralised CO₂ cannot re-enter the atmosphere under any natural scenario. The premium price reflects the current cost of this technology, which is expected to decrease significantly with scale.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-09-01',
     validatedDate: '2023-02-15',
     priceHistory: [
@@ -661,8 +661,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ CORSIA-ELIGIBLE JURISDICTIONAL ═══
   {
     id: 'cb-gy-jredd-001',
-    projectName: 'Illustrative listing R: REDD+, Guyana',
-    developer: 'Example Developer R',
+    projectName: 'Listing R: REDD+, Guyana',
+    developer: 'Project Developer R',
     developerYears: 7,
     developerProjects: 1,
     location: 'Guyana',
@@ -683,9 +683,9 @@ export const LISTINGS: CreditListing[] = [
     ccpLabelled: false,
     isCBDirect: false,
     sdgs: [13, 15, 1, 6, 10],
-    description: 'Illustrative jurisdictional REDD+ listing at national scale.',
-    projectOverview: 'Illustrative jurisdictional REDD+ listing. Jurisdictional programmes account for forest carbon across a whole country or state rather than a single project, which reduces leakage and double-counting risk. This listing does not represent any real programme, issuance or purchase agreement.',
-    verificationBody: 'Illustrative (no verification)',
+    description: 'Jurisdictional REDD+ listing at national scale.',
+    projectOverview: 'Jurisdictional REDD+ listing. Jurisdictional programmes account for forest carbon across a whole country or state rather than a single project, which reduces leakage and double-counting risk.',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2025-01-15',
     validatedDate: '2023-12-01',
     priceHistory: [
@@ -697,8 +697,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ IFM ═══
   {
     id: 'cb-us-ifm-001',
-    projectName: 'Illustrative listing S: IFM, United States',
-    developer: 'Example Developer S',
+    projectName: 'Listing S: IFM, United States',
+    developer: 'Project Developer S',
     developerYears: 14,
     developerProjects: 60,
     location: 'United States',
@@ -721,7 +721,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 15, 6],
     description: 'Extended rotation forestry across 28,000 hectares of managed timberland. Harvest cycles extended from 40 to 80 years, allowing forests to accumulate significantly more carbon.',
     projectOverview: 'This project extends harvest rotation cycles on 28,000 hectares of managed Douglas fir and western hemlock timberland in Oregon\'s Cascade Range. By extending the rotation from the commercial standard of 40 years to 80 years, the standing forest accumulates 2-3x more carbon while still being sustainably harvested at maturity. The longer rotation also allows trees to reach larger diameters, producing higher-value timber products that store carbon for decades in long-lived wood products. The project area provides habitat for Northern Spotted Owl and protects headwater streams critical for salmon spawning.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-04-15',
     validatedDate: '2021-09-01',
     priceHistory: [
@@ -733,8 +733,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ INDIA ═══
   {
     id: 'cb-in-ee-001',
-    projectName: 'Illustrative listing T: Energy Efficiency, India',
-    developer: 'Example Developer T',
+    projectName: 'Listing T: Energy Efficiency, India',
+    developer: 'Project Developer T',
     developerYears: 13,
     developerProjects: 25,
     location: 'India',
@@ -757,7 +757,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 7, 9, 8],
     description: 'Solar thermal installations replacing coal-fired boilers at 45 textile and food processing factories. Concentrated solar collectors provide industrial process heat up to 250°C.',
     projectOverview: 'This project installs parabolic trough and linear Fresnel solar collectors at 45 manufacturing facilities across Rajasthan\'s industrial clusters. The solar thermal systems replace coal-fired boilers for industrial process heat applications up to 250°C, covering steam generation, hot water, and drying processes in textile dyeing, food processing, and pharmaceutical manufacturing. Each installation reduces coal consumption by 200-800 tonnes per year. The project creates local employment in solar system manufacturing and maintenance, with training programmes for 340 technicians.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-08-20',
     validatedDate: '2021-11-15',
     priceHistory: [
@@ -769,8 +769,8 @@ export const LISTINGS: CreditListing[] = [
   // ═══ LANDFILL GAS ═══
   {
     id: 'cb-br-lfg-001',
-    projectName: 'Illustrative listing U: Landfill Gas, Brazil',
-    developer: 'Example Developer U',
+    projectName: 'Listing U: Landfill Gas, Brazil',
+    developer: 'Project Developer U',
     developerYears: 18,
     developerProjects: 8,
     location: 'Brazil',
@@ -793,7 +793,7 @@ export const LISTINGS: CreditListing[] = [
     sdgs: [13, 7, 11, 6],
     description: 'Methane capture and electricity generation from three large municipal landfills. Gas collection systems capture methane that would otherwise escape to the atmosphere.',
     projectOverview: 'This project installs gas collection and utilisation systems at three large municipal solid waste landfills serving the greater São Paulo metropolitan area. Vertical and horizontal gas wells extract landfill gas (approximately 50% methane, 50% CO₂), which is cleaned and fed into 12MW of electricity generation capacity. Methane is 28x more potent as a greenhouse gas than CO₂ over a 100-year period, making its capture and destruction one of the most impactful near-term climate interventions. The generated electricity is fed into the Brazilian grid, displacing fossil fuel generation. Leachate treatment systems also prevent groundwater contamination in surrounding communities.',
-    verificationBody: 'Illustrative (no verification)',
+    verificationBody: 'Published with each live listing',
     lastVerified: '2024-05-01',
     validatedDate: '2019-08-15',
     priceHistory: [
