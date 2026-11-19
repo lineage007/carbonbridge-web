@@ -97,7 +97,7 @@ export default function RegisterPage() {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0C1C14 0%, #1B3A2D 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div style={{ width: '100%', maxWidth: '520px' }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '36px', marginBottom: '24px' }} /></Link>
+          <Link href="/"><img src="/logo-white-h96.webp" alt="CarbonBridge" style={{ height: '36px', marginBottom: '24px' }} /></Link>
           <h1 style={{ fontFamily: fr, fontSize: '28px', color: '#F2ECE0', marginBottom: '8px' }}>Create your account</h1>
           <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92' }}>One account for buying, selling, and managing carbon credits</p>
         </div>

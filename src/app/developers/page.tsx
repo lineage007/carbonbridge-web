@@ -35,7 +35,7 @@ export default function DevelopersPage() {
       <header style={{ background: '#0C1C14', borderBottom: '1px solid rgba(201,169,110,0.06)', padding: '16px 0' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '28px' }} /></Link>
+            <Link href="/"><img src="/logo-white-h96.webp" alt="CarbonBridge" style={{ height: '28px' }} /></Link>
             <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', padding: '2px 8px', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '4px' }}>DEVELOPERS</span>
           </div>
           <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '13px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '8px 20px', borderRadius: '8px', textDecoration: 'none' }}>Request API access</a>

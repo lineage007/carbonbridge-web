@@ -20,6 +20,14 @@ function daysUntil(dateStr: string): number {
   return Math.max(0, Math.ceil((target.getTime() - now.getTime()) / 86400000));
 }
 
+/* Cloudflare's email obfuscation rewrites plain-text addresses in the HTML, which breaks hydration.
+   Setting the @ in its own span keeps the address readable and out of its pattern. */
+function plainEmail(text: string): ReactNode {
+  const parts = text.split('@');
+  if (parts.length === 1) return text;
+  return parts.flatMap((p, i) => (i === 0 ? [p] : [<span key={i}>@</span>, p]));
+}
+
 /* ─── Scroll-triggered fade-in ───────────────────────────── */
 function FadeIn({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -134,6 +142,9 @@ function SectionHeader({ eyebrow, title, subtitle, dark, center = true }: { eyeb
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Re-render once after hydration so date-based countdowns show today's value, not the build day's.
+  const [, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
   const navLinks = [
     { label: 'Marketplace', href: '/marketplace' },
     { label: 'Compare', href: '/compare' },
@@ -149,7 +160,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '48px', width: 'auto' }} />
+            <img src="/logo-white-h96.webp" alt="CarbonBridge" width={160} height={48} style={{ height: '48px', width: 'auto' }} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
@@ -352,7 +363,7 @@ export default function Home() {
                 <div style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '24px', borderLeft: `3px solid ${r.color}`, transition: 'box-shadow 0.3s' }} className="hover:shadow-md">
                   <div className="flex items-center justify-between mb-2">
                     <span style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: 'var(--ink)' }}>{r.reg}</span>
-                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: r.color, background: `${r.color}15`, padding: '4px 12px', borderRadius: '100px', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>{r.days}</span>
+                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: r.color, background: `${r.color}15`, padding: '4px 12px', borderRadius: '100px', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }} suppressHydrationWarning>{r.days}</span>
                   </div>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.55 }}>{r.desc}</p>
                   <span style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(107,98,89,0.5)', marginTop: '6px', display: 'block' }}>Deadline: {r.deadline}</span>
@@ -600,7 +611,7 @@ export default function Home() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
                   </span>
                 </summary>
-                <p style={{ fontFamily: bg, fontSize: '14px', color: 'var(--ink-muted)', lineHeight: 1.65, marginTop: '12px', paddingRight: '32px' }}>{faq.a}</p>
+                <p style={{ fontFamily: bg, fontSize: '14px', color: 'var(--ink-muted)', lineHeight: 1.65, marginTop: '12px', paddingRight: '32px' }}>{plainEmail(faq.a)}</p>
               </details>
             ))}
           </div>
@@ -637,7 +648,7 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
-              <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
+              <img src="/logo-white-h96.webp" alt="CarbonBridge" width={80} height={24} loading="lazy" style={{ height: '24px', width: 'auto' }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
                 An institutional carbon credit marketplace for MENA, headquartered in the UAE.
               </p>
@@ -684,7 +695,7 @@ export default function Home() {
             <span style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }}>
               © {new Date().getFullYear()} CarbonBridge. Headquartered in the United Arab Emirates.
             </span>
-            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">info@carbonbridge.ae</a>
+            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">{plainEmail('info@carbonbridge.ae')}</a>
           </div>
         </div>
       </footer>
