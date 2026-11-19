@@ -119,7 +119,7 @@ export default function AboutPage() {
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8AAA92', marginBottom: '24px' }}>Buying for compliance or listing credits for sale, you can start with a free account.</p>
             <div className="flex justify-center gap-3 flex-wrap">
               <Link href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 700, color: '#0C1C14', background: '#C9A96E', padding: '13px 28px', borderRadius: '10px' }}>Create free account</Link>
-              <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: '#FFFCF6', border: '1px solid rgba(255,252,246,0.15)', padding: '13px 28px', borderRadius: '10px' }}>Browse marketplace</Link>
+              <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: '#FFFCF6', border: '1px solid rgba(255,252,246,0.15)', padding: '13px 28px', borderRadius: '10px' }}>Browse credits</Link>
             </div>
           </div>
         </div>

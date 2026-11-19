@@ -111,10 +111,10 @@ export default function SellerDemoPage() {
           </div>
 
           {/* Tabs */}
-          <div style={{ display: 'flex', gap: '0', borderBottom: '1px solid #E8E2D6', marginBottom: '24px' }}>
+          <div role="tablist" aria-label="Seller dashboard sections" style={{ display: 'flex', gap: '0', borderBottom: '1px solid #E8E2D6', marginBottom: '24px', overflowX: 'auto' }}>
             {(['overview', 'listings', 'orders', 'disputes'] as Tab[]).map(t => (
-              <button key={t} onClick={() => setTab(t)}
-                style={{ fontFamily: bg, fontSize: '13px', fontWeight: tab === t ? 700 : 500, color: tab === t ? '#1B3A2D' : '#8B8178', background: 'transparent', border: 'none', padding: '12px 20px', cursor: 'pointer', borderBottom: tab === t ? '2px solid #1B3A2D' : '2px solid transparent', textTransform: 'capitalize' }}>
+              <button key={t} onClick={() => setTab(t)} role="tab" aria-selected={tab === t}
+                style={{ fontFamily: bg, fontSize: '13px', fontWeight: tab === t ? 700 : 500, color: tab === t ? '#1B3A2D' : '#8B8178', background: 'transparent', border: 'none', padding: '12px 16px', whiteSpace: 'nowrap', flexShrink: 0, cursor: 'pointer', borderBottom: tab === t ? '2px solid #1B3A2D' : '2px solid transparent', textTransform: 'capitalize' }}>
                 {t}{t === 'disputes' && frozenCount > 0 && (
                   <span style={{ marginLeft: '6px', background: '#D97706', color: 'white', borderRadius: '10px', padding: '1px 7px', fontSize: '10px', fontWeight: 700 }}>{frozenCount}</span>
                 )}

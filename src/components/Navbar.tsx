@@ -67,7 +67,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
     : '#E8E2D8';
   const linkColor = dark ? 'rgba(255,252,246,0.6)' : '#5A5248';
   const activeLinkColor = dark ? '#FFFCF6' : '#1A1714';
-  const logoSrc = dark ? '/logo-white.png' : '/logo-white.png';
+  const logoSrc = dark ? '/logo-white-h96.webp' : '/logo-green-h96.webp';
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
@@ -89,11 +89,11 @@ export default function Navbar({ dark = false }: NavbarProps) {
         }}>
           {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <img src={logoSrc} alt="CarbonBridge" style={{ height: '36px', width: 'auto' }} />
+            <img src={logoSrc} alt="CarbonBridge" width={120} height={36} style={{ height: '36px', width: 'auto' }} />
           </Link>
 
           {/* Desktop nav links */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '4px' }} className="hidden md:flex">
+          <nav aria-label="Main" style={{ gap: '4px' }} className="hidden lg:flex items-center">
             {PUBLIC_NAV.map(item => {
               const active = isActive(item.href);
               return (
@@ -121,7 +121,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
             {user ? (
               /* Authenticated — company name dropdown */
-              <div ref={dropdownRef} style={{ position: 'relative' }} className="hidden md:block">
+              <div ref={dropdownRef} style={{ position: 'relative' }} className="hidden lg:block">
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   style={{
@@ -212,7 +212,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
                     textDecoration: 'none', padding: '6px 14px', borderRadius: '8px',
                     transition: 'color 0.15s',
                   }}
-                  className="hidden md:block"
+                  className="hidden lg:block"
                 >
                   Sign in
                 </Link>
@@ -225,7 +225,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
                     padding: '8px 18px', borderRadius: '8px',
                     textDecoration: 'none', transition: 'opacity 0.15s',
                   }}
-                  className="hidden md:inline-block"
+                  className="hidden lg:inline-block"
                   onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
                   onMouseLeave={e => e.currentTarget.style.opacity = '1'}
                 >
@@ -239,10 +239,14 @@ export default function Navbar({ dark = false }: NavbarProps) {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: dark ? '#FFFCF6' : '#1A1714', padding: '4px' }}
-              className="md:hidden"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: dark ? '#FFFCF6' : '#1A1714', width: '44px', height: '44px', marginRight: '-10px' }}
+              className="lg:hidden inline-flex items-center justify-center"
             >
-              {mobileOpen ? '✕' : '☰'}
+              {mobileOpen ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+              )}
             </button>
           </div>
         </div>
@@ -256,7 +260,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
           zIndex: 99, overflowY: 'auto',
           padding: '24px',
           display: 'flex', flexDirection: 'column', gap: '4px',
-        }} className="md:hidden">
+        }} className="lg:hidden">
           {PUBLIC_NAV.map(item => (
             <Link
               key={item.href}
@@ -280,7 +284,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
               </>
             ) : (
               <>
-                <Link href="/login" style={{ fontFamily: bg, fontSize: '15px', color: dark ? 'rgba(255,252,246,0.7)' : '#5A5248', textDecoration: 'none' }}>Sign in</Link>
+                <Link href="/login" style={{ fontFamily: bg, fontSize: '15px', fontWeight: 500, color: dark ? 'rgba(255,252,246,0.8)' : '#5A5248', textDecoration: 'none', padding: '12px 20px', borderRadius: '8px', border: `1px solid ${dark ? 'rgba(201,169,110,0.25)' : '#E8E2D8'}`, textAlign: 'center' }}>Sign in</Link>
                 <Link href="/register" style={{ fontFamily: bg, fontSize: '15px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', textAlign: 'center' }}>Get started</Link>
               </>
             )}
