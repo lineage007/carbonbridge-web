@@ -10,7 +10,7 @@ import { useEffect, useState, useRef, type ReactNode } from "react";
    + Scroll-triggered animations (IntersectionObserver)
    + Tactile hover states on credit cards
    + Geometric decorative circles on dark sections
-   + Market data disclaimer ("Indicative")
+   + Market snapshot from a published, dated source
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─── Dynamic countdown ──────────────────────────────────── */
@@ -81,6 +81,16 @@ function GeoCircles({ side = "right" }: { side?: "left" | "right" }) {
 }
 
 const fr = "'Fraunces', Georgia, serif";
+const mono = "'JetBrains Mono', ui-monospace, monospace";
+
+// Published annual figures, Ecosystem Marketplace SOVCM 2025 (calendar 2024 transactions).
+// Same source as MARKET_STATS on /data. Refresh when the next annual report is published.
+const MARKET_SNAPSHOT = [
+  { label: 'Transaction value', value: '$535M', delta: '\u221229%', up: false, unit: 'all voluntary credits' },
+  { label: 'Average price', value: '$6.34', delta: '\u22126%', up: false, unit: 'per tCO\u2082e, all credits' },
+  { label: 'ARR removals', value: '$20.44', delta: '+19%', up: true, unit: 'per tCO\u2082e, average' },
+  { label: 'Improved forest mgmt', value: '$14.97', delta: '\u22128%', up: false, unit: 'per tCO\u2082e, average' },
+];
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 
 // Consistent icon set — stroke-based, 1.5px weight
@@ -262,7 +272,7 @@ export default function Home() {
               </h1>
 
               <p style={{ fontFamily: bg, fontSize: '16px', color: '#8AAA92', lineHeight: 1.7, marginBottom: '36px', maxWidth: '480px' }}>
-                Discover and compare carbon credits with quality ratings and indicative price benchmarks. Integrated insurance and institutional settlement are being built into the same platform.
+                Discover, compare and source carbon credits for UAE NRCC, EU CBAM and CORSIA programmes, with quality ratings, price benchmarks and a managed procurement desk.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-14">
@@ -280,56 +290,39 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: Market data dashboard */}
-            <div style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '18px', padding: '28px', position: 'relative' }}>
-              <div className="flex items-center justify-between mb-6">
-                <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Market Overview</span>
-                <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', background: 'rgba(138,170,146,0.08)', padding: '2px 8px', borderRadius: '4px' }}>Indicative · As of March 2026</span>
+            {/* Right: market snapshot, sourced and dated */}
+            <figure style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.1)', borderRadius: '18px', padding: '28px', position: 'relative', margin: 0 }} aria-labelledby="market-snapshot-title">
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div>
+                  <span id="market-snapshot-title" style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#C9A96E', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Voluntary carbon market</span>
+                  <div style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.7)', marginTop: '4px' }}>Full-year 2024, the latest published annual figures</div>
+                </div>
+                <span style={{ fontFamily: mono, fontSize: '10.5px', color: '#8AAA92', background: 'rgba(138,170,146,0.1)', padding: '3px 8px', borderRadius: '4px', whiteSpace: 'nowrap' }}>vs 2023</span>
               </div>
 
-              {/* Price grid */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                {[
-                  { label: 'High-Integrity VCUs', price: '$14.80', delta: '+18.4%', up: true },
-                  { label: 'Blue Carbon', price: '$64.00', delta: '+28.7%', up: true },
-                  { label: 'Biochar / CDR', price: '$142.00', delta: '+45.2%', up: true },
-                  { label: 'Legacy Credits', price: '$3.50', delta: '-22.1%', up: false },
-                ].map(p => (
-                  <div key={p.label} style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{p.label}</div>
-                    <div className="flex items-baseline gap-2 mt-1">
-                      <span style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: '#FFFCF6' }}>{p.price}</span>
-                      <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: p.up ? '#22C55E' : '#EF4444' }}>{p.delta}</span>
-                    </div>
-                    <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', marginTop: '2px' }}>per tCO₂e</div>
+              <dl className="grid grid-cols-2 gap-3" style={{ margin: '0 0 22px' }}>
+                {MARKET_SNAPSHOT.map(p => (
+                  <div key={p.label} style={{ background: 'rgba(255,252,246,0.035)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '10px', padding: '14px' }}>
+                    <dt style={{ fontFamily: bg, fontSize: '10.5px', color: '#8AAA92', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{p.label}</dt>
+                    <dd style={{ margin: 0 }}>
+                      <div className="flex items-baseline gap-2 mt-1 flex-wrap">
+                        <span style={{ fontFamily: fr, fontSize: '22px', fontWeight: 700, color: '#FFFCF6', fontVariantNumeric: 'tabular-nums' }}>{p.value}</span>
+                        <span style={{ fontFamily: mono, fontSize: '11px', fontWeight: 600, color: p.up ? '#4ADE80' : '#F87171' }}>{p.delta}</span>
+                      </div>
+                      <div style={{ fontFamily: bg, fontSize: '10.5px', color: 'rgba(138,170,146,0.75)', marginTop: '2px' }}>{p.unit}</div>
+                    </dd>
                   </div>
                 ))}
-              </div>
+              </dl>
 
-              {/* Volume bars */}
-              <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '10px' }}>Retirement volume by type (2024)</div>
-              <div className="space-y-2">
-                {[
-                  { label: 'Nature-Based', pct: 56, color: '#22C55E' },
-                  { label: 'Engineered', pct: 24, color: '#8B5CF6' },
-                  { label: 'Avoidance', pct: 14, color: '#0EA5E9' },
-                  { label: 'Other', pct: 6, color: '#6B8A74' },
-                ].map(b => (
-                  <div key={b.label} className="flex items-center gap-3">
-                    <span style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92', width: '90px', flexShrink: 0 }}>{b.label}</span>
-                    <div style={{ flex: 1, height: '6px', background: 'rgba(255,252,246,0.04)', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div style={{ width: `${b.pct}%`, height: '100%', background: b.color, borderRadius: '3px', transition: 'width 1s ease' }} />
-                    </div>
-                    <span style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', width: '28px', textAlign: 'right' }}>{b.pct}%</span>
-                  </div>
-                ))}
-              </div>
+              <p style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.78)', lineHeight: 1.6, margin: 0 }}>
+                Total value fell while buyers paid more for removals. 182 Mt of credits were retired across the ten largest standards.
+              </p>
 
-              <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', marginTop: '20px', paddingTop: '14px', fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.35)', lineHeight: 1.5 }}>
-                182M tonnes retired in 2024 · $535M total value · Quality premium widening<br />
-                <span style={{ fontSize: '9px', opacity: 0.7 }}>Prices are indicative benchmarks from public registry data.</span>
-              </div>
-            </div>
+              <figcaption style={{ borderTop: '1px solid rgba(201,169,110,0.08)', marginTop: '18px', paddingTop: '14px', fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.75)', lineHeight: 1.55 }}>
+                Source: <a href="https://www.ecosystemmarketplace.com/publications/2025-state-of-the-voluntary-carbon-market-sovcm/" target="_blank" rel="noopener noreferrer" style={{ color: '#C9A96E', textDecoration: 'underline', textUnderlineOffset: '2px' }}>Ecosystem Marketplace, State of the Voluntary Carbon Market 2025</a> (June 2025). Checked 20 Nov 2026. <a href="/data" style={{ color: 'rgba(255,252,246,0.8)' }}>More market data</a>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
@@ -527,14 +520,14 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(45,90,63,0.4) 0%, transparent 60%)' }} />
         <GeoCircles side="left" />
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
-          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Planned: optional credit guarantee insurance at checkout, covering non-delivery, invalidation, political risk and CORSIA eligibility. No cover is offered yet." dark />
+          <SectionHeader eyebrow="Integrated Insurance" title={<>Credit guarantee cover,<br />designed into checkout.</>} subtitle="CarbonBridge is building optional credit guarantee insurance into the purchase flow, so buyers can cover the four risks that matter most in a carbon transaction." dark />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: icons.shield, title: 'Non-Delivery', desc: 'Full refund if credits are not delivered as specified in the purchase agreement.' },
-              { icon: icons.lock, title: 'Invalidation', desc: 'Protection if a registry invalidates credits post-issuance due to methodology or verification failures.' },
-              { icon: icons.globe, title: 'Political Risk', desc: 'Coverage for sovereign intervention, export restrictions, or regulatory changes in the project host country.' },
-              { icon: icons.plane, title: 'CORSIA Guarantee', desc: 'Insurance that credits maintain CORSIA eligibility through the entire compliance period.' },
+              { icon: icons.shield, title: 'Non-Delivery', desc: 'Designed to refund the buyer if credits are not delivered as specified in the purchase agreement.' },
+              { icon: icons.lock, title: 'Invalidation', desc: 'Designed to protect the buyer if a registry invalidates credits after issuance for methodology or verification failures.' },
+              { icon: icons.globe, title: 'Political Risk', desc: 'Designed to cover sovereign intervention, export restrictions or regulatory change in the project host country.' },
+              { icon: icons.plane, title: 'CORSIA Guarantee', desc: 'Designed to back CORSIA eligibility through the full compliance period.' },
             ].map(i => (
               <div key={i.title} style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '14px', padding: '24px' }}>
                 <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '14px' }}>{i.icon}</div>
@@ -544,11 +537,6 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-12" style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '24px' }}>
-            <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
-              Cover options launch with live trading.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -600,7 +588,7 @@ export default function Home() {
             {[
               { q: 'What registries do you support?', a: 'CarbonBridge is designed for credits from Verra (VCS), Gold Standard and the American Carbon Registry (ACR).' },
               { q: 'How are credits rated?', a: 'We use a rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
-              { q: 'Is the insurance mandatory?', a: 'No. Insurance cover is on our roadmap and will always be optional.' },
+              { q: 'Is the insurance mandatory?', a: 'No. Credit guarantee cover is designed as an optional add-on at checkout, and it will always stay optional.' },
               { q: 'How does settlement work?', a: 'To buy credits, email info@carbonbridge.ae and the CarbonBridge team will take you through the process.' },
               { q: 'Do you sell your own credits?', a: 'When CarbonBridge lists its own curated inventory (CarbonBridge Direct), it is always clearly labelled and never favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
@@ -651,7 +639,7 @@ export default function Home() {
             <div>
               <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
               <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
-                An institutional carbon credit marketplace for MENA. Abu Dhabi Global Market, Abu Dhabi, UAE.
+                An institutional carbon credit marketplace for MENA, headquartered in the UAE.
               </p>
             </div>
             {[
@@ -694,7 +682,7 @@ export default function Home() {
 
           <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
             <span style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }}>
-              © {new Date().getFullYear()} CarbonBridge. Registered in Abu Dhabi Global Market.
+              © {new Date().getFullYear()} CarbonBridge. Headquartered in the United Arab Emirates.
             </span>
             <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">info@carbonbridge.ae</a>
           </div>
