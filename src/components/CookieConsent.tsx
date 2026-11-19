@@ -26,7 +26,7 @@ export default function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div style={{
+    <div role="dialog" aria-label="Cookie preferences" style={{
       position: 'fixed', bottom: '24px', left: '24px', right: '24px',
       maxWidth: '520px',
       background: '#1A1714',
@@ -37,8 +37,7 @@ export default function CookieConsent() {
       zIndex: 9999,
       fontFamily: bg,
     }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
-        <span style={{ fontSize: '20px', flexShrink: 0 }}>🍪</span>
+      <div style={{ marginBottom: '16px' }}>
         <div>
           <div style={{ fontSize: '14px', fontWeight: 600, color: '#FFFCF6', marginBottom: '4px' }}>We use cookies</div>
           <div style={{ fontSize: '12px', color: 'rgba(255,252,246,0.6)', lineHeight: 1.5 }}>
