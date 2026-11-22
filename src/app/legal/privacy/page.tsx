@@ -6,7 +6,7 @@ export default function privacyPage() {
   return (
     <div>
       <h1 style={{ fontFamily: fr, fontSize: '28px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Privacy Policy</h1>
-      <p style={{ fontSize: '13px', color: '#8A7E70', marginBottom: '32px' }}>Last updated: March 2026 · CarbonBridge Ltd, Abu Dhabi Global Market</p>
+      <p style={{ fontSize: '13px', color: '#8A7E70', marginBottom: '32px' }}>Last updated: March 2026 · CarbonBridge, United Arab Emirates</p>
       
       <div style={{ background: '#F5F0E8', borderRadius: '12px', padding: '20px 24px', marginBottom: '32px', fontSize: '14px', color: '#6B6259' }}>
         <strong style={{ color: '#1A1714' }}>Note:</strong> This page contains placeholder legal text. Final legal terms will be drafted by ADGM-qualified legal counsel before platform launch. The structure and sections below represent the topics that will be covered.

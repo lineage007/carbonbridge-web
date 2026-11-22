@@ -77,12 +77,12 @@ function DisputeInner() {
   if (!session) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '16px' }}>
-        <h2 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714' }}>No order found</h2>
+        <h1 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714' }}>No order found</h1>
         <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178' }}>
           A dispute can only be raised against an escrow-held order.
         </p>
         <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>
-          Browse marketplace →
+          Browse credits →
         </Link>
       </div>
     );

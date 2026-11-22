@@ -10,7 +10,7 @@ import { useEffect, useState, useRef, type ReactNode } from "react";
    + Scroll-triggered animations (IntersectionObserver)
    + Tactile hover states on credit cards
    + Geometric decorative circles on dark sections
-   + Market data disclaimer ("Indicative")
+   + Market snapshot from a published, dated source
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─── Dynamic countdown ──────────────────────────────────── */
@@ -20,6 +20,14 @@ function daysUntil(dateStr: string): number {
   return Math.max(0, Math.ceil((target.getTime() - now.getTime()) / 86400000));
 }
 
+/* Cloudflare's email obfuscation rewrites plain-text addresses in the HTML, which breaks hydration.
+   Setting the @ in its own span keeps the address readable and out of its pattern. */
+function plainEmail(text: string): ReactNode {
+  const parts = text.split('@');
+  if (parts.length === 1) return text;
+  return parts.flatMap((p, i) => (i === 0 ? [p] : [<span key={i}>@</span>, p]));
+}
+
 /* ─── Scroll-triggered fade-in ───────────────────────────── */
 function FadeIn({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,6 +35,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: ReactNode; 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setVisible(true); return; }
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.15 });
     obs.observe(el);
     return () => obs.disconnect();
@@ -81,6 +90,16 @@ function GeoCircles({ side = "right" }: { side?: "left" | "right" }) {
 }
 
 const fr = "'Fraunces', Georgia, serif";
+const mono = "'JetBrains Mono', ui-monospace, monospace";
+
+// Published annual figures, Ecosystem Marketplace SOVCM 2025 (calendar 2024 transactions).
+// Same source as MARKET_STATS on /data. Refresh when the next annual report is published.
+const MARKET_SNAPSHOT = [
+  { label: 'Transaction value', value: '$535M', delta: '\u221229%', up: false, unit: 'all voluntary credits' },
+  { label: 'Average price', value: '$6.34', delta: '\u22126%', up: false, unit: 'per tCO\u2082e, all credits' },
+  { label: 'ARR removals', value: '$20.44', delta: '+19%', up: true, unit: 'per tCO\u2082e, average' },
+  { label: 'Improved forest mgmt', value: '$14.97', delta: '\u22128%', up: false, unit: 'per tCO\u2082e, average' },
+];
 const bg = "'Bricolage Grotesque', system-ui, sans-serif";
 
 // Consistent icon set — stroke-based, 1.5px weight
@@ -124,6 +143,9 @@ function SectionHeader({ eyebrow, title, subtitle, dark, center = true }: { eyeb
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Re-render once after hydration so date-based countdowns show today's value, not the build day's.
+  const [, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
   const navLinks = [
     { label: 'Marketplace', href: '/marketplace' },
     { label: 'Compare', href: '/compare' },
@@ -139,7 +161,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(12,28,20,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(201,169,110,0.08)' }}>
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '48px', width: 'auto' }} />
+            <img src="/logo-white-h96.webp" alt="CarbonBridge" width={160} height={48} style={{ height: '48px', width: 'auto' }} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
@@ -160,7 +182,7 @@ export default function Home() {
           </div>
 
           <button
-            className="lg:hidden text-white/60 hover:text-white"
+            className="lg:hidden text-white/60 hover:text-white inline-flex items-center justify-center w-11 h-11 -mr-2"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(prev => !prev)}
@@ -253,7 +275,7 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-3 mb-7">
                 <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.14em', textTransform: 'uppercase', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', padding: '5px 14px', borderRadius: '100px' }}>
-                  Create your free account today
+                  For buyers and project developers
                 </span>
               </div>
 
@@ -262,74 +284,61 @@ export default function Home() {
               </h1>
 
               <p style={{ fontFamily: bg, fontSize: '16px', color: '#8AAA92', lineHeight: 1.7, marginBottom: '36px', maxWidth: '480px' }}>
-                Discover and compare carbon credits with quality ratings and indicative price benchmarks. Integrated insurance and institutional settlement are being built into the same platform.
+                Discover, compare and source carbon credits for UAE NRCC, EU CBAM and CORSIA programmes, with quality ratings, price benchmarks and a managed procurement desk.
               </p>
 
-              <div className="flex flex-wrap gap-3 mb-14">
+              <div className="flex flex-wrap gap-3 mb-5">
                 <a href="/register" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '13px 28px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
                   Create free account {icons.arrow}
                 </a>
                 <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '13px 28px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 hover:text-white transition-all duration-300">
-                  Explore the platform
+                  Browse credits
                 </a>
               </div>
+              <p style={{ fontFamily: bg, fontSize: '13.5px', color: 'rgba(255,252,246,0.7)', marginBottom: '40px' }}>
+                Developing a project?{' '}
+                <a href="/register" style={{ color: '#C9A96E', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px', display: 'inline-block', padding: '4px 0' }}>List your credits</a>
+              </p>
 
               <div style={{ borderTop: '1px solid rgba(201,169,110,0.1)', paddingTop: '24px' }}>
-                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.45)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '10px' }}>Built for</div>
+                <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.8)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '10px' }}>Built for</div>
                 <div style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.75)' }}>Verra VCS · Gold Standard · American Carbon Registry</div>
               </div>
             </div>
 
-            {/* Right: Market data dashboard */}
-            <div style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '18px', padding: '28px', position: 'relative' }}>
-              <div className="flex items-center justify-between mb-6">
-                <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#8AAA92' }}>Market Overview</span>
-                <span style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', background: 'rgba(138,170,146,0.08)', padding: '2px 8px', borderRadius: '4px' }}>Indicative · As of March 2026</span>
+            {/* Right: market snapshot, sourced and dated */}
+            <figure style={{ background: 'rgba(12,28,20,0.6)', border: '1px solid rgba(201,169,110,0.1)', borderRadius: '18px', padding: '28px', position: 'relative', margin: 0 }} aria-labelledby="market-snapshot-title">
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div>
+                  <span id="market-snapshot-title" style={{ fontFamily: bg, fontSize: '12px', fontWeight: 600, color: '#C9A96E', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Voluntary carbon market</span>
+                  <div style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.7)', marginTop: '4px' }}>Full-year 2024, the latest published annual figures</div>
+                </div>
+                <span style={{ fontFamily: mono, fontSize: '10.5px', color: '#8AAA92', background: 'rgba(138,170,146,0.1)', padding: '3px 8px', borderRadius: '4px', whiteSpace: 'nowrap' }}>vs 2023</span>
               </div>
 
-              {/* Price grid */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                {[
-                  { label: 'High-Integrity VCUs', price: '$14.80', delta: '+18.4%', up: true },
-                  { label: 'Blue Carbon', price: '$64.00', delta: '+28.7%', up: true },
-                  { label: 'Biochar / CDR', price: '$142.00', delta: '+45.2%', up: true },
-                  { label: 'Legacy Credits', price: '$3.50', delta: '-22.1%', up: false },
-                ].map(p => (
-                  <div key={p.label} style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.06)', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{p.label}</div>
-                    <div className="flex items-baseline gap-2 mt-1">
-                      <span style={{ fontFamily: fr, fontSize: '20px', fontWeight: 700, color: '#FFFCF6' }}>{p.price}</span>
-                      <span style={{ fontFamily: bg, fontSize: '11px', fontWeight: 600, color: p.up ? '#22C55E' : '#EF4444' }}>{p.delta}</span>
-                    </div>
-                    <div style={{ fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.4)', marginTop: '2px' }}>per tCO₂e</div>
+              <dl className="grid grid-cols-2 gap-3" style={{ margin: '0 0 22px' }}>
+                {MARKET_SNAPSHOT.map(p => (
+                  <div key={p.label} style={{ background: 'rgba(255,252,246,0.035)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '10px', padding: '14px' }}>
+                    <dt style={{ fontFamily: bg, fontSize: '10.5px', color: '#8AAA92', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{p.label}</dt>
+                    <dd style={{ margin: 0 }}>
+                      <div className="flex items-baseline gap-2 mt-1 flex-wrap">
+                        <span style={{ fontFamily: fr, fontSize: '22px', fontWeight: 700, color: '#FFFCF6', fontVariantNumeric: 'tabular-nums' }}>{p.value}</span>
+                        <span style={{ fontFamily: mono, fontSize: '11px', fontWeight: 600, color: p.up ? '#4ADE80' : '#F87171' }}>{p.delta}</span>
+                      </div>
+                      <div style={{ fontFamily: bg, fontSize: '10.5px', color: 'rgba(138,170,146,0.75)', marginTop: '2px' }}>{p.unit}</div>
+                    </dd>
                   </div>
                 ))}
-              </div>
+              </dl>
 
-              {/* Volume bars */}
-              <div style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '10px' }}>Retirement volume by type (2024)</div>
-              <div className="space-y-2">
-                {[
-                  { label: 'Nature-Based', pct: 56, color: '#22C55E' },
-                  { label: 'Engineered', pct: 24, color: '#8B5CF6' },
-                  { label: 'Avoidance', pct: 14, color: '#0EA5E9' },
-                  { label: 'Other', pct: 6, color: '#6B8A74' },
-                ].map(b => (
-                  <div key={b.label} className="flex items-center gap-3">
-                    <span style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92', width: '90px', flexShrink: 0 }}>{b.label}</span>
-                    <div style={{ flex: 1, height: '6px', background: 'rgba(255,252,246,0.04)', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div style={{ width: `${b.pct}%`, height: '100%', background: b.color, borderRadius: '3px', transition: 'width 1s ease' }} />
-                    </div>
-                    <span style={{ fontFamily: bg, fontSize: '10px', color: '#6B8A74', width: '28px', textAlign: 'right' }}>{b.pct}%</span>
-                  </div>
-                ))}
-              </div>
+              <p style={{ fontFamily: bg, fontSize: '13px', color: 'rgba(255,252,246,0.78)', lineHeight: 1.6, margin: 0 }}>
+                Total value fell while buyers paid more for removals. 182 Mt of credits were retired across the ten largest standards.
+              </p>
 
-              <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', marginTop: '20px', paddingTop: '14px', fontFamily: bg, fontSize: '10px', color: 'rgba(138,170,146,0.35)', lineHeight: 1.5 }}>
-                182M tonnes retired in 2024 · $535M total value · Quality premium widening<br />
-                <span style={{ fontSize: '9px', opacity: 0.7 }}>Prices are indicative benchmarks from public registry data.</span>
-              </div>
-            </div>
+              <figcaption style={{ borderTop: '1px solid rgba(201,169,110,0.08)', marginTop: '18px', paddingTop: '14px', fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.75)', lineHeight: 1.55 }}>
+                Source: <a href="https://www.ecosystemmarketplace.com/publications/2025-state-of-the-voluntary-carbon-market-sovcm/" target="_blank" rel="noopener noreferrer" style={{ color: '#C9A96E', textDecoration: 'underline', textUnderlineOffset: '2px' }}>Ecosystem Marketplace, State of the Voluntary Carbon Market 2025</a> (June 2025). Checked 20 Nov 2026. <a href="/data" style={{ color: 'rgba(255,252,246,0.8)' }}>More market data</a>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
@@ -359,7 +368,7 @@ export default function Home() {
                 <div style={{ background: 'var(--cream)', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '24px', borderLeft: `3px solid ${r.color}`, transition: 'box-shadow 0.3s' }} className="hover:shadow-md">
                   <div className="flex items-center justify-between mb-2">
                     <span style={{ fontFamily: fr, fontSize: '18px', fontWeight: 600, color: 'var(--ink)' }}>{r.reg}</span>
-                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: r.color, background: `${r.color}15`, padding: '4px 12px', borderRadius: '100px', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }}>{r.days}</span>
+                    <span style={{ fontFamily: bg, fontSize: '12px', fontWeight: 700, color: r.color, background: `${r.color}15`, padding: '4px 12px', borderRadius: '100px', letterSpacing: '0.02em', fontVariantNumeric: 'tabular-nums' }} suppressHydrationWarning>{r.days}</span>
                   </div>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.55 }}>{r.desc}</p>
                   <span style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(107,98,89,0.5)', marginTop: '6px', display: 'block' }}>Deadline: {r.deadline}</span>
@@ -404,7 +413,7 @@ export default function Home() {
               { icon: icons.chart, title: 'Data & Ratings', desc: 'Credit quality ratings (AAA-C) against ICVCM CCP criteria. Price benchmarks, vintage analysis, and compliance eligibility mapping.', tag: 'Core' },
               { icon: icons.code, title: 'Retirement API', desc: 'REST API for point-of-sale carbon offsetting, with early access open: log offset requests per transaction, with monthly retirement and branded certificate delivery. Indicative pricing from $0.15/call.', tag: 'Developer' },
               { icon: icons.database, title: 'Carbon Management', desc: 'Track your emissions, manage compliance obligations, and optimise your portfolio with indicative market data.', tag: 'Enterprise' },
-              { icon: icons.users, title: 'Managed Procurement', desc: 'White-glove service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
+              { icon: icons.users, title: 'Managed Procurement', desc: 'A dedicated service for large compliance buyers. CORSIA credit sourcing, CBAM bundling, forward offtake structuring, and dedicated account management.', tag: 'Premium' },
             ].map((f, i) => (
               <FadeIn key={f.title} delay={i * 80}>
                 <div className="group" style={{ background: '#FFFCF6', border: '1px solid var(--border-light)', borderRadius: '14px', padding: '28px', transition: 'box-shadow 0.3s, border-color 0.3s' }}
@@ -431,12 +440,12 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance is designed to cover non-delivery and invalidation risk.', points: ['Multi-registry marketplace browsing', 'Quality ratings (AAA-C)', 'Optional insurance on our roadmap', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
-            { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement on our roadmap', 'Forward contract facilitation'] },
-            { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery on our roadmap', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
-            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. A REST API for per-transaction offset logging and monthly retirement, with early access open now.', points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Early-access programme', 'Indicative: from $0.15/call + 25% margin on credit cost'] },
+            { icon: icons.building, role: 'Corporate Buyers', desc: 'Source high-integrity credits for NRCC, CBAM, and voluntary commitments. Quality ratings take the guesswork out of selection, and optional insurance is designed to cover non-delivery and invalidation risk.', cta: { label: 'Browse credits', href: '/marketplace' }, points: ['Multi-registry marketplace browsing', 'Quality ratings (AAA-C)', 'Optional insurance on our roadmap', 'Portfolio management & compliance tracking', 'Retirement certificates on demand'] },
+            { icon: icons.leaf, role: 'Project Developers', desc: 'List your credits on a marketplace dedicated to MENA buyers. Reach corporate buyers you can\'t access through bilateral channels alone.', cta: { label: 'List your credits', href: '/register' }, points: ['Self-serve listing portal with inventory management', 'Reach Gulf corporate buyers directly', 'OTC and marketplace sales channels', 'Institutional settlement on our roadmap', 'Forward contract facilitation'] },
+            { icon: icons.plane, role: 'Airlines & Aviation', desc: 'Procure CORSIA-eligible credits with Letters of Authorisation and corresponding adjustments. Full compliance packaging from sourcing to retirement.', cta: { label: 'Read the CORSIA explainer', href: '/compliance/corsia' }, points: ['CORSIA-eligible credit sourcing', 'Letter of Authorisation procurement', 'Insurance-wrapped delivery on our roadmap', 'Multi-year forward offtake structuring', 'Dedicated procurement desk'] },
+            { icon: icons.code, role: 'Developers & Platforms', desc: 'Embed carbon offsetting into checkout flows, fintech apps, and corporate platforms. A REST API for per-transaction offset logging and monthly retirement, with early access open now.', cta: { label: 'See the Retirement API', href: '/developers' }, points: ['Point-of-sale retirement API', 'Webhook notifications & SDKs', 'White-label certificate generation', 'Early-access programme', 'Indicative: from $0.15/call + 25% margin on credit cost'] },
           ].map(s => (
-            <div key={s.role} style={{ background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px' }}>
+            <div key={s.role} style={{ background: 'rgba(255,252,246,0.04)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '16px', padding: '32px', display: 'flex', flexDirection: 'column' }}>
               <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '16px' }}>{s.icon}</div>
               <h3 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#FFFCF6', marginBottom: '8px' }}>{s.role}</h3>
               <p style={{ fontFamily: bg, fontSize: '13.5px', color: '#8AAA92', lineHeight: 1.6, marginBottom: '20px' }}>{s.desc}</p>
@@ -448,6 +457,9 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              <a href={s.cta.href} style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#C9A96E', display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: 'auto', paddingTop: '24px', minHeight: '44px', alignSelf: 'flex-start' }} className="hover:underline underline-offset-4">
+                {s.cta.label} {icons.arrow}
+              </a>
             </div>
           ))}
         </div>
@@ -465,11 +477,11 @@ export default function Home() {
               {[
                 { title: 'Quality Ratings', desc: 'AAA to C scale based on ICVCM CCP assessment: additionality, permanence, leakage risk, co-benefit scoring, and methodology integrity.' },
                 { title: 'Price Intelligence', desc: 'Indicative benchmarks by credit type, geography, vintage and quality tier, built from public registry data.' },
-                { title: 'Compliance Mapping', desc: 'Instant eligibility checks: which credits qualify for NRCC, CBAM, CORSIA, SBTi BVCM, and VCMI claims, before you buy.' },
+                { title: 'Compliance Mapping', desc: 'Eligibility checks: which credits qualify for NRCC, CBAM, CORSIA, SBTi BVCM, and VCMI claims, before you buy.' },
                 { title: 'Risk Scores', desc: 'Permanence risk, political risk, and reversal probability scores for every project. Know what you\'re buying.' },
               ].map(item => (
                 <div key={item.title} style={{ borderLeft: '2px solid var(--gold)', paddingLeft: '16px' }}>
-                  <h4 style={{ fontFamily: fr, fontSize: '16px', fontWeight: 600, color: 'var(--ink)', marginBottom: '3px' }}>{item.title}</h4>
+                  <h3 style={{ fontFamily: fr, fontSize: '16px', fontWeight: 600, color: 'var(--ink)', marginBottom: '3px' }}>{item.title}</h3>
                   <p style={{ fontFamily: bg, fontSize: '13px', color: 'var(--ink-muted)', lineHeight: 1.55 }}>{item.desc}</p>
                 </div>
               ))}
@@ -498,7 +510,7 @@ export default function Home() {
                       <span style={{ fontFamily: bg, fontSize: '10px', fontWeight: 700, color: c.badgeColor, background: `${c.badgeColor}12`, padding: '2px 7px', borderRadius: '3px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{c.badge}</span>
                       <span style={{ fontFamily: bg, fontSize: '11px', color: 'var(--ink-muted)' }}>{c.registry} · {c.vintage}</span>
                     </div>
-                    <h4 style={{ fontFamily: fr, fontSize: '15px', fontWeight: 600, color: 'var(--ink)', lineHeight: 1.3 }}>{c.project}</h4>
+                    <h3 style={{ fontFamily: fr, fontSize: '15px', fontWeight: 600, color: 'var(--ink)', lineHeight: 1.3 }}>{c.project}</h3>
                     <span style={{ fontFamily: bg, fontSize: '12px', color: 'var(--ink-muted)' }}>{c.location} · {c.volume} tCO₂e available</span>
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
@@ -523,18 +535,18 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════
           INSURANCE — The trust differentiator
           ═══════════════════════════════════════════════════════ */}
-      <section style={{ background: 'var(--forest-deep)', padding: '100px 0', position: 'relative', overflow: 'hidden' }}>
+      <section id="insurance" style={{ background: 'var(--forest-deep)', padding: '100px 0', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(45,90,63,0.4) 0%, transparent 60%)' }} />
         <GeoCircles side="left" />
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10 relative z-10">
-          <SectionHeader eyebrow="Integrated Insurance" title={<>Every credit purchase,<br />protected.</>} subtitle="Planned: optional credit guarantee insurance at checkout, covering non-delivery, invalidation, political risk and CORSIA eligibility. No cover is offered yet." dark />
+          <SectionHeader eyebrow="Integrated Insurance" title={<>Credit guarantee cover,<br />designed into checkout.</>} subtitle="CarbonBridge is building optional credit guarantee insurance into the purchase flow, so buyers can cover the four risks that matter most in a carbon transaction." dark />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: icons.shield, title: 'Non-Delivery', desc: 'Full refund if credits are not delivered as specified in the purchase agreement.' },
-              { icon: icons.lock, title: 'Invalidation', desc: 'Protection if a registry invalidates credits post-issuance due to methodology or verification failures.' },
-              { icon: icons.globe, title: 'Political Risk', desc: 'Coverage for sovereign intervention, export restrictions, or regulatory changes in the project host country.' },
-              { icon: icons.plane, title: 'CORSIA Guarantee', desc: 'Insurance that credits maintain CORSIA eligibility through the entire compliance period.' },
+              { icon: icons.shield, title: 'Non-Delivery', desc: 'Designed to refund the buyer if credits are not delivered as specified in the purchase agreement.' },
+              { icon: icons.lock, title: 'Invalidation', desc: 'Designed to protect the buyer if a registry invalidates credits after issuance for methodology or verification failures.' },
+              { icon: icons.globe, title: 'Political Risk', desc: 'Designed to cover sovereign intervention, export restrictions or regulatory change in the project host country.' },
+              { icon: icons.plane, title: 'CORSIA Guarantee', desc: 'Designed to back CORSIA eligibility through the full compliance period.' },
             ].map(i => (
               <div key={i.title} style={{ background: 'rgba(255,252,246,0.03)', border: '1px solid rgba(201,169,110,0.08)', borderRadius: '14px', padding: '24px' }}>
                 <div style={{ width: '44px', height: '44px', borderRadius: '11px', background: 'rgba(201,169,110,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A96E', marginBottom: '14px' }}>{i.icon}</div>
@@ -544,11 +556,6 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-12" style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '24px' }}>
-            <p className="text-center" style={{ fontFamily: bg, fontSize: '11px', color: 'rgba(138,170,146,0.35)' }}>
-              Cover options launch with live trading.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -600,7 +607,7 @@ export default function Home() {
             {[
               { q: 'What registries do you support?', a: 'CarbonBridge is designed for credits from Verra (VCS), Gold Standard and the American Carbon Registry (ACR).' },
               { q: 'How are credits rated?', a: 'We use a rating framework based on ICVCM Core Carbon Principles. Each credit is scored on additionality, permanence, leakage risk, co-benefits, and methodology integrity, from AAA (highest) to C.' },
-              { q: 'Is the insurance mandatory?', a: 'No. Insurance cover is on our roadmap and will always be optional.' },
+              { q: 'Is the insurance mandatory?', a: 'No. Credit guarantee cover is designed as an optional add-on at checkout, and it will always stay optional.' },
               { q: 'How does settlement work?', a: 'To buy credits, email info@carbonbridge.ae and the CarbonBridge team will take you through the process.' },
               { q: 'Do you sell your own credits?', a: 'When CarbonBridge lists its own curated inventory (CarbonBridge Direct), it is always clearly labelled and never favoured over third-party listings.' },
               { q: 'What compliance frameworks do you support?', a: 'We map every credit to its eligibility for UAE NRCC, EU CBAM, ICAO CORSIA, SBTi BVCM, and VCMI claims. This mapping is visible before purchase.' },
@@ -612,7 +619,7 @@ export default function Home() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
                   </span>
                 </summary>
-                <p style={{ fontFamily: bg, fontSize: '14px', color: 'var(--ink-muted)', lineHeight: 1.65, marginTop: '12px', paddingRight: '32px' }}>{faq.a}</p>
+                <p style={{ fontFamily: bg, fontSize: '14px', color: 'var(--ink-muted)', lineHeight: 1.65, marginTop: '12px', paddingRight: '32px' }}>{plainEmail(faq.a)}</p>
               </details>
             ))}
           </div>
@@ -633,10 +640,10 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: 'var(--forest-deep)', background: '#C9A96E', padding: '14px 32px', borderRadius: '9px', display: 'inline-flex', alignItems: 'center', gap: '8px' }} className="hover:brightness-110 transition-all duration-200">
-              Contact our team {icons.arrow}
+              Talk to the team {icons.arrow}
             </a>
             <a href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 500, color: 'rgba(255,252,246,0.7)', padding: '14px 32px', borderRadius: '9px', border: '1px solid rgba(255,252,246,0.1)' }} className="hover:border-white/25 transition-all">
-              Explore the platform
+              Browse credits
             </a>
           </div>
         </div>
@@ -649,16 +656,16 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
-              <img src="/logo-white.png" alt="CarbonBridge" style={{ height: '24px', width: 'auto' }} />
-              <p style={{ fontFamily: bg, fontSize: '12px', color: '#4A6B55', marginTop: '10px', lineHeight: 1.6 }}>
-                An institutional carbon credit marketplace for MENA. Abu Dhabi Global Market, Abu Dhabi, UAE.
+              <img src="/logo-white-h96.webp" alt="CarbonBridge" width={80} height={24} loading="lazy" style={{ height: '24px', width: 'auto' }} />
+              <p style={{ fontFamily: bg, fontSize: '12px', color: '#8AAA92', marginTop: '10px', lineHeight: 1.6 }}>
+                An institutional carbon credit marketplace for MENA, headquartered in the UAE.
               </p>
             </div>
             {[
               { title: 'Platform', items: [
                 { label: 'Marketplace', href: '/marketplace' },
                 { label: 'Data & Ratings', href: '/data' },
-                { label: 'Insurance', href: '/marketplace' },
+                { label: 'Insurance', href: '/#insurance' },
                 { label: 'Compare Credits', href: '/compare' },
                 { label: 'Carbon Management', href: '/carbon-management' },
               ] },
@@ -682,10 +689,10 @@ export default function Home() {
               ] },
             ].map(col => (
               <div key={col.title}>
-                <h4 style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px' }}>{col.title}</h4>
-                <ul className="space-y-2">
+                <h2 style={{ fontFamily: bg, fontSize: '11px', fontWeight: 700, color: '#C9A96E', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '10px' }}>{col.title}</h2>
+                <ul className="space-y-0.5">
                   {col.items.map(item => (
-                    <li key={item.label}><a href={item.href} style={{ fontFamily: bg, fontSize: '13px', color: '#4A6B55' }} className="hover:text-white transition-colors duration-200">{item.label}</a></li>
+                    <li key={item.label}><a href={item.href} style={{ fontFamily: bg, fontSize: '13px', color: '#8AAA92', display: 'inline-block', padding: '4px 0' }} className="hover:text-white transition-colors duration-200">{item.label}</a></li>
                   ))}
                 </ul>
               </div>
@@ -693,10 +700,10 @@ export default function Home() {
           </div>
 
           <div style={{ borderTop: '1px solid rgba(201,169,110,0.06)', paddingTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }}>
-              © {new Date().getFullYear()} CarbonBridge. Registered in Abu Dhabi Global Market.
+            <span style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92' }}>
+              © {new Date().getFullYear()} CarbonBridge. Headquartered in the United Arab Emirates.
             </span>
-            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#3A5A45' }} className="hover:text-white transition-colors">info@carbonbridge.ae</a>
+            <a href="mailto:info@carbonbridge.ae" style={{ fontFamily: bg, fontSize: '11px', color: '#8AAA92', display: 'inline-block', padding: '4px 0' }} className="hover:text-white transition-colors">{plainEmail('info@carbonbridge.ae')}</a>
           </div>
         </div>
       </footer>

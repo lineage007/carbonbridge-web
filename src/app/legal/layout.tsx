@@ -17,7 +17,7 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
     <div style={{ minHeight: '100vh', background: '#FFFCF6' }}>
       <header style={{ background: '#1B3A2D', padding: '20px 0' }}>
         <div style={{ maxWidth: '880px', margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Link href="/"><img src="/logo-white.png" alt="CarbonBridge" style={{ height: '28px' }} /></Link>
+          <Link href="/"><img src="/logo-white-h96.webp" alt="CarbonBridge" style={{ height: '28px' }} /></Link>
           <Link href="/" style={{ fontFamily: bg, fontSize: '13px', color: '#C9A96E', textDecoration: 'none' }}>Back to platform →</Link>
         </div>
       </header>

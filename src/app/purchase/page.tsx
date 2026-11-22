@@ -54,9 +54,9 @@ function PurchaseInner() {
   if (!credit) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '16px' }}>
-        <h2 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714' }}>No credit selected</h2>
+        <h1 style={{ fontFamily: fr, fontSize: '24px', color: '#1A1714' }}>No credit selected</h1>
         <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', color: '#C9A96E', fontWeight: 600 }}>
-          Browse marketplace →
+          Browse credits →
         </Link>
       </div>
     );

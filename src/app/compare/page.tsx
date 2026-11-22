@@ -94,7 +94,7 @@ export default function ComparePage() {
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚖️</div>
             <h2 style={{ fontFamily: fr, fontSize: '22px', fontWeight: 600, color: '#1A1714', marginBottom: '8px' }}>Nothing to compare yet</h2>
             <p style={{ fontFamily: bg, fontSize: '14px', color: '#8B8178', marginBottom: '24px' }}>Select 2-4 credits from the marketplace to compare them side by side.</p>
-            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>Browse Marketplace</Link>
+            <Link href="/marketplace" style={{ fontFamily: bg, fontSize: '14px', fontWeight: 600, color: '#0C1C14', background: '#C9A96E', padding: '12px 28px', borderRadius: '9px', textDecoration: 'none' }}>Browse credits</Link>
           </div>
         )}
 

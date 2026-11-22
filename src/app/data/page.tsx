@@ -9,17 +9,6 @@ const fr = "'Fraunces', 'Cormorant Garamond', Georgia, serif";
 const bg = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
 const mono = "'JetBrains Mono', 'DM Mono', monospace";
 
-// ─── Price indices: illustrative placeholders, not market prices ──
-// Replace with indices computed from settled marketplace transactions
-// once CarbonBridge trades. The UI labels every card "Illustrative".
-const PRICE_INDICES = [
-  { name: 'CB Nature Index', desc: 'Nature-based credits (ARR, REDD+, IFM, Blue Carbon)', price: 14.80, change: +1.2, sparkline: [12.4, 12.8, 13.1, 13.5, 14.0, 14.3, 14.8] },
-  { name: 'CB Tech Removal Index', desc: 'Engineered CDR (Biochar, DACCS, Enhanced Weathering)', price: 96.50, change: -2.1, sparkline: [105.0, 103.2, 101.5, 100.0, 98.8, 97.2, 96.5] },
-  { name: 'CB Australia Index', desc: 'Australian-origin credits across all types', price: 22.30, change: +0.8, sparkline: [20.1, 20.5, 21.0, 21.4, 21.8, 22.0, 22.3] },
-  { name: 'CB MENA Index', desc: 'Gulf and MENA-origin credits', price: 18.60, change: +3.4, sparkline: [15.8, 16.2, 16.8, 17.2, 17.8, 18.1, 18.6] },
-  { name: 'CB CORSIA Eligible', desc: 'Credits eligible for airline compliance', price: 19.40, change: +1.8, sparkline: [17.0, 17.4, 17.9, 18.2, 18.6, 19.0, 19.4] },
-];
-
 // Sourced, dated reference figures. One line each in
 // docs/FACT-CHECK-2026-09-22-data-page.md; refresh when SOVCM 2026 is out.
 const MARKET_STATS = [
@@ -29,13 +18,6 @@ const MARKET_STATS = [
   { label: 'Credits retired (2024)', value: '182 Mt', sub: 'Ten largest standards, EM SOVCM 2025' },
   { label: 'UAE NRCC threshold', value: '0.5 Mt/yr', sub: 'Scope 1 + 2 tCO₂e, mandatory registration' },
   { label: 'CORSIA baseline', value: '85%', sub: 'of 2019 emissions, from 2024 (ICAO)' },
-];
-
-// Illustrative placeholder series, not registry data (labelled in the UI).
-const MONTHLY_VOLUME = [
-  { month: 'Oct', nature: 12.4, tech: 2.1 }, { month: 'Nov', nature: 14.2, tech: 2.8 },
-  { month: 'Dec', nature: 11.8, tech: 3.1 }, { month: 'Jan', nature: 15.6, tech: 3.4 },
-  { month: 'Feb', nature: 16.8, tech: 3.9 }, { month: 'Mar', nature: 18.2, tech: 4.2 },
 ];
 
 const REGULATORY_TIMELINE = [
@@ -78,52 +60,8 @@ export default function DataPage() {
 
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10">
 
-          {/* ═══ PRICE INDICES ═══ */}
-          <Section title="CarbonBridge Price Indices" sub="Preview. CarbonBridge publishes its indices from settled marketplace transactions as trading opens.">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {PRICE_INDICES.map(idx => (
-                <div key={idx.name} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '22px', transition: 'all 0.2s' }}
-                  className="hover:shadow-md hover:border-[rgba(201,169,110,0.3)]">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h3 style={{ fontFamily: bg, fontSize: '13px', fontWeight: 700, color: '#1A1714' }}>{idx.name}</h3>
-                      <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '2px' }}>{idx.desc}</p>
-                    </div>
-                    <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', flexShrink: 0 }}>
-                      Preview
-                    </span>
-                  </div>
-                  <div className="flex items-end justify-between mt-4">
-                    <div>
-                      <span style={{ fontFamily: fr, fontSize: '28px', fontWeight: 700, color: '#1A1714', fontFeatureSettings: "'tnum'" }}>${idx.price.toFixed(2)}</span>
-                    </div>
-                    {/* Sparkline */}
-                    <svg width="80" height="28" viewBox="0 0 80 28" fill="none">
-                      <polyline
-                        points={idx.sparkline.map((v, i) => {
-                          const min = Math.min(...idx.sparkline);
-                          const max = Math.max(...idx.sparkline);
-                          const range = max - min || 1;
-                          const x = (i / (idx.sparkline.length - 1)) * 76 + 2;
-                          const y = 26 - ((v - min) / range) * 24;
-                          return `${x},${y}`;
-                        }).join(' ')}
-                        stroke={'#8B8178'}
-                        strokeWidth="1.5"
-                        fill="none"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p style={{ fontFamily: bg, fontSize: '11px', color: '#B0A99A', marginTop: '12px', fontStyle: 'italic' }}>
-              Preview data. Not investment advice.
-            </p>
-          </Section>
-
           {/* ═══ MARKET OVERVIEW ═══ */}
-          <Section title="Market Overview" sub="Published reference figures for the voluntary market (calendar 2024, the latest full-year report) and two compliance thresholds. Source under each figure.">
+          <Section title="Market Overview" sub="Published reference figures for the voluntary market (calendar 2024, the latest full-year report) and two compliance thresholds. Source under each figure, checked 20 Nov 2026.">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               {MARKET_STATS.map(s => (
                 <div key={s.label} style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '12px', padding: '18px', textAlign: 'center' }}>
@@ -154,38 +92,6 @@ export default function DataPage() {
               </div>
               <div className="flex justify-end mt-3" style={{ fontFamily: bg, fontSize: '10px', color: '#B0A99A' }}>
                 <span>Avg. price/tCO₂e →</span>
-              </div>
-            </div>
-          </Section>
-
-          {/* ═══ MONTHLY TRADING VOLUME ═══ */}
-          <Section title="Monthly Retirements" sub="Preview. Nature-based and technology-based retirements in millions of tonnes.">
-            <div style={{ background: 'white', border: '1px solid #E8E2D6', borderRadius: '14px', padding: '24px' }}>
-              <div className="flex items-center gap-2 mb-6">
-                <span style={{ fontFamily: bg, fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8B8178', background: 'rgba(176,169,154,0.12)', padding: '2px 8px', borderRadius: '4px', marginRight: '8px' }}>
-                  Preview
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '180px' }}>
-                {MONTHLY_VOLUME.map(m => {
-                  const maxTotal = Math.max(...MONTHLY_VOLUME.map(v => v.nature + v.tech));
-                  const natureH = (m.nature / maxTotal) * 150;
-                  const techH = (m.tech / maxTotal) * 150;
-                  return (
-                    <div key={m.month} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                      <span style={{ fontFamily: mono, fontSize: '9px', color: '#B0A99A' }}>{(m.nature + m.tech).toFixed(1)}M</span>
-                      <div style={{ width: '100%', maxWidth: '48px', display: 'flex', flexDirection: 'column', gap: '1px' }}>
-                        <div style={{ height: `${techH}px`, background: '#C9A96E', borderRadius: '3px 3px 0 0' }} />
-                        <div style={{ height: `${natureH}px`, background: '#2D6A4F', borderRadius: '0 0 3px 3px' }} />
-                      </div>
-                      <span style={{ fontFamily: bg, fontSize: '10px', color: '#8B8178', marginTop: '4px' }}>{m.month}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex items-center gap-6 mt-4 justify-center" style={{ fontFamily: bg, fontSize: '11px', color: '#8B8178' }}>
-                <span className="flex items-center gap-2"><span style={{ width: '10px', height: '10px', background: '#2D6A4F', borderRadius: '2px', display: 'inline-block' }} /> Nature-based</span>
-                <span className="flex items-center gap-2"><span style={{ width: '10px', height: '10px', background: '#C9A96E', borderRadius: '2px', display: 'inline-block' }} /> Technology-based</span>
               </div>
             </div>
           </Section>

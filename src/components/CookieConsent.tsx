@@ -26,7 +26,7 @@ export default function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div style={{
+    <div role="dialog" aria-label="Cookie preferences" style={{
       position: 'fixed', bottom: '24px', left: '24px', right: '24px',
       maxWidth: '520px',
       background: '#1A1714',
@@ -37,8 +37,7 @@ export default function CookieConsent() {
       zIndex: 9999,
       fontFamily: bg,
     }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
-        <span style={{ fontSize: '20px', flexShrink: 0 }}>🍪</span>
+      <div style={{ marginBottom: '16px' }}>
         <div>
           <div style={{ fontSize: '14px', fontWeight: 600, color: '#FFFCF6', marginBottom: '4px' }}>We use cookies</div>
           <div style={{ fontSize: '12px', color: 'rgba(255,252,246,0.6)', lineHeight: 1.5 }}>
@@ -54,7 +53,7 @@ export default function CookieConsent() {
         <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(255,255,255,0.04)', borderRadius: '8px', fontSize: '11px', color: 'rgba(255,252,246,0.5)', lineHeight: 1.6 }}>
           <div style={{ marginBottom: '6px' }}><strong style={{ color: 'rgba(255,252,246,0.8)' }}>Essential cookies</strong>: always active. Required for authentication, session management, and security. Cannot be disabled.</div>
           <div><strong style={{ color: 'rgba(255,252,246,0.8)' }}>Analytics cookies</strong>: optional. Help us understand how the platform is used so we can improve it. No personal data is sold.</div>
-          <div style={{ marginTop: '6px', color: 'rgba(255,252,246,0.3)' }}>Required under ADGM Data Protection Regulations and UAE Federal Decree-Law No. 45 of 2021.</div>
+          <div style={{ marginTop: '6px', color: 'rgba(255,252,246,0.3)' }}>Required under UAE Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data.</div>
         </div>
       )}
 
