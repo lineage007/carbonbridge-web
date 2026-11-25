@@ -14,7 +14,7 @@ export default function insurancePage() {
 
       <section style={{ marginBottom: '28px' }}>
         <h2 style={{ fontFamily: fr, fontSize: '20px', color: '#1B3A2D', marginBottom: '12px' }}>1. Introduction</h2>
-        <p>CarbonBridge Ltd (&ldquo;CarbonBridge,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) operates a carbon credit marketplace platform accessible at carbonbridge.ae. These terms govern your use of the platform.</p>
+        <p>CarbonBridge (&ldquo;CarbonBridge,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) operates a carbon credit marketplace platform accessible at carbonbridge.ae. These terms govern your use of the platform.</p>
       </section>
 
       <section style={{ marginBottom: '28px' }}>
@@ -24,7 +24,7 @@ export default function insurancePage() {
 
       <section style={{ marginBottom: '28px' }}>
         <h2 style={{ fontFamily: fr, fontSize: '20px', color: '#1B3A2D', marginBottom: '12px' }}>3. Governing Law</h2>
-        <p>These terms are governed by the laws of the Abu Dhabi Global Market (ADGM). Any disputes shall be resolved in the ADGM Courts.</p>
+        <p>The governing law and the forum for disputes will be set out in the final terms.</p>
       </section>
 
       <section>

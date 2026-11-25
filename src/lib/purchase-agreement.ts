@@ -144,8 +144,8 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 </table>
 
 <p><strong>CarbonBridge's Role:</strong> ${isCBDirect
-  ? 'CarbonBridge Ltd acts as both marketplace operator and principal Seller in this transaction. This dual role is disclosed. CarbonBridge Direct inventory is clearly labelled on the Platform and is not algorithmically favoured over third-party listings.'
-  : 'CarbonBridge Ltd acts as marketplace facilitator and escrow agent. CarbonBridge is NOT a party to this sale: the sale is between the Buyer and the Seller. CarbonBridge&rsquo;s obligations are limited to holding funds in escrow, facilitating communication, monitoring the registry transfer, and releasing funds to the Seller upon confirmed Delivery.'
+  ? 'CarbonBridge acts as both marketplace operator and principal Seller in this transaction. This dual role is disclosed. CarbonBridge Direct inventory is clearly labelled on the Platform and is not algorithmically favoured over third-party listings.'
+  : 'CarbonBridge acts as marketplace facilitator and escrow agent. CarbonBridge is NOT a party to this sale: the sale is between the Buyer and the Seller. CarbonBridge&rsquo;s obligations are limited to holding funds in escrow, facilitating communication, monitoring the registry transfer, and releasing funds to the Seller upon confirmed Delivery.'
 }</p>
 
 <h1>2. Definitions</h1>
@@ -215,9 +215,9 @@ ${!data.acceptedAt ? '<div class="watermark">DRAFT</div>' : ''}
 ${isBank ? `
 <p>The Buyer shall transfer the full Total Amount Due within the Purchase Agreement Validity Period (five Business Days from the date of this Agreement) to the following account:</p>
 <div class="schedule-box">
-  <strong>CarbonBridge Ltd: Escrow Account</strong><br>
-  Bank: [ADGM Bank Name]<br>
-  Account Name: CarbonBridge Ltd (Client Escrow)<br>
+  <strong>CarbonBridge: Escrow Account</strong><br>
+  Bank: [Bank Name]<br>
+  Account Name: CarbonBridge (Client Escrow)<br>
   IBAN: [To be provided]<br>
   SWIFT/BIC: [To be provided]<br>
   Reference: <span class="highlight">${data.reference}</span>
@@ -240,7 +240,7 @@ ${insurance.selected ? `
   </table>
 </div>
 
-<p>Insurance Products are arranged through CarbonBridge Ltd. CarbonBridge does not underwrite, assess claims, pay claims, or hold insurance reserves. Each policy is underwritten by the insurer named in that policy&rsquo;s documentation. Full policy wording is available upon request or via the CarbonBridge Platform.</p>
+<p>Insurance Products are arranged through CarbonBridge. CarbonBridge does not underwrite, assess claims, pay claims, or hold insurance reserves. Each policy is underwritten by the insurer named in that policy&rsquo;s documentation. Full policy wording is available upon request or via the CarbonBridge Platform.</p>
 
 <p><strong>Claims Process:</strong> Claims shall be submitted through the CarbonBridge Platform. CarbonBridge routes the claim to the relevant underwriter. Resolution is governed by the applicable insurance policy terms and conditions.</p>
 
@@ -395,7 +395,7 @@ ${isCBDirect ? '<p>12.2 Where CarbonBridge is the Seller (CarbonBridge Direct), 
   ` : `
   <p style="color: #8A8279;">This is a draft. The Agreement becomes binding upon electronic acceptance by the Buyer via the CarbonBridge Platform.</p>
   <div class="sig-line">Authorised Signatory, ${buyer.companyName}</div>
-  <div class="sig-line" style="margin-top: 28px;">CarbonBridge Ltd</div>
+  <div class="sig-line" style="margin-top: 28px;">CarbonBridge</div>
   `}
 </div>
 
@@ -409,7 +409,7 @@ ${isCBDirect ? '<p>12.2 Where CarbonBridge is the Seller (CarbonBridge Direct), 
 
 <div class="footer">
   <img src="https://carbonbridge-web.vercel.app/logo-green.png" alt="CarbonBridge" style="height: 24px; width: auto; margin-bottom: 6px;" />
-  <p>CarbonBridge Ltd &middot; Abu Dhabi Global Market &middot; Al Maryah Island, Abu Dhabi, UAE</p>
+  <p>CarbonBridge</p>
   <p>${data.reference} &middot; Generated ${data.date}</p>
 </div>
 
